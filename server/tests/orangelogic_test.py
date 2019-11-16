@@ -25,3 +25,4 @@ class OrangelogicTestCase(unittest.TestCase):
         service = OrangelogicSearchProvider(self.provider)
         items = service.find({})
         self.assertEqual(50, len(items))
+        self.assertGreater(items.count(), 50)
