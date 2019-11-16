@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "main": "src/extension.ts",
+  "name": "orangelogic-extension",
+  "scripts": {
+    "compile": "tsc",
+    "watch": "tsc -watch"
+  },
+  "devDependencies": {
+    "typescript": "3.4.4"
+  },
+  "superdeskExtension": {
+    "dependencies": []
+  }
+}

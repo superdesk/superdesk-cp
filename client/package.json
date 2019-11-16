@@ -4,6 +4,7 @@
     "dependencies": {
         "superdesk-analytics": "tomaskikutis/superdesk-analytics#next",
         "superdesk-core": "superdesk/superdesk-client-core#develop",
-        "superdesk-publisher": "superdesk/superdesk-publisher#master"
+        "superdesk-publisher": "superdesk/superdesk-publisher#master",
+        "orangelogic-extension": "./extensions/orangelogic-extension"
     }
 }
