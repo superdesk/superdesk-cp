@@ -28,6 +28,11 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
 
         render() {
             const {params} = this.props;
+            
+            if (params.provider !== 'orangelogic') {
+                return null;
+            }
+
             return (
                 <fieldset>
                     <div className="field">
