@@ -37,5 +37,7 @@ module.exports = function(grunt) {
         workspace: {
             analytics: true
         },
+        // special characters that are disallowed in the slugline
+        disallowedSluglineCharacters: '!"#$%&\'()*+,./:;<=>?@[\]^_`{|}~',
     };
 };
