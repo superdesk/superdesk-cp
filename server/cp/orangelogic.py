@@ -58,8 +58,7 @@ class OrangelogicSearchProvider(SearchProvider):
         self.token = os.environ.get('ORANGELOGIC_TOKEN')
         self.config = provider.get('config') or {}
         app.config.setdefault('ORANGELOGIC_URL', self.URL)
-        self.sess.cookies.set('CP1-Session', 'teisjyoygrznnvsrefvb4wfn')
-        self.sess.cookies.set('CP1-Session-Alt', 'teisjyoygrznnvsrefvb4wfn')
+        self.sess.cookies.set('CP1-Session', '4mwae5eguvb3fps0mlljyoe0')
         self.token = 'foo'
 
     def _request(self, api, method='GET', **kwargs):

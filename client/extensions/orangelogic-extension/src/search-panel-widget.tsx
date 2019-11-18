@@ -29,7 +29,7 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
         render() {
             const {params} = this.props;
             
-            if (params.provider !== 'orangelogic') {
+            if (this.props.provider !== 'orangelogic') {
                 return null;
             }
 

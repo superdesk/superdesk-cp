@@ -3,8 +3,8 @@
   "main": "src/extension.ts",
   "name": "orangelogic-extension",
   "scripts": {
-    "compile": "tsc",
-    "watch": "tsc -watch"
+    "compile": "",
+    "watch": ""
   },
   "devDependencies": {
     "typescript": "3.4.4"
