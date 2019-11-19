@@ -7,8 +7,7 @@ interface IParams {
     from: string;
     to: string;
     mediaTypes: {
-        Image: boolean;
-        Video: boolean;
+        [key in IMediaType]?: boolean;
     };
 };
 
