@@ -1,8 +1,24 @@
 import * as React from 'react';
 import {ISearchPanelWidgetProps, ISuperdesk} from 'superdesk-api';
 
+type IMediaType = 'Image' | 'Video';
+
+interface IParams {
+    from: string;
+    to: string;
+    mediaTypes: {
+        Image: boolean;
+        Video: boolean;
+    };
+};
+
+interface IMediaTypeLabel {
+    type: IMediaType,
+    label: string;
+}
+
 export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['gettext']) => {
-    const mediaTypes = [
+    const mediaTypes: Array<IMediaTypeLabel> = [
         {
             type: 'Image',
             label: gettext('Picture'),
@@ -13,16 +29,16 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
         },
     ];
 
-    return class SearchPanelWidget extends React.PureComponent<ISearchPanelWidgetProps> {
+    return class SearchPanelWidget extends React.PureComponent<ISearchPanelWidgetProps<IParams>> {
 
-        toggleMediaType(type: string) {
+        toggleMediaType(type: IMediaType) {
             const mediaTypes = this.props.params.mediaTypes || {};
 
             mediaTypes[type] = !mediaTypes[type];
             this.props.setParams({mediaTypes});
         }
 
-        isActive(type: string) {
+        isActive(type: IMediaType) {
             return this.props.params.mediaTypes != null && this.props.params.mediaTypes[type] === true;
         }
 
