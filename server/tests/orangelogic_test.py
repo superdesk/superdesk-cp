@@ -3,7 +3,8 @@ import os
 import flask
 import unittest
 
-from httmock import urlmatch, HTTMock
+from httmock import urlmatch, HTTMock, remember_called
+from requests.exceptions import HTTPError
 from cp.orangelogic import OrangelogicSearchProvider, AUTH_API, SEARCH_API
 
 
@@ -12,13 +13,24 @@ def read_fixture(filename):
         return f.read()
 
 
-@urlmatch(netloc=r'example\.com$')
-def orangelogic_mock(url, request):
-    if url.path == AUTH_API:
-        return read_fixture('orangelogic_auth.json')
-    if url.path == SEARCH_API:
-        return read_fixture('orangelogic_search.json')
-    raise ValueError(url.path)
+@urlmatch(netloc=r'example\.com$', path=r'/API/Auth')
+def auth_ok(url, request):
+    return read_fixture('orangelogic_auth.json')
+
+
+@urlmatch(netloc=r'example\.com$', path=r'/API/Search')
+def search_ok(url, request):
+    return read_fixture('orangelogic_search.json')
+
+
+@urlmatch(netloc=r'example\.com$', path=r'/API/Auth')
+def auth_error(url, request):
+    return {'status_code': 400}
+
+
+@urlmatch(netloc=r'example\.com$', path=r'/API/Search')
+def search_error(url, request):
+    return {'status_code': 400}
 
 
 class OrangelogicTestCase(unittest.TestCase):
@@ -41,7 +53,7 @@ class OrangelogicTestCase(unittest.TestCase):
     def test_find(self):
         service = OrangelogicSearchProvider(self.provider)
 
-        with HTTMock(orangelogic_mock):
+        with HTTMock(auth_ok, search_ok):
             items = service.find({})
 
         self.assertEqual(5, len(items))
@@ -70,3 +82,14 @@ class OrangelogicTestCase(unittest.TestCase):
             'height': 675,
             'mimetype': 'image/jpeg',
         }, items[0]['renditions']['viewImage'])
+
+    def test_repeat_and_raise_on_error(self):
+        service = OrangelogicSearchProvider(self.provider)
+
+        with HTTMock(auth_ok, search_error):
+            with self.assertRaises(HTTPError):
+                items = service.find({})
+
+        with HTTMock(auth_error, search_error):
+            with self.assertRaises(HTTPError):
+                items = service.find({})

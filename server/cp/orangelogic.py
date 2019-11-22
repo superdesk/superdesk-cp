@@ -9,6 +9,7 @@ import mimetypes
 from datetime import datetime
 from urllib.parse import urljoin
 from flask import current_app as app, json
+from requests.exceptions import HTTPError
 from superdesk.utils import ListCursor
 from superdesk.search_provider import SearchProvider
 
@@ -73,13 +74,21 @@ class OrangelogicSearchProvider(SearchProvider):
                              Password=self.config.get('password'),
                              format='json')
         self.token = resp.json()['APIResponse']['Token']
+        print('login', self.token)
 
     def _auth_request(self, api, **kwargs):
-        if not self.token:
-            self._login()
-        kwargs['token'] = self.token
-        resp = self._request(api, **kwargs)
-        return resp
+        repeats = 2
+        while repeats > 0:
+            if not self.token:
+                self._login()
+            try:
+                kwargs['token'] = self.token
+                return self._request(api, **kwargs)
+            except HTTPError:
+                self.token = None
+                repeats -= 1
+                if repeats == 0:
+                    raise
 
     def find(self, query, params=None):
         if params is None:
