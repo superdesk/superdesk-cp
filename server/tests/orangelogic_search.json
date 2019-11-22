@@ -1,0 +1,194 @@
+{
+    "APIRequestInfo": {
+        "Module": "Search",
+        "APIVersion": "v3.0",
+        "Resource": "search",
+        "IsLoggedIn": true,
+        "Status": "LoggedIn",
+        "TimeoutPeriodMinutes": 60
+    },
+    "APIResponse": {
+        "GlobalInfo": {
+            "TotalCount": 2021650,
+            "QueryDurationMilliseconds": 650,
+            "Sort": "Relevancy",
+            "NextPage": {
+                "href": "https://canadianpress3227prod.orangelogic.com/API/v3.0/Search/search?pagenumber=2&countperpage=5&fields=Title%2cSystemIdentifier%2cMediaNumber%2cCaption%2cCaptionShort%2cMediaDate%2cCreateDate%2cGlobalEditDate%2cMediaType%2cPath_TR1%2cPath_TR7%2cPath_WebHigh%2cPath_WebLow%2cPhotographer%2cPhotographerFastId%2ccopyright&Sort=Newest&query=&token=foo",
+                "rel": "next"
+            }
+        },
+        "Items": [{
+            "Title": "",
+            "SystemIdentifier": "CP14725215",
+            "MediaNumber": "585e4cd57c0d4c8b8a96b36fce095b32",
+            "Caption": "",
+            "CaptionShort": "",
+            "MediaDate": "",
+            "CreateDate": "11/22/2019 10:22:58 AM",
+            "GlobalEditDate": "11/22/2019 10:23:19 AM",
+            "MediaType": "Video",
+            "Path_TR1": {
+                "URI": "https://example.com/view.jpg",
+                "Width": 1200,
+                "Height": 675
+            },
+            "Path_TR7": {
+                "URI": "https://example.com/thumb.jpg",
+                "Width": 341,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "https://example.com/video.mp4",
+                "Width": 1280,
+                "Height": 720
+            },
+            "Path_WebLow": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format WebLow is not available for this asset"
+            },
+            "Photographer": "",
+            "PhotographerFastId": "",
+            "copyright": ""
+        }, {
+            "Title": "",
+            "SystemIdentifier": "CP14725178",
+            "MediaNumber": "a8245a4048d24901bf4f1a05a67666f8",
+            "Caption": "",
+            "CaptionShort": "",
+            "MediaDate": "",
+            "CreateDate": "11/22/2019 8:57:41 AM",
+            "GlobalEditDate": "11/22/2019 8:58:01 AM",
+            "MediaType": "Video",
+            "Path_TR1": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTknPy211UYn5n3zhXafs3QV6MU3sIGu.47MDbgb.eE05zvQfCWNXiLzj9lN2.PPe7QnFs1trg.42ZfWA1j1JhN.c*/o75Y83ujMYbg9pdg/eUQe1A4srgQ4rMA2/CP14725203.jpg",
+                "Width": 1200,
+                "Height": 675
+            },
+            "Path_TR7": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkskUYqRBXauWT4R9ZoKUkYsa7O5LnjO.8gMSfy4E5GxLen2ewMzggfdqeYvGI9orhIX69Lil34u9IaWcepw788Q*/9JTNxouoXDBQaIvC/7AdpNB0BqvU4Ti8c/CP14725203.jpg",
+                "Width": 341,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkmHf8Z3NacUHxZ5Fr6ZJistv2EGsAXBWSYman98adfr3gdMeGHQz.wbdvnQroCsxi.3nuvEpw5LBSfpbUp2fTlbF36f1Vr@mb56uDgTPvueu/oeSxv2yUi7OEbIIY/@XP7bSacoc3zEMJf/CP14725178.mp4",
+                "Width": 1280,
+                "Height": 720
+            },
+            "Path_WebLow": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format WebLow is not available for this asset"
+            },
+            "Photographer": "",
+            "PhotographerFastId": "",
+            "copyright": ""
+        }, {
+            "Title": "",
+            "SystemIdentifier": "CP14725141",
+            "MediaNumber": "fa3c18305e064af58df6dcc35822efa0",
+            "Caption": "",
+            "CaptionShort": "",
+            "MediaDate": "",
+            "CreateDate": "11/22/2019 7:32:54 AM",
+            "GlobalEditDate": "11/22/2019 7:33:14 AM",
+            "MediaType": "Video",
+            "Path_TR1": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkvSPJ2LtC1NEl0ghpweFjp67XqL3bEOFPjWQ6pRsGDwe6DmF4Wyc@NBTmfOK.viuGE5ZUQkH7CvBnR0117MVt@o*/PvuGdxJJQswe5GZU/mHy8eZJHa4WPbeer/CP14725166.jpg",
+                "Width": 1200,
+                "Height": 675
+            },
+            "Path_TR7": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkknnPv0@wvU5Fv4.Jy..IQE0UqUgExR@H4pMUN9CkfwpdlzNzVLItNaE3146qIwzrJr@.7FuI7zOPuOkhxy@2ys*/jFPPOZByTwJJGgyV/hv@y0t388FTT6SkK/CP14725166.jpg",
+                "Width": 341,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkmHf8Z3NacUHxZ5Fr6ZJissbvVfTkLRVUEUo8TQ2Ds0ZK5wVtmkSES@r0ROt6TGXfrmU7U9FMMAVY33fc9eJgwcI3gXT4QShREKUNXhSRc5G/1vgHqB9TuUlGzJVF/EppprLeobOjeVHdI/CP14725141.mp4",
+                "Width": 1280,
+                "Height": 720
+            },
+            "Path_WebLow": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format WebLow is not available for this asset"
+            },
+            "Photographer": "",
+            "PhotographerFastId": "",
+            "copyright": ""
+        }, {
+            "Title": "",
+            "SystemIdentifier": "CP14725139",
+            "MediaNumber": "CPT50131055",
+            "Caption": "Players from the Montreal Carabins hoist the Vanier Cup after beating the McMaster Marauders in the CIS football final in Montreal, Saturday, November 29, 2014. THE CANADIAN PRESS/Graham Hughes",
+            "CaptionShort": "Vanier Cup,",
+            "MediaDate": "11/27/2014 12:00:00 AM",
+            "CreateDate": "11/22/2019 5:30:26 AM",
+            "GlobalEditDate": "11/22/2019 5:30:28 AM",
+            "MediaType": "Image",
+            "Path_TR1": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkvgJgmedr9XRTFxG7KJSMuz2gJli8LtfnCorPt91.faQpC.nYIUokXS2y3AvwSwy@CdQwMoSWWMFlZ57kKtHBXc*/T4C4NI9VC48WmHw8/FAHMZTDZsFYuCQTJ/CP14725139.jpg",
+                "Width": 1200,
+                "Height": 750
+            },
+            "Path_TR7": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkskUYqRBXauWT4R9ZoKUkYsak10V@CcwBIlGbPr5vVoLKm7OuLU@nKoO3UBQk4.2dH8H69ENGXytSDdv99Mdb8U*/NiC7hyuk3Lnsso0d/5z8zNe.hdgTt8S0U/CP14725139.jpg",
+                "Width": 307,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format is not available on this media WebHigh"
+            },
+            "Path_WebLow": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format is not available on this media WebLow"
+            },
+            "Photographer": "",
+            "PhotographerFastId": "CP",
+            "copyright": "The Canadian Press / Canadian Press"
+        }, {
+            "Title": "",
+            "SystemIdentifier": "CP14725140",
+            "MediaNumber": "CPT50431054",
+            "Caption": "A pioneering study of seven beluga whales in Canada\u0027s remote Arctic waters has found microplastics in the innards of every single one. Ocean Wise researcher and Simon Fraser University masters student Rhiannon Moore shows a vial of microplastics at the Ocean Wise Plastics Lab in Vancouver in a November 2019 handout photo. THE CANADIAN PRESS/HO-Ocean Wise, Valeria Vergara, *MANDATORY CREDIT*",
+            "CaptionShort": "",
+            "MediaDate": "4/27/2018 12:00:00 AM",
+            "CreateDate": "11/22/2019 5:30:26 AM",
+            "GlobalEditDate": "11/22/2019 5:30:27 AM",
+            "MediaType": "Image",
+            "Path_TR1": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTksGAllmgSA9To8GD.Zu@1lGDZM1qENF5aN37gYt3jaIAMjDCuzVvZE6D@N1nmvM5CH.dO8Eho.gNqs1NwfQ8ips*/H5mb30UK5Ob.KEtt/l58QySj9hJp@bDvZ/CP14725140.jpg",
+                "Width": 900,
+                "Height": 1200
+            },
+            "Path_TR7": {
+                "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkkQ3ciHBmtOTx7bycmG0lLaq2wWLM0gHaEb9s@jSxU6v3KQ7mhJryS0V9APcTuf8dmeUa01SY.FzG2B8ENuq6Ls*/rOfGJQzl3yYeim5m/u8.YD71gUlyxw3qQ/CP14725140.jpg",
+                "Width": 144,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format is not available on this media WebHigh"
+            },
+            "Path_WebLow": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format is not available on this media WebLow"
+            },
+            "Photographer": "",
+            "PhotographerFastId": "CP",
+            "copyright": "The Canadian Press / Canadian Press"
+        }]
+    }
+}

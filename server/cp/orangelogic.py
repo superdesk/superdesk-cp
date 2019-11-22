@@ -2,9 +2,9 @@
 import os
 import math
 import pytz
-import logging
 import requests
 import superdesk
+import mimetypes
 
 from datetime import datetime
 from urllib.parse import urljoin
@@ -18,10 +18,6 @@ SEARCH_API = '/API/Search/v3.0/search'
 
 TIMEOUT = (5, 25)
 DATE_FORMAT = 'u'
-
-
-logging.basicConfig()
-logger = logging.getLogger(__name__)
 
 
 class OrangelogicListCursor(ListCursor):
@@ -52,28 +48,35 @@ class OrangelogicSearchProvider(SearchProvider):
         'graphic': 'graphic',
     }
 
+    RENDITIONS_MAP = {
+        'viewImage': 'Path_TR1',
+        'thumbnail': 'Path_TR7',
+        'webHigh': 'Path_WebHigh',
+    }
+
     def __init__(self, provider):
         super().__init__(provider)
         self.sess = requests.Session()
-        self.token = os.environ.get('ORANGELOGIC_TOKEN')
+        self.token = None
         self.config = provider.get('config') or {}
         app.config.setdefault('ORANGELOGIC_URL', self.URL)
-        self.sess.cookies.set('CP1-Session', '4mwae5eguvb3fps0mlljyoe0')
-        self.token = 'foo'
 
     def _request(self, api, method='GET', **kwargs):
         url = urljoin(app.config['ORANGELOGIC_URL'], api)
-        logging.info('request %s %s', api, json.dumps(kwargs))
         resp = self.sess.request(method, url, params=kwargs, timeout=TIMEOUT)
         resp.raise_for_status()
         return resp
 
+    def _login(self):
+        resp = self._request(AUTH_API, method='POST',
+                             Login=self.config.get('username'),
+                             Password=self.config.get('password'),
+                             format='json')
+        self.token = resp.json()['APIResponse']['Token']
+
     def _auth_request(self, api, **kwargs):
         if not self.token:
-            resp = self._request(AUTH_API, method='POST',
-                                 Login=self.config.get('username'),
-                                 Password=self.config.get('password'))
-            self.token = resp.get('token')
+            self._login()
         kwargs['token'] = self.token
         resp = self._request(api, **kwargs)
         return resp
@@ -101,7 +104,6 @@ class OrangelogicSearchProvider(SearchProvider):
                 'Path_TR1',
                 'Path_TR7',
                 'Path_WebHigh',
-                'Path_WebLow',
                 'Photographer',
                 'PhotographerFastId',
                 'copyright',
@@ -155,27 +157,32 @@ class OrangelogicSearchProvider(SearchProvider):
                 'firstcreated': self.parse_datetime(item['CreateDate']),
                 'versioncreated': self.parse_datetime(item['MediaDate'] or item['GlobalEditDate']),
                 'renditions': {
-                    'thumbnail': {
-                        'href': thumb['URI'],
-                        'width': int(thumb['Width']),
-                        'height': int(thumb['Height']),
-                        'mimetype': 'image/jpeg',
-                    },
-                    'viewImage': {
-                        'href': view['URI'],
-                        'width': int(view['Width']),
-                        'height': int(view['Height']),
-                        'mimetype': 'image/jpeg',
-                    },
+                    key: rendition(item[path])
+                    for key, path in self.RENDITIONS_MAP.items()
+                    if item.get(path) and item[path].get('URI')
                 },
             })
 
         return OrangelogicListCursor(items, data['APIResponse']['GlobalInfo']['TotalCount'])
-        return items
 
     def parse_datetime(self, value):
         local = datetime.strptime(value, '%m/%d/%Y %H:%M:%S %p')
         return local.replace(tzinfo=pytz.UTC)
+
+
+def rendition(data):
+    rend = {
+        'href': data['URI'],
+        'mimetype': mimetypes.guess_type(data['URI'])[0],
+    }
+
+    if data.get('Width'):
+        rend['width'] = int(data['Width'])
+
+    if data.get('Height'):
+        rend['height'] = int(data['Height'])
+
+    return rend
 
 
 def init_app(app):
