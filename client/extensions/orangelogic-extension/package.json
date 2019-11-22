@@ -1,10 +1,10 @@
 {
   "private": true,
-  "main": "src/extension.ts",
+  "main": "dist/extension.js",
   "name": "orangelogic-extension",
   "scripts": {
-    "compile": "",
-    "watch": ""
+    "compile": "tsc",
+    "watch": "tsc -watch"
   },
   "devDependencies": {
     "typescript": "3.4.4"
