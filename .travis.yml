@@ -20,8 +20,8 @@ cache:
     - $HOME/.npm
 
 before_install:
-    - nvm install lts
-    - nvm use lts
+    - nvm install --lts
+    - nvm use --lts
     - node --version
     - npm install -g npm@lts grunt-cli
 
