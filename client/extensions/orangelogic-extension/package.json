@@ -5,10 +5,14 @@
   "name": "orangelogic-extension",
   "scripts": {
     "compile": "tsc",
-    "watch": "tsc -watch"
+    "watch": "tsc -watch",
+    "install": "compile"
   },
   "devDependencies": {
-    "typescript": "3.4.4"
+    "typescript": "3.7.2"
+  },
+  "peerDependencies": {
+    "typescript": "3.7.2"
   },
   "superdeskExtension": {
     "dependencies": []
