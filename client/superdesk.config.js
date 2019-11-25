@@ -11,17 +11,9 @@ module.exports = function(grunt) {
         ],
         importApps: [
             '../index',
-            'superdesk-analytics',
-            'superdesk-publisher'
+            'superdesk-analytics'
         ],
         defaultRoute: '/workspace/personal',
-
-        publisher: {
-            protocol: 'https',
-            tenant: process.env.PUBLISHER_API_SUBDOMAIN || '',
-            domain: process.env.PUBLISHER_API_DOMAIN || 'localhost',
-            base: 'api/v1'
-        },
 
         langOverride: {
             'en': {
@@ -44,6 +36,7 @@ module.exports = function(grunt) {
             editFeaturedImage: false,
             searchShortcut: true,
         },
+
         workspace: {
             analytics: true
         },
