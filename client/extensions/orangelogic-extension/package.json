@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "tsc",
     "watch": "tsc -watch",
-    "install": "compile"
+    "install": "tsc"
   },
   "devDependencies": {
     "typescript": "3.7.2"
