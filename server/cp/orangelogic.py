@@ -47,6 +47,7 @@ class OrangelogicSearchProvider(SearchProvider):
         'audio': 'audio',
         'package': 'composite',
         'graphic': 'graphic',
+        'story': 'composite',
     }
 
     RENDITIONS_MAP = {
