@@ -1,206 +1,208 @@
-{
-    "_id" : "story",
-    "priority" : 0,
-    "label" : "Story",
-    "enabled" : true,
-    "editor" : {
-        "correction" : {
-            "required" : false,
-            "section" : "content",
-            "order" : 9
+[
+    {
+        "_id" : "Story",
+        "priority" : 0,
+        "label" : "Story",
+        "enabled" : true,
+        "editor" : {
+            "correction" : {
+                "required" : false,
+                "section" : "content",
+                "order" : 9
+            },
+            "related-articles" : {
+                "required" : false,
+                "section" : "content",
+                "order" : 14
+            },
+            "attachments" : null,
+            "slugline" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "order" : 1
+            },
+            "ednote" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "order" : 5
+            },
+            "authors" : null,
+            "headline" : {
+                "required" : false,
+                "formatOptions" : [],
+                "sdWidth" : "full",
+                "order" : 7
+            },
+            "body_footer" : null,
+            "genre" : {
+                "required" : false,
+                "sdWidth" : "half",
+                "order" : 2
+            },
+            "byline" : {
+                "required" : false,
+                "order" : 10
+            },
+            "usageterms" : null,
+            "short_headline" : {
+                "required" : false,
+                "section" : "content",
+                "order" : 6
+            },
+            "feature_media" : null,
+            "body_html" : {
+                "required" : false,
+                "editor3" : true,
+                "formatOptions" : [
+                    "h2",
+                    "bold",
+                    "italic",
+                    "underline",
+                    "quote",
+                    "link",
+                    "embed",
+                    "media"
+                ],
+                "cleanPastedHTML" : false,
+                "order" : 12
+            },
+            "abstract" : null,
+            "anpa_category" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "order" : 4
+            },
+            "language" : null,
+            "dateline" : {
+                "required" : false,
+                "order" : 11
+            },
+            "urgency" : {
+                "required" : false,
+                "sdWidth" : "quarter",
+                "order" : 3
+            },
+            "media_description" : null,
+            "priority" : null,
+            "place" : null,
+            "update" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "section" : "content",
+                "order" : 8
+            },
+            "sign_off" : {
+                "required" : false,
+                "order" : 15
+            },
+            "media-gallery" : {
+                "required" : false,
+                "section" : "content",
+                "order" : 13
+            },
+            "sms" : null
         },
-        "related-articles" : {
-            "required" : false,
-            "section" : "content",
-            "order" : 14
-        },
-        "attachments" : null,
-        "slugline" : {
-            "required" : false,
-            "sdWidth" : "full",
-            "order" : 1
-        },
-        "ednote" : {
-            "required" : false,
-            "sdWidth" : "full",
-            "order" : 5
-        },
-        "authors" : null,
-        "headline" : {
-            "required" : false,
-            "formatOptions" : [],
-            "sdWidth" : "full",
-            "order" : 7
-        },
-        "body_footer" : null,
-        "genre" : {
-            "required" : false,
-            "sdWidth" : "half",
-            "order" : 2
-        },
-        "byline" : {
-            "required" : false,
-            "order" : 10
-        },
-        "usageterms" : null,
-        "short_headline" : {
-            "required" : false,
-            "section" : "content",
-            "order" : 6
-        },
-        "feature_media" : null,
-        "body_html" : {
-            "required" : false,
-            "editor3" : true,
-            "formatOptions" : [ 
-                "h2", 
-                "bold", 
-                "italic", 
-                "underline", 
-                "quote", 
-                "link", 
-                "embed", 
-                "media"
-            ],
-            "cleanPastedHTML" : false,
-            "order" : 12
-        },
-        "abstract" : null,
-        "anpa_category" : {
-            "required" : false,
-            "sdWidth" : "full",
-            "order" : 4
-        },
-        "language" : null,
-        "dateline" : {
-            "required" : false,
-            "order" : 11
-        },
-        "urgency" : {
-            "required" : false,
-            "sdWidth" : "quarter",
-            "order" : 3
-        },
-        "media_description" : null,
-        "priority" : null,
-        "place" : null,
-        "update" : {
-            "required" : false,
-            "sdWidth" : "full",
-            "section" : "content",
-            "order" : 8
-        },
-        "sign_off" : {
-            "required" : false,
-            "order" : 15
-        },
-        "media-gallery" : {
-            "required" : false,
-            "section" : "content",
-            "order" : 13
-        },
-        "sms" : null
-    },
-    "schema" : {
-        "correction" : {
-            "required" : false,
-            "maxlength" : 500,
-            "nullable" : true,
-            "enabled" : true,
-            "type" : "text"
-        },
-        "related-articles" : {
-            "required" : false,
-            "nullable" : true,
-            "enabled" : true,
-            "type" : "related_content"
-        },
-        "attachments" : null,
-        "slugline" : {
-            "required" : false,
-            "maxlength" : 50,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "ednote" : {
-            "required" : false,
-            "maxlength" : 500,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "authors" : null,
-        "headline" : {
-            "required" : false,
-            "minlength" : 65,
-            "maxlength" : 80,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "body_footer" : null,
-        "genre" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "list"
-        },
-        "feature_media" : null,
-        "byline" : {
-            "required" : false,
-            "maxlength" : 500,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "short_headline" : {
-            "required" : false,
-            "maxlength" : 500,
-            "nullable" : true,
-            "enabled" : true,
-            "type" : "text"
-        },
-        "body_html" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "abstract" : null,
-        "subject" : null,
-        "anpa_category" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "list"
-        },
-        "language" : null,
-        "dateline" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "dict"
-        },
-        "urgency" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "integer"
-        },
-        "media_description" : null,
-        "usageterms" : null,
-        "priority" : null,
-        "place" : null,
-        "update" : {
-            "required" : false,
-            "maxlength" : 500,
-            "nullable" : true,
-            "enabled" : true,
-            "type" : "text"
-        },
-        "sign_off" : {
-            "required" : false,
-            "nullable" : true,
-            "type" : "string"
-        },
-        "media-gallery" : {
-            "required" : false,
-            "nullable" : true,
-            "enabled" : true,
-            "type" : "media"
-        },
-        "sms" : null
+        "schema" : {
+            "correction" : {
+                "required" : false,
+                "maxlength" : 500,
+                "nullable" : true,
+                "enabled" : true,
+                "type" : "text"
+            },
+            "related-articles" : {
+                "required" : false,
+                "nullable" : true,
+                "enabled" : true,
+                "type" : "related_content"
+            },
+            "attachments" : null,
+            "slugline" : {
+                "required" : false,
+                "maxlength" : 50,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "ednote" : {
+                "required" : false,
+                "maxlength" : 500,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "authors" : null,
+            "headline" : {
+                "required" : false,
+                "minlength" : 65,
+                "maxlength" : 80,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "body_footer" : null,
+            "genre" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "list"
+            },
+            "feature_media" : null,
+            "byline" : {
+                "required" : false,
+                "maxlength" : 500,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "short_headline" : {
+                "required" : false,
+                "maxlength" : 500,
+                "nullable" : true,
+                "enabled" : true,
+                "type" : "text"
+            },
+            "body_html" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "abstract" : null,
+            "subject" : null,
+            "anpa_category" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "list"
+            },
+            "language" : null,
+            "dateline" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "dict"
+            },
+            "urgency" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "integer"
+            },
+            "media_description" : null,
+            "usageterms" : null,
+            "priority" : null,
+            "place" : null,
+            "update" : {
+                "required" : false,
+                "maxlength" : 500,
+                "nullable" : true,
+                "enabled" : true,
+                "type" : "text"
+            },
+            "sign_off" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "string"
+            },
+            "media-gallery" : {
+                "required" : false,
+                "nullable" : true,
+                "enabled" : true,
+                "type" : "media"
+            },
+            "sms" : null
+        }
     }
-}
+]

@@ -1,10 +1,11 @@
 [
     {
         "template_name": "Story",
+        "template_type": "create",
         "is_public": true,
         "data": {
             "language" : "en",
-            "profile": "story",
+            "profile": "Story",
             "type": "text",
             "pubstatus": "usable",
             "flags": {
@@ -15,7 +16,6 @@
             },
             "format": "HTML"
         },
-        "template_type": "create",
-        "template_desks" : []
+        "schedule": {}
     }
 ]
