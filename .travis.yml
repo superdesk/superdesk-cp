@@ -2,9 +2,6 @@ language: python
 
 python: "3.5"
 
-sudo: false
-dist: xenial
-
 services:
     - mongodb
     - elasticsearch
@@ -23,17 +20,17 @@ cache:
     - $HOME/.npm
 
 before_install:
-    - nvm install 6.10
-    - nvm use 6.10
+    - nvm install --lts
+    - nvm use --lts
     - node --version
-    - npm install -g npm@3
-    - npm install -g grunt-cli
+    - npm install -g npm@lts grunt-cli
 
 install:
     - cd server && pip install -r dev-requirements.txt && cd ..
     - cd client && npm install && cd ..
 
 script:
-    - cd server && flake8 && cd ..
+    - cd server && flake8 && nosetests tests && cd ..
     - cd client && grunt build && cd ..
     - cd server && python manage.py users:create -u test -p test -e test@localhost --admin && cd ..
+
