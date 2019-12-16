@@ -1,26 +1,5 @@
 [
     {
-        "_id": "short_headline",
-        "field_type": "text",
-        "items": [],
-        "type": "manageable",
-        "schema": {
-            "name": {},
-            "qcode": {},
-            "parent": {}
-        },
-        "service": {
-            "all": 1
-        },
-        "display_name": "Short headline",
-        "description": "",
-        "helper_text": "",
-        "field_options": {
-            "single": true
-        },
-        "unique_field": "qcode"
-    },
-    {
         "_id": "correction",
         "field_type": "text",
         "items": [],
@@ -34,6 +13,83 @@
             "all": 1
         },
         "display_name": "Correction",
+        "description": "",
+        "helper_text": "",
+        "field_options": {
+            "single": true
+        },
+        "unique_field": "qcode"
+    },
+    {
+        "_id": "media-gallery",
+        "field_type": "media",
+        "items": [],
+        "type": "manageable",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "parent": {}
+        },
+        "service": {
+            "all": 1
+        },
+        "display_name": "Media gallery",
+        "field_options": {
+            "allowed_types": {
+                "picture": true,
+                "video": true,
+                "audio": true
+            },
+            "multiple_items": {
+                "enabled": true,
+                "max_items": 5
+            }
+        },
+        "description": "",
+        "helper_text": "",
+        "unique_field": "qcode"
+    },
+    {
+        "_id": "related-articles",
+        "field_type": "related_content",
+        "items": [],
+        "type": "manageable",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "parent": {}
+        },
+        "service": {
+            "all": 1
+        },
+        "display_name": "Related articles",
+        "field_options": {
+            "allowed_types": {
+                "text": true
+            },
+            "multiple_items": {
+                "enabled": true,
+                "max_items": 99
+            }
+        },
+        "description": "",
+        "helper_text": "",
+        "unique_field": "qcode"
+    },
+    {
+        "_id": "short_headline",
+        "field_type": "text",
+        "items": [],
+        "type": "manageable",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "parent": {}
+        },
+        "service": {
+            "all": 1
+        },
+        "display_name": "Short headline",
         "description": "",
         "helper_text": "",
         "field_options": {
@@ -60,62 +116,6 @@
         "field_options": {
             "single": true
         },
-        "unique_field": "qcode"
-    },
-    {
-        "_id" : "related-articles",
-        "field_type" : "related_content",
-        "items" : [],
-        "type" : "manageable",
-        "schema" : {
-            "name" : {},
-            "qcode" : {},
-            "parent" : {}
-        },
-        "service" : {
-            "all" : 1
-        },
-        "display_name" : "Related articles",
-        "field_options" : {
-            "allowed_types" : {
-                "text" : true
-            },
-            "multiple_items" : {
-                "enabled" : true,
-                "max_items" : 99
-            }
-        },
-        "description": "",
-        "helper_text": "",
-        "unique_field": "qcode"
-    },
-    {
-        "_id" : "media-gallery",
-        "field_type" : "media",
-        "items" : [],
-        "type" : "manageable",
-        "schema" : {
-            "name" : {},
-            "qcode" : {},
-            "parent" : {}
-        },
-        "service" : {
-            "all" : 1
-        },
-        "display_name" : "Media gallery",
-        "field_options" : {
-            "allowed_types" : {
-                "picture" : true,
-                "video" : true,
-                "audio" : true
-            },
-            "multiple_items" : {
-                "enabled" : true,
-                "max_items" : 5
-            }
-        },
-        "description": "",
-        "helper_text": "",
         "unique_field": "qcode"
     }
 ]
