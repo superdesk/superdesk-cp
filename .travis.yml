@@ -33,3 +33,4 @@ script:
     - cd server && flake8 && nosetests tests && cd ..
     - cd client && grunt build && cd ..
     - cd server && python manage.py users:create -u test -p test -e test@localhost --admin && cd ..
+

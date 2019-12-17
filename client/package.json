@@ -3,6 +3,7 @@
     "license": "GPL-3.0",
     "dependencies": {
         "orangelogic-extension": "./extensions/orangelogic-extension",
-        "superdesk-core": "github:superdesk/superdesk-client-core#develop"
+        "superdesk-core": "github:superdesk/superdesk-client-core#develop",
+        "superdesk-analytics": "tomaskikutis/superdesk-analytics#next"
     }
 }
