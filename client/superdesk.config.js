@@ -35,10 +35,11 @@ module.exports = function(grunt) {
             editorHighlights: true,
             editFeaturedImage: false,
             searchShortcut: true,
+            useTansaProofing: true,
         },
 
         workspace: {
-            analytics: false,
+            analytics: true,
         },
     };
 };
