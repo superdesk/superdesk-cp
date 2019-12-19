@@ -67,6 +67,11 @@ ANALYTICS_ENABLE_SCHEDULED_REPORTS = strtobool(
 HIGHCHARTS_SERVER_HOST = env('HIGHCHARTS_SERVER_HOST', 'localhost')
 HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
 
+LANGUAGES = [
+    {'language': 'en-CA', 'label': 'English', 'source': True, 'destination': True},
+    {'language': 'fr-CA', 'label': 'Français', 'source': True, 'destination': True}
+]
+
 ARCHIVE_AUTOCOMPLETE = True
 ARCHIVE_AUTOCOMPLETE_DAYS = 2
 
