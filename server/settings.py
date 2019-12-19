@@ -69,3 +69,7 @@ HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
 
 ARCHIVE_AUTOCOMPLETE = True
 ARCHIVE_AUTOCOMPLETE_DAYS = 2
+
+# special characters that are disallowed
+DISALLOWED_CHARACTERS = ['!', '#', '$', '%', '&', '"', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
+                         '>', '?', '@', '[', ']', '\\', '^', '_', '`', '{', '|', '}', '~']
