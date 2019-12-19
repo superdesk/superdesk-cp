@@ -78,3 +78,8 @@ ARCHIVE_AUTOCOMPLETE_DAYS = 2
 # special characters that are disallowed
 DISALLOWED_CHARACTERS = ['!', '#', '$', '%', '&', '"', '(', ')', '*', '+', ',', '.', '/', ':', ';', '<', '=',
                          '>', '?', '@', '[', ']', '\\', '^', '_', '`', '{', '|', '}', '~']
+
+TANSA_PROFILES = {
+    'en_CA': 445,
+    'fr_CA': 507,
+}
