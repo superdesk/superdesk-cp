@@ -1,5 +1,129 @@
 [
     {
+        "_id": "categories",
+        "display_name": "Categories",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "multi selection",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
+        },
+        "service": {"all": 1},
+        "init_version": 1,
+
+        "items": 
+        	[
+				{"name": "Advisory","qcode": "Advisory","is_active": true,"translations": {"name": {"en-CA": "Advisory","fr-CA": "Avis"}}},
+				{"name": "Agate","qcode": "Agate","is_active": true,"translations": {"name": {"en-CA": "Agate","fr-CA": "Statistiques"}}},
+				{"name": "Atlantic","qcode": "Atlantic","is_active": true,"translations": {"name": {"en-CA": "Atlantic","fr-CA": "Atlantique"}}},
+				{"name": "Audio Skeds","qcode": "Audio Skeds","is_active": true,"translations": {"name": {"en-CA": "Audio Skeds","fr-CA": "Envois sonores"}}},
+				{"name": "Business","qcode": "Business","is_active": true,"translations": {"name": {"en-CA": "Business","fr-CA": "Affaires"}}},
+				{"name": "Entertainment","qcode": "Entertainment","is_active": true,"translations": {"name": {"en-CA": "Entertainment","fr-CA": "Culture"}}},
+				{"name": "Finance","qcode": "Finance","is_active": true,"translations": {"name": {"en-CA": "Finance","fr-CA": "Finance"}}},
+				{"name": "International","qcode": "International","is_active": true,"translations": {"name": {"en-CA": "International","fr-CA": "International"}}},
+				{"name": "Lifestyle","qcode": "Lifestyle","is_active": true,"translations": {"name": {"en-CA": "Lifestyle","fr-CA": "Documentaries"}}},
+				{"name": "National","qcode": "National","is_active": true,"translations": {"name": {"en-CA": "National","fr-CA": "Nouveleles Generales"}}},
+				{"name": "Ontario/Quebec","qcode": "Ontario/Quebec","is_active": true,"translations": {"name": {"en-CA": "Ontario/Quebec","fr-CA": "Ontario"}}},
+				{"name": "Prairies/BC","qcode": "Prairies/BC","is_active": true,"translations": {"name": {"en-CA": "Prairies/BC","fr-CA": "Quest"}}},
+				{"name": "Press Release","qcode": "Press Release","is_active": true,"translations": {"name": {"en-CA": "Press Release","fr-CA": "Communique"}}},
+				{"name": "Spare News","qcode": "Spare News","is_active": true,"translations": {"name": {"en-CA": "Spare News","fr-CA": "Nouvelles supplementaire"}}},
+				{"name": "Spare Sports","qcode": "Spare Sports","is_active": true,"translations": {"name": {"en-CA": "Spare Sports","fr-CA": "Evenements speciaux"}}},
+				{"name": "Sports","qcode": "Sports","is_active": true,"translations": {"name": {"en-CA": "Sports","fr-CA": "Sports"}}},
+				{"name": "Travel","qcode": "Travel","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
+        ]
+    }, 
+    {
+        "_id": "subject_custom",
+        "display_name": "Subject",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "multi selection",
+        "schema_field": "subject",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
+        },
+        "service": {"all": 1},
+        "init_version": 1,
+
+        "items": 
+        	[
+			{"name": "Agriculture", "qcode": "04001000", "is_active": true, "translations": {"name": {"en-CA": "Agriculture", "fr-CA": "Agriculture"} } },
+            {"name": "Arts", "qcode": "01020000", "is_active": true, "translations": {"name": {"en-CA": "Arts", "fr-CA": "Arts"} } },
+            {"name": "Automotive", "qcode": "10014000", "is_active": true, "translations": {"name": {"en-CA": "Automotive", "fr-CA": "Automoble"} } },
+            {"name": "Banks", "qcode": "04006002", "is_active": true, "translations": {"name": {"en-CA": "Banks", "fr-CA": "Banques"} } },
+            {"name": "Beverage", "qcode": "04007008", "is_active": true, "translations": {"name": {"en-CA": "Beverage", "fr-CA": "Boisson"} } },
+            {"name": "Books", "qcode": "04010002", "is_active": true, "translations": {"name": {"en-CA": "Books", "fr-CA": "Livres"} } },
+            {"name": "Chemicals", "qcode": "04002000", "is_active": true, "translations": {"name": {"en-CA": "Chemicals", "fr-CA": "Chimiques"} } },
+            {"name": "Construction", "qcode": "04004000", "is_active": true, "translations": {"name": {"en-CA": "Construction", "fr-CA": "Construction"} } },
+            {"name": "Consumer tech", "qcode": "17000000", "is_active": true, "translations": {"name": {"en-CA": "Consumer tech", "fr-CA": "Tech de consommation"} } },
+            {"name": "ConsumerAuto", "qcode": "10014000", "is_active": true, "translations": {"name": {"en-CA": "ConsumerAuto", "fr-CA": "ConsumerAuto"} } },
+            {"name": "Defence", "qcode": "11001000", "is_active": true, "translations": {"name": {"en-CA": "Defence", "fr-CA": "Defense"} } },
+            {"name": "Disaster", "qcode": "03015000", "is_active": true, "translations": {"name": {"en-CA": "Disaster", "fr-CA": "Catastrophe"} } },
+            {"name": "Economy", "qcode": "04017000", "is_active": true, "translations": {"name": {"en-CA": "Economy", "fr-CA": "Economie"} } },
+            {"name": "Education", "qcode": "05000000", "is_active": true, "translations": {"name": {"en-CA": "Education", "fr-CA": "Education"} } },
+            {"name": "Environment", "qcode": "06000000", "is_active": true, "translations": {"name": {"en-CA": "Environment", "fr-CA": "Environment"} } },
+            {"name": "Film", "qcode": "01005000", "is_active": true, "translations": {"name": {"en-CA": "Film", "fr-CA": "Cinema"} } },
+            {"name": "FinServices", "qcode": "01005000", "is_active": true, "translations": {"name": {"en-CA": "FinServices", "fr-CA": "Servicesfin"} } },
+            {"name": "Fisheries", "qcode": "04001002", "is_active": true, "translations": {"name": {"en-CA": "Fisheries", "fr-CA": "Peches"} } },
+            {"name": "Food", "qcode": "04007003", "is_active": true, "translations": {"name": {"en-CA": "Food", "fr-CA": "Aliment (General)"} } },
+            {"name": "Forestry", "qcode": "04001003", "is_active": true, "translations": {"name": {"en-CA": "Forestry", "fr-CA": "Foresterie"} } },
+            {"name": "Hardware", "qcode": "04003001", "is_active": true, "translations": {"name": {"en-CA": "Hardware", "fr-CA": "Materiel Informatique"} } },
+            {"name": "Health", "qcode": "07000000", "is_active": true, "translations": {"name": {"en-CA": "Health", "fr-CA": "Sante"} } },
+            {"name": "Human Interest", "qcode": "08000000", "is_active": true, "translations": {"name": {"en-CA": "Human Interest", "fr-CA": "Insolite"} } },
+            {"name": "Insurance", "qcode": "04006006", "is_active": true, "translations": {"name": {"en-CA": "Insurance", "fr-CA": "Assurance"} } },
+            {"name": "Justice", "qcode": "02000000", "is_active": true, "translations": {"name": {"en-CA": "Justice", "fr-CA": "Justice"} } },
+            {"name": "Labour", "qcode": "09000000", "is_active": true, "translations": {"name": {"en-CA": "Labour", "fr-CA": "Travail"} } },
+            {"name": "Manufacturing", "qcode": "04011000", "is_active": true, "translations": {"name": {"en-CA": "Manufacturing", "fr-CA": "Fabrication"} } },
+            {"name": "Media", "qcode": "04010000", "is_active": true, "translations": {"name": {"en-CA": "Media", "fr-CA": "Media"} } },
+            {"name": "Metal", "qcode": "04009002", "is_active": true, "translations": {"name": {"en-CA": "Metal", "fr-CA": "Metaux"} } },
+            {"name": "Mining", "qcode": "04012005", "is_active": true, "translations": {"name": {"en-CA": "Mining", "fr-CA": "Mines"} } },
+            {"name": "Music", "qcode": "01011000", "is_active": true, "translations": {"name": {"en-CA": "Music", "fr-CA": "Musique"} } },
+            {"name": "Oil&Gas", "qcode": "04005003", "is_active": true, "translations": {"name": {"en-CA": "Oil&Gas", "fr-CA": "Hydrocarbures"} } },
+            {"name": "Pharma", "qcode": "04002006", "is_active": true, "translations": {"name": {"en-CA": "Pharma", "fr-CA": "Pharma"} } },
+            {"name": "Politics", "qcode": "11000000", "is_active": true, "translations": {"name": {"en-CA": "Politics", "fr-CA": "Politique"} } },
+            {"name": "Radio", "qcode": "01014000", "is_active": true, "translations": {"name": {"en-CA": "Radio", "fr-CA": "Radio"} } },
+            {"name": "Real Estate", "qcode": "04004003", "is_active": true, "translations": {"name": {"en-CA": "Real Estate", "fr-CA": "Immobilier"} } },
+            {"name": "Religion", "qcode": "12000000", "is_active": true, "translations": {"name": {"en-CA": "Religion", "fr-CA": "Religion"} } },
+            {"name": "Retail", "qcode": "04007005", "is_active": true, "translations": {"name": {"en-CA": "Retail", "fr-CA": "Detail"} } },
+            {"name": "Science", "qcode": "13009000", "is_active": true, "translations": {"name": {"en-CA": "Science", "fr-CA": "Science Et Technologie"} } },
+            {"name": "Social", "qcode": "14025000", "is_active": true, "translations": {"name": {"en-CA": "Social", "fr-CA": "Social"} } },
+            {"name": "Software", "qcode": "04003005", "is_active": true, "translations": {"name": {"en-CA": "Software", "fr-CA": "Logiciel"} } },
+            {"name": "Telecom", "qcode": "04003007", "is_active": true, "translations": {"name": {"en-CA": "Telecom", "fr-CA": "Télécom"} } },
+            {"name": "Television", "qcode": "01016000", "is_active": true, "translations": {"name": {"en-CA": "Television", "fr-CA": "Télévision"} } },
+            {"name": "Terrorism", "qcode": "02001010", "is_active": true, "translations": {"name": {"en-CA": "Terrorism", "fr-CA": "Conflits"} } },
+            {"name": "Trade", "qcode": "04008000", "is_active": true, "translations": {"name": {"en-CA": "Trade", "fr-CA": "Commerce"} } },
+            {"name": "Transport", "qcode": "04015000", "is_active": true, "translations": {"name": {"en-CA": "Transport", "fr-CA": "Transport"} } },
+            {"name": "Utilities", "qcode": "04006000", "is_active": true, "translations": {"name": {"en-CA": "Utilities", "fr-CA": "Commodites"} } },
+            {"name": "Weather", "qcode": "17000000", "is_active": true, "translations": {"name": {"en-CA": "Weather", "fr-CA": "Meteo"} } },
+            {"name": "Your money", "qcode": "04006018", "is_active": true, "translations": {"name": {"en-CA": "Your money", "fr-CA": "Votre Argent"} } }
+        ]
+    },
+    {
+        "_id": "languages",
+        "display_name": "Languages",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "service": {
+            "all": 1
+        },
+        "items": [
+            {
+                "name": "en-CA",
+                "qcode": "en-CA",
+                "is_active": true
+            },
+            {
+                "name": "fr-CA",
+                "qcode": "fr-CA",
+                "is_active": true
+            }
+        ]
+    },
+    {
         "_id": "correction",
         "field_type": "text",
         "items": [],
