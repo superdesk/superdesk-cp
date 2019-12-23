@@ -11,18 +11,7 @@
 
 import os
 from pathlib import Path
-from superdesk.default_settings import INSTALLED_APPS, strtobool
-
-
-def env(variable, fallback_value=None):
-    env_value = os.environ.get(variable, '')
-    if len(env_value) == 0:
-        return fallback_value
-    else:
-        if env_value == "__EMPTY__":
-            return ''
-        else:
-            return env_value
+from superdesk.default_settings import strtobool, env
 
 
 ABS_PATH = str(Path(__file__).resolve().parent)
@@ -31,10 +20,10 @@ init_data = Path(ABS_PATH) / 'data'
 if init_data.exists():
     INIT_DATA_PATH = init_data
 
-INSTALLED_APPS.extend([
-    'analytics',
+INSTALLED_APPS = [
     'apps.languages',
-])
+    'cp.orangelogic',
+]
 
 RENDITIONS = {
     'picture': {

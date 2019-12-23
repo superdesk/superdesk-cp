@@ -1,0 +1,17 @@
+{
+    "APIRequestInfo": {
+        "Module": "Authentication",
+        "APIVersion": "v1.0",
+        "Resource": "Login",
+        "IsLoggedIn": true,
+        "Parameters": {
+            "Login": "foo"
+        },
+        "Status": "LoggedIn",
+        "TimeoutPeriodMinutes": 60
+    },
+    "APIResponse": {
+        "Code": "SUCCESS",
+        "Token": "token.foo"
+    }
+}

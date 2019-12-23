@@ -7,11 +7,11 @@
 module.exports = function(grunt) {
     return {
         apps: [
-            'superdesk.analytics'
+            'superdesk.analytics',
         ],
         importApps: [
             '../index',
-            'superdesk-analytics'
+            'superdesk-analytics',
         ],
         defaultRoute: '/workspace/personal',
 
@@ -33,10 +33,13 @@ module.exports = function(grunt) {
             editor3: true,
             validatePointOfInterestForImages: true,
             editorHighlights: true,
+            editFeaturedImage: false,
+            searchShortcut: true,
             useTansaProofing: true,
         },
+
         workspace: {
-            analytics: true
+            analytics: true,
         },
     };
 };
