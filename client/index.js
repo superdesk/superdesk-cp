@@ -1,5 +1,5 @@
 import {startApp} from 'superdesk-core/scripts/index';
-import orangelogicExtension from 'orangelogic-extension';
+import orangelogicExtension from './extensions/orangelogic-extension/dist/extension';
 
 setTimeout(() => {
     startApp(
