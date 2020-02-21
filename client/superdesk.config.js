@@ -8,10 +8,12 @@ module.exports = function(grunt) {
     return {
         apps: [
             'superdesk.analytics',
+            'superdesk-planning',
         ],
         importApps: [
             '../index',
             'superdesk-analytics',
+            'superdesk-planning',
         ],
         defaultRoute: '/workspace/personal',
 
@@ -36,10 +38,13 @@ module.exports = function(grunt) {
             editFeaturedImage: false,
             searchShortcut: true,
             useTansaProofing: true,
+            planning: true,
         },
 
         workspace: {
             analytics: true,
+            planning: true,
+            assignments: true,
         },
     };
 };
