@@ -22,8 +22,10 @@ if init_data.exists():
 
 INSTALLED_APPS = [
     'apps.languages',
-    'cp.orangelogic',
     'planning',
+
+    'cp.orangelogic',
+    'cp.macros',
 ]
 
 RENDITIONS = {
