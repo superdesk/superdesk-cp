@@ -2,35 +2,34 @@ language: python
 
 python: "3.5"
 
-services:
-    - mongodb
-    - elasticsearch
-    - redis-server
+dist: bionic
 
-addons:
-  apt:
-    sources:
-    - mongodb-3.0-precise
-    packages:
-    - mongodb-org-server
+services:
+    - docker
 
 cache:
-  directories:
-    - $HOME/.cache/pip
-    - $HOME/.npm
+    - pip
+    - npm
 
 before_install:
-    - nvm install --lts
-    - nvm use --lts
-    - node --version
-    - npm install -g npm@lts grunt-cli
+    - |
+      if [ "$TEST" = "server" ]; then
+        docker-compose -f .travis-docker-compose.yml up -d
+      fi
 
 install:
-    - cd server && pip install -r dev-requirements.txt && cd ..
-    - cd client && npm install && cd ..
+    - |
+      if [ "$TEST" = "server" ]; then
+        cd server && pip install -r dev-requirements.txt && cd ..
+      else
+        cd client && npm install && cd ..
+      fi
 
-script:
-    - cd server && flake8 && nosetests tests && cd ..
-    - cd client && grunt build && cd ..
-    - cd server && python manage.py users:create -u test -p test -e test@localhost --admin && cd ..
+jobs:
+    include:
+        - script: cd server && flake8 && nosetests tests && python manage.py app:initialize_data
+          env: TEST=server
+          name: "server"
+        - script: cd client && node --max_old_space_size=4098 ./node_modules/.bin/grunt build
+          name: "client"
 
