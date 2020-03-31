@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'cp.orangelogic',
     'cp.macros',
     'cp.ingest',
+    'cp.output',
 ]
 
 RENDITIONS = {
