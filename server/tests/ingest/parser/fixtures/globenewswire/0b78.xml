@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:201912037765832-en" version="1" xml:lang="en-US" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2019 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2019-12-03T12:00:10+00:00</versionCreated>
+    <firstCreated>2019-12-03T12:00:10+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:TSXVO" />
+    <service qcode="MWNetwork:TSXVP" />
+    <service qcode="MWNetwork:TSXVQ" />
+    <title role="MWTitleRole:PATopicKeyword">Miscellaneous  Calgary, AB, Canada</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2019-12-03T12:00:10+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Calgary, AB, Canada" />
+    <subject qcode="MWSubject:MIS" type="cpnat:abstract">
+      <name>Miscellaneous</name>
+    </subject>
+    <subject literal="Arrow Exploration Corp." type="cpnat:organisation" relevance="100">
+      <name>Arrow Exploration Corp.</name>
+    </subject>
+    <subject qcode="MWIndustry:MIS" type="cpnat:abstract">
+      <name>Miscellaneous\Miscellaneous</name>
+      <broader qcode="MWIndustry:MI" type="cpnat:abstract">
+        <name>Miscellaneous</name>
+      </broader>
+    </subject>
+    <headline>Arrow Exploration Corp. Confirms Issuance of Stock Options</headline>
+    <description role="MWdrole:abstract">ARROW Exploration Corp. (“Arrow” or the “Company”) (TSXV: AXL) announces the issuance last evening of a total of 150,000 stock options (“Options”), pursuant to the Company’s Stock Option Plan (the “Plan”) to a Director, previously appointed as...</description>
+    <language tag="en-US" />
+    <keyword role="MWKeyRole:Ticker" relevance="100">TSX VENTURE:AXL</keyword>
+  </contentMeta>
+  <assert literal="Arrow Exploration Corp.">
+    <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/c52f529a-bec2-467e-8ce4-cb75ddc3652c" >
+      <name>Arrow Exploration Corp.</name>
+    </remoteInfo>
+    <related rel="MWFinRel:Instrument" qcode="ISIN:CA04274P1053"  />
+    <related rel="MWFinRel:Instrument" literal="AXL" >
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:TSX VENTURE">
+        <name>TSX Venture Exchange</name>
+      </related>
+    </related>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Arrow Exploration Corp. Confirms Issuance of Stock Options</title>
+</head>
+<body>
+<h1>
+Arrow Exploration Corp. Confirms Issuance of Stock Options
+</h1>
+<div class="mw_release"><p align="justify">CALGARY, Alberta, Dec.  03, 2019  (GLOBE NEWSWIRE) -- ARROW Exploration Corp. (“<strong>Arrow</strong>” or the “<strong>Company</strong>”) (TSXV: AXL) announces the issuance last evening of a total of 150,000 stock options (“Options”), pursuant to the Company’s Stock Option Plan (the “Plan”) to a Director, previously appointed as announced on August 1, 2019, subject to regulatory approval. The Company has been in a share trading blackout since that time, which was lifted post market close on December 2, 2019. The Plan is intended to assist in attracting, retaining, engaging and rewarding directors, officers, employees and consultants of the Company, provide additional incentive to these people for their efforts on behalf of the Company, and to align with the enhancement of shareholder value. Under the Plan, the Company is able to issue Options to a maximum of 10% of the number of issued and outstanding common shares in the Company from time to time.</p>    <p align="justify">The 150,000 Options granted on December 2, 2019 have a strike price of CAD$0.25, the closing market price of the Company’s common shares trading on the TSX Venture Exchange on December 2, 2019. The grant of Options is subject to regulatory approval. The Options were issued pursuant to the Plan, vest in thirds, with one third vesting upon each of the first, second and third anniversaries of issuance, and expire on December 2, 2029.</p>    <p align="justify"><strong>About ARROW Exploration</strong></p>    <p align="justify">Arrow Exploration Corp. (operating in Colombia via a branch of its 100% owned subsidiary Carrao Energy S.A.) is a publicly-traded company with a portfolio of premier Colombian oil assets that are under-exploited, under-explored and offer high potential growth. The Company’s business plan is to rapidly expand oil production from some of Colombia’s most active basins, including the Llanos, Middle Magdalena Valley (MMV) and Putumayo Basin. The asset base is predominantly operated with high working interests, and the Brent-linked light oil pricing exposure combines with low royalties to yield attractive potential operating margins. Arrow’s seasoned team is led by a hands-on and in-country executive team supported by an experienced board.  Arrow is listed on the TSX Venture Exchange under the symbol “AXL”.</p>    <p align="justify">On November 28, 2019, the Company announced it has initiated a strategic alternatives process to be overseen by a Special Committee of the Board of Directors.</p>    <p align="justify"><strong>For further information contact:</strong></p>  <table style="border-collapse: collapse;   font-size: 15px; width:100%; border-collapse:collapse ;"><tr><td style="max-width:20%; width:20%; min-width:20%;"><strong>Jack Scott</strong><strong><br /> </strong>Interim CEO &amp; COO<br /> P: +57 1 241 1110 ext. 5110<br /> E: <a href="mailto:jscott@arrowexploration.ca" rel="nofollow" target="_blank">jscott@arrowexploration.ca </a></td><td style="max-width:20%; width:20%; min-width:20%;"><strong>John Newman<br /> </strong>Chief Financial Officer<br /> P: (403) 660-3468<br /> E: <a href="mailto:jnewman@arrowexploration.ca" rel="nofollow" target="_blank">jnewman@arrowexploration.ca</a></td><td style="max-width:60%; width:60%; min-width:60%;"><strong>Eric Van Enk, CFA</strong><br /> VP Finance &amp; IR<br /> P: (403) 237-5700 ext. 104<br /> E: <a href="mailto:ericvanenk@arrowexploration.ca" rel="nofollow" target="_blank">ericvanenk@arrowexploration.ca</a></td></tr></table>  <p align="justify"><strong><em>Neither the TSX Venture Exchange (TSXV) nor its regulation services provider (as that term is defined in the policies of the TSXV) accepts responsibility for the adequacy or accuracy of this release.</em></strong></p>    <p align="justify"><strong><em>Forward-looking Statements</em></strong></p>    <p align="justify"><em>This news release contains certain statements or disclosures relating to Arrow that are based on the expectations of its management as well as assumptions made by and information currently available to Arrow which may constitute forward-looking statements or information (“forward-looking statements”) under applicable securities laws. All such statements and disclosures, other than those of historical fact, which address activities, events, outcomes, results or developments that Arrow anticipates or expects may, could or will occur in the future (in whole or in part) should be considered forward-looking statements. In some cases, forward-looking statements can be identified by the use of the words “expect”, “future”, “guidance”, “will” and similar expressions. In particular, but without limiting the foregoing, this news release contains forward-looking statements pertaining to the Company’s directors and the issuance of options. The forward-looking statements contained in this news release reflect several expectations and assumptions of Arrow. Arrow believes the expectations and assumptions reflected in the forward-looking statements are reasonable at this time but no assurance can be given that these factors, expectations and assumptions will prove to be correct. The forward-looking statements included in this news release are not guarantees of future performance and should not be unduly relied upon. Such forward-looking statements involve known and unknown risks, uncertainties and other factors that may cause actual results or events to differ materially from those anticipated in such forward-looking statements. The forward-looking statements contained in this news release are made as of the date hereof and the Company undertakes no obligations to update publicly or revise any forward-looking statements, whether as a result of new information, future events or otherwise, unless so required by applicable securities laws.</em></p>  <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=Nzc2NTgzMiMzMjQxODY5IzIxODkxNTU=" width="1" height="1"/></div><div class="mw_contactinfo">
+
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>

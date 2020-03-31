@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:201912037765753-en" version="1" xml:lang="en-US" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2019 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2019-12-03T14:00:10+00:00</versionCreated>
+    <firstCreated>2019-12-03T14:00:10+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:CDNPR" />
+    <service qcode="MWNetwork:ESTPR" />
+    <service qcode="MWNetwork:TSXVO" />
+    <service qcode="MWNetwork:TSXVP" />
+    <service qcode="MWNetwork:TSXVQ" />
+    <title role="MWTitleRole:PATopicKeyword">Calendar of Events  Port Moody, BC, Canada</title>
+    <title role="MWTitleRole:PATopicKeyword">Miscellaneous  Port Moody, BC, Canada</title>
+    <title role="MWTitleRole:PATopicKeyword">Financing Agreements  Port Moody, BC, Canada</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2019-12-03T14:00:10+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Port Moody, BC, Canada" />
+    <subject qcode="MWSubject:CAL" type="cpnat:abstract">
+      <name>Calendar of Events</name>
+    </subject>
+    <subject qcode="MWSubject:MIS" type="cpnat:abstract">
+      <name>Miscellaneous</name>
+    </subject>
+    <subject qcode="MWSubject:FNC" type="cpnat:abstract">
+      <name>Financing Agreements</name>
+    </subject>
+    <subject literal="LYF Food Technologies Inc." type="cpnat:organisation" relevance="100">
+      <name>LYF Food Technologies Inc.</name>
+    </subject>
+    <subject qcode="MWIndustry:FBFO" type="cpnat:abstract">
+      <name>Food and Beverage\Food</name>
+      <broader qcode="MWIndustry:FB" type="cpnat:abstract">
+        <name>Food</name>
+      </broader>
+    </subject>
+    <headline>LYF Edibles Targeting Early 2020 to Manufacture Cannabis Products, Announces $6,000,000 Capital Raise</headline>
+    <description role="MWdrole:abstract">LYF FOOD TECHNOLOGIES INC. (“LYF” or the “Company”) is pleased to announce that Health Canada has completed its preliminary high-level review of the Company’s Standard Processor License application. The Company will submit its evidence package to...</description>
+    <language tag="en-US" />
+  </contentMeta>
+  <assert literal="LYF Food Technologies Inc." />
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>LYF Edibles Targeting Early 2020 to Manufacture Cannabis Products, Announces $6,000,000 Capital Raise</title>
+</head>
+<body>
+<h1>
+LYF Edibles Targeting Early 2020 to Manufacture Cannabis Products, Announces $6,000,000 Capital Raise
+</h1>
+<div class="mw_release"><p align="left"><sup><strong>NOT FOR DISSEMINATION TO UNITED STATES NEWSWIRE SERVICES OR DISSEMINATION IN THE UNITED STATES</strong></sup><br /></p>  <p>VANCOUVER, British Columbia, Dec.  03, 2019  (GLOBE NEWSWIRE) -- LYF FOOD TECHNOLOGIES INC. (“LYF” or the “Company”) is pleased to announce that Health Canada has completed its preliminary high-level review of the Company’s Standard Processor License application. The Company will submit its evidence package to demonstrate that the Company's site meets all the requirements of the Cannabis Act and applicable regulations to Health Canada in the coming weeks.</p>  <p>“Our team has worked tirelessly over the last 2 years to bring this dream to reality, and can now confidently say we are in the last steps of the Health Canada licensing process. Our facility will be completed in approximately 2 weeks and then our regulatory partners at CCI Deloitte will assist in the submission of our site evidence package to Health Canada. We are excited at the prospect of being one of the first licensed edibles companies in Canada, and a first mover in Cannabis 2.0 consumer products,” said Matthew Amado, President and co-founder of LYF.</p>  <p>LYF will focus on producing sublingual nutraceuticals, functional foods, and traditional edibles in their wholly-owned, purpose-built facility in Kelowna, BC, capable of manufacturing over $250,000,000 worth of value-added cannabis products per year once licensed and fully operational.</p>  <p>To fund the final steps of the Company’s strategic plan, LYF is currently looking to raise up to $6,000,000 via a convertible note offering (the “Offering”). Proceeds will be used to order manufacturing and production equipment, business development, hiring of necessary staff, marketing, sales and for general corporate purposes. The Offering will consist of Secured Convertible Debentures, with each note earning 8% interest and exercisable at $0.25 per share for a period of three (3) years. The investment round is open to accredited investors, with a $10,000.00 minimum investment.</p>  <p>The Offering is expected to close on or about December 20, 2019, subject to customary closing conditions and LYF having the right to extend the closing of the Offering at its sole discretion. This announcement is neither an offer to sell nor a solicitation of an offer to buy the convertible notes or the common shares of LYF into which the notes are convertible and shall not constitute an offer, solicitation or sale in any jurisdiction in which such offer, solicitation or sale is unlawful.</p>  <p>The convertible notes and any common shares of LYF issuable upon conversion of the notes have not been and will not be registered under the U.S. Securities Act of 1933, as amended, or any state securities laws, or qualified for distribution by prospectus in Canada, and may not be offered or sold in the United States absent registration or an applicable exemption from such registration requirements, or sold in Canada absent an exemption from the prospectus requirements of Canadian securities laws.</p>  <p><strong>About LYF Food Technologies Inc.</strong></p>  <p>Expertly crafted chocolate, confectionary, raw health foods and baked edibles are what we do best. LYF has over 25 years experience in large-scale food manufacturing for some of the biggest grocery store, health and wellness retailers and pharmacies across Canada, and have combined that expertise with science-led cannabis R&amp;D in infusion technologies, proprietary delivery methods and novel product development.</p>  <p>LYF owns a state-of-the-art 10,500 sqft, purpose built, cannabis specific manufacturing facility with a production capacity of over $250,000,000 of edibles per year in a safe and consistently dosed manner. LYF is well positioned to be a leading manufacturer of white label products turning potential competitors into strategic partners.</p>  <p>For more information please contact:</p>  <p><a href="https://www.globenewswire.com/Tracker?data=ue-0_BTpFg0R4cA4RHjEmSl-IHYPuXxsZNjHwnYR9A-w26x6bhD2kH8boCt5cyFlKDSvBLDS6-P-eh5wpFuoWw==" rel="nofollow" target="_blank"><u>lyffoods.com</u></a> // <a href="https://www.globenewswire.com/Tracker?data=BF37q6u7BDfno6JvQmgS5wNk4zCS70Y8V02RkCir1WIRjwFuoDdvEsFFNnOTMapczWoN_qehk4GuEdJGpUwrGKHfyA4_C1I1mr0GtSrDFt8=" rel="nofollow" target="_blank"><u>investors@lyffoods.com</u></a> // 1.833.786.2253</p>  <p><strong>Cautionary Notes</strong></p>  <p>Completion of the Offering is subject to a number of conditions. The Offering cannot close until all required regulatory and corporate approvals are obtained. There can be no assurance that the Offering will be completed as proposed, or at all. Trading in the securities of LYF should be considered highly speculative.</p>  <p>This news release may include forward-looking statements that are subject to inherent risks and uncertainties. All statements within this news release, other than statements of historical fact, are to be considered forward looking. Although LYF believes the expectations expressed in such forward-looking statements are based on reasonable assumptions, such statements are not guarantees of future performance and actual results or developments may differ materially from those described in forward-looking statements. Factors that could cause actual results to differ materially from those described in forward-looking statements include market fluctuations, availability of capital and financing, and general economic, market and business conditions. There can be no assurances that such statements will prove accurate and, therefore, readers are advised to rely on their own evaluation of such uncertainties. LYF does not assume any obligation to update any forward-looking statements except as required under applicable laws.</p> <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=Nzc2NTc1MyMzMjQxNzI1IzIxOTM0NDY=" width="1" height="1"/></div><div class="mw_contactinfo">
+
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>

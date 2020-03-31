@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:201912037764389-en" version="1" xml:lang="en-US" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2019 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2019-12-03T14:00:10+00:00</versionCreated>
+    <firstCreated>2019-12-03T14:00:10+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:CDNPR" />
+    <service qcode="MWNetwork:ESTPR" />
+    <title role="MWTitleRole:PATopicKeyword">Miscellaneous  Winnipeg, MB, Canada</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2019-12-03T14:00:10+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Winnipeg, MB, Canada" />
+    <subject qcode="MWSubject:MIS" type="cpnat:abstract">
+      <name>Miscellaneous</name>
+    </subject>
+    <subject literal="KidSport Canada" type="cpnat:organisation" relevance="100">
+      <name>KidSport Canada</name>
+    </subject>
+    <subject qcode="MWIndustry:LLRE" type="cpnat:abstract">
+      <name>Lifestyle and Leisure\Recreation</name>
+      <broader qcode="MWIndustry:LL" type="cpnat:abstract">
+        <name>Recreation</name>
+      </broader>
+    </subject>
+    <headline>KidSport Calls on Canadians to Give the Gift of Sport this Holiday Season</headline>
+    <description role="MWdrole:abstract">KidSport™ has launched their eighth annual Give the Gift of Sport™ fundraising campaign, calling on Canadians to donate online at KidSport.ca/GiftofSport. Over 30 percent of Canadian youth under the age of 18 cannot afford to play organized sport....</description>
+    <language tag="en-US" />
+  </contentMeta>
+  <assert literal="KidSport Canada">
+    <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/189bce42-b604-4857-82d8-26137935c316" >
+      <name>KidSport Canada</name>
+    </remoteInfo>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>KidSport Calls on Canadians to Give the Gift of Sport this Holiday Season</title>
+</head>
+<body>
+<h1>
+KidSport Calls on Canadians to Give the Gift of Sport this Holiday Season
+</h1>
+<h2>
+National not-for-profit aims to raise $250,000 to help more children play organized sport in 2020
+</h2>
+<div class="mw_release"><p align="left">WINNIPEG, Manitoba, Dec.  03, 2019  (GLOBE NEWSWIRE) -- KidSport™ has launched their eighth annual <em>Give the Gift of Sport</em>™ fundraising campaign, calling on Canadians to donate online at <u><a href="http://www.kidsport.ca/giftofsport" rel="nofollow" target="_blank">KidSport.ca/GiftofSport</a></u>. Over 30 percent of Canadian youth under the age of 18 cannot afford to play organized sport. With the support of the Government of Canada, corporate partners, and the generosity of donors across the country, KidSport’s annual campaign—running until January 6, 2020—aims to get more kids off the sidelines, into the game, and experience the gift of sport.<br /></p>        <p align="left">“Organized sport provides our children with so many benefits. We know it can help them be healthier, but it can also help them with things like their education and social development,” says Jamie Ferguson, Chair of KidSport. “In essence, sport can provide our children with a head start on life. At KidSport we believe every child deserves that chance. Please give to our Give the Gift of Sport campaign and help make more head starts happen.”</p>        <p align="left">Since its creation in 1993, KidSport has disbursed $75M and helped over 825,000 kids from coast to coast receive grants and sport introduction programming.  “KidSport is the type of program that is committed to filling gaps and strengthening community through an investment in youth who would otherwise not be able to experience the power of play,” says 2010 Olympic gold medalist Jon Montgomery.  “This type of contribution to the Canadian landscape has a butterfly effect on our entire country for generations.  That's worth being a part of!”  <br /><br /><a href="https://www.youtube.com/watch?v=MTV1QaSBRQY" rel="nofollow" target="_blank">Every donation counts and will contribute to making a difference in a child’s life</a>. An average donation of $250 can provide one child a full season of sport—the type of gift that will last well beyond the holidays.  “KidSport is a program that truly makes a difference for youth across Canada who would not be able to gain the values of sport without its existence.” adds LPGA professional golfer Lorie Kane. “My experiences in sport have shaped who I am today and I often think where I would be if I didn’t have sport!”</p>        <p align="left">Make your contribution today to <em>Give the Gift of Sport </em>at <a href="http://www.kidsport.ca/giftofsport" rel="nofollow" target="_blank">KidSport.ca/GiftofSport</a>, where personal, corporate or tribute donations can be directed to any of KidSport’s 177 community chapters.  Learn more about KidSport and join the holiday conversation on Twitter <a href="http://www.twitter.com/kidsport" rel="nofollow" target="_blank">@KidSport</a> and #GiftofSport, on <a href="http://www.facebook.com/kidsportcanada" rel="nofollow" target="_blank">Facebook<u>.com/KidSportCanada</u></a>, or online at <u><a href="http://www.kidsport.ca/giftofsport" rel="nofollow" target="_blank">KidSport.ca/GiftofSport</a></u>.</p>        <p align="left"><strong>About KidSport:<br /> </strong>KidSport is a national not-for-profit organization that helps remove financial barriers that prevent kids from playing sport by providing assistance for registration fees and sport equipment to children aged 18 and under. Through a confidential application process grants are given so they can play a season of sport.</p>        <p align="left"><strong>For more information:</strong><br />Bryan Ezako<br />Manager, KidSport <br /><a href="mailto:bezako@kidsportcanada.ca" rel="nofollow" target="_blank">bezako@kidsportcanada.ca</a><br />204.925.5914</p> <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=Nzc2NDM4OSMzMjM3OTAwIzIwOTUzNDY=" width="1" height="1"/></div><div class="mw_contactinfo">
+
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>
