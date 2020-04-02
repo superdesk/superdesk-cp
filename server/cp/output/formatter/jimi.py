@@ -2,12 +2,19 @@
 import superdesk
 import lxml.etree as etree
 
+from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
 
 
 DEFAULT_DATETIME = '0001-01-01T00:00:00'
+
+DATELINE_MAPPING = OrderedDict((
+    ('city', 'City'),
+    ('state', 'Province'),
+    ('country', 'Country'),
+))
 
 
 class JimiFormatter(Formatter):
@@ -62,8 +69,8 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'BreakWordCount').text = word_count
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
-        etree.SubElement(content, 'Placeline')
 
+        self._format_dateline(content, item.get('dateline'))
         self._format_writethru(content, item.get('rewrite_sequence'))
 
     def _format_writethru(self, content, num):
@@ -102,3 +109,14 @@ class JimiFormatter(Formatter):
 
     def _format_html(self, value):
         return value or ''
+
+    def _format_dateline(self, content, dateline):
+        if dateline and dateline.get('located'):
+            pieces = []
+            located = dateline['located']
+            for src, dest in DATELINE_MAPPING.items():
+                etree.SubElement(content, dest).text = located.get(src)
+                pieces.append(located.get(src) or '')
+            etree.SubElement(content, 'Placeline').text = ';'.join(pieces)
+        else:
+            etree.SubElement(content, 'Placeline')

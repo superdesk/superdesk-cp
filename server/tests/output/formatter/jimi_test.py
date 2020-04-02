@@ -27,6 +27,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         'abstract': '<p>Abstract</p>',
         'body_html': '<p>Body HTML</p>',
 
+
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
         'firstpublished': datetime(2020, 4, 1, 11, 33, 12, 25, tzinfo=UTC),
@@ -42,6 +43,11 @@ class JimiFormatterTestCase(unittest.TestCase):
 
     def get_root(self, xml):
         return etree.fromstring(xml.encode(self.formatter.ENCODING))
+
+    def format_item(self, updates=None):
+        xml = self.format(updates)
+        root = self.get_root(xml)
+        return root.find('ContentItem')
 
     def test_can_format(self):
         self.assertTrue(self.formatter.can_format('jimi', {}))
@@ -101,15 +107,34 @@ class JimiFormatterTestCase(unittest.TestCase):
         }
 
         for val, num in expected_data.items():
-            xml = self.format({'rewrite_sequence': val})
-            root = self.get_root(xml)
-            item = root.find('ContentItem')
+            item = self.format_item({'rewrite_sequence': val})
             self.assertEqual(num, item.find('WritethruNum').text)
             self.assertEqual(str(val), item.find('WritethruValue').text)
             self.assertEqual('Writethru', item.find('WriteThruType').text)
 
     def test_embargo(self):
-        xml = self.format({'embargoed': self.article['firstcreated']})
-        root = self.get_root(xml)
-        item = root.find('ContentItem')
+        item = self.format_item({'embargoed': self.article['firstcreated']})
         self.assertEqual('2020-04-01T11:13:12', item.find('EmbargoTime').text)
+
+    def test_dateline(self):
+        item = self.format_item({
+            'dateline': {
+                'source': 'AAP',
+                'text': 'sample dateline',
+                'located': {
+                    'alt_name': '',
+                    'state': 'California',
+                    'city_code': 'Los Angeles',
+                    'city': 'Los Angeles',
+                    'dateline': 'city',
+                    'country_code': 'US',
+                    'country': 'USA',
+                    'tz': 'America/Los_Angeles',
+                    'state_code': 'CA'
+                }
+            },
+        })
+        self.assertEqual('Los Angeles', item.find('City').text)
+        self.assertEqual('California', item.find('Province').text)
+        self.assertEqual('USA', item.find('Country').text)
+        self.assertEqual('Los Angeles;California;USA', item.find('Placeline').text)
