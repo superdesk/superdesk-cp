@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:201912037765786-en" version="1" xml:lang="en-US" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2019 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2019-12-03T17:00:10+00:00</versionCreated>
+    <firstCreated>2019-12-03T17:00:10+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:CDNPR" />
+    <service qcode="MWNetwork:ESTPR" />
+    <title role="MWTitleRole:PATopicKeyword">Board of Directors  San Francisco, CA, USA</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2019-12-03T17:00:10+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="San Francisco, CA, USA" />
+    <subject qcode="MWSubject:BRD" type="cpnat:abstract">
+      <name>Board of Directors</name>
+    </subject>
+    <subject literal="Zignal Labs Inc." type="cpnat:organisation" relevance="100">
+      <name>Zignal Labs Inc.</name>
+    </subject>
+    <subject qcode="MWIndustry:CSHA" type="cpnat:abstract">
+      <name>Computers and Software\Hardware</name>
+      <broader qcode="MWIndustry:CS" type="cpnat:abstract">
+        <name>Hardware</name>
+      </broader>
+    </subject>
+    <headline>Zignal Labs Names David Atlas Chief Marketing Officer</headline>
+    <description role="MWdrole:abstract">Zignal Labs, provider of a real-time AI customer and brand insights platform, today announced that David Atlas has joined the company as Chief Marketing Officer. Atlas will oversee demand generation, product marketing and corporate marketing. In...</description>
+    <language tag="en-US" />
+  </contentMeta>
+  <assert literal="Zignal Labs Inc.">
+    <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/09f80af8-18f7-4fa7-968a-4d3c9e3ba83a" >
+      <name>Zignal Labs Inc.</name>
+    </remoteInfo>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Zignal Labs Names David Atlas Chief Marketing Officer</title>
+</head>
+<body>
+<h1>
+Zignal Labs Names David Atlas Chief Marketing Officer
+</h1>
+<h2>
+AI Marketing Veteran to Position Company for Growth in New Markets
+</h2>
+<div class="mw_release"><p align="left">SAN FRANCISCO, Dec.  03, 2019  (GLOBE NEWSWIRE) -- Zignal Labs, provider of a real-time AI customer and brand insights platform, today announced that David Atlas has joined the company as Chief Marketing Officer. Atlas will oversee demand generation, product marketing and corporate marketing. In addition, he will optimize the company’s overall efforts to ensure it is best able to achieve its mission of enabling users to create more customer-optimized brands and campaigns, and detect potential threats before they fully emerge.<br /></p>  <p>“David understands the potential of a company that has eight years of experience applying proprietary AI and machine learning to real-time social, traditional and broadcast media,” said Adam Beaugh, CEO and co-founder of Zignal. “He is a fast-moving, dynamic and creative marketing leader who joins our team at the perfect moment, just as our Fortune 500 customers are prompting us to widen the aperture of the use cases our platform supports.”</p>  <p>With over 25 years of high tech and internet marketing experience, Atlas is an expert in creating awareness of and demand for cutting-edge technologies. He previously served as CMO at Persado, SVP of Marketing at StrongView (now Selligent) and SVP of Sales &amp; Marketing at Goodmail, as well as managing Collective Gain, his successful marketing consulting practice.</p>  <p>“What strikes me most about Zignal is how the company is essentially mapping influence flowing among groups of people,” said Atlas. “Brands, candidates, products, threats - all of these are functions of what people believe. Having spent nearly a decade mining real-time media data, Zignal can observe, mathematically, customer beliefs and potential threats being formed. The value of that is enormous.”</p>  <p>This announcement comes on the heels of significant momentum for Zignal in recent months, including the launch of the company’s <u><a href="https://www.globenewswire.com/Tracker?data=MNEIPZ6_pglfuSxnJJYdPKxt0kVFBFsaWln20azZ59dWyJE1Q4Nw0qCtXsd8o6Me0UMkgSYEsWUuNUvJ0-K2s1X9VdQz47gBRg_VOxe9HO8gUXRxhKQxlR62_6NmCZo2eqpYCrKsXlE7-OzV9yWGzy1rBylI26mJwDnSS2mOZ6whsMzpH5JwX3qOXiQhPyce" rel="nofollow" target="_blank">Partner Program</a></u>, recognition of the company and its customers by The Holmes Report’s <u><a href="https://www.globenewswire.com/Tracker?data=swA2yvs3fIoc1yfsF-53rP6QK3YYjmtH5OqDJ30PgvUWf9rj-WibWsDIbJF3RcbjwM69YIn8i94o_rzY9CXwtUQJKpY1VPjniX-u-FzwWqDa-idE98mIsBzDyZzCV8p0fakE_LXbvmGZ9xfc_zD-4iAMmnKIYIWBRQriYuCUl8NTdBrv3-mDjukXJOeZRUKG45hKAoDtUc7rruOU46vslNdqIQ5Kz25I2Dwcs_QDLUJ9c8NM88JnK3G_0VV7y7TSNw3XpZnymTzYG7xvVWlvTXCKD8Dh4y9G7lWOi6DK-CcBdAOB3K5lAG21mhKmFPPse8X4KL7oKyzZ_hPB1vpLVw==" rel="nofollow" target="_blank">Innovator 25 Americas 2019</a></u> and the <u><a href="https://www.globenewswire.com/Tracker?data=5XMKaoZu6Vyh7WlLQh5GvfCInUIiOfjtcRMBCzG9csubHN2hSbd0P2Gz4iJ6PeBkuEpDZFjBTmU2vQgsJknpzFX2JKwTi4h3oBkn32gQEh7lRlydUjN8IChTtWB8S-8tfo11TE1ynSQTW4b0f03ONZMlWA4sJQlU9ehRVqx84H-5AFcG4W5vMDFT0yQXQvAOMETg-HX8BoqQG3WgJWydR7fIPWIytGq8bpbgKK6e8H7oSD7NtgpC4jlq8ugM0WLtxp2QxVtUwTOx2r6fPGWWXX3f73wnnuVevG9LcApZvcFGr9SlEf0RgE1n9D_NogICOgGZK2IaXy-XpqBgfmy6Ng==" rel="nofollow" target="_blank">appointments</a></u> of Jonathan Dodson to Chief Technology Officer and Aaron Hayes-Roth as Vice President of Revenue &amp; Partnerships.</p>  <p><strong>About Zignal Labs</strong><br />Zignal Labs is the world’s leading media insights company, using AI and machine learning to mine social, traditional and broadcast media for emergent insights and signals about changing beliefs. Zignal helps marketers, communicators and designers launch more compelling campaigns, products and customer experiences, and helps risk managers and analysts identify potential threats before they fully emerge. Headquartered in San Francisco with offices in New York City and Washington D.C., Zignal serves customers around the world, including Expedia, GoPro, DaVita, Under Armour, Synchrony, Prudential, DTE Energy, The Public Goods Project and Uber. To learn more, visit: <u><a href="https://www.globenewswire.com/Tracker?data=WKAt0DzvrawX_Gfqjk7ZE4hRAVEG0A4MILrsQEg-n9zFtMzhJ2qQoJH8nUfkGWQgCfLS5WGFtmHyLEl-eTqRJlhtUQ__L4X97cQtBrXi5mE=" rel="nofollow" target="_blank">www.zignallabs.com</a></u>.</p>  <p>A photo accompanying this announcement is available at <a href="https://www.globenewswire.com/Tracker?data=X_FH6G_jmIghEn9J4gpQ6MlIpsYKsFZ_oY0OePHnxBLJfWH2jRu31qVh5YNTP7mijgc5vSM-7eLlzf1WjllxxvL0YkGSBak8g4gojtIzezZPFFPuir53DAmT67fDlSDwJaLQt-OmjAjGVhzo815-ODT2WRYUYVgb6cePau8GT_wZblUPdypubigT49qXWgOhGwTbrc8jrgHGbyKeBdSDE52CHhr68zMK0WcwLlIPmnlASSWY0wq8ZOvlU48ctR0m0GccAmu0R362gxGDRzcf1A==" rel="nofollow" target="_blank">https://www.globenewswire.com/NewsRoom/AttachmentNg/c101bb23-b6bd-4bdf-86f5-33c82a4860cc</a></p>  <p>The photo is also available via AP PhotoExpress.</p>  <p /> <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=Nzc2NTc4NiMzMjQxODI3IzIwMjAzMzc=" width="1" height="1"/></div><div class="mw_contactinfo">
+<pre>Media Contact: North 6th Agency for Zignal Labs / Diana Kozak
+zignallabs@n6a.com</pre>
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>
