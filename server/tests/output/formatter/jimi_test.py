@@ -31,8 +31,10 @@ class JimiFormatterTestCase(unittest.TestCase):
     }
 
     def format(self, updates=None):
+        article = self.article.copy()
+        article.update(updates or {})
         with patch.object(superdesk, 'get_resource_service'):
-            seq, xml_str = self.formatter.format(self.article, self.subscriber)[0]
+            seq, xml_str = self.formatter.format(article, self.subscriber)[0]
         print('xml', xml_str)
         return xml_str
 
@@ -71,12 +73,35 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(str(self.article['word_count']), item.find('WordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('BreakWordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('Length').text)
-        self.assertEqual('1st', item.find('WritethruNum').text)
         self.assertEqual('Abstract', item.find('DirectoryText').text)
         self.assertEqual('<p>Body HTML</p>', item.find('ContentText').text)
         self.assertEqual(None, item.find('Placeline').text)
+        self.assertEqual('0', item.find('WritethruValue').text)
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
         self.assertEqual('2020-04-01T11:13:12', item.find('CreatedDateTime').text)
         self.assertEqual('2020-04-01T07:23:12-04:00', item.find('UpdatedDateTime').text)
+
+    def test_writethru(self):
+        expected_data = {
+            1: '1st',
+            2: '2nd',
+            3: '3rd',
+            4: '4th',
+            5: '5th',
+            10: '10th',
+            100: '100th',
+            101: '101st',
+        }
+
+        for val, num in expected_data.items():
+            xml = self.format({'rewrite_sequence': val})
+            root = self.get_root(xml)
+            item = root.find('ContentItem')
+            self.assertEqual(num, item.find('WritethruNum').text)
+            self.assertEqual(str(val), item.find('WritethruValue').text)
+            self.assertEqual('Writethru', item.find('WriteThruType').text)
+
+    def get_root(self, xml):
+        return etree.fromstring(xml.encode(self.formatter.ENCODING))

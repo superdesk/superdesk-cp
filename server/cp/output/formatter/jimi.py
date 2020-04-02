@@ -57,13 +57,33 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Length').text = word_count
         etree.SubElement(content, 'WordCount').text = word_count
         etree.SubElement(content, 'BreakWordCount').text = word_count
-        etree.SubElement(content, 'WritethruNum').text = self._get_writethru_num(item.get('rewrite_sequence'))
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
         etree.SubElement(content, 'Placeline')
 
-    def _get_writethru_num(self, seq=None):
-        return '1st'
+        self._format_writethru(content, item.get('rewrite_sequence'))
+
+    def _format_writethru(self, content, num):
+        etree.SubElement(content, 'WritethruValue').text = str(num or 0)
+
+        if not num:
+            return
+
+        endings = {
+            1: 'st',
+            2: 'nd',
+            3: 'rd',
+        }
+
+        test_num = num % 100
+
+        if 4 <= test_num <= 20:
+            ending = 'th'
+        else:
+            ending = endings.get(test_num % 10, 'th')
+
+        etree.SubElement(content, 'WritethruNum').text = '{}{}'.format(num, ending)
+        etree.SubElement(content, 'WriteThruType').text = 'Writethru'
 
     def _format_datetime(self, datetime, rel=False):
         if rel:
