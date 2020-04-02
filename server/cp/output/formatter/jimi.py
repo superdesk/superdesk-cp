@@ -7,6 +7,9 @@ from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
 
 
+DEFAULT_DATETIME = '0001-01-01T00:00:00'
+
+
 class JimiFormatter(Formatter):
 
     ENCODING = 'utf-8'
@@ -37,18 +40,18 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'NewsCompID').text = '2'
+        etree.SubElement(content, 'NewsCompID').text = item['_id']
 
         # timestamps
         firstpublished = item.get('firstpublished') or item['versioncreated']
         etree.SubElement(root, 'PublishDateTime').text = self._format_datetime(firstpublished)
-        etree.SubElement(content, 'EmbargoTime').text = '0001-01-01T00:00:00'
+        etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(item.get('embargoed'))
         etree.SubElement(content, 'CreatedDateTime').text = self._format_datetime(item['firstcreated'])
         etree.SubElement(content, 'UpdatedDateTime').text = self._format_datetime(item['versioncreated'], True)
 
         # obvious
         word_count = str(item['word_count']) if item.get('word_count') else None
-        etree.SubElement(content, 'ContentType').text = item['type'][0].upper() + item['type'][1:]
+        etree.SubElement(content, 'ContentType').text = item['type'].capitalize()
         etree.SubElement(content, 'Headline').text = item.get('headline')
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = item.get('creditline')
@@ -86,6 +89,8 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'WriteThruType').text = 'Writethru'
 
     def _format_datetime(self, datetime, rel=False):
+        if not datetime:
+            return DEFAULT_DATETIME
         if rel:
             relative = utc_to_local('America/Toronto', datetime)
             formatted = relative.strftime('%Y-%m-%dT%H:%M:%S%z')

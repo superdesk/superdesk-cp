@@ -7,6 +7,7 @@ from pytz import UTC
 from datetime import datetime
 from unittest.mock import patch
 
+from superdesk.metadata.utils import generate_guid
 from cp.output.formatter.jimi import JimiFormatter
 
 
@@ -15,6 +16,7 @@ class JimiFormatterTestCase(unittest.TestCase):
     subscriber = {}
     formatter = JimiFormatter()
     article = {
+        '_id': '123',
         'type': 'text',
         'headline': 'Headline',
         'slugline': 'slug',
@@ -37,6 +39,9 @@ class JimiFormatterTestCase(unittest.TestCase):
             seq, xml_str = self.formatter.format(article, self.subscriber)[0]
         print('xml', xml_str)
         return xml_str
+
+    def get_root(self, xml):
+        return etree.fromstring(xml.encode(self.formatter.ENCODING))
 
     def test_can_format(self):
         self.assertTrue(self.formatter.can_format('jimi', {}))
@@ -61,7 +66,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(None, item.find('Name').text)
         self.assertEqual('false', item.find('Cachable').text)
         self.assertEqual('false', item.find('Cachable').text)
-        self.assertEqual('2', item.find('NewsCompID').text)
+        self.assertEqual(self.article['_id'], item.find('NewsCompID').text)
 
         # obvious
         self.assertEqual('Text', item.find('ContentType').text)
@@ -103,5 +108,8 @@ class JimiFormatterTestCase(unittest.TestCase):
             self.assertEqual(str(val), item.find('WritethruValue').text)
             self.assertEqual('Writethru', item.find('WriteThruType').text)
 
-    def get_root(self, xml):
-        return etree.fromstring(xml.encode(self.formatter.ENCODING))
+    def test_embargo(self):
+        xml = self.format({'embargoed': self.article['firstcreated']})
+        root = self.get_root(xml)
+        item = root.find('ContentItem')
+        self.assertEqual('2020-04-01T11:13:12', item.find('EmbargoTime').text)
