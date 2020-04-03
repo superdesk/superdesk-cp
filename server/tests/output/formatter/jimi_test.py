@@ -26,6 +26,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         'word_count': 123,
         'abstract': '<p>Abstract</p>',
         'body_html': '<p>Body HTML</p>',
+        'keywords': ['Foo bar', 'baz'],
 
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
@@ -88,6 +89,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('<p>Body HTML</p>', item.find('ContentText').text)
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
+        self.assertEqual('Foo bar,baz', item.find('Keyword').text)
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)

@@ -70,8 +70,13 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
 
+        self._format_keyword(content, item.get('keywords'))
         self._format_dateline(content, item.get('dateline'))
         self._format_writethru(content, item.get('rewrite_sequence'))
+
+    def _format_keyword(self, content, keywords):
+        if keywords:
+            etree.SubElement(content, 'Keyword').text = ','.join(keywords)
 
     def _format_writethru(self, content, num):
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)
