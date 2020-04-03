@@ -24,6 +24,8 @@ INSTALLED_APPS = [
     'apps.languages',
     'planning',
 
+    'superdesk.macros.imperial',
+
     'cp.orangelogic',
     'cp.macros',
     'cp.ingest',
