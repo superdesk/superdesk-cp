@@ -5,10 +5,16 @@ import lxml.etree as etree
 
 from pytz import UTC
 from datetime import datetime
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock, create_autospec
 
 from superdesk.metadata.utils import generate_guid
+from superdesk.publish.subscribers import SubscribersService
+
 from cp.output.formatter.jimi import JimiFormatter
+
+
+subscriber_service = create_autospec(SubscribersService)
+subscriber_service.generate_sequence_number.return_value = 100
 
 
 class JimiFormatterTestCase(unittest.TestCase):
@@ -27,7 +33,9 @@ class JimiFormatterTestCase(unittest.TestCase):
         'abstract': '<p>Abstract</p>',
         'body_html': '<p>Body HTML</p>',
         'keywords': ['Foo bar', 'baz'],
-
+        'anpa_category': [{'name': 'National', 'qcode': 'n'}],
+        'subject': [{'name': 'Health', 'qcode': 'h'}, {'name': 'National', 'qcode': 'n'}],
+        'urgency': 3,
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
@@ -37,7 +45,7 @@ class JimiFormatterTestCase(unittest.TestCase):
     def format(self, updates=None):
         article = self.article.copy()
         article.update(updates or {})
-        with patch.object(superdesk, 'get_resource_service'):
+        with patch.object(superdesk, 'get_resource_service', return_value=subscriber_service):
             seq, xml_str = self.formatter.format(article, self.subscriber)[0]
         print('xml', xml_str)
         return xml_str
@@ -62,7 +70,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('false', root.find('Reschedule').text)
         self.assertEqual('false', root.find('IsRegional').text)
         self.assertEqual('true', root.find('CanAutoRoute').text)
-        self.assertEqual('1', root.find('PublishID').text)
+        self.assertEqual(str(subscriber_service.generate_sequence_number.return_value), root.find('PublishID').text)
         self.assertEqual('Print', root.find('Services').text)
         self.assertEqual(None, root.find('Username').text)
         self.assertEqual('false', root.find('UseLocalsOut').text)
@@ -90,6 +98,9 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Foo bar,baz', item.find('Keyword').text)
+        self.assertEqual('National', item.find('Category').text)
+        self.assertEqual('Health,National', item.find('IndexCode').text)
+        self.assertEqual(str(self.article['urgency']), item.find('RankingValue').text)
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)

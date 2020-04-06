@@ -27,18 +27,18 @@ class JimiFormatter(Formatter):
     def format(self, article, subscriber, codes=None):
         pub_seq_num = superdesk.get_resource_service('subscribers').generate_sequence_number(subscriber)
         root = etree.Element('Publish')
-        self._format_item(root, article)
+        self._format_item(root, article, pub_seq_num)
         xml = etree.tostring(root, pretty_print=True, encoding=self.ENCODING, xml_declaration=True)
         return [(pub_seq_num, xml.decode(self.ENCODING))]
 
-    def _format_item(self, root, item):
+    def _format_item(self, root, item, pub_seq_num):
         content = etree.SubElement(root, 'ContentItem')
 
         # root system fields
         etree.SubElement(root, 'Reschedule').text = 'false'
         etree.SubElement(root, 'IsRegional').text = 'false'
         etree.SubElement(root, 'CanAutoRoute').text = 'true'
-        etree.SubElement(root, 'PublishID').text = '1'
+        etree.SubElement(root, 'PublishID').text = str(pub_seq_num)
         etree.SubElement(root, 'Services').text = 'Print'
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
@@ -69,6 +69,16 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'BreakWordCount').text = word_count
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
+        etree.SubElement(content, 'RankingValue').text = str(item.get('urgency') or 0)
+
+        try:
+            etree.SubElement(content, 'Category').text = item['anpa_category'][0]['name']
+        except (KeyError, IndexError):
+            pass
+
+        etree.SubElement(content, 'IndexCode').text = ','.join(
+            [s['name'] for s in item.get('subject', []) if s.get('name') and s.get('scheme') is None]
+        )
 
         self._format_keyword(content, item.get('keywords'))
         self._format_dateline(content, item.get('dateline'))
