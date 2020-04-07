@@ -4,47 +4,54 @@
         "display_name": "Ranking",
         "type": "manageable",
         "unique_field": "qcode",
-        "init_version": 2,
+        "init_version": 3,
         "items": [
             {
                 "is_active": true,
                 "name": "Urgent",
+                "short": "1",
                 "qcode": 1,
                 "color" : "#ff0000"
             },
             {
                 "is_active": true,
-                "name": "News- Need to know",
+                "name": "News - Need to know",
+                "short": "2",
                 "qcode": 2,
                 "color" : "#ff0000"
             },
             {
                 "is_active": true,
-                "name": "News- Good to know",
+                "name": "News - Good to know",
+                "short": "3",
                 "qcode": 3,
                 "color" : "#808080"
             },
             {
                 "is_active": true,
                 "name": "Buzz",
+                "short": "4",
                 "qcode": 4,
                 "color" : "#808080"
             },
             {
                 "is_active": true,
                 "name": "News - Optional",
+                "short": "5",
                 "qcode": 5,
                 "color" : "#808080"
             },
             {
                 "is_active": true,
                 "name": "Feature",
+                "short": "6",
                 "qcode": 6,
                 "color" : "#808080"
             },
             {
                 "is_active": true,
                 "name": "Regular",
+                "short": "7",
                 "qcode": 7,
                 "color" : "#808080"
             }
@@ -58,7 +65,7 @@
             },
             "short": {
                 "type": "short",
-                "label": "List Name",
+                "label": "Badge value",
                 "maxlength": 2
             }
         }
