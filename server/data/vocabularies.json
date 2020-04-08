@@ -4,61 +4,11 @@
         "display_name": "Ranking",
         "type": "manageable",
         "unique_field": "qcode",
-        "init_version": 3,
-        "items": [
-            {
-                "is_active": true,
-                "name": "Urgent",
-                "short": "1",
-                "qcode": 1,
-                "color" : "#ff0000"
-            },
-            {
-                "is_active": true,
-                "name": "News - Need to know",
-                "short": "2",
-                "qcode": 2,
-                "color" : "#ff0000"
-            },
-            {
-                "is_active": true,
-                "name": "News - Good to know",
-                "short": "3",
-                "qcode": 3,
-                "color" : "#808080"
-            },
-            {
-                "is_active": true,
-                "name": "Buzz",
-                "short": "4",
-                "qcode": 4,
-                "color" : "#808080"
-            },
-            {
-                "is_active": true,
-                "name": "News - Optional",
-                "short": "5",
-                "qcode": 5,
-                "color" : "#808080"
-            },
-            {
-                "is_active": true,
-                "name": "Feature",
-                "short": "6",
-                "qcode": 6,
-                "color" : "#808080"
-            },
-            {
-                "is_active": true,
-                "name": "Regular",
-                "short": "7",
-                "qcode": 7,
-                "color" : "#808080"
-            }
-        ],
+        "init_version": 4,
         "schema": {
             "name": {},
             "qcode": {},
+            "translations": {},
             "color": {
                 "type": "color",
                 "label": "Colour"
@@ -68,7 +18,113 @@
                 "label": "Badge value",
                 "maxlength": 2
             }
-        }
+        },
+        "items": [
+            {
+                "is_active": true,
+                "name": "News – Urgent",
+                "translations": {
+                    "name": {
+                        "en-CA": "News – Urgent",
+                        "fr-CA": "Nouvelle - Urgent"
+                    }
+                },
+                "short": "1",
+                "qcode": 1,
+                "color" : "#E51C23"
+            },
+            {
+                "is_active": true,
+                "name": "News – Need to Know",
+                "translations": {
+                    "name": {
+                        "en-CA": "News – Need to Know",
+                        "fr-CA": "Nouvelle - Majeur"
+                    }
+                },
+                "short": "2",
+                "qcode": 2,
+                "color" : "#dd8200"
+            },
+            {
+                "is_active": true,
+                "name": "News – Good to Know",
+                "translations": {
+                    "name": {
+                        "en-CA": "News – Good to Know",
+                        "fr-CA": "Nouvelle - Important"
+                    }
+                },
+                "short": "3",
+                "qcode": 3,
+                "color" : "#9c27b0"
+            },
+            {
+                "is_active": true,
+                "name": "News – Buzz",
+                "translations": {
+                    "name": {
+                        "en-CA": "News – Buzz",
+                        "fr-CA": "Nouvelle - Buzz"
+                    }
+                },
+                "short": "4",
+                "qcode": 4,
+                "color" : "#46a546"
+            },
+            {
+                "is_active": true,
+                "name": "News – Optional",
+                "translations": {
+                    "name": {
+                        "en-CA": "News – Optional",
+                        "fr-CA": "Nouvelle - Optionnel"
+                    }
+                },
+                "short": "5",
+                "qcode": 5,
+                "color" : "#808080"
+            },
+            {
+                "is_active": true,
+                "name": "Feature – Regular",
+                "translations": {
+                    "name": {
+                        "en-CA": "Feature – Regular",
+                        "fr-CA": "Documentaire - Régulier"
+                    }
+                },
+                "short": "6",
+                "qcode": 6,
+                "color" : "#5ea9c8"
+            },
+            {
+                "is_active": true,
+                "name": "Feature – Premium",
+                "translations": {
+                    "name": { 
+                        "en-CA": "Feature – Premium",
+                        "fr-CA": "Documentaire – Spécial"
+                    }
+                },
+                "short": "7",
+                "qcode": 7,
+                "color" : "#5ea9c8"
+            },
+            {
+                "is_active": true,
+                "name": "Routine",
+                "translations": {
+                    "name": {
+                        "en-CA": "Routine",
+                        "fr-CA": "Routine"
+                    }
+                },
+                "short": "8",
+                "qcode": 8,
+                "color" : "#808080"
+            }
+        ]
     },
     {
         "_id": "genre",
