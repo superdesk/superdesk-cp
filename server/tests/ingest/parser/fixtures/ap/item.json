@@ -1,0 +1,544 @@
+{
+  "api_version": "1.1",
+  "api_mode": "live",
+  "id": "UdkHPLCCe5F",
+  "method": "/content.GET",
+  "org_name": "Canadian Press",
+  "params": {
+    "et": "0a4aza0c0",
+    "qt": "UdkHPLCCe5F"
+  },
+  "data": {
+    "meta": {
+      "products": [{
+          "id": 33619,
+          "name": "AP Regional State Report - Colorado"
+        },
+        {
+          "id": 33639,
+          "name": "AP Regional State Report - Montana"
+        },
+        {
+          "id": 33658,
+          "name": "AP Regional State Report - Utah"
+        },
+        {
+          "id": 33664,
+          "name": "AP Regional State Report - Wyoming"
+        },
+        {
+          "id": 100271,
+          "name": "AP Regional State News"
+        }
+      ]
+    },
+    "item": {
+      "uri": "https://api.ap.org/media/v/content/ba7d03f0cd24a17faa81bebc724bcf3f?qt=UdkHPLCCe5F&et=0a8aza0c0",
+      "altids": {
+        "itemid": "ba7d03f0cd24a17faa81bebc724bcf3f",
+        "etag": "ba7d03f0cd24a17faa81bebc724bcf3f_0a8aza0c0",
+        "friendlykey": "556046026543",
+        "referenceid": "WY--Exchange-Coronavirus Tech",
+        "transref": "m0012"
+      },
+      "version": 0,
+      "type": "text",
+      "urgency": 4,
+      "profile": "Feature",
+      "editorialpriority": "r",
+      "language": "en",
+      "versioncreated": "2020-04-05T12:10:09Z",
+      "firstcreated": "2020-04-03T22:33:11Z",
+      "editorialrole": "FullStory",
+      "fixture": {
+        "code": "5de954f68067414da2d1315cf15a171e",
+        "name": "Member Exchange"
+      },
+      "pubstatus": "usable",
+      "ednote": "Eds: UPDATES: With AP Photos.",
+      "signals": [
+        "newscontent"
+      ],
+      "title": "WY--Exchange-Coronavirus Tech",
+      "headline": "headline1",
+      "headline_extended": "headline2",
+      "slugline": "BC-WY--Exchange-Coronavirus Tech",
+      "bylines": [{
+        "by": "By MARGARET AUSTIN",
+        "title": "Wyoming Tribune Eagle"
+      }],
+      "located": "CHEYENNE, Wyo.",
+      "datelinelocation": {
+        "city": "Cheyenne",
+        "countryareacode": "WY",
+        "countryareaname": "Wyoming",
+        "countrycode": "USA",
+        "countryname": "United States",
+        "geometry_geojson": {
+          "type": "Point",
+          "coordinates": [
+            -104.82025,
+            41.13998
+          ]
+        }
+      },
+      "copyrightnotice": "For copyright information, check with the distributor of this item, Wyoming Tribune Eagle.",
+      "usageterms": [
+        "This content is intended for editorial use only. For other uses, additional clearances may be required."
+      ],
+      "keywords": [
+        "Exchange-Coronavirus Tech"
+      ],
+      "provider": "AP",
+      "infosource": [{
+        "name": "Wyoming Tribune Eagle",
+        "type": "Member"
+      }],
+      "subject": [{
+          "rels": [
+            "category"
+          ],
+          "creator": "Editorial",
+          "code": "n",
+          "name": "n"
+        },
+        {
+          "code": "f25af2d07e4e100484f5df092526b43e",
+          "name": "General news",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Editorial",
+          "editorial_subject": "General news"
+        },
+        {
+          "code": "e90a6acc514f4c8687d6b6e37b76967c",
+          "name": "3D technology",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "707828f88b6b10048bd1a385cd5ce603"
+          ]
+        },
+        {
+          "code": "707828f88b6b10048bd1a385cd5ce603",
+          "name": "Entertainment and media technology",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "455ef2b87df7100483d8df092526b43e"
+          ]
+        },
+        {
+          "code": "455ef2b87df7100483d8df092526b43e",
+          "name": "Technology",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "topparent": true
+        },
+        {
+          "code": "cc7a76087e4e10048482df092526b43e",
+          "name": "Health",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "topparent": true
+        },
+        {
+          "code": "b8265dc08b6e10048b49b5b842854103",
+          "name": "Mobile software",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "4cc458108c1e10048d0aa13d9888b73e",
+            "e88437688b901004865ba13d9888b73e"
+          ]
+        },
+        {
+          "code": "4cc458108c1e10048d0aa13d9888b73e",
+          "name": "Mobile communication technology",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "707765a88b6b10048b53a385cd5ce603"
+          ]
+        },
+        {
+          "code": "707765a88b6b10048b53a385cd5ce603",
+          "name": "Communication technology",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "455ef2b87df7100483d8df092526b43e"
+          ]
+        },
+        {
+          "code": "e88437688b901004865ba13d9888b73e",
+          "name": "Application software",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "c9453cf08b6b10048d2ea385cd5ce603"
+          ]
+        },
+        {
+          "code": "c9453cf08b6b10048d2ea385cd5ce603",
+          "name": "Software",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "29dfdd288b6b10048ff4bd945080b03e"
+          ]
+        },
+        {
+          "code": "29dfdd288b6b10048ff4bd945080b03e",
+          "name": "Computing and information technology",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "455ef2b87df7100483d8df092526b43e"
+          ]
+        },
+        {
+          "code": "ae2f807206ab4501a3b2e38baf83da7b",
+          "name": "Coronavirus",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "eaf596107eff10048521df092526b43e",
+            "e228bab07de410048fa8df092526b43e"
+          ]
+        },
+        {
+          "code": "eaf596107eff10048521df092526b43e",
+          "name": "Infectious diseases",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "e22284d87de410048f8ddf092526b43e"
+          ]
+        },
+        {
+          "code": "e22284d87de410048f8ddf092526b43e",
+          "name": "Diseases and conditions",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "cc7a76087e4e10048482df092526b43e"
+          ]
+        },
+        {
+          "code": "e228bab07de410048fa8df092526b43e",
+          "name": "Lung disease",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "e22284d87de410048f8ddf092526b43e"
+          ]
+        },
+        {
+          "code": "ba6d08b91d954c62b3b08e516b44e3dc",
+          "name": "Mobile media",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "c188eb1088be10048dceb097165a0203"
+          ]
+        },
+        {
+          "code": "c188eb1088be10048dceb097165a0203",
+          "name": "Media",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "topparent": true
+        }
+      ],
+      "organisation": [{
+        "code": "326daccc1a1b47e4a511187eb2bf8b9d",
+        "name": "University of Wyoming",
+        "rels": [
+          "direct"
+        ],
+        "scheme": "http://cv.ap.org/id/",
+        "creator": "Machine",
+        "topparent": true
+      }],
+      "place": [{
+          "code": "3677d2f882c810048991df092526b43e",
+          "name": "Cheyenne",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "2fb83d4082c810048984df092526b43e"
+          ],
+          "locationtype": {
+            "code": "9d26a20b35f0484a891740f8189d4c7b",
+            "name": "City"
+          },
+          "geometry_geojson": {
+            "type": "Point",
+            "coordinates": [
+              -104.82025,
+              41.13998
+            ]
+          }
+        },
+        {
+          "code": "2fb83d4082c810048984df092526b43e",
+          "name": "Wyoming",
+          "rels": [
+            "direct"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "661e48387d5b10048291c076b8e3055c"
+          ],
+          "locationtype": {
+            "code": "0ae5eb8e00e04295a4fc209c94bfe6ef",
+            "name": "State"
+          },
+          "geometry_geojson": {
+            "type": "Point",
+            "coordinates": [
+              -107.5009,
+              43.00024
+            ]
+          }
+        },
+        {
+          "code": "661e48387d5b10048291c076b8e3055c",
+          "name": "United States",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "parentids": [
+            "661850e07d5b100481f7c076b8e3055c"
+          ],
+          "locationtype": {
+            "code": "01f56e0e654841eca2e69bf2cbcc0526",
+            "name": "Nation"
+          },
+          "geometry_geojson": {
+            "type": "Point",
+            "coordinates": [
+              -98.5,
+              39.76
+            ]
+          }
+        },
+        {
+          "code": "661850e07d5b100481f7c076b8e3055c",
+          "name": "North America",
+          "rels": [
+            "ancestor"
+          ],
+          "scheme": "http://cv.ap.org/id/",
+          "creator": "Machine",
+          "topparent": true,
+          "locationtype": {
+            "code": "976d112cd5c3497ea180aeecab922c6b",
+            "name": "Continent"
+          },
+          "geometry_geojson": {
+            "type": "Point",
+            "coordinates": [
+              -100.54688,
+              46.07323
+            ]
+          }
+        }
+      ],
+      "audiences": [{
+          "code": "82c6a4c46fa0446090a7acaf93159e4c",
+          "name": "Print",
+          "type": "AUDPLATFORM"
+        },
+        {
+          "code": "9add4649b53b4702ba7d9de5d4fa607a",
+          "name": "Online",
+          "type": "AUDPLATFORM"
+        },
+        {
+          "code": "f5b16ea8760d10048047e6e7a0f4673e",
+          "name": "State",
+          "type": "AUDSCOPE"
+        },
+        {
+          "code": "2fb83d4082c810048984df092526b43e",
+          "name": "Wyoming",
+          "type": "AUDGEOGRAPHY"
+        },
+        {
+          "code": "6429117882c610048770df092526b43e",
+          "name": "Montana",
+          "type": "AUDGEOGRAPHY"
+        },
+        {
+          "code": "c1dff44882c710048903df092526b43e",
+          "name": "Utah",
+          "type": "AUDGEOGRAPHY"
+        },
+        {
+          "code": "902a5eb082af1004828adf092526b43e",
+          "name": "Colorado",
+          "type": "AUDGEOGRAPHY"
+        }
+      ],
+      "associations": {
+        "1": {
+          "uri": "https://api.ap.org/media/v/content/80bc4c5694394e23b3d1d5f24a726571?qt=UdkHPLCCe5F&et=0a1aza3c0&ai=ba7d03f0cd24a17faa81bebc724bcf3f",
+          "altids": {
+            "itemid": "80bc4c5694394e23b3d1d5f24a726571",
+            "etag": "80bc4c5694394e23b3d1d5f24a726571_0a1aza3c0"
+          },
+          "version": 0,
+          "type": "picture",
+          "headline": "WY Exchange Coronavirus Tech"
+        },
+        "2": {
+          "uri": "https://api.ap.org/media/v/content/9d878f94b2c3477193a0f84a61c11484?qt=UdkHPLCCe5F&et=0a1aza3c0&ai=ba7d03f0cd24a17faa81bebc724bcf3f",
+          "altids": {
+            "itemid": "9d878f94b2c3477193a0f84a61c11484",
+            "etag": "9d878f94b2c3477193a0f84a61c11484_0a1aza3c0"
+          },
+          "version": 0,
+          "type": "picture",
+          "headline": "WY Exchange Coronavirus Tech"
+        }
+      },
+      "renditions": {
+        "nitf": {
+          "title": "NITF Story Download",
+          "rel": "Story",
+          "format": "IIM",
+          "type": "text",
+          "mimetype": "text/xml",
+          "fileextension": "xml",
+          "words": 807,
+          "contentid": "9416bbe3bfac4cd99a6a29d76b43931e",
+          "href": "https://api.ap.org/media/v/content/ba7d03f0cd24a17faa81bebc724bcf3f.0/download?type=text&format=NITF&rid=e8a47f169acd7c47d2ad65d6f5289b0d&cid=0&fid=9416bbe3bfac4cd99a6a29d76b43931e&trf=m0012&qt=UdkHPLCCe5F&dt=tE44rFK-d&et=0a8aza0c0",
+          "mediafilterid": "2"
+        },
+        "anpa": {
+          "title": "ANPA Story Download",
+          "rel": "Main",
+          "format": "ANPA1312",
+          "type": "text",
+          "mimetype": "application/octet-stream",
+          "fileextension": "anpa",
+          "mediafilterid": "1",
+          "words": 807,
+          "contentid": "9416bbe3bfac4cd99a6a29d76b43931e",
+          "href": "https://api.ap.org/media/v/content/ba7d03f0cd24a17faa81bebc724bcf3f.0/download?type=text&format=ANPA&rid=e8a47f169acd7c47d2ad65d6f5289b0d&cid=0&fid=9416bbe3bfac4cd99a6a29d76b43931e&trf=m0012&qt=UdkHPLCCe5F&dt=tE44rFK-d&et=0a8aza0c0"
+        }
+      },
+      "textformat": "bx",
+      "links": [{
+        "href": "https://apnews.com/ba7d03f0cd24a17faa81bebc724bcf3f",
+        "rel": "canonical"
+      }]
+    }
+  },
+  "nitf": {
+    "type": "text",
+    "guid": null,
+    "uri": null,
+    "pubstatus": "usable",
+    "firstcreated": "2020-04-05T12:10:09+0000",
+    "versioncreated": "2020-04-05T12:10:09+0000",
+    "subject": [],
+    "body_html": "<block id=\"Main\"><p>CHEYENNE, Wyo. (AP) \u2014 Across the state of Wyoming, there are web developers who specialize in coding mobile applications, makers who use 3D printers to bring ideas to life and mapping professionals who use GIS to show data visually.</p><p>So as Array School of Technology and Design CEO Eric Trowbridge watched coronavirus impact communities around the world, he started brainstorming ways to bring Wyomingites in the tech community together to find solutions.</p><p>With Array leading the charge, the Wyoming Technology Coronavirus Coalition was formed March 17. Since then, the network has grown to more than 200 volunteers with different ideas to help the people of Wyoming in the midst of the coronavirus outbreak.</p><p>\u201cWe need to bring the tech community around the state of Wyoming together once and for all, and all collaborate and work together,\u201d Trowbridge said.</p><p>\u201cThis pandemic has really given us a way to solidify that.\u201d</p><p>In Laramie, the University of Wyoming\u2019s Engineering Education and Research Building Student Innovation Center has almost $1.4 million worth of brand new equipment, including 3D printers.</p><p>Now, under the leadership of Makerspace Coordinator Tyler Kerr, those 3D printers are being used to make surgical masks for hospitals across the state as part of the coalition. On Monday, they provided 115 masks for the staff at Cheyenne Regional Medical Center, <a href=\"https://www.wyomingnews.com/news/local_news/coalition-channels-tech-community-to-find-creative-solutions-for-covid-19/article_73cd4bc3-6d9a-5df9-966d-bc5be6d17f82.html\">the Wyoming Tribune Eagle reports.</a></p><p>\u201cThis absolutely felt like something we had to do,\u201d Kerr said, considering the resources they have at their fingertips. \u201cI think it\u2019s really in our power and should be expected of us to help.\u201d</p><p>Kerr first heard about the possibility to 3D print surgical masks from a registered nurse at CRMC. Working at the direction of health-care professionals, UW students and staff have printed masks they know those in the medical field can utilize.</p><p>Kerr said they have to be cautious in what they produce, making sure they\u2019re up to health care standards. They\u2019re currently in the process of creating face shields, in addition to surgical masks.</p><p>\u201cAnything were producing is what the medical community is asking for,\u201d Kerr said. \u201cWe\u2019re letting their teams, their experts drive the conversation.\u201d</p><p>While UW is the main point of contact for 3D printing, the coalition\u2019s utilization of Slack, an online messaging system, has allowed individuals and hobbyists with 3D printers to join the efforts and provide help as they can.</p><p>Within a day of creating the Wyoming Technology Coronavirus Coalition Slack channel, Slack donated $800 to help with their efforts.</p><p>Due to the sheer amount of residents willing to step up and help, the coalition has created a team of four or five volunteers to sort through the submitted ideas and decide which projects should take priority. Ryan Alford has taken on the role of community manager, pairing up people with similar skills to help increase efficiency and meet the community\u2019s needs.</p><p>\u201cWe truly want to be able to support all of Wyoming,\u201d Alford said.</p><p>Already, the coalition has put together a website where residents can tip service industry workers and delivery drivers directly using money transferring apps like Venmo and Cash App. Thanks to techies across the state, businesses can now contact the coalition to set up a VPN so their employees can work from home. Volunteers have arranged a medical supply drive at UW today, April 1, and they\u2019re in the process of creating a GIS map with up-to-date information on coronavirus cases in Wyoming.</p><p>\u201cI\u2019ve never been part of a group like this in my life,\u201d Alford said. \u201cIt\u2019s really exciting to see people just step up and say, \u2018I\u2019m here. I want to help. Can you give me something to work on?\u2019\u201d</p><p>The idea of the coalition is that collaboration will lead to better ideas and faster execution. Out of a partnership with Array and Stitches Acute Care Center, a new telehealth mobile application for Stitches was launched to provide medical assistance to those who can\u2019t get into the clinic.</p><p>While telemedicine visits aren\u2019t new to Stitches, the app will provide \u201can easier way for patients to access telemedicine in Wyoming and Colorado,\u201d according to Stitches co-owner Amy Surdam.</p><p>\u201cNow, more than ever, offering telemedicine to patients to keep them home and keep them away from health care facilities \u2013 it\u2019s critical,\u201d Surdam said.</p><p>While the main focus is projects that will assist in the fight against coronavirus, some of the endeavors like the Stitches telehealth app will continue serving Wyoming residents once things return to normal. The Wyoming Technology Coronavirus Coalition serves as an example of the difference one person or idea and make during a time of crisis.</p><p>\u201cAt the end of the day, it felt like the right thing for Array to do \u2013 to get involved and to make an impact,\u201d Trowbridge said.</p></block>",
+    "format": "HTML",
+    "place": [],
+    "keywords": [],
+    "ednote": "Eds: UPDATES: With AP Photos.",
+    "headline": "Wyoming techies team up, take on challenge of coronavirus",
+    "abstract": "",
+    "byline": "By MARGARET AUSTIN",
+    "word_count": 808
+  },
+  "associations": {
+    "1": {
+      "data": {
+        "item": {
+          "uri": "https://api.ap.org/media/v/content/80bc4c5694394e23b3d1d5f24a726571?qt=UdkHPLCCe5F&et=0a1aza3c0&ai=ba7d03f0cd24a17faa81bebc724bcf3f",
+          "altids": {
+            "itemid": "80bc4c5694394e23b3d1d5f24a726571",
+            "etag": "80bc4c5694394e23b3d1d5f24a726571_0a1aza3c0"
+          },
+          "version": 0,
+          "type": "picture",
+          "headline": "WY Exchange Coronavirus Tech"
+        }
+      }
+    },
+    "2": {
+      "data": {
+        "item": {
+          "uri": "https://api.ap.org/media/v/content/9d878f94b2c3477193a0f84a61c11484?qt=UdkHPLCCe5F&et=0a1aza3c0&ai=ba7d03f0cd24a17faa81bebc724bcf3f",
+          "altids": {
+            "itemid": "9d878f94b2c3477193a0f84a61c11484",
+            "etag": "9d878f94b2c3477193a0f84a61c11484_0a1aza3c0"
+          },
+          "version": 0,
+          "type": "picture",
+          "headline": "WY Exchange Coronavirus Tech"
+        }
+      }
+    }
+  }
+}
