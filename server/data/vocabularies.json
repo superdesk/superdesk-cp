@@ -132,32 +132,204 @@
         "type": "manageable",
         "unique_field": "qcode",
         "selection_type": "multi selection",
-        "init_version": 2,
-        "service": {
-            "all": 1
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
         },
-        "items": [
+        "service": {"all": 1},
+        "init_version": 3,
+
+        "items": 
+        	[
             {
-                "name": "News Alert",
-                "qcode": "News Alert",
-                "is_active": true
+                "name": "NewsAlert",
+                "qcode": "NewsAlert",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "NewsAlert",
+                        "fr-CA": "Alerte"
+                    }
+                }
+            },
+            {
+                "name": "BizFlash",
+                "qcode": "BizFlash",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "BizFlash",
+                        "fr-CA": "EconoFlash"
+                    }
+                }
+            },
+            {
+                "name": "Budget",
+                "qcode": "Budget",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Budget",
+                        "fr-CA": "Budget"
+                    }
+                }
+            },
+            {
+                "name": "Agate",
+                "qcode": "Agate",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Agate",
+                        "fr-CA": "Agate"
+                    }
+                }
             },
             {
                 "name": "Advisory",
                 "qcode": "Advisory",
-                "is_active": true
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Advisory",
+                        "fr-CA": "Avis"
+                    }
+                }
+            },
+            {
+                "name": "Advance",
+                "qcode": "Advance",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Advance",
+                        "fr-CA": "Pré-papier"
+                    }
+                }
+            },
+            {
+                "name": "Advance Budget",
+                "qcode": "Advance Budget",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Advance Budget",
+                        "fr-CA": "Pre-papier budget"
+                    }
+                }
+            },
+            {
+                "name": "QuickFacts",
+                "qcode": "QuickFacts",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "QuickFacts",
+                        "fr-CA": "En Bref"
+                    }
+                }
             },
             {
                 "name": "Sidebar",
                 "qcode": "Sidebar",
-                "is_active": true
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Sidebar",
+                        "fr-CA": "Encadré"
+                    }
+                }
             },
             {
-                "name": "Correction",
-                "qcode": "Correction",
-                "is_active": true
+                "name": "Scoreboard",
+                "qcode": "Scoreboard",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Scoreboard",
+                        "fr-CA": "Résultat"
+                    }
+                }
+            },
+            {
+                "name": "Roundup",
+                "qcode": "Roundup",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Roundup",
+                        "fr-CA": "Synthèse"
+                    }
+                }
+            },
+            {
+                "name": "Kill",
+                "qcode": "Kill",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Kill",
+                        "fr-CA": "Supprimer"
+                    }
+                }
+            },
+            {
+                "name": "Sub",
+                "qcode": "Sub",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Sub",
+                        "fr-CA": "Corrige"
+                    }
+                }
+            },
+            {
+                "name": "Withhold",
+                "qcode": "Withhold",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Withhold",
+                        "fr-CA": "Différer"
+                    }
+                }
+            },
+            {
+                "name": "Release",
+                "qcode": "Release",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Release",
+                        "fr-CA": "Parution"
+                    }
+                }
+            },
+            {
+                "name": "Corrective",
+                "qcode": "Corrective",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Corrective",
+                        "fr-CA": "Rectificatif"
+                    }
+                }
+            },
+            {
+                "name": "Clarification",
+                "qcode": "Clarification",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Clarification",
+                        "fr-CA": "Clarification"
+                    }
+                }
             }
-        ]
+            ]
     },
     {
         "_id": "categories",
