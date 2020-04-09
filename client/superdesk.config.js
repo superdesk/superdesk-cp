@@ -67,7 +67,6 @@ module.exports = function(grunt) {
                 'highlights',
                 'markedDesks',
                 'headline',
-                'wordcount',
                 'associations',
                 'versioncreated'
             ],
