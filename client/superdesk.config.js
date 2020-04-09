@@ -63,6 +63,7 @@ module.exports = function(grunt) {
             ],
             firstLine: [
                 'slugline',                
+                'takekey',
                 'highlights',
                 'markedDesks',
                 'headline',
@@ -76,7 +77,6 @@ module.exports = function(grunt) {
                 'update',
                 'scheduledDateTime',
                 'embargo',
-                'takekey',
                 'signal',
                 'broadcast',
                 'flags',
