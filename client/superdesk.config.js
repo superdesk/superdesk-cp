@@ -17,13 +17,6 @@ module.exports = function(grunt) {
         ],
         defaultRoute: '/workspace/personal',
 
-        langOverride: {
-            'en': {
-                'ANPA Category': 'Category',
-                'ANPA CATEGORY': 'CATEGORY'
-            }
-        },
-
         view: {
             timeformat: 'HH:mm',
             dateformat: 'DD.MM.YYYY',
@@ -46,5 +39,63 @@ module.exports = function(grunt) {
             planning: true,
             assignments: true,
         },
+        
+        search: {
+            'slugline': 1,
+            'headline': 1,
+            'short_headline': 1,
+            'unique_name': 1,
+            'story_text': 1,
+            'byline': 1,
+            'keywords': 0,
+            'creator': 1,
+            'from_desk': 1,
+            'to_desk': 1,
+            'spike': 1,
+            'ingest_provider': 1,
+            'marked_desks': 1,
+            'scheduled': 1
+        },
+        
+        list: {
+            priority: [
+                'urgency'
+            ],
+            firstLine: [
+                'slugline',                
+                'highlights',
+                'markedDesks',
+                'headline',
+                'wordcount',
+                'associations',
+                'versioncreated'
+            ],
+            secondLine: [
+                'profile',
+                'state',
+                'update',
+                'scheduledDateTime',
+                'embargo',
+                'takekey',
+                'signal',
+                'broadcast',
+                'flags',
+                'updated',
+                'provider',
+                'desk',
+                'fetchedDesk',
+                'associatedItems',
+                'translations',
+            ]
+        },        
+
+        monitoring: {
+            scheduled: {
+                sort: {
+                    default: { field: 'publish_schedule', order: 'asc' },
+                    allowed_fields_to_sort: [ 'publish_schedule' ]
+                }
+            },
+        }        
     };
 };
