@@ -72,7 +72,6 @@ module.exports = function(grunt) {
                 'versioncreated'
             ],
             secondLine: [
-                'profile',
                 'state',
                 'update',
                 'scheduledDateTime',
