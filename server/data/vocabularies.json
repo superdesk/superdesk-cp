@@ -138,7 +138,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 4,
+        "init_version": 5,
 
         "items": 
         	[
@@ -215,7 +215,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Advance Budget",
-                        "fr-CA": "Pre-papier budget"
+                        "fr-CA": "Pré-papier Budget"
                     }
                 }
             },
@@ -292,7 +292,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Withhold",
-                        "fr-CA": "Différer"
+                        "fr-CA": "Retenir"
                     }
                 }
             },
@@ -303,7 +303,18 @@
                 "translations": {
                     "name": {
                         "en-CA": "Release",
-                        "fr-CA": "Parution"
+                        "fr-CA": "Transmettre"
+                    }
+                }
+            },
+            {
+                "name": "Repetition",
+                "qcode": "Repetition",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Repetition",
+                        "fr-CA": "Répétition"
                     }
                 }
             },
