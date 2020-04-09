@@ -138,7 +138,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 3,
+        "init_version": 4,
 
         "items": 
         	[
@@ -281,7 +281,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Sub",
-                        "fr-CA": "Corrige"
+                        "fr-CA": "Corrigée"
                     }
                 }
             },
