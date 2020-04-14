@@ -48,6 +48,8 @@ class USD2CADMacroTestCase(unittest.TestCase):
             'ABC$120': '',
             'foo $100 foo': {'key': ' $100', 'repl': 'C$132.80'},
             ' $200.': {'key': ' $200', 'repl': 'C$265.60'},
+            '52,34 millions $': '69,51 millions C$',
+            '52,34 $': '69,51 C$',
         }
 
         item = {'body_html': '\n'.join(test.keys())}
