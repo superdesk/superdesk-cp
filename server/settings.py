@@ -27,9 +27,10 @@ INSTALLED_APPS = [
     'superdesk.macros.imperial',
 
     'cp.orangelogic',
-    'cp.macros',
     'cp.ingest',
 ]
+
+MACROS_MODULE = 'cp.macros'
 
 RENDITIONS = {
     'picture': {
