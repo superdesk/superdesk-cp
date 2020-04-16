@@ -68,7 +68,7 @@
             },
             "abstract" : null,
             "anpa_category" : {
-                "required" : false,
+                "required" : true,
                 "sdWidth" : "full",
                 "order" : 4
             },
@@ -165,7 +165,7 @@
             "abstract" : null,
             "subject" : null,
             "anpa_category" : {
-                "required" : false,
+                "required" : true,
                 "nullable" : true,
                 "type" : "list"
             },
