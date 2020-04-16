@@ -22,10 +22,10 @@
         "items": [
             {
                 "is_active": true,
-                "name": "News – Urgent",
+                "name": "News - Urgent",
                 "translations": {
                     "name": {
-                        "en-CA": "News – Urgent",
+                        "en-CA": "News - Urgent",
                         "fr-CA": "Nouvelle - Urgent"
                     }
                 },
@@ -33,12 +33,12 @@
                 "qcode": 1,
                 "color" : "#E51C23"
             },
-            {
+            
                 "is_active": true,
-                "name": "News – Need to Know",
+                "name": "News - Need to Know",
                 "translations": {
                     "name": {
-                        "en-CA": "News – Need to Know",
+                        "en-CA": "News - Need to Know",
                         "fr-CA": "Nouvelle - Majeur"
                     }
                 },
@@ -48,10 +48,10 @@
             },
             {
                 "is_active": true,
-                "name": "News – Good to Know",
+                "name": "News - Good to Know",
                 "translations": {
                     "name": {
-                        "en-CA": "News – Good to Know",
+                        "en-CA": "News - Good to Know",
                         "fr-CA": "Nouvelle - Important"
                     }
                 },
@@ -61,10 +61,10 @@
             },
             {
                 "is_active": true,
-                "name": "News – Buzz",
+                "name": "News - Buzz",
                 "translations": {
                     "name": {
-                        "en-CA": "News – Buzz",
+                        "en-CA": "News - Buzz",
                         "fr-CA": "Nouvelle - Buzz"
                     }
                 },
@@ -74,10 +74,10 @@
             },
             {
                 "is_active": true,
-                "name": "News – Optional",
+                "name": "News - Optional",
                 "translations": {
                     "name": {
-                        "en-CA": "News – Optional",
+                        "en-CA": "News - Optional",
                         "fr-CA": "Nouvelle - Optionnel"
                     }
                 },
@@ -87,10 +87,10 @@
             },
             {
                 "is_active": true,
-                "name": "Feature – Regular",
+                "name": "Feature - Regular",
                 "translations": {
                     "name": {
-                        "en-CA": "Feature – Regular",
+                        "en-CA": "Feature - Regular",
                         "fr-CA": "Documentaire - Régulier"
                     }
                 },
@@ -100,11 +100,11 @@
             },
             {
                 "is_active": true,
-                "name": "Feature – Premium",
+                "name": "Feature - Premium",
                 "translations": {
                     "name": { 
-                        "en-CA": "Feature – Premium",
-                        "fr-CA": "Documentaire – Spécial"
+                        "en-CA": "Feature - Premium",
+                        "fr-CA": "Documentaire - Spécial"
                     }
                 },
                 "short": "7",
@@ -131,14 +131,14 @@
         "display_name": "Version",
         "type": "manageable",
         "unique_field": "qcode",
-        "selection_type": "multi selection",
+        "selection_type": "single selection",
         "schema": {
             "name": {},
             "qcode": {},
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 5,
+        "init_version": 6,
 
         "items": 
         	[
