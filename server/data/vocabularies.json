@@ -33,7 +33,7 @@
                 "qcode": 1,
                 "color" : "#E51C23"
             },
-            
+            {
                 "is_active": true,
                 "name": "News - Need to Know",
                 "translations": {
