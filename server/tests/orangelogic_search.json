@@ -28,9 +28,14 @@
             "GlobalEditDate": "11/22/2019 10:23:19 AM",
             "MediaType": "Video",
             "Path_TR1": {
-                "URI": "https://example.com/view.jpg",
+                "URI": "https://example.com/base.jpg",
                 "Width": 1200,
                 "Height": 675
+            },
+            "Path_TR4": {
+                "URI": "https://example.com/view.jpg",
+                "Width": 800,
+                "Height": 600
             },
             "Path_TR7": {
                 "URI": "https://example.com/thumb.jpg",

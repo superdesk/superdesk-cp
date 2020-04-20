@@ -78,8 +78,8 @@ class OrangelogicTestCase(unittest.TestCase):
 
         self.assertEqual({
             'href': 'https://example.com/view.jpg',
-            'width': 1200,
-            'height': 675,
+            'width': 800,
+            'height': 600,
             'mimetype': 'image/jpeg',
         }, items[0]['renditions']['viewImage'])
 
