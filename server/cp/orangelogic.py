@@ -11,6 +11,8 @@ from urllib.parse import urljoin
 from flask import current_app as app, json
 from requests.exceptions import HTTPError
 from superdesk.utils import ListCursor
+from superdesk.timer import timer
+from superdesk.utc import local_to_utc
 from superdesk.search_provider import SearchProvider
 
 
@@ -51,7 +53,8 @@ class OrangelogicSearchProvider(SearchProvider):
     }
 
     RENDITIONS_MAP = {
-        'viewImage': 'Path_TR1',
+        'baseImage': 'Path_TR1',
+        'viewImage': 'Path_TR4',
         'thumbnail': 'Path_TR7',
         'webHigh': 'Path_WebHigh',
     }
@@ -75,7 +78,6 @@ class OrangelogicSearchProvider(SearchProvider):
                              Password=self.config.get('password'),
                              format='json')
         self.token = resp.json()['APIResponse']['Token']
-        print('login', self.token)
 
     def _auth_request(self, api, **kwargs):
         repeats = 2
@@ -112,6 +114,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 'GlobalEditDate',
                 'MediaType',
                 'Path_TR1',
+                'Path_TR4',
                 'Path_TR7',
                 'Path_WebHigh',
                 'Photographer',
@@ -143,8 +146,9 @@ class OrangelogicSearchProvider(SearchProvider):
                 if params.get(param):
                     kwargs['query'] = '{} MediaDate{}{}'.format(kwargs['query'], op, params[param]).strip()
 
-        resp = self._auth_request(SEARCH_API, **kwargs)
-        data = resp.json()
+        with timer('orange'):
+            resp = self._auth_request(SEARCH_API, **kwargs)
+            data = resp.json()
 
         with open('/tmp/resp.json', mode='w') as out:
             out.write(json.dumps(data, indent=2))
@@ -152,8 +156,6 @@ class OrangelogicSearchProvider(SearchProvider):
         items = []
         for item in data['APIResponse']['Items']:
             guid = item['MediaNumber']
-            view = item['Path_TR1']
-            thumb = item['Path_TR7']
             items.append({
                 '_id': guid,
                 'guid': guid,
@@ -177,7 +179,7 @@ class OrangelogicSearchProvider(SearchProvider):
 
     def parse_datetime(self, value):
         local = datetime.strptime(value, '%m/%d/%Y %H:%M:%S %p')
-        return local.replace(tzinfo=pytz.UTC)
+        return local_to_utc(self.TZ, local)
 
 
 def rendition(data):
