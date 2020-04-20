@@ -1,0 +1,102 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish>
+    <Reschedule>false</Reschedule>
+    <IsRegional>false</IsRegional>
+    <CanAutoRoute>true</CanAutoRoute>
+    <PublishID>20006393</PublishID>
+    <Services>Print</Services>
+    <Username />
+    <UseLocalsOut>false</UseLocalsOut>
+    <PscCodes>ap---</PscCodes>
+    <ContentItem>
+        <Name />
+        <Cachable>false</Cachable>
+        <NewsCompID>55496578</NewsCompID>
+        <AutoSaveID>0</AutoSaveID>
+        <Type>0</Type>
+        <MediaType>0</MediaType>
+        <Status>0</Status>
+        <SystemSlug>578e67c7df37e844e89e9ff5226bedac</SystemSlug>
+        <FileName>i65005</FileName>
+        <Headline>Malfunction caused copter crash that killed Mexico governor </Headline>
+        <HeadlineService>false</HeadlineService>
+        <VideoType>None</VideoType>
+        <Category>International</Category>
+        <IndexCode>International</IndexCode>
+        <Ranking>News - Good to know</Ranking>
+        <RankingValue>3</RankingValue>
+        <PhotoType>One</PhotoType>
+        <GraphicType>None</GraphicType>
+        <ReadOnlyFlag>true</ReadOnlyFlag>
+        <HoldFlag>false</HoldFlag>
+        <OpenFlag>false</OpenFlag>
+        <TransmittedToWire>false</TransmittedToWire>
+        <TrashFlag>false</TrashFlag>
+        <TopStory>false</TopStory>
+        <Headline2>Malfunction caused copter crash that killed Mexico governor </Headline2>
+        <Credit>THE ASSOCIATED PRESS</Credit>
+        <ContentType>Text</ContentType>
+        <SlugProper>LT-Mexico-Helicopter-Crash</SlugProper>
+        <Source>The Associated Press</Source>
+        <UpdateNote>UPDATES: With AP Photos.</UpdateNote>
+        <AuthorVersion>196</AuthorVersion>
+        <BreakWordCount>292</BreakWordCount>
+        <ContentItemID>72954190</ContentItemID>
+        <ProfileID>204</ProfileID>
+        <SysContentType>0</SysContentType>
+        <WordCount>292</WordCount>
+        <WritethruNum>1st</WritethruNum>
+        <EmbargoTime>0001-01-01T00:00:00</EmbargoTime>
+        <Language>1</Language>
+        <DirectoryText>A 2018 helicopter crash that killed the current and former governors of the central Mexican state
+            of Puebla was likely caused by a malfunctioning system that was known to the company flying it, autho
+        </DirectoryText>
+        <UpdatedDateTime>2020-03-27T11:52:47.78-04:00</UpdatedDateTime>
+        <CreatedDateTime>2020-03-27T15:52:47.753</CreatedDateTime>
+        <HandledByUserID>0</HandledByUserID>
+        <WriteThruType>Writethru</WriteThruType>
+        <ContentText>&lt;p&gt;A 2018 helicopter crash that killed the current and former governors of the central
+            Mexican state of Puebla was likely caused by a malfunctioning system that was known to the company flying
+            it, authorities said Friday.&lt;/p&gt;
+            &lt;p&gt;Mexico Transportation Secretary Javier Jiménez Espriú said the final investigation report concluded
+            the helicopter “should not have flown.”&lt;/p&gt;
+            &lt;p&gt;The deaths of wife and husband political power couple Gov. Martha Erika Alonso and ex-Gov. Rafael
+            Moreno Valle stunned Mexico and raised suspicions about the cause of the crash. Moreno Valle was a prominent
+            figure in the opposition National Action Party who had vied unsuccessfully for the party’s presidential
+            nomination and its internal leadership, President Andrés Manuel López Obrador's Morena party had challenged
+            the validity of Alonso's election victory.&lt;/p&gt;
+            &lt;p&gt;The Agusta 109 helicopter fell about 10 minutes after taking off from a heliport within the city of
+            Puebla on a flight to Mexico City on Christmas Eve, 2018.&lt;/p&gt;
+            &lt;p&gt;It crashed in the municipality of Santa Maria Coronango, which is about 3.5 miles (5.5 &lt;replaced
+            captured="kilometers"&gt;kilometres&lt;/replaced&gt;) north of the city’s main airport In all, five people
+            died.&lt;/p&gt;
+            &lt;p&gt;Jiménez said mistakes by the helicopter's operator and those responsible for its maintenance
+            contributed to the crash. Specifically investigators found records showing there was a preexisting problem
+            with a stability system on the helicopter. One piece was found to have two loose screws inside.&lt;/p&gt;
+            &lt;p&gt;The government has suspended operations by the company flying the helicopter and the company
+            responsible for its maintenance and turned the crash investigation report over to prosecutors.&lt;/p&gt;
+            &lt;p&gt;Jiménez said witnesses described the helicopter suddenly inclining to the left and diving to the
+            ground. Investigators found no objects that had collided with the aircraft and no pieces of the aircraft
+            that had fallen off it prior to the crash.&lt;/p&gt;
+        </ContentText>
+        <Keyword>General news,Aviation accidents and incidents,Transportation accidents,Accidents,Accidents and
+            disasters,Transportation,Helicopt</Keyword>
+        <Length>292</Length>
+        <WritethruValue>1</WritethruValue>
+        <City>Mexico City</City>
+        <Country>Mexico</Country>
+        <Latitude>43.491148</Latitude>
+        <Longitude>-79.987854</Longitude>
+        <Placeline>Mexico City;;Mexico</Placeline>
+        <Published>false</Published>
+        <PhotoLinkCount>0</PhotoLinkCount>
+        <VideoLinkCount>0</VideoLinkCount>
+        <AudioLinkCount>0</AudioLinkCount>
+        <IsPublishedAsTopStory>false</IsPublishedAsTopStory>
+    </ContentItem>
+    <UserProfileID>0</UserProfileID>
+    <PublishOrder>0</PublishOrder>
+    <PublishDateTime>2020-03-27T15:52:47.78</PublishDateTime>
+    <NewCycle>false</NewCycle>
+    <OnlineResend>false</OnlineResend>
+</Publish>

@@ -727,6 +727,7 @@
         "display_name": "Subscriber Types",
         "type": "unmanageable",
         "selection_type": "do not show",
+        "init_version": 2,
         "items": [
             {
                 "is_active": true,
@@ -762,8 +763,8 @@
                         "qcode": "json_planning_featured"
                     },
                     {
-                        "name": "Belga News ML 1.2",
-                        "qcode": "belganewsml12"
+                        "name": "Jimi XML",
+                        "qcode": "jimi"
                     }
                 ]
             },
@@ -801,8 +802,8 @@
                         "qcode": "json_planning_featured"
                     },
                     {
-                        "name": "Belga News ML 1.2",
-                        "qcode": "belganewsml12"
+                        "name": "Jimi XML",
+                        "qcode": "jimi"
                     }
                 ]
             },
@@ -834,6 +835,10 @@
                     {
                         "name": "JSON Planning Featured",
                         "qcode": "json_planning_featured"
+                    },
+                    {
+                        "name": "Jimi XML",
+                        "qcode": "jimi"
                     }
                 ]
             }

@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     'cp.orangelogic',
     'cp.ingest',
+    'cp.output',
 ]
 
 MACROS_MODULE = 'cp.macros'
