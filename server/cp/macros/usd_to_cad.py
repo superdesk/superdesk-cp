@@ -14,7 +14,7 @@ CURRENCY_REGEX = re.compile(
 )
 
 CURRENCY_REGEX_FR = re.compile(
-    r'(^| |\b)(?P<num>[0-9]+(?P<decimal>\,[0-9]+)?)(?P<mil> millions?)? (?P<currency>[A-Z]+)?\$($|\b)',
+    r'(^| |\b)(?P<num>[0-9]+(?P<decimal>\,[0-9]+)?)(?P<mil> millions?)? ?(?P<currency>[A-Z]+)?\$($|\b)',
     re.MULTILINE,
 )
 
