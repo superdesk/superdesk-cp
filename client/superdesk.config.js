@@ -27,7 +27,23 @@ module.exports = function(grunt) {
                 'update': '1st Writethru',
                 '2nd update': '2nd Writethru',
                 '3rd update': '3rd Writethru',
-                'th update': 'th Writethru'
+                '4th update': '4th Writethru',
+                '5th update': '5th Writethru',
+                '6th update': '6th Writethru',
+                '7th update': '7th Writethru',
+                '8th update': '8th Writethru',
+                '9th update': '9th Writethru',
+                '10th update': '10th Writethru',
+                '11th update': '11th Writethru',
+                '12th update': '12th Writethru',
+                '13th update': '13th Writethru',
+                '14th update': '14th Writethru',
+                '15th update': '15th Writethru',
+                '16th update': '16th Writethru',
+                '17th update': '17th Writethru',
+                '18th update': '18th Writethru',
+                '19th update': '19th Writethru',
+                '20th update': '20th Writethru'
             }
         },
 
