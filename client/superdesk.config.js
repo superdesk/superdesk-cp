@@ -15,11 +15,19 @@ module.exports = function(grunt) {
             'superdesk-analytics',
             'superdesk-planning',
         ],
-        defaultRoute: '/workspace/personal',
+        defaultRoute: '/workspace/monitoring',
 
         view: {
             timeformat: 'HH:mm',
             dateformat: 'DD.MM.YYYY',
+        },
+
+        langOverride: {
+            'en': {
+                'update': '1st Writethru',
+                '2nd update': '2nd Writethru',
+                '3rd update': '3rd Writethru'
+            }
         },
 
         features: {
@@ -62,8 +70,7 @@ module.exports = function(grunt) {
                 'urgency'
             ],
             firstLine: [
-                'slugline', 
-                'rewrite_sequence', 
+                'slugline',  
                 'takekey',
                 'highlights',
                 'markedDesks',
