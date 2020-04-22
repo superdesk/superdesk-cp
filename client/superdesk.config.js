@@ -26,7 +26,8 @@ module.exports = function(grunt) {
             'en': {
                 'update': '1st Writethru',
                 '2nd update': '2nd Writethru',
-                '3rd update': '3rd Writethru'
+                '3rd update': '3rd Writethru',
+                'th update': 'th Writethru'
             }
         },
 
