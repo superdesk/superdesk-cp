@@ -26,13 +26,15 @@ class GlobeNewswireParserTestCase(unittest.TestCase):
         self.assertEqual('usable', item['pubstatus'])
         self.assertEqual('GNW-en-10--AXL', item['slugline'])
         self.assertEqual(['TSX VENTURE:AXL'], item['keywords'])
+        self.assertEqual(3, item['urgency'])
+        self.assertEqual(3, item['priority'])
 
         self.assertGreaterEqual(item['word_count'], 1)
         self.assertRegex(item['body_html'], r'^<p>CALGARY')
         self.assertNotIn('https://www.globenewswire.com/newsroom/ti', item['body_html'])
 
         self.assertEqual('Press Release', item['description_text'])
-        self.assertEqual('NEWS RELEASE TRANSMITTED BY Globe Newswire', item['body_footer'])
+        self.assertIn('<p>NEWS RELEASE TRANSMITTED BY Globe Newswire</p>', item['body_html'])
 
     def test_parser_slugline(self):
         xml = self.get_xml('1bf6.xml')
@@ -40,3 +42,4 @@ class GlobeNewswireParserTestCase(unittest.TestCase):
         with self.app.app_context():
             item = parser.parse(xml)[0]
         self.assertEqual('GNW-en-10--CAL-MIS-FNC', item['slugline'])
+        self.assertIn('<a href="https://www.globenewswire.com/', item['body_html'])

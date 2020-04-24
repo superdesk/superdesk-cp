@@ -24,7 +24,8 @@ logger = logging.getLogger(__name__)
 class GlobeNewswireParser(NewsMLTwoFeedParser):
 
     NAME = 'globenewswire'
-    label = 'Globe Newswire'
+    label = 'GlobeNewswire'
+    ALLOWED_EXT = {'.newsml', '.xml'}
 
     def parse_content_meta(self, tree, item):
         meta = super().parse_content_meta(tree, item)
@@ -41,7 +42,7 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
         item['keywords'] = [k.text for k in keywords if k.text and k.get('role') == KEYWORD_ROLE]
 
         item['description_text'] = DESCRIPTION
-        item['body_footer'] = BODY_FOOTER[item['language']]
+        item['urgency'] = item['priority'] = 3
 
         return meta
 
@@ -58,9 +59,9 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
             javascript=True,
             style=True,
             comments=True,
-            add_nofollow=False,
+            add_nofollow=True,
             kill_tags=['style', 'script'],
-            safe_attrs=['alt', 'src', 'rel'],
+            safe_attrs=['alt', 'src', 'rel', 'href', 'target'],
         )
         divs = html.xpath('./xhtml:body/xhtml:*[@class="mw_release"]', namespaces=NS)
         for div in divs:
@@ -76,6 +77,10 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
     def parse_content_set(self, tree, item):
         super().parse_content_set(tree, item)
         item['word_count'] = get_word_count(item.get('body_html'))
+        item['body_html'] = '{}\n<p>{}</p>'.format(
+            item['body_html'],
+            BODY_FOOTER[item['language']],
+        )
 
     def _get_stock_symbols(self, tree):
         symbols = [
