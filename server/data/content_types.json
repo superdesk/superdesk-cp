@@ -4,6 +4,7 @@
         "priority" : 0,
         "label" : "Story",
         "enabled" : true,
+        "init_version": 2,
         "editor" : {
             "correction" : {
                 "required" : false,
@@ -44,7 +45,7 @@
                 "order" : 10
             },
             "usageterms" : null,
-            "short_headline" : {
+            "headline_extended" : {
                 "required" : false,
                 "section" : "content",
                 "order" : 6
@@ -150,7 +151,7 @@
                 "nullable" : true,
                 "type" : "string"
             },
-            "short_headline" : {
+            "headline_extended" : {
                 "required" : false,
                 "maxlength" : 500,
                 "nullable" : true,

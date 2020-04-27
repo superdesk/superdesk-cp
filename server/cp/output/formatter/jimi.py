@@ -7,6 +7,8 @@ from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
 
+from cp import HEADLINE2
+
 
 DEFAULT_DATETIME = '0001-01-01T00:00:00'
 
@@ -47,7 +49,10 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'NewsCompID').text = item['_id']
+        etree.SubElement(content, 'ContentItemID').text = str(item['_id'])
+        etree.SubElement(content, 'FileName').text = str(item['family_id'])
+        etree.SubElement(content, 'NewsCompID').text = str(item['family_id'])
+        etree.SubElement(content, 'SystemSlug').text = str(item['family_id'])
 
         # timestamps
         firstpublished = item.get('firstpublished') or item['versioncreated']
@@ -69,20 +74,35 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'BreakWordCount').text = word_count
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
-        etree.SubElement(content, 'RankingValue').text = str(item.get('urgency') or 0)
 
-        try:
-            etree.SubElement(content, 'Category').text = item['anpa_category'][0]['name']
-        except (KeyError, IndexError):
-            pass
+        # extra
+        extra = item.get('extra') or {}
 
-        etree.SubElement(content, 'IndexCode').text = ','.join(
-            [s['name'] for s in item.get('subject', []) if s.get('name') and s.get('scheme') is None]
-        )
+        if extra.get(HEADLINE2):
+            etree.SubElement(content, 'Headline2').text = extra[HEADLINE2]
 
+        subjects = [
+            s['name'] for s in item.get('subject', [])
+            if s.get('name') and s.get('scheme') in (None, 'subject_custom')
+        ]
+
+        if subjects:
+            etree.SubElement(content, 'Category').text = subjects[0]
+            etree.SubElement(content, 'IndexCode').text = ','.join(subjects)
+
+        self._format_urgency(content, item.get('urgency'))
         self._format_keyword(content, item.get('keywords'))
         self._format_dateline(content, item.get('dateline'))
         self._format_writethru(content, item.get('rewrite_sequence'))
+
+    def _format_urgency(self, content, urgency):
+        if urgency is None:
+            urgency = 3
+        etree.SubElement(content, 'RankingValue').text = str(urgency)
+        cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id='urgency')
+        items = [item for item in cv['items'] if str(item.get('qcode')) == str(urgency)]
+        if items:
+            etree.SubElement(content, 'Ranking').text = items[0]['name']
 
     def _format_keyword(self, content, keywords):
         if keywords:
@@ -133,5 +153,10 @@ class JimiFormatter(Formatter):
                 etree.SubElement(content, dest).text = located.get(src)
                 pieces.append(located.get(src) or '')
             etree.SubElement(content, 'Placeline').text = ';'.join(pieces)
+            try:
+                etree.SubElement(content, 'Latitude').text = str(located['location']['lat'])
+                etree.SubElement(content, 'Longitude').text = str(located['location']['lon'])
+            except KeyError:
+                pass
         else:
             etree.SubElement(content, 'Placeline')

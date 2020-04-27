@@ -109,6 +109,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 'MediaNumber',
                 'Caption',
                 'CaptionShort',
+                'EditDate',
                 'MediaDate',
                 'CreateDate',
                 'GlobalEditDate',
@@ -167,7 +168,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 'copyrightholder': item['copyright'],
                 'description_text': item['Caption'],
                 'firstcreated': self.parse_datetime(item['CreateDate']),
-                'versioncreated': self.parse_datetime(item['MediaDate'] or item['GlobalEditDate']),
+                'versioncreated': self.parse_datetime(item['GlobalEditDate']),
                 'renditions': {
                     key: rendition(item[path])
                     for key, path in self.RENDITIONS_MAP.items()
@@ -180,6 +181,9 @@ class OrangelogicSearchProvider(SearchProvider):
     def parse_datetime(self, value):
         local = datetime.strptime(value, '%m/%d/%Y %H:%M:%S %p')
         return local_to_utc(self.TZ, local)
+
+    def fetch(self, guid):
+        return
 
 
 def rendition(data):

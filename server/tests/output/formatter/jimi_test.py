@@ -5,16 +5,13 @@ import lxml.etree as etree
 
 from pytz import UTC
 from datetime import datetime
-from unittest.mock import patch, MagicMock, create_autospec
+from unittest.mock import patch
+from tests.mock import resources, SEQUENCE_NUMBER
 
 from superdesk.metadata.utils import generate_guid
-from superdesk.publish.subscribers import SubscribersService
 
+from cp import HEADLINE2
 from cp.output.formatter.jimi import JimiFormatter
-
-
-subscriber_service = create_autospec(SubscribersService)
-subscriber_service.generate_sequence_number.return_value = 100
 
 
 class JimiFormatterTestCase(unittest.TestCase):
@@ -22,7 +19,8 @@ class JimiFormatterTestCase(unittest.TestCase):
     subscriber = {}
     formatter = JimiFormatter()
     article = {
-        '_id': '123',
+        '_id': 'id',
+        'family_id': 'famid',
         'type': 'text',
         'headline': 'Headline',
         'slugline': 'slug',
@@ -34,18 +32,26 @@ class JimiFormatterTestCase(unittest.TestCase):
         'body_html': '<p>Body HTML</p>',
         'keywords': ['Foo bar', 'baz'],
         'anpa_category': [{'name': 'National', 'qcode': 'n'}],
-        'subject': [{'name': 'Health', 'qcode': 'h'}, {'name': 'National', 'qcode': 'n'}],
-        'urgency': 3,
+        'subject': [
+            {'name': 'Health', 'qcode': '0123124', 'scheme': 'subject_custom'},
+            {'name': 'National', 'qcode': '1231245', 'scheme': 'subject_custom'},
+            {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
+        ],
+        'urgency': 2,
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
         'firstpublished': datetime(2020, 4, 1, 11, 33, 12, 25, tzinfo=UTC),
+
+        'extra': {
+            HEADLINE2: 'headline2',
+        },
     }
 
     def format(self, updates=None):
         article = self.article.copy()
         article.update(updates or {})
-        with patch.object(superdesk, 'get_resource_service', return_value=subscriber_service):
+        with patch.dict(superdesk.resources, resources):
             seq, xml_str = self.formatter.format(article, self.subscriber)[0]
         print('xml', xml_str)
         return xml_str
@@ -70,7 +76,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('false', root.find('Reschedule').text)
         self.assertEqual('false', root.find('IsRegional').text)
         self.assertEqual('true', root.find('CanAutoRoute').text)
-        self.assertEqual(str(subscriber_service.generate_sequence_number.return_value), root.find('PublishID').text)
+        self.assertEqual(str(SEQUENCE_NUMBER), root.find('PublishID').text)
         self.assertEqual('Print', root.find('Services').text)
         self.assertEqual(None, root.find('Username').text)
         self.assertEqual('false', root.find('UseLocalsOut').text)
@@ -80,12 +86,17 @@ class JimiFormatterTestCase(unittest.TestCase):
         item = root.find('ContentItem')
         self.assertEqual(None, item.find('Name').text)
         self.assertEqual('false', item.find('Cachable').text)
-        self.assertEqual('false', item.find('Cachable').text)
-        self.assertEqual(self.article['_id'], item.find('NewsCompID').text)
+
+        # ids
+        self.assertEqual(self.article['_id'], item.find('ContentItemID').text)
+        self.assertEqual(self.article['family_id'], item.find('NewsCompID').text)
+        self.assertEqual(self.article['family_id'], item.find('SystemSlug').text)
+        self.assertEqual(self.article['family_id'], item.find('FileName').text)
 
         # obvious
         self.assertEqual('Text', item.find('ContentType').text)
         self.assertEqual(self.article['headline'], item.find('Headline').text)
+        self.assertEqual('headline2', item.find('Headline2').text)
         self.assertEqual(self.article['creditline'], item.find('Credit').text)
         self.assertEqual(self.article['slugline'], item.find('SlugProper').text)
         self.assertEqual(self.article['source'], item.find('Source').text)
@@ -98,9 +109,10 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Foo bar,baz', item.find('Keyword').text)
-        self.assertEqual('National', item.find('Category').text)
+        self.assertEqual('Health', item.find('Category').text)
         self.assertEqual('Health,National', item.find('IndexCode').text)
         self.assertEqual(str(self.article['urgency']), item.find('RankingValue').text)
+        self.assertEqual('News - Need to Know', item.find('Ranking').text)
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
@@ -143,7 +155,11 @@ class JimiFormatterTestCase(unittest.TestCase):
                     'country_code': 'US',
                     'country': 'USA',
                     'tz': 'America/Los_Angeles',
-                    'state_code': 'CA'
+                    'state_code': 'CA',
+                    'location': {
+                        'lat': 34.0522,
+                        'lon': -118.2347,
+                    },
                 }
             },
         })
@@ -151,3 +167,5 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('California', item.find('Province').text)
         self.assertEqual('USA', item.find('Country').text)
         self.assertEqual('Los Angeles;California;USA', item.find('Placeline').text)
+        self.assertEqual('34.0522', item.find('Latitude').text)
+        self.assertEqual('-118.2347', item.find('Longitude').text)
