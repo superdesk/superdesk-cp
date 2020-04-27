@@ -354,7 +354,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 2,
+        "init_version": 3,
 
         "items": 
         	[

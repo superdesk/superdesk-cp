@@ -4,6 +4,7 @@
         "priority" : 0,
         "label" : "Story",
         "enabled" : true,
+        "init_version": 2,
         "editor" : {
             "correction" : {
                 "required" : false,
