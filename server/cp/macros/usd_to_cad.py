@@ -55,7 +55,7 @@ def callback(item, **kwargs):
             en_currency='' if is_fr else 'C$',
             value=fixed if not is_fr else fixed.replace('.', ','),
             mil=m.group('mil') or '',
-            fr_currency=' C$' if is_fr else '',
+            fr_currency=' $ CAN' if is_fr else '',
         ).rstrip()
 
     re.sub(CURRENCY_REGEX, repl, text)
