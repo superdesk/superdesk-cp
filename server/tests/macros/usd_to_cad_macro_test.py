@@ -50,6 +50,7 @@ class USD2CADMacroTestCase(unittest.TestCase):
             ' $200.': {'key': ' $200', 'repl': 'C$265.60'},
             '52,34 millions $': '69,51 millions $ CAN',
             '52,34 $': '69,51 $ CAN',
+            '52,34 $ US': '69,51 $ CAN',
             '2,24$': '2,97 $ CAN',
         }
 
