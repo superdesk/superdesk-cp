@@ -1,5 +1,45 @@
 [
     {
+        "_id": "distribution",
+        "display_name": "Distribution",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "multi selection",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
+        },
+        "service": {"all": 1},
+        "init_version": 1,
+
+        "items": 
+        	[
+             {
+                "name": "Print",
+                "qcode": "Print",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Print",
+                        "fr-CA": "Print"
+                    }
+                }
+            },
+            {
+                "name": "Broadcast",
+                "qcode": "Broadcast",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Broadcast",
+                        "fr-CA": "Broadcast"
+                    }
+                }
+            }
+            ]
+    },
+    {
         "_id": "urgency",
         "display_name": "Ranking",
         "type": "manageable",
