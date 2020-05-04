@@ -1,7 +1,7 @@
 [
     {
         "_id": "distribution",
-        "display_name": "Distribution",
+        "display_name": "Services",
         "type": "manageable",
         "unique_field": "qcode",
         "selection_type": "multi selection",
@@ -11,10 +11,21 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 1,
+        "init_version": 2,
 
         "items": 
         	[
+             {
+                "name": "QuickHit",
+                "qcode": "QuickHit",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "QuickHit",
+                        "fr-CA": "QuickHit"
+                    }
+                }
+            },			
              {
                 "name": "Print",
                 "qcode": "Print",
@@ -34,6 +45,28 @@
                     "name": {
                         "en-CA": "Broadcast",
                         "fr-CA": "Broadcast"
+                    }
+                }
+            },
+            {
+                "name": "NewsBase",
+                "qcode": "NewsBase",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "NewsBase",
+                        "fr-CA": "NewsBase"
+                    }
+                }
+            },
+            {
+                "name": "DataSpecials",
+                "qcode": "DataSpecials",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "DataSpecials",
+                        "fr-CA": "DataSpecials"
                     }
                 }
             }
