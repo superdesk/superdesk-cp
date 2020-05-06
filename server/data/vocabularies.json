@@ -11,7 +11,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 2,
+        "init_version": 3,
 
         "items": 
         	[
@@ -45,6 +45,17 @@
                     "name": {
                         "en-CA": "Broadcast",
                         "fr-CA": "Broadcast"
+                    }
+                }
+            },
+             {
+                "name": "Print / Broadcast",
+                "qcode": "Print / Broadcast",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Print / Broadcast",
+                        "fr-CA": "Print / Broadcast"
                     }
                 }
             },
@@ -210,8 +221,7 @@
             "qcode": {},
             "translations": {}
         },
-        "service": {"all": 1},
-        "init_version": 6,
+        "init_version": 7,
 
         "items": 
         	[
