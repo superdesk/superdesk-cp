@@ -23,6 +23,13 @@ TIMEOUT = (5, 25)
 DATE_FORMAT = 'u'
 
 
+def get_api_sort(sort):
+    if sort == {'versioncreated': 'asc'}:
+        return 'Oldest first'
+    else:
+        return 'Newest first'
+
+
 class OrangelogicListCursor(ListCursor):
 
     def __init__(self, docs, count):
@@ -97,8 +104,12 @@ class OrangelogicSearchProvider(SearchProvider):
         if params is None:
             params = {}
 
-        size = int(query.get('size', 50))
+        size = 25  # int(query.get('size', 25))
         page = math.ceil((int(query.get('from', 0)) + 1) / size)
+        try:
+            sort = query.get('sort')[0]
+        except (IndexError, AttributeError, TypeError):
+            sort = {'versioncreated': 'desc'}
 
         kwargs = {
             'pagenumber': page,
@@ -122,7 +133,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 'PhotographerFastId',
                 'copyright',
             ]),
-            'Sort': 'Newest',
+            'Sort': get_api_sort(sort),
             'format': 'json',
             'DateFormat': 'u',
         }
@@ -168,7 +179,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 'copyrightholder': item['copyright'],
                 'description_text': item['Caption'],
                 'firstcreated': self.parse_datetime(item['CreateDate']),
-                'versioncreated': self.parse_datetime(item['GlobalEditDate']),
+                'versioncreated': self.parse_datetime(item['MediaDate']) or self.parse_datetime(item['CreateDate']),
                 'renditions': {
                     key: rendition(item[path])
                     for key, path in self.RENDITIONS_MAP.items()
@@ -179,6 +190,8 @@ class OrangelogicSearchProvider(SearchProvider):
         return OrangelogicListCursor(items, data['APIResponse']['GlobalInfo']['TotalCount'])
 
     def parse_datetime(self, value):
+        if not value:
+            return None
         local = datetime.strptime(value, '%m/%d/%Y %H:%M:%S %p')
         return local_to_utc(self.TZ, local)
 
