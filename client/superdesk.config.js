@@ -132,8 +132,8 @@ module.exports = function(grunt) {
                 'provider',
                 'desk',
                 'fetchedDesk',
-                'associatedItems',
                 'translations',
+                'associatedItems'
             ]
         },        
 
