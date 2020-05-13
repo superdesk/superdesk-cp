@@ -78,6 +78,7 @@ module.exports = function(grunt) {
             validatePointOfInterestForImages: true,
             editorHighlights: true,
             editFeaturedImage: false,
+            searchShortcut: true,
             elasticHighlight: true,
             useTansaProofing: true,
             planning: true,
