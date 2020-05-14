@@ -20092,30 +20092,326 @@
     },
     {
         "_id": "regions",
+        "display_name": "Provinces",
         "type": "manageable",
-        "selection_type": "multi selection",
+        "selection_type": "single selection",
         "unique_field": "qcode",
-        "display_name": "State / Region",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
+        },
+        "service": {
+            "all": 1
+        },
+        "init_version": 2,
         "items": [
             {
+                "name": "Alberta",
+                "qcode": "AB",
                 "is_active": true,
-                "name": "West-Vlaanderen",
-                "qcode": "VWV"
+                "translations": {
+                    "name": {
+                        "en-CA": "Alberta",
+                        "fr-CA": "Alberta"
+                    }
+                }
+            },
+            {
+                "name": "British Columbia",
+                "qcode": "BC",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "British Columbia",
+                        "fr-CA": "Colombie-Britannique"
+                    }
+                }
+            },
+            {
+                "name": "Manitoba",
+                "qcode": "MB",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Manitoba",
+                        "fr-CA":"Manitoba"
+                    }
+                }
+            },
+            {
+                "name": "New Brunswick",
+                "qcode": "NB",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "New Brunswick",
+                        "fr-CA": "Nouveau-Brunswick"
+                    }
+                }
+            },
+            {
+                "name": "Newfoundland and Labrador",
+                "qcode": "NL",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Newfoundland and Labrador",
+                        "fr-CA": "Terre-Neuve-et-Labrador"
+                    }
+                }
+            },
+            {
+                "name": "Nova Scotia",
+                "qcode": "NS",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Nova Scotia",
+                        "fr-CA": "Nouvelle-Écosse"
+                    }
+                }
+            },
+            {
+                "name": "Northwest Territories",
+                "qcode": "NT",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Northwest Territories",
+                        "fr-CA": "Territoires du Nord-Ouest"
+                    }
+                }
+            },
+            {
+                "name": "Nunavut",
+                "qcode": "NU",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Nunavut",
+                        "fr-CA": "Nunavut"
+                    }
+                }
+            },
+            {
+                "name": "Ontario",
+                "qcode": "ON",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Ontario",
+                        "fr-CA": "Ontario"
+                    }
+                }
+            },
+            {
+                "name": "Prince Edward Island",
+                "qcode": "PE",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Prince Edward Island",
+                        "fr-CA": "Île-du-Prince-Édouard"
+                    }
+                }
+            },
+            {
+                "name": "Quebec",
+                "qcode": "QC",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Quebec",
+                        "fr-CA": "Québec"
+                    }
+                }
+            },
+            {
+                "name": "Saskatchewan",
+                "qcode": "SK",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Saskatchewan",
+                        "fr-CA": "Saskatchewan"
+                    }
+                }
+            },
+            {
+                "name": "Yukon",
+                "qcode": "YT",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Yukon",
+                        "fr-CA": "Yukon"
+                    }
+                }
             }
-        ],
-        "helper_text": "The administrative state or region of an address"
+        ]
     },
-    {
+    
+    
+    
+        {
         "_id": "geographical_restrictions",
-        "type": "manageable",
-        "selection_type": "multi selection",
-        "unique_field": "qcode",
         "display_name": "Geographical Restrictions",
+        "type": "manageable",
+        "selection_type": "single selection",
+        "unique_field": "qcode",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "translations": {}
+        },
+        "service": {
+            "all": 1
+        },
+        "init_version": 2,
         "items": [
             {
+                "name": "Alberta",
+                "qcode": "AB",
                 "is_active": true,
-                "name": "West-Vlaanderen",
-                "qcode": "VWV"
+                "translations": {
+                    "name": {
+                        "en-CA": "Alberta",
+                        "fr-CA": "Alberta"
+                    }
+                }
+            },
+            {
+                "name": "British Columbia",
+                "qcode": "BC",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "British Columbia",
+                        "fr-CA": "Colombie-Britannique"
+                    }
+                }
+            },
+            {
+                "name": "Manitoba",
+                "qcode": "MB",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Manitoba",
+                        "fr-CA":"Manitoba"
+                    }
+                }
+            },
+            {
+                "name": "New Brunswick",
+                "qcode": "NB",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "New Brunswick",
+                        "fr-CA": "Nouveau-Brunswick"
+                    }
+                }
+            },
+            {
+                "name": "Newfoundland and Labrador",
+                "qcode": "NL",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Newfoundland and Labrador",
+                        "fr-CA": "Terre-Neuve-et-Labrador"
+                    }
+                }
+            },
+            {
+                "name": "Nova Scotia",
+                "qcode": "NS",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Nova Scotia",
+                        "fr-CA": "Nouvelle-Écosse"
+                    }
+                }
+            },
+            {
+                "name": "Northwest Territories",
+                "qcode": "NT",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Northwest Territories",
+                        "fr-CA": "Territoires du Nord-Ouest"
+                    }
+                }
+            },
+            {
+                "name": "Nunavut",
+                "qcode": "NU",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Nunavut",
+                        "fr-CA": "Nunavut"
+                    }
+                }
+            },
+            {
+                "name": "Ontario",
+                "qcode": "ON",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Ontario",
+                        "fr-CA": "Ontario"
+                    }
+                }
+            },
+            {
+                "name": "Prince Edward Island",
+                "qcode": "PE",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Prince Edward Island",
+                        "fr-CA": "Île-du-Prince-Édouard"
+                    }
+                }
+            },
+            {
+                "name": "Quebec",
+                "qcode": "QC",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Quebec",
+                        "fr-CA": "Québec"
+                    }
+                }
+            },
+            {
+                "name": "Saskatchewan",
+                "qcode": "SK",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Saskatchewan",
+                        "fr-CA": "Saskatchewan"
+                    }
+                }
+            },
+            {
+                "name": "Yukon",
+                "qcode": "YT",
+                "is_active": true,
+                "translations": {
+                    "name": {
+                        "en-CA": "Yukon",
+                        "fr-CA": "Yukon"
+                    }
+                }
             }
         ]
     },
