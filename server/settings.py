@@ -92,3 +92,72 @@ PUBLISH_ASSOCIATED_ITEMS = True
 NEWSML_PROVIDER_ID = 'thecanadianpress.com'
 ORGANIZATION_NAME = env('ORGANIZATION_NAME', 'THE CANADIAN PRESS')
 ORGANIZATION_NAME_ABBREVIATION = env('ORGANIZATION_NAME_ABBREVIATION', 'CP')
+
+# schema for images, video, audio
+SCHEMA = {
+    'picture': {
+        'slugline': {'required': False},
+        'headline': {'required': False},
+        'description_text': {'required': True},
+        'byline': {'required': False},
+        'copyrightnotice': {'required': False},
+        'usageterms': {'required': False},
+        'ednote': {'required': False},
+    },
+    'video': {
+        'slugline': {'required': False},
+        'headline': {'required': False},
+        'description_text': {'required': True},
+        'byline': {'required': True},
+        'copyrightnotice': {'required': False},
+        'usageterms': {'required': False},
+        'ednote': {'required': False},
+    },
+}
+
+# editor for images, video, audio
+EDITOR = {
+    'picture': {
+        'headline': {'order': 1, 'sdWidth': 'full'},
+        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
+        'byline': {'displayOnMediaEditor': True},
+        'copyrightnotice': {'displayOnMediaEditor': True},
+        'slugline': {'displayOnMediaEditor': True},
+        'ednote': {'displayOnMediaEditor': True},
+        'usageterms': {'displayOnMediaEditor': True},
+    },
+    'video': {
+        'headline': {'order': 2, 'sdWidth': 'full'},
+        'description_text': {'order': 3, 'sdWidth': 'full', 'textarea': True},
+        'byline': {'displayOnMediaEditor': True},
+        'copyrightnotice': {'displayOnMediaEditor': True},
+        'slugline': {'displayOnMediaEditor': True},
+        'ednote': {'displayOnMediaEditor': True},
+        'usageterms': {'displayOnMediaEditor': True},
+    },
+}
+
+SCHEMA['audio'] = SCHEMA['video']
+EDITOR['audio'] = EDITOR['video']
+
+# media required fields for upload
+VALIDATOR_MEDIA_METADATA = {
+    "slugline": {
+        "required": False,
+    },
+    "headline": {
+        "required": False,
+    },
+    "description_text": {
+        "required": True,
+    },
+    "byline": {
+        "required": False,
+    },
+    "copyrightnotice": {
+        "required": False,
+    },
+    "usageterms": {
+        "required": False,
+    },
+}
