@@ -85,6 +85,9 @@ GENERATE_SHORT_GUID = True
 
 DEFAULT_URGENCY_VALUE_FOR_INGESTED_ARTICLES = 5
 
+# publishing of associated and related items
+PUBLISH_ASSOCIATED_ITEMS = True
+
 # This value gets injected into NewsML 1.2 and G2 output documents.
 NEWSML_PROVIDER_ID = 'thecanadianpress.com'
 ORGANIZATION_NAME = env('ORGANIZATION_NAME', 'THE CANADIAN PRESS')
