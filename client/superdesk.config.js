@@ -121,6 +121,7 @@ module.exports = function(grunt) {
                 'versioncreated'
             ],
             secondLine: [
+                'language',
                 'state',
                 'update',
                 'scheduledDateTime',
