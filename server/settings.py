@@ -120,20 +120,20 @@ EDITOR = {
     'picture': {
         'headline': {'order': 1, 'sdWidth': 'full'},
         'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'displayOnMediaEditor': True},
-        'copyrightnotice': {'displayOnMediaEditor': True},
+        'byline': {'order': 3, 'displayOnMediaEditor': True},
+        'copyrightnotice': {'order': 4, 'displayOnMediaEditor': True},
         'slugline': {'displayOnMediaEditor': True},
         'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'displayOnMediaEditor': True},
+        'usageterms': {'order': 5,'displayOnMediaEditor': True},
     },
     'video': {
-        'headline': {'order': 2, 'sdWidth': 'full'},
-        'description_text': {'order': 3, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'displayOnMediaEditor': True},
-        'copyrightnotice': {'displayOnMediaEditor': True},
+        'headline': {'order': 1, 'sdWidth': 'full'},
+        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
+        'byline': {'order': 3, 'displayOnMediaEditor': True},
+        'copyrightnotice': {'order': 4,'displayOnMediaEditor': True},
         'slugline': {'displayOnMediaEditor': True},
         'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'displayOnMediaEditor': True},
+        'usageterms': {'order': 5, 'displayOnMediaEditor': True},
     },
 }
 
