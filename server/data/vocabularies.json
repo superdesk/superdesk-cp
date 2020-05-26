@@ -427,7 +427,7 @@
     },
     {
         "_id": "categories",
-        "display_name": "Category",
+        "display_name": "Categories",
         "type": "manageable",
         "unique_field": "qcode",
         "selection_type": "multi selection",
@@ -437,23 +437,24 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 3,
+        "init_version": 4,
 
         "items": 
-        	[
-				{"name": "Advisory","qcode": "Advisory","is_active": true,"translations": {"name": {"en-CA": "Advisory","fr-CA": "Avis"}}},
-				{"name": "Agate","qcode": "Agate","is_active": true,"translations": {"name": {"en-CA": "Agate","fr-CA": "Statistiques"}}},
-				{"name": "Atlantic","qcode": "Atlantic","is_active": true,"translations": {"name": {"en-CA": "Atlantic","fr-CA": "Atlantique"}}},
-				{"name": "Audio Skeds","qcode": "Audio Skeds","is_active": true,"translations": {"name": {"en-CA": "Audio Skeds","fr-CA": "Envois sonores"}}},
-				{"name": "Finance","qcode": "Finance","is_active": true,"translations": {"name": {"en-CA": "Finance","fr-CA": "Finance"}}},
-				{"name": "International","qcode": "International","is_active": true,"translations": {"name": {"en-CA": "International","fr-CA": "International"}}},
-				{"name": "National","qcode": "National","is_active": true,"translations": {"name": {"en-CA": "National","fr-CA": "Nouveleles Generales"}}},
-				{"name": "Ontario/Quebec","qcode": "Ontario/Quebec","is_active": true,"translations": {"name": {"en-CA": "Ontario/Quebec","fr-CA": "Ontario"}}},
-				{"name": "Prairies/BC","qcode": "Prairies/BC","is_active": true,"translations": {"name": {"en-CA": "Prairies/BC","fr-CA": "Quest"}}},
-				{"name": "Press Release","qcode": "Press Release","is_active": true,"translations": {"name": {"en-CA": "Press Release","fr-CA": "Communique"}}},
-				{"name": "Spare News","qcode": "Spare News","is_active": true,"translations": {"name": {"en-CA": "Spare News","fr-CA": "Nouvelles supplementaire"}}},
-				{"name": "Spare Sports","qcode": "Spare Sports","is_active": true,"translations": {"name": {"en-CA": "Spare Sports","fr-CA": "Evenements speciaux"}}},
-				{"name": "Travel","qcode": "Travel","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
+        [
+		{"name": "Advisory","qcode": "m","is_active": true,"translations": {"name": {"en-CA": "Advisory","fr-CA": "Avis"}}},
+		{"name": "Agate","qcode": "r","is_active": true,"translations": {"name": {"en-CA": "Agate","fr-CA": "Statistiques"}}},
+		{"name": "Atlantic","qcode": "a","is_active": true,"translations": {"name": {"en-CA": "Atlantic","fr-CA": "Atlantique"}}},
+		{"name": "Audio Skeds","qcode": "as","is_active": true,"translations": {"name": {"en-CA": "Audio Skeds","fr-CA": "Envois sonores"}}},
+		{"name": "Business","qcode": "b","is_active": true,"translations": {"name": {"en-CA": "Business","fr-CA": "Affaires"}}},
+		{"name": "Finance","qcode": "f","is_active": true,"translations": {"name": {"en-CA": "Finance","fr-CA": "Finance"}}},
+		{"name": "International","qcode": "w","is_active": true,"translations": {"name": {"en-CA": "International","fr-CA": "International"}}},
+		{"name": "National","qcode": "g","is_active": true,"translations": {"name": {"en-CA": "National","fr-CA": "Nouveleles Generales"}}},
+		{"name": "Ontario/Quebec","qcode": "c","is_active": true,"translations": {"name": {"en-CA": "Ontario/Quebec","fr-CA": "Ontario"}}},
+		{"name": "Prairies/BC","qcode": "d","is_active": true,"translations": {"name": {"en-CA": "Prairies/BC","fr-CA": "Quest"}}},
+		{"name": "Press Release","qcode": "p","is_active": true,"translations": {"name": {"en-CA": "Press Release","fr-CA": "Communique"}}},
+		{"name": "Spare News","qcode": "y","is_active": true,"translations": {"name": {"en-CA": "Spare News","fr-CA": "Nouvelles supplementaire"}}},
+		{"name": "Spare Sports","qcode": "x","is_active": true,"translations": {"name": {"en-CA": "Spare Sports","fr-CA": "Evenements speciaux"}}},
+		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
         ]
     }, 
     {
