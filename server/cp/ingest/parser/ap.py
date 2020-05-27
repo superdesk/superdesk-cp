@@ -86,10 +86,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         parsed = []
         available = superdesk.get_resource_service('vocabularies').find_one(req=None, _id='subject_custom')
         for subj in available['items']:
-            if subj.get('ap'):
-                codes = subj['ap'].split(',')
+            if subj.get('ap_subject'):
+                codes = [code.strip() for code in subj['ap_subject'].split(',')]
                 for ap_subj in subject:
                     if any([code for code in codes if ap_subj['code'].startswith(code)]):
+                        print('got', parsed)
                         parsed.append({
                             'name': subj['name'],
                             'qcode': subj['qcode'],
