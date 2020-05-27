@@ -80,6 +80,7 @@ module.exports = function(grunt) {
             editFeaturedImage: false,
             searchShortcut: true,
             elasticHighlight: true,
+            hideCreatePackage: true,
             useTansaProofing: true,
             planning: true,
         },
