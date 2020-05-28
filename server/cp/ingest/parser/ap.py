@@ -90,7 +90,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 codes = [code.strip() for code in subj['ap_subject'].split(',')]
                 for ap_subj in subject:
                     if any([code for code in codes if ap_subj['code'].startswith(code)]):
-                        print('got', parsed)
                         parsed.append({
                             'name': subj['name'],
                             'qcode': subj['qcode'],
