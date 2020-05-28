@@ -45,9 +45,10 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn('editorial use only', item['usageterms'])
 
         subjects = [s['name'] for s in item['subject']]
-        self.assertIn('Science', subjects)
-        self.assertIn('Health', subjects)
-        self.assertIn('Media', subjects)
+        self.assertIn('science and technology', subjects)
+        self.assertIn('health', subjects)
+        self.assertIn('mass media', subjects)
+        self.assertIn('technology and engineering', subjects)
 
         dateline = item['dateline']
         self.assertEqual('Wyoming Tribune Eagle', dateline['source'])
