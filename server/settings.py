@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'apps.languages',
     'planning',
 
+    'superdesk.auth.saml',
     'superdesk.macros.imperial',
 
     'cp.orangelogic',
@@ -55,7 +56,7 @@ if env('REDIS_PORT'):
     REDIS_URL = env('REDIS_PORT').replace('tcp:', 'redis:')
 BROKER_URL = env('CELERY_BROKER_URL', REDIS_URL)
 
-SECRET_KEY = env('SECRET_KEY', '')
+SECRET_KEY = env('SECRET_KEY', os.urandom(32))
 
 # Highcharts Export Server - default settings
 ANALYTICS_ENABLE_SCHEDULED_REPORTS = strtobool(
@@ -161,3 +162,7 @@ VALIDATOR_MEDIA_METADATA = {
         "required": False,
     },
 }
+
+# saml
+SAML_PATH = env('SAML_PATH', os.path.join(ABS_PATH, 'saml'))
+SAML_LABEL = env('SAML_LABEL', 'SSO')
