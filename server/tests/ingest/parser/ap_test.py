@@ -44,6 +44,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn('copyright information', item['copyrightnotice'])
         self.assertIn('editorial use only', item['usageterms'])
 
+        self.assertIn({
+            'name': 'General News',
+            'qcode': 'n',
+        }, item['anpa_category'])
+
         subjects = [s['name'] for s in item['subject']]
         self.assertIn('science and technology', subjects)
         self.assertIn('health', subjects)

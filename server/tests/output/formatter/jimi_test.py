@@ -6,12 +6,13 @@ import lxml.etree as etree
 from pytz import UTC
 from datetime import datetime
 from unittest.mock import patch
-from tests.mock import resources, SEQUENCE_NUMBER
 
 from superdesk.metadata.utils import generate_guid
 
 from cp import HEADLINE2
 from cp.output.formatter.jimi import JimiFormatter
+
+from tests.mock import resources, SEQUENCE_NUMBER
 
 
 class JimiFormatterTestCase(unittest.TestCase):
@@ -33,11 +34,13 @@ class JimiFormatterTestCase(unittest.TestCase):
         'keywords': ['Foo bar', 'baz'],
         'anpa_category': [{'name': 'National', 'qcode': 'n'}],
         'subject': [
-            {'name': 'Health', 'qcode': '0123124', 'scheme': 'subject_custom'},
-            {'name': 'National', 'qcode': '1231245', 'scheme': 'subject_custom'},
+            {'name': 'health', 'qcode': '07000000', 'scheme': 'subject_custom'},
+            {'name': 'citizens', 'qcode': '20000575', 'scheme': 'subject_custom'},
+            {'name': 'made-up', 'qcode': '12345678901234', 'scheme': 'subject_custom'},
             {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
         ],
         'urgency': 2,
+        'language': 'en-CA',
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
@@ -109,10 +112,11 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Foo bar,baz', item.find('Keyword').text)
-        self.assertEqual('Health', item.find('Category').text)
-        self.assertEqual('Health,National', item.find('IndexCode').text)
+        self.assertEqual('National', item.find('Category').text)
+        self.assertEqual('Health,Politics', item.find('IndexCode').text)
         self.assertEqual(str(self.article['urgency']), item.find('RankingValue').text)
         self.assertEqual('News - Need to Know', item.find('Ranking').text)
+        self.assertEqual('1', item.find('Language').text)
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)

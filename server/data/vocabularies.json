@@ -450,14 +450,15 @@
 		{"name": "Finance","qcode": "f","is_active": true,"translations": {"name": {"en-CA": "Finance","fr-CA": "Finance"}}},
 		{"name": "International","qcode": "w","is_active": true,"translations": {"name": {"en-CA": "International","fr-CA": "International"}}},
 		{"name": "Lifestyle","qcode": "l","is_active": true,"translations": {"name": {"en-CA": "Lifestyle","fr-CA": "Documentaries"}}},
-		{"name": "National","qcode": "g","is_active": true,"translations": {"name": {"en-CA": "National","fr-CA": "Nouveleles Generales"}}},
+		{"name": "National","qcode": "g","is_active": true,"translations": {"name": {"en-CA": "National","fr-CA": "Nouvelles Generales"}}},
 		{"name": "Ontario/Quebec","qcode": "c","is_active": true,"translations": {"name": {"en-CA": "Ontario/Quebec","fr-CA": "Ontario"}}},
 		{"name": "Prairies/BC","qcode": "d","is_active": true,"translations": {"name": {"en-CA": "Prairies/BC","fr-CA": "Quest"}}},
 		{"name": "Press Release","qcode": "p","is_active": true,"translations": {"name": {"en-CA": "Press Release","fr-CA": "Communique"}}},
 		{"name": "Spare News","qcode": "y","is_active": true,"translations": {"name": {"en-CA": "Spare News","fr-CA": "Nouvelles supplementaire"}}},
 		{"name": "Spare Sports","qcode": "x","is_active": true,"translations": {"name": {"en-CA": "Spare Sports","fr-CA": "Evenements speciaux"}}},
 		{"name": "Sports","qcode": "s","is_active": true,"translations": {"name": {"en-CA": "Sports","fr-CA": "Sports"}}},
-		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
+		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}},
+		{"name": "General News","qcode": "n","is_active": true,"translations": {"name": {"en-CA": "General News","fr-CA": "Nouvelles Generales"}}}
         ]
     }, 
     {
