@@ -23,6 +23,7 @@ if init_data.exists():
 INSTALLED_APPS = [
     'apps.languages',
     'planning',
+    'analytics',
 
     'superdesk.auth.saml',
     'superdesk.macros.imperial',
