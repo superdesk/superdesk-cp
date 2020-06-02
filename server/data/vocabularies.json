@@ -11,7 +11,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 4,
+        "init_version": 5,
 
         "items": 
         	[
@@ -22,7 +22,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "QuickHit",
-                        "fr-CA": "QuickHit"
+                        "fr-CA": "Abrégé"
                     }
                 }
             },			
@@ -33,7 +33,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Print",
-                        "fr-CA": "Print"
+                        "fr-CA": "Écrit"
                     }
                 }
             },
@@ -44,7 +44,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Broadcast",
-                        "fr-CA": "Broadcast"
+                        "fr-CA": "Radio"
                     }
                 }
             },
@@ -55,7 +55,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "Print / Broadcast",
-                        "fr-CA": "Print / Broadcast"
+                        "fr-CA": "Écrit / Radio"
                     }
                 }
             },
@@ -66,7 +66,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "NewsBase",
-                        "fr-CA": "NewsBase"
+                        "fr-CA": "NewsBase-MTL"
                     }
                 }
             },
@@ -486,7 +486,7 @@
          "qcode": "01000000",
          "parent": null,
          "iptc_subject": "01000000",
-         "ap_subject": "16cb0ba3e6d24d97ace39f5a1924669a ",
+         "ap_subject": "16cb0ba3e6d24d97ace39f5a1924669a",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -531,7 +531,7 @@
          "qcode": "04000000",
          "parent": null,
          "iptc_subject": "04000000",
-         "ap_subject": "c8e409f8858510048872ff2260dd383e ",
+         "ap_subject": "c8e409f8858510048872ff2260dd383e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -561,7 +561,7 @@
          "qcode": "06000000",
          "parent": null,
          "iptc_subject": "06000000",
-         "ap_subject": "8783d248894710048286ba0a2b2ca13e ",
+         "ap_subject": "8783d248894710048286ba0a2b2ca13e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -576,7 +576,7 @@
          "qcode": "07000000",
          "parent": null,
          "iptc_subject": "07000000",
-         "ap_subject": "cc7a76087e4e10048482df092526b43e ",
+         "ap_subject": "cc7a76087e4e10048482df092526b43e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -621,7 +621,7 @@
          "qcode": "10000000",
          "parent": null,
          "iptc_subject": "10000000",
-         "ap_subject": "3e37e4b87df7100483d5df092526b43e ",
+         "ap_subject": "3e37e4b87df7100483d5df092526b43e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -666,7 +666,7 @@
          "qcode": "13000000",
          "parent": null,
          "iptc_subject": "13000000",
-         "ap_subject": "4bf76cb87df7100483dbdf092526b43e, 455ef2b87df7100483d8df092526b43e ",
+         "ap_subject": "4bf76cb87df7100483dbdf092526b43e, 455ef2b87df7100483d8df092526b43e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -681,7 +681,7 @@
          "qcode": "14000000",
          "parent": null,
          "iptc_subject": "14025000",
-         "ap_subject": "75a42fd87df7100483eedf092526b43e ",
+         "ap_subject": "75a42fd87df7100483eedf092526b43e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
@@ -696,7 +696,7 @@
          "qcode": "15000000",
          "parent": null,
          "iptc_subject": "15000000",
-         "ap_subject": "54df6c687df7100483dedf092526b43e ",
+         "ap_subject": "54df6c687df7100483dedf092526b43e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
