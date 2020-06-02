@@ -99,43 +99,47 @@ ORGANIZATION_NAME_ABBREVIATION = env('ORGANIZATION_NAME_ABBREVIATION', 'CP')
 SCHEMA = {
     'picture': {
         'slugline': {'required': False},
+        'categories': {'required': True},
+        'ednote': {'required': False},
         'headline': {'required': False},
         'description_text': {'required': True},
         'byline': {'required': False},
         'copyrightnotice': {'required': False},
         'usageterms': {'required': False},
-        'ednote': {'required': False},
     },
     'video': {
         'slugline': {'required': False},
+        'categories': {'required': True},
+        'ednote': {'required': False},
         'headline': {'required': False},
         'description_text': {'required': True},
-        'byline': {'required': True},
+        'byline': {'required': False},
         'copyrightnotice': {'required': False},
         'usageterms': {'required': False},
-        'ednote': {'required': False},
     },
 }
 
 # editor for images, video, audio
 EDITOR = {
     'picture': {
-        'headline': {'order': 1, 'sdWidth': 'full'},
-        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'order': 3, 'displayOnMediaEditor': True},
-        'copyrightnotice': {'order': 4, 'displayOnMediaEditor': True},
-        'slugline': {'displayOnMediaEditor': True},
-        'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'order': 5, 'displayOnMediaEditor': True},
+        'slugline': {'order': 1, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'categories': {'order': 2, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'ednote': {'order': 3, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'headline': {'order': 4, 'sdWidth': 'full'},
+        'description_text': {'order': 5, 'sdWidth': 'full', 'textarea': True},
+        'byline': {'order': 6, 'displayOnMediaEditor': True},
+        'copyrightnotice': {'order': 7, 'displayOnMediaEditor': True},
+        'usageterms': {'order': 8, 'displayOnMediaEditor': True},
     },
     'video': {
-        'headline': {'order': 1, 'sdWidth': 'full'},
-        'description_text': {'order': 2, 'sdWidth': 'full', 'textarea': True},
-        'byline': {'order': 3, 'displayOnMediaEditor': True},
-        'copyrightnotice': {'order': 4, 'displayOnMediaEditor': True},
-        'slugline': {'displayOnMediaEditor': True},
-        'ednote': {'displayOnMediaEditor': True},
-        'usageterms': {'order': 5, 'displayOnMediaEditor': True},
+        'slugline': {'order': 1, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'categories': {'order': 2, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'ednote': {'order': 3, 'sdWidth': 'full', 'displayOnMediaEditor': True},
+        'headline': {'order': 4, 'sdWidth': 'full'},
+        'description_text': {'order': 5, 'sdWidth': 'full', 'textarea': True},
+        'byline': {'order': 6, 'displayOnMediaEditor': True},
+        'copyrightnotice': {'order': 7, 'displayOnMediaEditor': True},
+        'usageterms': {'order': 8, 'displayOnMediaEditor': True},
     },
 }
 
@@ -146,6 +150,9 @@ EDITOR['audio'] = EDITOR['video']
 VALIDATOR_MEDIA_METADATA = {
     "slugline": {
         "required": False,
+    },
+    "categories": {
+        "required": True,
     },
     "headline": {
         "required": False,
