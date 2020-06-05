@@ -26,6 +26,7 @@ module.exports = function(grunt) {
         
         langOverride: {
             'en': {
+                'Take Key': 'Writethru',
                 'update': '1st Writethru',
                 '2nd update': '2nd Writethru',
                 '3rd update': '3rd Writethru',
@@ -48,6 +49,7 @@ module.exports = function(grunt) {
                 '20th update': '20th Writethru'
             },
             'fr_CA': {
+                'Take Key': 'Writethru',
                 'update': '1st Writethru',
                 '2nd update': '2nd Writethru',
                 '3rd update': '3rd Writethru',
