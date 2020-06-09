@@ -91,6 +91,8 @@ module.exports = function(grunt) {
             analytics: true,
             planning: true,
             assignments: true,
+            ingest: true,
+            content: true,
         },
         
         search: {
