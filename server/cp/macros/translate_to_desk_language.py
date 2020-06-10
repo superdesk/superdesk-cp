@@ -32,7 +32,8 @@ def translate_to_desk_language(item, **kwargs):
         item['language'] = 'fr-CA'
 
 
-label = 'Translate To Desk Language'
+name = 'Translate To Desk Language'
+label = name
 callback = translate_to_desk_language
 access_type = 'frontend'
 action_type = 'direct'
