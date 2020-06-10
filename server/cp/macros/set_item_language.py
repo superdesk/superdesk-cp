@@ -18,19 +18,19 @@ logger = logging.getLogger(__name__)
 def set_item_language(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
 
-    dest_desk_id = kwargs.get('desk').get('_id')
+    dest_desk = kwargs.get('desk')
     item_source = item.get('source')
 
-    if dest_desk_id and item_source:
-        desk = get_resource_service('desks').find_one(req=None, _id=dest_desk_id)
+    if dest_desk and item_source:
         if item_source == 'THE CANADIAN PRESS':
             return
-        elif desk.get('desk_language') == 'fr-CA':
+        elif dest_desk.get('desk_language') == 'fr-CA':
             item['language'] = 'fr-CA'
-        elif desk.get('desk_language') == 'en-CA' and item.get('language') != 'fr-CA':
+        elif dest_desk.get('desk_language') == 'en-CA' and item.get('language') != 'fr-CA':
             item['language'] = 'en-CA'
     elif kwargs['desk'].get('desk_language') == 'fr-CA':
         item['language'] = 'fr-CA'
+
 
 name = 'Set Item Language'
 label = name
