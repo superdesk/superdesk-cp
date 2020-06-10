@@ -15,7 +15,7 @@ from superdesk import get_resource_service
 logger = logging.getLogger(__name__)
 
 
-def set_item_language(item, **kwargs):
+def translate_to_desk_language(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
 
     dest_desk = kwargs.get('desk')
@@ -32,8 +32,7 @@ def set_item_language(item, **kwargs):
         item['language'] = 'fr-CA'
 
 
-name = 'Set Item Language'
-label = name
-callback = set_item_language
+label = 'Translate To Desk Language'
+callback = translate_to_desk_language
 access_type = 'frontend'
 action_type = 'direct'
