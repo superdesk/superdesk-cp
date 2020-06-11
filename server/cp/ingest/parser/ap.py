@@ -97,3 +97,14 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                             'translations': subj['translations'],
                         })
         return parsed
+
+    def _map_category_codes(self, item):
+        cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id='categories')
+        codes = [cat['qcode'] for cat in item['anpa_category']]
+        if cv:
+            item['anpa_category'] = [
+                {
+                    'name': cat['name'],
+                    'qcode': cat['qcode'],
+                } for cat in cv['items'] if cat.get('qcode') in codes
+            ]

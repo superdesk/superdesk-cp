@@ -74,6 +74,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'BreakWordCount').text = word_count
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
+        etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language') else '1'
 
         # extra
         extra = item.get('extra') or {}
@@ -81,15 +82,8 @@ class JimiFormatter(Formatter):
         if extra.get(HEADLINE2):
             etree.SubElement(content, 'Headline2').text = extra[HEADLINE2]
 
-        subjects = [
-            s['name'] for s in item.get('subject', [])
-            if s.get('name') and s.get('scheme') in (None, 'subject_custom')
-        ]
-
-        if subjects:
-            etree.SubElement(content, 'Category').text = subjects[0]
-            etree.SubElement(content, 'IndexCode').text = ','.join(subjects)
-
+        self._format_index(content, item)
+        self._format_category(content, item)
         self._format_urgency(content, item.get('urgency'))
         self._format_keyword(content, item.get('keywords'))
         self._format_dateline(content, item.get('dateline'))
@@ -160,3 +154,48 @@ class JimiFormatter(Formatter):
                 pass
         else:
             etree.SubElement(content, 'Placeline')
+
+    def _format_index(self, content, item):
+        SUBJECTS_ID = 'subject_custom'
+        cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id=SUBJECTS_ID)
+
+        codes = [
+            s['qcode'] for s in item.get('subject', [])
+            if s.get('name') and s.get('scheme') in (None, SUBJECTS_ID)
+        ]
+
+        names = self._resolve_names(codes, cv, item.get('language'))
+
+        if names:
+            etree.SubElement(content, 'IndexCode').text = ','.join(names)
+
+    def _resolve_names(self, codes, cv, language):
+        names = []
+        for code in codes:
+            item = _find_jimi_item(code, cv['items'])
+            if item:
+                names.append(_get_name(item, language))
+        return names
+
+    def _format_category(self, content, item):
+        try:
+            etree.SubElement(content, 'Category').text = item['anpa_category'][0]['name']
+        except (KeyError):
+            pass
+
+
+def _find_jimi_item(code, items):
+    for item in items:
+        if item.get('qcode') == code:
+            if item.get('in_jimi'):
+                return item
+            elif item.get('parent'):
+                return _find_jimi_item(item['parent'], items)
+            break
+
+
+def _get_name(item, language):
+    try:
+        return item['translations']['name'][language]
+    except (KeyError, ):
+        return item['name']
