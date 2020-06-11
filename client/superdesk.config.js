@@ -88,6 +88,10 @@ module.exports = function(grunt) {
             noPublishOnAuthoringDesk: true,
             autorefreshContent: true,
         },
+        
+        item_profile: {
+            change_profile: 1
+        },
 
         workspace: {
             analytics: true,
