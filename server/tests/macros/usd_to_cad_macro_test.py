@@ -32,26 +32,39 @@ class USD2CADMacroTestCase(unittest.TestCase):
 
     def test_convertions(self):
         test = {
+            # us notation
             '$52': 'C$69.10',
             '$52.34': 'C$69.51',
             '$56': 'C$74.40',
             '$52 million': 'C$69.10 million',
+            '$52 billion': 'C$69.10 billion',
+            '$52 trillion': 'C$69.10 trillion',
             'US$52': 'C$69.10',
             'US$52.34': 'C$69.51',
             '$ 52': 'C$69.10',
             'US$ 52': 'C$69.10',
             'US$300 (C$394)': '',
+            '$200,000': 'C$265,620',
+
+            # ignore
             'C$69': '',
             '123': '',
             'C$500': '',
             'C$ 120': '',
             'ABC$120': '',
+
+            # specific
             'foo $100 foo': {'key': ' $100', 'repl': 'C$132.80'},
             ' $200.': {'key': ' $200', 'repl': 'C$265.60'},
+
+            # french notation
             '52,34 millions $': '69,51 millions $ CAN',
+            '52,34 billions $': '69,51 billions $ CAN',
+            '52,34 trillions $': '69,51 trillions $ CAN',
             '52,34 $': '69,51 $ CAN',
             '52,34 $ US': '69,51 $ CAN',
             '2,24$': '2,97 $ CAN',
+            '200 000 $': '265 620 $ CAN',
         }
 
         item = {'body_html': '\n'.join(test.keys())}
