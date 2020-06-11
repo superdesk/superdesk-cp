@@ -1,4 +1,5 @@
 
+import cp
 import superdesk
 import lxml.etree as etree
 
@@ -7,7 +8,7 @@ from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
 
-from cp import HEADLINE2
+import cp.ingest.parser.globenewswire as globenewswire
 
 
 DEFAULT_DATETIME = '0001-01-01T00:00:00'
@@ -27,13 +28,19 @@ class JimiFormatter(Formatter):
         return format_type == 'jimi'
 
     def format(self, article, subscriber, codes=None):
-        pub_seq_num = superdesk.get_resource_service('subscribers').generate_sequence_number(subscriber)
-        root = etree.Element('Publish')
-        self._format_item(root, article, pub_seq_num)
-        xml = etree.tostring(root, pretty_print=True, encoding=self.ENCODING, xml_declaration=True)
-        return [(pub_seq_num, xml.decode(self.ENCODING))]
+        output = []
+        services = [s.get('name') for s in article.get('subject') or [] if s.get('scheme') == cp.SERVICE]
+        if not services:
+            services.append(None)
+        for service in services:
+            pub_seq_num = superdesk.get_resource_service('subscribers').generate_sequence_number(subscriber)
+            root = etree.Element('Publish')
+            self._format_item(root, article, pub_seq_num, service, services)
+            xml = etree.tostring(root, pretty_print=True, encoding=self.ENCODING, xml_declaration=True)
+            output.append((pub_seq_num, xml.decode(self.ENCODING)))
+        return output
 
-    def _format_item(self, root, item, pub_seq_num):
+    def _format_item(self, root, item, pub_seq_num, service, services):
         content = etree.SubElement(root, 'ContentItem')
 
         # root system fields
@@ -44,7 +51,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(root, 'Services').text = 'Print'
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
-        etree.SubElement(root, 'PscCodes').text = 'ap---'
+        etree.SubElement(root, 'PscCodes').text = 'ap---' if not service else service
 
         # content system fields
         etree.SubElement(content, 'Name')
@@ -53,6 +60,9 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'FileName').text = str(item['family_id'])
         etree.SubElement(content, 'NewsCompID').text = str(item['family_id'])
         etree.SubElement(content, 'SystemSlug').text = str(item['family_id'])
+
+        if service:
+            etree.SubElement(content, 'Note').text = ','.join(services)
 
         # timestamps
         firstpublished = item.get('firstpublished') or item['versioncreated']
@@ -76,11 +86,14 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language') else '1'
 
+        if item.get('keywords') and item.get('source') == globenewswire.SOURCE:
+            etree.SubElement(content, 'Stocks').text = ','.join(item['keywords'])
+
         # extra
         extra = item.get('extra') or {}
 
-        if extra.get(HEADLINE2):
-            etree.SubElement(content, 'Headline2').text = extra[HEADLINE2]
+        etree.SubElement(content, 'Headline2').text = extra.get(cp.HEADLINE2) if extra.get(cp.HEADLINE2) \
+            else item['headline']
 
         self._format_index(content, item)
         self._format_category(content, item)
@@ -168,6 +181,8 @@ class JimiFormatter(Formatter):
 
         if names:
             etree.SubElement(content, 'IndexCode').text = ','.join(names)
+        else:
+            etree.SubElement(content, 'IndexCode')
 
     def _resolve_names(self, codes, cv, language):
         names = []

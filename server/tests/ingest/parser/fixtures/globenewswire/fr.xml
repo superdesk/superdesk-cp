@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:202005267925935-fr" version="1" xml:lang="fr-FR" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2020 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2020-05-26T15:31:00+00:00</versionCreated>
+    <firstCreated>2020-05-26T15:31:00+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:CDNPR" />
+    <service qcode="MWNetwork:ESTPR" />
+    <title role="MWTitleRole:PATopicKeyword">Miscellaneous  Vancouver, BC, Canada</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2020-05-26T15:31:00+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Vancouver, BC, Canada" />
+    <subject qcode="MWSubject:MIS" type="cpnat:abstract">
+      <name>Miscellaneous</name>
+    </subject>
+    <subject literal="TELUS Communications Inc" type="cpnat:organisation" relevance="100">
+      <name>TELUS Communications Inc</name>
+    </subject>
+    <subject qcode="MWIndustry:MIS" type="cpnat:abstract">
+      <name>Miscellaneous\Miscellaneous</name>
+      <broader qcode="MWIndustry:MI" type="cpnat:abstract">
+        <name>Miscellaneous</name>
+      </broader>
+    </subject>
+    <headline>CORRECTION ET MISE À JOUR - Les réseaux mobiles dans les régions rurales au Canada sont parmi les plus rapides au monde</headline>
+    <description role="MWdrole:abstract">Les vitesses de téléchargement en régions rurales du Canada se classent parmi les plus élevées au monde, surpassant celles de cinq pays du G7 selon le rapport The state of rural Canada’s Mobile Network Experience1 d’Opensignal. Affichant une...</description>
+    <language tag="fr-FR" />
+    <keyword role="MWKeyRole:Ticker" relevance="100">TSX:T</keyword>
+    <keyword role="MWKeyRole:Ticker" relevance="100">NYSE:TU</keyword>
+  </contentMeta>
+  <assert literal="TELUS Communications Inc">
+    <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/3d6f4d2a-ef5f-4f6e-a4ab-40fa71612131" >
+      <name>TELUS Communications Inc</name>
+    </remoteInfo>
+    <related rel="MWFinRel:Instrument" qcode="ISIN:CA87971M1032"  />
+    <related rel="MWFinRel:Instrument" literal="T" >
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:TSX">
+        <name>Toronto Stock Exchange</name>
+      </related>
+    </related>
+    <related rel="MWFinRel:Instrument" literal="TU" >
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:NYSE">
+        <name>New York Stock Exchange</name>
+      </related>
+    </related>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>CORRECTION ET MISE À JOUR - Les réseaux mobiles dans les régions rurales au Canada sont parmi les plus rapides au monde</title>
+</head>
+<body>
+<h1>
+CORRECTION ET MISE À JOUR - Les réseaux mobiles dans les régions rurales au Canada sont parmi les plus rapides au monde
+</h1>
+<div class="mw_release"><p align="left">Le communiqué suivant corrige et remplace le communiqué de presse intitulé "Le Canada arrive au deuxième rang des pays du G7 pour les vitesses de téléchargement mobiles dans les régions rurales" diffusé le 26 mai 2020 à 9:00 AM HAE par TELUS Communications Inc. La version complète et corrigée suit :<br /> </p>  <p align="center"><strong>Les réseaux mobiles dans les régions rurales au Canada sont parmi les plus rapides au monde</strong></p>  <p align="center"><em>TELUS offre le réseau le plus rapide dans les régions rurales du pays</em></p>  <p align="center"><em>Les vitesses de téléchargement dans les zones rurales au Canada se classent deuxième parmi les pays du G7</em></p>  <p align="center"><em>Les investissements technologiques soutenus de TELUS dans son réseau en régions rurales ont permis une augmentation de 71 % des vitesses de téléchargement sur un an</em></p>  <p>TORONTO,  26 mai 2020  (GLOBE NEWSWIRE) -- Les vitesses de téléchargement en régions rurales du Canada se classent parmi les plus élevées au monde, surpassant celles de cinq pays du G7 selon le rapport <a href="https://www.globenewswire.com/Tracker?data=XrMdNZPALCx-l6TtmYEzsSs0D8fSQporq2oeUnRDfucWUm0aDGLCTTvMfTb-Hs3BMGfo03wiFPBz09EGs3o8shXkHBHcFb0JzKYsZmdpbDnUUPBKy_zoh1vq7RqDsApZ-BLo53ZhJfXDcMwXWYRuKVBMEbZcmX1vM-6nP3VFI0TN895n1pyEWaasWGfimRiEB9G3WX1uL0FVAn3-LxGM_6CjnWrrtM010RJmmgsnJqo=" rel="nofollow" target="_blank">The state of rural Canada’s Mobile Network Experience</a><sup>1</sup> d’Opensignal. Affichant une vitesse globale de 48 Mbit/s, le réseau de TELUS a été désigné le plus rapide dans les régions rurales du Canada. Parmi les pays du G7, seuls les utilisateurs japonais profitaient de vitesses supérieures à celles offertes aux Canadiens dans certaines régions rurales, la vitesse globale de téléchargement dans les régions rurales japonaises étant de 49 Mbit/s. Les Canadiens qui utilisent le réseau de TELUS ont constaté l’augmentation la plus importante (71 %) des vitesses de téléchargement au premier trimestre de 2020 par rapport à 2019.</p>  <p>« Comme plus de 7,5 millions de Canadiens vivent en milieu rural, le rapport publié aujourd’hui par la société britannique Opensignal met en évidence toute l’importance que revêt l’expérience réseau de calibre mondial qu’offre TELUS, en particulier dans ce contexte inédit où la population dépend plus que jamais d’une connexion Internet pour travailler, apprendre, accéder à des soins et socialiser à distance », déclare Darren Entwistle, président et chef de la direction de TELUS. « Par ailleurs, les Canadiens des régions rurales ont profité de vitesses de téléchargement jusqu’à 110 % supérieures à celles offertes dans les autres pays du G7, sauf un. Cela est particulièrement impressionnant si l’on considère l’étendue et la configuration du territoire canadien. Bravo à nos ingénieurs, informaticiens et techniciens de talent à qui nous devons cette réalisation! Grâce à eux, tous les Canadiens ont accès à des ressources, à des informations et à des personnes essentielles. »</p>  <p>« Malgré la marque de reconnaissance d’Opensignal à l’égard de la qualité des réseaux canadiens en régions rurales et les nombreuses récompenses reçues par TELUS au cours des années pour ses réseaux de communication de premier ordre, nous recherchons toujours activement à élargir et à améliorer la couverture en milieu rural pour permettre aux Canadiens d’accéder à des services essentiels à distance, qu’il s’agisse de la connectivité des petites entreprises, de l’agriculture intelligente ou de la santé numérique », a poursuivi M. Entwistle. « La distinction d’OpenSignal s’ajoute à celles reçues par les firmes Tutela, J.D. Power, Ookla et PCMag, et est un rappel significatif du rôle essentiel que nous jouons pour connecter les citoyens aux ressources, à l’information et aux personnes qui comptent le plus pour eux. »</p>  <p>Il convient de noter que dans le dernier rapport d’Opensignal, <a href="https://www.globenewswire.com/Tracker?data=vPctHjnD3_Cx8XkCk1Czh7q9zCAjO8bK4INJM0159ndcEcZVl59t7DaazLdTEa05CNFoGp75FcYE10CfkA9CAZWQsYvyJJ2WYSzPYaYLVJZRy6UV2XufE5o915gryxoDEhItrwAoV3LktAG4bFz9gzI6Nfk5NIciz8gTznzNT8towA85MeEzytmfjJ-5-RiK" rel="nofollow" target="_blank">State of Mobile Network Experience 2020</a><sup>2</sup>, les vitesses de téléchargement moyennes au Canada dépassent légèrement celles de la Corée du Sud (59,6 Mbit/s pour le Canada et 59,0 Mbit/s pour la Corée du Sud), démontrant la force inégalée des réseaux mobiles canadiens. En 2019, les réussites de TELUS ont été saluées par d’autres experts du secteur, dont Opensignal, Ookla, J.D. Power, PCMag et Tutela. Ces honneurs viennent garnir une feuille de route déjà remarquable. En effet, TELUS a obtenu le premier rang dans quatre des cinq principaux rapports sur les réseaux mobiles pour au moins la troisième année consécutive.</p>  <p>Depuis 2000, TELUS a investi près de 200 milliards de dollars dans ses infrastructures réseau, ses licences de spectre et ses activités afin d’améliorer la couverture, la vitesse et la fiabilité de son réseau de calibre mondial et de connecter ses clients d’un océan à l’autre. Elle s’est par ailleurs engagée à investir, au cours des trois prochaines années, 40 milliards de dollars de plus dans les composants technologiques essentiels au déploiement des réseaux 5G, qui stimuleront l’innovation et le développement du numérique dans tous les pans de l’économie à l’ère de l’hyperconnectivité. Connecter les collectivités rurales nécessite l'effort et l'investissement conjoints des fournisseurs dotés d'installations et des gouvernements pour s'assurer que tous les Canadiens aient accès à une couverture, à une vitesse et à une fiabilité exemplaires.</p>  <p><strong>À propos de TELUS </strong><br />TELUS (TSX : T, NYSE : TU) est une société dynamique spécialisée en technologies de l’information et des communications et un chef de file mondial, grâce à des produits d’exploitation annuels de 14,8 milliards de dollars et à 15,3 millions de connexions clients à ses services mobiles, ses services de transmission de données et de la voix, ses services IP et ses services de télévision, de vidéo, de divertissement et de sécurité. À TELUS, nous exploitons le potentiel de notre technologie pour produire des retombées remarquables sur le plan humain. Nous accordons depuis longtemps la priorité aux clients. Cette orientation transparaît dans toutes nos sphères d’activité et nous a valu de devenir un indéniable chef de file de la fidélisation et du service à la clientèle. TELUS Santé est le fournisseur de TI le plus important dans le secteur de la santé au Canada, et TELUS International fournit les solutions de processus opérationnels les plus novatrices qui soient à de grandes entreprises bien établies à l’échelle mondiale.</p>  <p>Fidèles à la philosophie communautaire solidement ancrée « Nous donnons où nous vivons » de l’entreprise et à sa vocation sociale de connecter avec passion tous les Canadiens pour un monde meilleur, les membres de l’équipe TELUS, actuels et retraités, ont offert plus de 736 millions de dollars et 1,4 million de jours de bénévolat à la collectivité depuis 2000. La générosité sans précédent des membres de l’équipe et leur incroyable action bénévole ont d’ailleurs fait de TELUS l’entreprise la plus généreuse au monde.</p>  <p>Pour en savoir plus sur TELUS, visitez telus.com ou suivez-nous sur Twitter (@TELUSNouvelles) et sur Instagram (@Darren_Entwistle).</p>  <p align="left"><br /><strong>Pour en savoir plus, veuillez communiquer avec :</strong><br />Stéphanie Dussault<br /> Relations médiatiques de TELUS<br /> stephanie.dussault@telus.com</p>  <hr />  <p><sup>1</sup>Opensignal – <a href="https://www.globenewswire.com/Tracker?data=XrMdNZPALCx-l6TtmYEzsSs0D8fSQporq2oeUnRDfucWUm0aDGLCTTvMfTb-Hs3BMGfo03wiFPBz09EGs3o8svsZeWFrgngNiTP2LGWjAgr8QCfr3hcB_MKJxMQPoaZCgyFX9y9vKrXdBvZyjeqRxN5aXMMO8R_a0jRrNEa38a60yRvedj1q94xfNJEK53gG7NBIj72rf05S2D3XqFfo3IjaxJq28npRwXaYu-ISo7RSLjr5TNJQOfpgEFs2uvzA" rel="nofollow" target="_blank">The state of rural Canada’s Mobile Network Experience</a>, mai 2020, selon une analyse indépendante des mesures de performance de réseau mobile enregistrées du 1<sup>er</sup> janvier au 30 mars 2020 © 2020 Opensignal Limited.<br /></p>  <p><sup>2</sup>Opensignal – <a href="https://www.globenewswire.com/Tracker?data=5kXoFBHNcqIMHhZuY06_WFbcIxWqWqv57TLVUlmqvmj_2_C0EzKiR1WK9FbsrULxhEDEj3j1gj12gONOBmeyu46GKdxGRh-Fy6OyWQdlozZQ6mTQm3qLjILvBv0c86Q6i-7PaWZVvPuRqM6resYM2o1y-6GihPg9J0mML4pWIWodhI8R83HpMrpWaTCDgc-GNRQugE0fFWMFEXCCjZiJ9DBP4UCHSjAxs8Quvo8ITxY=" rel="nofollow" target="_blank">The State of Mobile Network Experience 2020: One year into the 5G era</a>, mai 2020, selon une analyse indépendante des mesures de performance de réseau mobile enregistrées du 1<sup>er</sup> janvier au 30 mars 2020 © 2020 Opensignal Limited.</p> <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=NzkyNjA0NiMzNTIzOTM5IzIwMDY2Mzg=" width="1" height="1"/></div><div class="mw_contactinfo">
+
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>
