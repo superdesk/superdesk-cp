@@ -45,6 +45,7 @@
     <description role="MWdrole:abstract">ARROW Exploration Corp. (“Arrow” or the “Company”) (TSXV: AXL) announces the issuance last evening of a total of 150,000 stock options (“Options”), pursuant to the Company’s Stock Option Plan (the “Plan”) to a Director, previously appointed as...</description>
     <language tag="en-US" />
     <keyword role="MWKeyRole:Ticker" relevance="100">TSX VENTURE:AXL</keyword>
+    <keyword role="MWKeyRole:Ticker" relevance="100">OTC:NTGSF</keyword>
   </contentMeta>
   <assert literal="Arrow Exploration Corp.">
     <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/c52f529a-bec2-467e-8ce4-cb75ddc3652c" >

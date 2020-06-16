@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power" guid="urn:newsml:marketwired.com:20020408:202006097942547-en" version="1" xml:lang="en-US" xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml" />
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml" />
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com" />
+    <copyrightNotice>© 2020 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text" />
+    <provider literal="globenewswire.com" />
+    <versionCreated>2020-06-09T11:30:10+00:00</versionCreated>
+    <firstCreated>2020-06-09T11:30:10+00:00</firstCreated>
+    <pubStatus qcode="stat:usable" />
+    <service qcode="MWNetwork:CDNPR" />
+    <service qcode="MWNetwork:ESTPR" />
+    <service qcode="MWNetwork:TSXVO" />
+    <service qcode="MWNetwork:TSXVP" />
+    <service qcode="MWNetwork:TSXVQ" />
+    <title role="MWTitleRole:PATopicKeyword">Financing Agreements  Toronto, ON, Canada</title>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2020-06-09T11:30:10+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Toronto, ON, Canada" />
+    <subject qcode="MWSubject:FNC" type="cpnat:abstract">
+      <name>Financing Agreements</name>
+    </subject>
+    <subject literal="Auxly Cannabis Group Inc." type="cpnat:organisation" relevance="100">
+      <name>Auxly Cannabis Group Inc.</name>
+    </subject>
+    <subject qcode="MWIndustry:PBBI" type="cpnat:abstract">
+      <name>Pharmaceuticals and Biotech\Biotech</name>
+      <broader qcode="MWIndustry:PB" type="cpnat:abstract">
+        <name>Biotech</name>
+      </broader>
+    </subject>
+    <headline>Auxly Closes $3 Million Third Tranche of Financing</headline>
+    <description role="MWdrole:abstract">Auxly Cannabis Group Inc. (TSX.V: XLY) (OTCQX: CBWTF) (“Auxly” or the “Company”) has issued an additional $3 million worth of unsecured convertible debentures (collectively, the “Third Tranche”) under its $25 million unsecured convertible debenture...</description>
+    <language tag="en-US" />
+    <keyword role="MWKeyRole:Ticker" relevance="100">TSX VENTURE:XLY</keyword>
+    <keyword role="MWKeyRole:Ticker" relevance="100">OTC:CBWTF</keyword>
+  </contentMeta>
+  <assert literal="Auxly Cannabis Group Inc.">
+    <remoteInfo contenttype="image/jpg" href="https://www.globenewswire.com/NewsRoom/AttachmentNg/a197bba4-be10-4859-8393-cfd5cd36ce6d" >
+      <name>Auxly Cannabis Group Inc.</name>
+    </remoteInfo>
+    <related rel="MWFinRel:Instrument" qcode="ISIN:CA05335P1099"  />
+    <related rel="MWFinRel:Instrument" literal="XLY" >
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:TSX VENTURE">
+        <name>TSX Venture Exchange</name>
+      </related>
+    </related>
+    <related rel="MWFinRel:Instrument" literal="CBWTF" >
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:OTC">
+        <name>Over-the-counter (US)</name>
+      </related>
+    </related>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Auxly Closes $3 Million Third Tranche of Financing</title>
+</head>
+<body>
+<h1>
+Auxly Closes $3 Million Third Tranche of Financing
+</h1>
+<div class="mw_release"><p align="justify">TORONTO, June  09, 2020  (GLOBE NEWSWIRE) -- <strong>Auxly Cannabis Group Inc. (TSX.V: XLY) (OTCQX: CBWTF) </strong>(“<strong>Auxly</strong>” or the “<strong>Company</strong>”) has issued an additional $3 million worth of unsecured convertible debentures (collectively, the “<strong>Third Tranche</strong>”) under its $25 million unsecured convertible debenture standby facility with an institutional investor (the “<strong>Investor</strong>”) as previously announced on April 28, 2020 (the “<strong>Original Offering</strong>”).<br /></p>      <p align="justify">Under the Third Tranche, the convertible debentures issued to the Investor have a conversion price of $0.38 per common share of the Company (each a “<strong>Common Share</strong>”), and the Investor received warrants to purchase 4,342,105 Common Shares until June 8, 2022 at an exercise price of $0.46 per Common Share. Each convertible debenture will mature on June 8, 2022 and will bear guaranteed interest from the date of issue at 7.5% per annum, payable semi-annually on June 30 and December 31 of each year and has the same terms and conditions as described in the Original Offering and the transaction documents filed on the Company’s SEDAR profile.</p>      <p align="justify">In connection with the completion of the Third Tranche, the Company has agreed to indemnify (the “<strong>Indemnity</strong>”) certain of its directors and officers for any and all losses not otherwise recoverable from the collateral provided by the Investor for the Common Shares provided by such directors and officers to the Investor pursuant to the terms of the investment agreement. The Indemnity may constitute a related party transaction under Multilateral Instrument 61-101 – <em>Protection of Minority Security Holders in Special Transactions</em> ("<strong>MI 61-101</strong>") but is otherwise exempt from the formal valuation and minority approval requirements of MI 61-101. The Indemnity has been approved by the independent directors of the Company. No special committee was established in connection with the Original Offering, the completion of the Third Tranche or the granting of the Indemnity, and no materially contrary view or abstention was expressed or made by any director of the Company in relation thereto. Further details will be included in a material change report that will be filed by the Company in connection with the completion of the Third Tranche. The Company did not file the material change report more than 21 days before the expected closing date of the Third Tranche as the details of the Third Tranche and the terms of the Indemnity were not settled until shortly prior to the closing of the Third Tranche, and the Company wished to complete the Third Tranche on an expedited basis for sound business reasons. </p>      <p align="justify">All securities issued by the Company under the Third Tranche are subject to a statutory four-month hold period in accordance with applicable securities legislation and final approval of the TSX Venture Exchange. </p>      <p align="justify">AltaCorp Capital Inc. is acting as exclusive agent on the Third Tranche.</p>      <p align="justify">This news release does not constitute an offer to sell, or a solicitation of an offer to buy, any of the securities referenced herein in the United States. The securities referenced herein have not been and will not be registered under the United States Securities Act of 1933, as amended (the "<strong>U.S. Securities Act</strong>") or any state securities laws and may not be offered or sold within the United States or to U.S. Persons unless registered under the U.S. Securities Act and applicable state securities laws or an exemption from such registration is available.</p>      <p align="justify">ON BEHALF OF THE BOARD</p>      <p align="justify">"Hugo Alves" CEO</p>      <p><strong>About Auxly Cannabis Group Inc. (TSX.V: XLY) (OTCQX: CBWTF)</strong></p>      <p align="justify">Auxly is an international cannabis company dedicated to bringing innovative, effective, and high-quality cannabis products to the medical, wellness and adult-use markets. Auxly's experienced team of industry first-movers and enterprising visionaries has secured a diversified supply of raw cannabis, strong clinical, scientific and operating capabilities and leading product research and development infrastructure in order to create trusted products and brands in an expanding global market.</p>      <p align="justify">Learn more at <a href="https://www.globenewswire.com/Tracker?data=tFeWWncO-46MlN7tbnhvszFDkDcAB9Vv2v0CI34vj29Vi5OYEgop29PqsnWQZszgeYdgImoqqbFnjl3uzBjQpg==" rel="nofollow" target="_blank">www.auxly.com</a> and stay up to date at Twitter: @AuxlyGroup; Instagram: @auxlygroup; Facebook: @auxlygroup; LinkedIn: company/auxlygroup/.</p>      <p align="justify"><strong>Investor Relations:</strong><br />For investor enquiries please contact our Investor Relations Team: <br />Email: <a href="https://www.globenewswire.com/Tracker?data=SGa1xMPSymXRfxu8YWoRLIE_J9Sg2VkcLmhXplqaxbXpUKbwp0p4UZKnSUE22BcT6LfJJcj10uwyxS1eReQYww==" rel="nofollow" target="_blank"><u>IR@auxly.com</u></a><br />Phone: 1.833.695.2414</p>      <p align="justify"><strong>Media Enquiries (only): </strong><br />For media enquiries or to set up an interview please contact:<br />Email: <a href="https://www.globenewswire.com/Tracker?data=Uzx39l-_dHedDMGtX7HoUAdHh9tJ3Hk8ZFbv0h9OzsWGElRYg3jHZsEJZMEw8V6zeL_Q_lL5K3ck9VB0chiBcA==" rel="nofollow" target="_blank"><u>press@auxly.com</u></a> </p>      <p><strong>Notice Regarding Forward Looking Information </strong></p>      <p align="justify">This news release contains certain "forward-looking information" within the meaning of applicable Canadian securities law. Forward-looking information is frequently characterized by words such as "plan", "continue", "expect", "project", "intend", "believe", "anticipate", "estimate", "may", "will", "potential", "proposed" and other similar words, or information that certain events or conditions "may" or "will" occur. This information is only a prediction. Various assumptions were used in drawing the conclusions or making the projections contained in the forward-looking information throughout this news release. Forward-looking information in this press release includes, but is not limited to: the expected use of proceeds of the offering by the Company; obtaining the necessary regulatory approval for the offering; political change; future legislative and regulatory developments involving cannabis and cannabis products; and competition and other risks affecting Auxly in particular and the cannabis industry generally.</p>      <p align="justify">A number of factors could cause actual results to differ materially from a conclusion, forecast or projection contained in the forward-looking information included in this release including, but not limited to: whether the Company can complete the offering on the anticipated terms and timeline; the ability to obtain regulatory approval of the offering on the proposed terms and timeline; and general economic, financial market, legislative, regulatory, competitive and political conditions in which Auxly operates will remain the same. Additional risk factors are disclosed in the revised annual information form of Auxly for the financial year ended December 31, 2019 dated May 13, 2020.</p>      <p align="justify">New factors emerge from time to time, and it is not possible for management to predict all of those factors or to assess in advance the impact of each such factor on Auxly's business or the extent to which any factor, or combination of factors, may cause actual results to differ materially from those contained in any forward-looking information. The forward-looking information in this release is based on information currently available and what management believes are reasonable assumptions. Forward-looking information speaks only to such assumptions as of the date of this release. The purpose of forward-looking information is to provide the reader with a description of management's expectations, and such forward-looking information may not be appropriate for any other purpose. Readers should not place undue reliance on forward-looking information contained in this release.</p>      <p align="justify">The forward-looking information contained in this release is expressly qualified by the foregoing cautionary statements and is made as of the date of this release.</p>      <p align="justify"><strong>Neither TSX Venture Exchange nor its Regulation Services Provider (as that term is defined in the policies of the TSX Venture Exchange) accepts responsibility for the adequacy or accuracy of this release.</strong></p>      <p> </p> <img class="__GNW8366DE3E__IMG" src="https://www.globenewswire.com/newsroom/ti?nf=Nzk0MjU0NyMzNTQxMjc2IzIwODgzMjY=" width="1" height="1"/></div><div class="mw_contactinfo">
+
+</div>
+</body>
+
+</html>
+</inlineXML>
+
+  </contentSet>
+</newsItem>

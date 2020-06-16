@@ -1,7 +1,9 @@
 
+import cp
 import unittest
 import superdesk
 import lxml.etree as etree
+import cp.ingest.parser.globenewswire as globenewswire
 
 from pytz import UTC
 from datetime import datetime
@@ -9,7 +11,6 @@ from unittest.mock import patch
 
 from superdesk.metadata.utils import generate_guid
 
-from cp import HEADLINE2
 from cp.output.formatter.jimi import JimiFormatter
 
 from tests.mock import resources, SEQUENCE_NUMBER
@@ -47,24 +48,29 @@ class JimiFormatterTestCase(unittest.TestCase):
         'firstpublished': datetime(2020, 4, 1, 11, 33, 12, 25, tzinfo=UTC),
 
         'extra': {
-            HEADLINE2: 'headline2',
+            cp.HEADLINE2: 'headline2',
         },
     }
 
-    def format(self, updates=None):
+    def format(self, updates=None, _all=False):
         article = self.article.copy()
         article.update(updates or {})
         with patch.dict(superdesk.resources, resources):
-            seq, xml_str = self.formatter.format(article, self.subscriber)[0]
+            formatted = self.formatter.format(article, self.subscriber)
+            if _all:
+                return formatted
+            seq, xml_str = formatted[0]
         print('xml', xml_str)
         return xml_str
 
     def get_root(self, xml):
         return etree.fromstring(xml.encode(self.formatter.ENCODING))
 
-    def format_item(self, updates=None):
+    def format_item(self, updates=None, return_root=False):
         xml = self.format(updates)
         root = self.get_root(xml)
+        if return_root:
+            return root
         return root.find('ContentItem')
 
     def test_can_format(self):
@@ -173,3 +179,34 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('Los Angeles;California;USA', item.find('Placeline').text)
         self.assertEqual('34.0522', item.find('Latitude').text)
         self.assertEqual('-118.2347', item.find('Longitude').text)
+
+    def test_globenewswire(self):
+        output = self.format({
+            'source': globenewswire.SOURCE,
+            'headline': 'Foo',
+            'keywords': ['TSX VENTURE:AXL', 'OTC:NTGSF'],
+            'anpa_category': [{
+                'name': globenewswire.DESCRIPTION['en'],
+                'qcode': 'p',
+            }],
+            'subject': [
+                {'name': 'FOO', 'qcode': 'FOO', 'scheme': cp.SERVICE},
+                {'name': 'BAR', 'qcode': 'BAR', 'scheme': cp.SERVICE},
+            ],
+            'extra': {},
+        }, _all=True)
+
+        self.assertEqual(2, len(output))
+
+        root = etree.fromstring(output[0][1].encode(self.formatter.ENCODING))
+        item = root.find('ContentItem')
+
+        self.assertEqual('Print', root.find('Services').text)
+        self.assertEqual('FOO', root.find('PscCodes').text)
+
+        self.assertEqual('Press Release', item.find('Category').text)
+        self.assertIsNone(item.find('IndexCode').text)
+        self.assertEqual('FOO,BAR', item.find('Note').text)
+        self.assertEqual('TSX VENTURE:AXL,OTC:NTGSF', item.find('Stocks').text)
+        self.assertEqual('Foo', item.find('Headline').text)
+        self.assertEqual('Foo', item.find('Headline2').text)
