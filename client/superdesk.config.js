@@ -79,12 +79,18 @@ module.exports = function(grunt) {
             editor3: true,
             validatePointOfInterestForImages: true,
             editorHighlights: true,
-            editFeaturedImage: false,
+            editFeaturedImage: true,
             searchShortcut: true,
             elasticHighlight: true,
             hideCreatePackage: true,
             useTansaProofing: true,
             planning: true,
+            noPublishOnAuthoringDesk: true,
+            autorefreshContent: true,
+        },
+        
+        item_profile: {
+            change_profile: 1
         },
 
         workspace: {
