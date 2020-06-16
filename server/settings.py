@@ -11,7 +11,7 @@
 
 import os
 from pathlib import Path
-from superdesk.default_settings import strtobool, env
+from superdesk.default_settings import strtobool, env, SERVER_URL
 
 
 ABS_PATH = str(Path(__file__).resolve().parent)
@@ -164,9 +164,13 @@ VALIDATOR_MEDIA_METADATA = {
     },
 }
 
+
 # saml
 SAML_PATH = env('SAML_PATH', os.path.join(ABS_PATH, 'saml'))
 SAML_LABEL = env('SAML_LABEL', 'SSO')
+USER_EXTERNAL_AUTO_CREATE = True
+if SERVER_URL == 'http://localhost:5000/api':
+    SAML_PATH = os.path.join(ABS_PATH, 'saml_local')
 
 HIGHCHARTS_LICENSE_ID = env('HIGHCHARTS_LICENSE_ID', '')
 HIGHCHARTS_LICENSE_TYPE = 'OEM'

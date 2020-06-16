@@ -4,11 +4,11 @@
     "sp": {
         "entityId": "https://cp-uat.superdesk.pro/api/login/saml?acs",
         "assertionConsumerService": {
-            "url": "https://scp-master.test.superdesk.org/api/login/saml?acs",
+            "url": "http://localhost:5000/api/login/saml?acs",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         },
         "singleLogoutService": {
-            "url": "https://scp-master.test.superdesk.org/api/login/saml?sls",
+            "url": "http://localhost:5000/api/login/saml?sls",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
         },
         "NameIDFormat": "urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress"
