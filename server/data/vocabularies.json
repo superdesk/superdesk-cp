@@ -1,5 +1,24 @@
 [
     {
+        "_id": "type",
+        "display_name": "Article Type",
+        "type": "unmanageable",
+        "selection_type": "multi selection",
+        "items": [
+            {"is_active": true, "name": "text", "qcode": "text"},
+            {"is_active": false, "name": "preformatted", "qcode": "preformatted"},
+            {"is_active": true, "name": "audio", "qcode": "audio"},
+            {"is_active": true, "name": "video", "qcode": "video"},
+            {"is_active": true, "name": "picture", "qcode": "picture"},
+            {"is_active": false, "name": "graphic", "qcode": "graphic"},
+            {"is_active": false, "name": "composite", "qcode": "composite"},
+            {"is_active": true, "name": "planning item", "qcode": "planning"},
+            {"is_active": true, "name": "event", "qcode": "event"}
+        ],
+        "init_version": 1
+    },
+	
+    {
         "_id": "distribution",
         "display_name": "Services",
         "type": "manageable",
