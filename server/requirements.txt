@@ -3,6 +3,6 @@ honcho==1.0.1
 newrelic>=2.66,<2.67
 python3-saml>=1.9,<1.10
 
--e git+git://github.com/superdesk/superdesk-core.git@ffedde0#egg=superdesk-core
--e git+git://github.com/superdesk/superdesk-analytics.git@master#egg=superdesk-analytics
--e git+git://github.com/superdesk/superdesk-planning.git@master#egg=superdesk-planning
+-e git+git://github.com/superdesk/superdesk-core.git@develop#egg=superdesk-core
+-e git+git://github.com/superdesk/superdesk-analytics.git@develop#egg=superdesk-analytics
+-e git+git://github.com/superdesk/superdesk-planning.git@develop#egg=superdesk-planning
