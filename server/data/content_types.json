@@ -179,10 +179,11 @@
                 "nullable" : true,
                 "type" : "list"
             },
-            "subject_custom" : {
+            "subject" : {
                 "required" : false,
                 "nullable" : true,
-                "type" : "list"
+                "type" : "list",
+                "mandatory_in_list": {}
             },
             "language" : null,
             "dateline" : {
