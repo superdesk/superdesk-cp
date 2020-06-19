@@ -183,7 +183,7 @@
                 "required" : false,
                 "nullable" : true,
                 "type" : "list",
-                "mandatory_in_list": {"scheme": {}}
+                "mandatory_in_list": {"scheme": {"subject": "subject_custom"}}
             },
             "language" : null,
             "dateline" : {
