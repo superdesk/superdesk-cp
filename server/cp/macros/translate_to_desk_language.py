@@ -40,7 +40,7 @@ def translate_to_desk_language(item, **kwargs):
         desk = get_resource_service('desks').find_one(req=None, _id=dest_desk_id)
         if desk and desk.get('desk_language') == 'fr-CA':
             item['language'] = 'fr-CA'
-    else
+    else:
         current_desk_id = item.get('task', {}).get('desk')
         desk = get_resource_service('desks').find_one(req=None, _id=current_desk_id)
         if desk.get('desk_language') == 'fr-CA':
