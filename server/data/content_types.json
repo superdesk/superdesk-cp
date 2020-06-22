@@ -4,55 +4,67 @@
         "priority" : 0,
         "label" : "Story",
         "enabled" : true,
-        "init_version": 2,
+        "init_version": 3,
         "editor" : {
-            "correction" : {
-                "required" : false,
-                "section" : "content",
-                "order" : 9
-            },
-            "related-articles" : {
-                "required" : false,
-                "section" : "content",
-                "order" : 14
-            },
-            "attachments" : null,
             "slugline" : {
-                "required" : false,
+                "required" : true,
                 "sdWidth" : "full",
                 "order" : 1
-            },
-            "ednote" : {
-                "required" : false,
-                "sdWidth" : "full",
-                "order" : 5
-            },
-            "authors" : null,
-            "headline" : {
-                "required" : false,
-                "formatOptions" : [],
-                "sdWidth" : "full",
-                "order" : 7
-            },
-            "body_footer" : null,
-            "genre" : {
+            },            
+            "anpa_take_key" : {
                 "required" : false,
                 "sdWidth" : "half",
                 "order" : 2
             },
+            "genre" : {
+                "required" : false,
+                "sdWidth" : "half",
+                "order" : 3
+            },
+            "urgency" : {
+                "required" : true,
+                "sdWidth" : "half",
+                "order" : 4
+            },
+            "anpa_category" : {
+                "required" : true,
+                "sdWidth" : "half",
+                "order" : 5
+            },
+            "subject_custom" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "order" : 6
+            },            
+            "ednote" : {
+                "required" : false,
+                "sdWidth" : "full",
+                "order" : 7
+            },            
+            "headline" : {
+                "required" : true,
+                "formatOptions" : [],
+                "sdWidth" : "full",
+                "order" : 8
+            },   
+            "headline_extended" : {
+                "required" : true,
+                "section" : "content",
+                "sdWidth" : "full",
+                "order" : 9
+            },
             "byline" : {
                 "required" : false,
+                "sdWidth" : "half",
                 "order" : 10
-            },
-            "usageterms" : null,
-            "headline_extended" : {
+            },            
+            "dateline" : {
                 "required" : false,
-                "section" : "content",
-                "order" : 6
-            },
-            "feature_media" : null,
+                "sdWidth" : "half",
+                "order" : 11
+            },            
             "body_html" : {
-                "required" : false,
+                "required" : true,
                 "editor3" : true,
                 "formatOptions" : [
                     "h2",
@@ -67,40 +79,37 @@
                 "cleanPastedHTML" : false,
                 "order" : 12
             },
-            "abstract" : null,
-            "anpa_category" : {
-                "required" : true,
-                "sdWidth" : "full",
-                "order" : 4
-            },
-            "language" : null,
-            "dateline" : {
-                "required" : false,
-                "order" : 11
-            },
-            "urgency" : {
-                "required" : false,
-                "sdWidth" : "quarter",
-                "order" : 3
-            },
-            "media_description" : null,
-            "priority" : null,
-            "place" : null,
             "update" : {
                 "required" : false,
                 "sdWidth" : "full",
                 "section" : "content",
-                "order" : 8
+                "order" : 13
             },
-            "sign_off" : {
+            "correction" : {
                 "required" : false,
-                "order" : 15
+                "sdWidth" : "full",
+                "section" : "content",
+                "order" : 14
             },
             "media-gallery" : {
                 "required" : false,
                 "section" : "content",
-                "order" : 13
-            },
+                "order" : 15
+            },            
+            "sign_off" : {
+                "required" : false,
+                "order" : 16
+            },            
+            "attachments" : null,
+            "authors" : null,
+            "body_footer" : null,
+            "usageterms" : null,
+            "feature_media" : null,
+            "abstract" : null,
+            "language" : null,
+            "media_description" : null,
+            "priority" : null,
+            "place" : null,
             "sms" : null
         },
         "schema" : {
@@ -111,15 +120,9 @@
                 "enabled" : true,
                 "type" : "text"
             },
-            "related-articles" : {
-                "required" : false,
-                "nullable" : true,
-                "enabled" : true,
-                "type" : "related_content"
-            },
             "attachments" : null,
             "slugline" : {
-                "required" : false,
+                "required" : true,
                 "maxlength" : 50,
                 "nullable" : true,
                 "type" : "string"
@@ -130,11 +133,16 @@
                 "nullable" : true,
                 "type" : "string"
             },
+            "anpa_take_key" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "string"
+            },
             "authors" : null,
             "headline" : {
-                "required" : false,
-                "minlength" : 65,
-                "maxlength" : 80,
+                "required" : true,
+                "minlength" : 35,
+                "maxlength" : 45,
                 "nullable" : true,
                 "type" : "string"
             },
@@ -152,14 +160,15 @@
                 "type" : "string"
             },
             "headline_extended" : {
-                "required" : false,
-                "maxlength" : 500,
+                "required" : true,
+                "minlength" : 45,
+                "maxlength" : 80,
                 "nullable" : true,
                 "enabled" : true,
                 "type" : "text"
             },
             "body_html" : {
-                "required" : false,
+                "required" : true,
                 "nullable" : true,
                 "type" : "string"
             },
@@ -170,6 +179,12 @@
                 "nullable" : true,
                 "type" : "list"
             },
+            "subject" : {
+                "required" : false,
+                "nullable" : true,
+                "type" : "list",
+                "mandatory_in_list": {"scheme": {"subject": "subject_custom"}}
+            },
             "language" : null,
             "dateline" : {
                 "required" : false,
@@ -177,7 +192,7 @@
                 "type" : "dict"
             },
             "urgency" : {
-                "required" : false,
+                "required" : true,
                 "nullable" : true,
                 "type" : "integer"
             },
