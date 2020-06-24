@@ -14,10 +14,12 @@ from superdesk.utils import ListCursor
 from superdesk.timer import timer
 from superdesk.utc import local_to_utc
 from superdesk.search_provider import SearchProvider
+from superdesk.io.commands.update_ingest import update_renditions
 
 
 AUTH_API = '/API/Authentication/v1.0/Login'
 SEARCH_API = '/API/Search/v3.0/search'
+DOWNLOAD_API = '/htm/GetDocumentAPI.aspx'
 
 TIMEOUT = (5, 25)
 DATE_FORMAT = 'u'
@@ -60,11 +62,33 @@ class OrangelogicSearchProvider(SearchProvider):
     }
 
     RENDITIONS_MAP = {
+        'original': 'Path_TR1',
         'baseImage': 'Path_TR1',
         'viewImage': 'Path_TR4',
         'thumbnail': 'Path_TR7',
         'webHigh': 'Path_WebHigh',
     }
+
+    FIELDS = [
+        'Title',
+        'SystemIdentifier',
+        'MediaNumber',
+        'Caption',
+        'CaptionShort',
+        'EditDate',
+        'MediaDate',
+        'CreateDate',
+        'GlobalEditDate',
+        'MediaType',
+        'Path_TR1',
+        'Path_TR4',
+        'Path_TR7',
+        'Path_WebHigh',
+        'Photographer',
+        'PhotographerFastId',
+        'copyright',
+        'MediaEncryptedIdentifier',
+    ]
 
     def __init__(self, provider):
         super().__init__(provider)
@@ -73,8 +97,11 @@ class OrangelogicSearchProvider(SearchProvider):
         self.config = provider.get('config') or {}
         app.config.setdefault('ORANGELOGIC_URL', self.URL)
 
+    def _url(self, path):
+        return urljoin(app.config['ORANGELOGIC_URL'], path)
+
     def _request(self, api, method='GET', **kwargs):
-        url = urljoin(app.config['ORANGELOGIC_URL'], api)
+        url = self._url(api)
         resp = self.sess.request(method, url, params=kwargs, timeout=TIMEOUT)
         resp.raise_for_status()
         return resp
@@ -114,25 +141,7 @@ class OrangelogicSearchProvider(SearchProvider):
         kwargs = {
             'pagenumber': page,
             'countperpage': size,
-            'fields': ','.join([
-                'Title',
-                'SystemIdentifier',
-                'MediaNumber',
-                'Caption',
-                'CaptionShort',
-                'EditDate',
-                'MediaDate',
-                'CreateDate',
-                'GlobalEditDate',
-                'MediaType',
-                'Path_TR1',
-                'Path_TR4',
-                'Path_TR7',
-                'Path_WebHigh',
-                'Photographer',
-                'PhotographerFastId',
-                'copyright',
-            ]),
+            'fields': ','.join(self.FIELDS),
             'Sort': get_api_sort(sort),
             'format': 'json',
             'DateFormat': 'u',
@@ -165,6 +174,10 @@ class OrangelogicSearchProvider(SearchProvider):
         with open('/tmp/resp.json', mode='w') as out:
             out.write(json.dumps(data, indent=2))
 
+        items = self._parse_items(data)
+        return OrangelogicListCursor(items, data['APIResponse']['GlobalInfo']['TotalCount'])
+
+    def _parse_items(self, data):
         items = []
         for item in data['APIResponse']['Items']:
             guid = item['MediaNumber']
@@ -172,6 +185,7 @@ class OrangelogicSearchProvider(SearchProvider):
                 '_id': guid,
                 'guid': guid,
                 'type': self.MEDIA_TYPE_MAP[item['MediaType'].lower()],
+                'media': item['MediaEncryptedIdentifier'],
                 'source': item['PhotographerFastId'],
                 'slugline': item['Title'],
                 'headline': item['CaptionShort'],
@@ -186,8 +200,7 @@ class OrangelogicSearchProvider(SearchProvider):
                     if item.get(path) and item[path].get('URI')
                 },
             })
-
-        return OrangelogicListCursor(items, data['APIResponse']['GlobalInfo']['TotalCount'])
+        return items
 
     def parse_datetime(self, value):
         if not value:
@@ -196,7 +209,30 @@ class OrangelogicSearchProvider(SearchProvider):
         return local_to_utc(self.TZ, local)
 
     def fetch(self, guid):
-        return
+        kwargs = {
+            'query': 'MediaNumber:{}'.format(guid),
+            'fields': ','.join(self.FIELDS),
+            'format': 'json',
+            'DateFormat': 'u',
+        }
+        resp = self._auth_request(SEARCH_API, **kwargs)
+        data = resp.json()
+        item = self._parse_items(data)[0]
+
+        url = self._url(DOWNLOAD_API)
+        params = {
+            'F': 'TRX',
+            'DocID': item.pop('media'),
+            'token': self.token,
+        }
+
+        href = requests.Request('GET', url, params=params).prepare().url
+        update_renditions(item, href, None)
+
+        # it's in superdesk now, so make it ignore the api
+        item['fetch_endpoint'] = ''
+
+        return item
 
 
 def rendition(data):
