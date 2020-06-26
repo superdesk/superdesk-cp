@@ -183,6 +183,7 @@ class OrangelogicSearchProvider(SearchProvider):
             guid = item['MediaNumber']
             items.append({
                 '_id': guid,
+                '_fetchable': True,
                 'guid': guid,
                 'type': self.MEDIA_TYPE_MAP[item['MediaType'].lower()],
                 'media': item['MediaEncryptedIdentifier'],
