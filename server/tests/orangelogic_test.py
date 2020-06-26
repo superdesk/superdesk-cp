@@ -3,6 +3,7 @@ import os
 import flask
 import unittest
 
+from unittest.mock import patch
 from httmock import urlmatch, HTTMock, remember_called
 from requests.exceptions import HTTPError
 from cp.orangelogic import OrangelogicSearchProvider, AUTH_API, SEARCH_API
@@ -93,3 +94,15 @@ class OrangelogicTestCase(unittest.TestCase):
         with HTTMock(auth_error, search_error):
             with self.assertRaises(HTTPError):
                 items = service.find({})
+
+    @patch('cp.orangelogic.update_renditions')
+    def test_fetch(self, update_renditions_mock):
+        service = OrangelogicSearchProvider(self.provider)
+
+        with HTTMock(auth_ok, search_ok):
+            item = service.fetch({})
+            update_renditions_mock.assert_called_once_with(
+                item,
+                'https://example.com/htm/GetDocumentAPI.aspx?F=TRX&DocID=encID&token=token.foo',
+                None,
+            )

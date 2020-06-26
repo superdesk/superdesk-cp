@@ -27,6 +27,7 @@
             "CreateDate": "11/22/2019 10:22:58 AM",
             "GlobalEditDate": "11/22/2019 10:23:19 AM",
             "MediaType": "Video",
+            "MediaEncryptedIdentifier": "encID",
             "Path_TR1": {
                 "URI": "https://example.com/base.jpg",
                 "Width": 1200,
@@ -66,6 +67,7 @@
             "CreateDate": "11/22/2019 8:57:41 AM",
             "GlobalEditDate": "11/22/2019 8:58:01 AM",
             "MediaType": "Video",
+            "MediaEncryptedIdentifier": "encID",
             "Path_TR1": {
                 "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTknPy211UYn5n3zhXafs3QV6MU3sIGu.47MDbgb.eE05zvQfCWNXiLzj9lN2.PPe7QnFs1trg.42ZfWA1j1JhN.c*/o75Y83ujMYbg9pdg/eUQe1A4srgQ4rMA2/CP14725203.jpg",
                 "Width": 1200,
@@ -100,6 +102,7 @@
             "CreateDate": "11/22/2019 7:32:54 AM",
             "GlobalEditDate": "11/22/2019 7:33:14 AM",
             "MediaType": "Video",
+            "MediaEncryptedIdentifier": "encID",
             "Path_TR1": {
                 "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkvSPJ2LtC1NEl0ghpweFjp67XqL3bEOFPjWQ6pRsGDwe6DmF4Wyc@NBTmfOK.viuGE5ZUQkH7CvBnR0117MVt@o*/PvuGdxJJQswe5GZU/mHy8eZJHa4WPbeer/CP14725166.jpg",
                 "Width": 1200,
@@ -134,6 +137,7 @@
             "CreateDate": "11/22/2019 5:30:26 AM",
             "GlobalEditDate": "11/22/2019 5:30:28 AM",
             "MediaType": "Image",
+            "MediaEncryptedIdentifier": "encID",
             "Path_TR1": {
                 "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTkvgJgmedr9XRTFxG7KJSMuz2gJli8LtfnCorPt91.faQpC.nYIUokXS2y3AvwSwy@CdQwMoSWWMFlZ57kKtHBXc*/T4C4NI9VC48WmHw8/FAHMZTDZsFYuCQTJ/CP14725139.jpg",
                 "Width": 1200,
@@ -169,6 +173,7 @@
             "CreateDate": "11/22/2019 5:30:26 AM",
             "GlobalEditDate": "11/22/2019 5:30:27 AM",
             "MediaType": "Image",
+            "MediaEncryptedIdentifier": "encID",
             "Path_TR1": {
                 "URI": "https://canadianpress3227prod.orangelogic.com/Assets/V2/yf06bKRm@iGC4RQrxcsTksGAllmgSA9To8GD.Zu@1lGDZM1qENF5aN37gYt3jaIAMjDCuzVvZE6D@N1nmvM5CH.dO8Eho.gNqs1NwfQ8ips*/H5mb30UK5Ob.KEtt/l58QySj9hJp@bDvZ/CP14725140.jpg",
                 "Width": 900,
