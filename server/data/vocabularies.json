@@ -4,7 +4,7 @@
     	"display_name": "Photo category",
     	"type": "manageable",
     	"unique_field": "qcode",
-    	"selection_type": "multi selection",
+    	"selection_type": "single selection",
     	"schema": {
     		"name": {},
     		"qcode": {}
@@ -12,9 +12,10 @@
     	"service": {
     		"all": 1
     	},
-    	"init_version": 1,
+    	"init_version": 2,
 
-    	"items": [{
+    	"items": [
+		{
     			"name": "Americas",
     			"qcode": "A",
     			"is_active": true
