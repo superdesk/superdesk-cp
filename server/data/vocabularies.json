@@ -68,7 +68,7 @@
 		{"name": "GLF","qcode": "GLF","is_active": true},
 		{"name": "F","qcode": "F","is_active": true},
 		{"name": "I","qcode": "I","is_active": true},
-		{"name": "WEA","qcode": "WEA","is_active": true
+		{"name": "WEA","qcode": "WEA","is_active": true},
 		{"name": "XGR","qcode": "XGR","is_active": true},
 		{"name": "CRI","qcode": "CRI","is_active": true},
 		{"name": "SOC","qcode": "SOC","is_active": true}
