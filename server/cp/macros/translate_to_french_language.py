@@ -35,7 +35,6 @@ def translate_to_french_language(item, **kwargs):
 
     if (new_stage == desk.get('incoming_stage')
             and (item.get('language') == 'en-CA' or item.get('language') == 'en')):
-        archive_service = get_resource_service('archive')
         translate_service = get_resource_service('translate')
 
         translate_service._translate_item(item['guid'], 'fr-CA', item['task'], state='routed')
