@@ -122,8 +122,6 @@
                 "sdWidth" : "half"
             }
         },
-        "_created" : ISODate("2019-12-19T10:59:51Z"),
-        "_etag" : "fe1c69b6f6921a30d25d462be4abc7b1f57e34dc",
         "schema" : {
             "sms" : null,
             "priority" : null,
