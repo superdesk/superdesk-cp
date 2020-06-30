@@ -26,6 +26,7 @@ module.exports = function(grunt) {
         
         langOverride: {
             'en': {
+                'Dateline': 'Placeline',
                 'Take Key': 'Writethru',
                 'update': '1st Writethru',
                 '2nd update': '2nd Writethru',

@@ -233,6 +233,81 @@
 	]
     },
     {
+    	"_id": "photo_categories",
+    	"display_name": "Photo category",
+    	"type": "manageable",
+    	"unique_field": "qcode",
+    	"selection_type": "single selection",
+    	"schema": {
+    		"name": {},
+    		"qcode": {}
+    	},
+    	"service": {
+    		"all": 1
+    	},
+    	"init_version": 2,
+
+    	"items": [
+		{
+    			"name": "Americas",
+    			"qcode": "A",
+    			"is_active": true
+    		},
+    		{
+    			"name": "Canada",
+    			"qcode": "C",
+    			"is_active": true
+    		},
+    		{
+    			"name": "Finance",
+    			"qcode": "F",
+    			"is_active": true
+    		},
+    		{
+    			"name": "International",
+    			"qcode": "I",
+    			"is_active": true
+    		},
+    		{
+    			"name": "News or Feature",
+    			"qcode": "N",
+    			"is_active": false
+    		},
+    		{
+    			"name": "Sports",
+    			"qcode": "S",
+    			"is_active": true
+    		}
+    	]
+    },
+    {
+        "_id": "photo_supplementalcategories",
+        "display_name": "Supp Cat",
+        "type": "manageable",
+        "unique_field": "qcode",
+        "selection_type": "multi selection",
+        "schema": {
+            "name": {},
+            "qcode": {}
+        },
+        "service": {"all": 1},
+        "init_version": 1,
+
+        "items": 
+        [
+		{"name": "ELN","qcode": "ELN","is_active": true},
+		{"name": "FEA","qcode": "FEA","is_active": true},
+		{"name": "TEN","qcode": "TEN","is_active": true},
+		{"name": "GLF","qcode": "GLF","is_active": true},
+		{"name": "F","qcode": "F","is_active": true},
+		{"name": "I","qcode": "I","is_active": true},
+		{"name": "WEA","qcode": "WEA","is_active": true},
+		{"name": "XGR","qcode": "XGR","is_active": true},
+		{"name": "CRI","qcode": "CRI","is_active": true},
+		{"name": "SOC","qcode": "SOC","is_active": true}
+        ]
+    }, 	
+    {
         "_id": "type",
         "display_name": "Article Type",
         "type": "unmanageable",
