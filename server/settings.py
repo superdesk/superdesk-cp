@@ -11,7 +11,7 @@
 
 import os
 from pathlib import Path
-from superdesk.default_settings import strtobool, env, SERVER_URL
+from superdesk.default_settings import strtobool, env, SERVER_URL, CORE_APPS as _core_apps
 
 
 ABS_PATH = str(Path(__file__).resolve().parent)
@@ -168,11 +168,23 @@ VALIDATOR_MEDIA_METADATA = {
 
 
 # saml
-SAML_PATH = env('SAML_PATH', os.path.join(ABS_PATH, 'saml'))
 SAML_LABEL = env('SAML_LABEL', 'SSO')
-USER_EXTERNAL_AUTO_CREATE = True
+USER_EXTERNAL_CREATE = True
+USER_EXTERNAL_DESK = "CP New User"
+SAML_BASE_PATH = env('SAML_PATH', os.path.join(ABS_PATH, 'saml'))
 if SERVER_URL == 'http://localhost:5000/api':
-    SAML_PATH = os.path.join(ABS_PATH, 'saml_local')
+    SAML_PATH = os.path.join(SAML_BASE_PATH, 'localhost')
+elif SERVER_URL == 'https://scp-master.test.superdesk.org/api':
+    SAML_PATH = os.path.join(SAML_BASE_PATH, 'test')
+elif SERVER_URL == 'https://cp-uat-api.superdesk.pro/api':
+    SAML_PATH = os.path.join(SAML_BASE_PATH, 'uat')
+else:
+    SAML_PATH = os.path.join(SAML_BASE_PATH, 'prod')
+
+# disable db auth if saml is configured properly
+if os.path.exists(os.path.join(SAML_PATH, 'certs')):
+    CORE_APPS = [app for app in _core_apps if app != 'apps.auth.db']
+
 
 HIGHCHARTS_LICENSE_ID = env('HIGHCHARTS_LICENSE_ID', '')
 HIGHCHARTS_LICENSE_TYPE = 'OEM'
