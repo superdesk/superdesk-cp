@@ -40,6 +40,12 @@ class JimiFormatter(Formatter):
             output.append((pub_seq_num, xml.decode(self.ENCODING)))
         return output
 
+    def _format_subject_code(self, root, item, elem, scheme):
+        subject = item.get('subject') or []
+        for subj in subject:
+            if subj.get('scheme') == scheme and subj.get('qcode'):
+                etree.SubElement(root, elem).text = subj['qcode']
+
     def _format_item(self, root, item, pub_seq_num, service, services):
         content = etree.SubElement(root, 'ContentItem')
 
@@ -48,10 +54,15 @@ class JimiFormatter(Formatter):
         etree.SubElement(root, 'IsRegional').text = 'false'
         etree.SubElement(root, 'CanAutoRoute').text = 'true'
         etree.SubElement(root, 'PublishID').text = str(pub_seq_num)
-        etree.SubElement(root, 'Services').text = 'Print'
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
-        etree.SubElement(root, 'PscCodes').text = 'ap---' if not service else service
+
+        if service:
+            etree.SubElement(root, 'Services').text = 'Print'
+            etree.SubElement(root, 'PscCodes').text = service
+        else:
+            self._format_subject_code(root, item, 'Services', 'distribution')
+            self._format_subject_code(root, item, 'PscCodes', 'destinations')
 
         # content system fields
         etree.SubElement(content, 'Name')

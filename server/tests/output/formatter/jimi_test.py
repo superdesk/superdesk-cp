@@ -39,6 +39,8 @@ class JimiFormatterTestCase(unittest.TestCase):
             {'name': 'citizens', 'qcode': '20000575', 'scheme': 'subject_custom'},
             {'name': 'made-up', 'qcode': '12345678901234', 'scheme': 'subject_custom'},
             {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
+            {'name': 'Broadcast', 'qcode': 'Broadcast', 'scheme': 'distribution'},
+            {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': 'destinations'},
         ],
         'urgency': 2,
         'language': 'en-CA',
@@ -86,7 +88,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('false', root.find('IsRegional').text)
         self.assertEqual('true', root.find('CanAutoRoute').text)
         self.assertEqual(str(SEQUENCE_NUMBER), root.find('PublishID').text)
-        self.assertEqual('Print', root.find('Services').text)
+        self.assertEqual('Broadcast', root.find('Services').text)
         self.assertEqual(None, root.find('Username').text)
         self.assertEqual('false', root.find('UseLocalsOut').text)
         self.assertEqual('ap---', root.find('PscCodes').text)
