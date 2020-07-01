@@ -36,17 +36,31 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             with patch.dict(superdesk.resources, resources):
                 item = parser.parse(data, provider)
 
+        self.assertEqual('ba7d03f0cd24a17faa81bebc724bcf3f_0a8aza0c0', item['guid'])
         self.assertEqual('Story', item['profile'])
+        self.assertEqual('WY-Exchange-Coronavirus-Tech', item['slugline'])
         self.assertEqual('headline1', item['headline'])
         self.assertEqual('headline2', item['extra'][HEADLINE2])
-        self.assertIsNone(item.get('abstract'))
-        self.assertEqual(['Exchange-Coronavirus Tech'], item['keywords'])
         self.assertIn('copyright information', item['copyrightnotice'])
         self.assertIn('editorial use only', item['usageterms'])
+        self.assertEqual('The Associated Press', item['source'])
+        self.assertEqual(5, item['urgency'])
+        self.assertEqual('Margaret Austin', item['byline'])
+        self.assertIn('General news', item['keywords'])
 
         self.assertIn({
-            'name': 'General News',
-            'qcode': 'n',
+            'name': 'Feature',
+            'qcode': 'Feature',
+        }, item['genre'])
+
+        self.assertEqual('UPDATES: With AP Photos.', item['extra']['update'])
+        self.assertEqual('', item['ednote'])
+
+        self.assertEqual('NYSE:WFC', item['extra']['stocks'])
+
+        self.assertIn({
+            'name': 'International',
+            'qcode': 'w',
         }, item['anpa_category'])
 
         subjects = [s['name'] for s in item['subject']]

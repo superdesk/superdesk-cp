@@ -97,6 +97,7 @@ class JimiFormatter(Formatter):
 
         self._format_index(content, item)
         self._format_category(content, item)
+        self._format_genre(content, item)
         self._format_urgency(content, item.get('urgency'))
         self._format_keyword(content, item.get('keywords'))
         self._format_dateline(content, item.get('dateline'))
@@ -194,9 +195,14 @@ class JimiFormatter(Formatter):
 
     def _format_category(self, content, item):
         try:
-            etree.SubElement(content, 'Category').text = item['anpa_category'][0]['name']
+            etree.SubElement(content, 'Category').text = ','.join([cat['name'] for cat in item['anpa_category']])
         except (KeyError):
             pass
+
+    def _format_genre(self, content, item):
+        version_type = etree.SubElement(content, 'VersionType')
+        if item.get('genre'):
+            version_type.text = item['genre'][0]['name']
 
 
 def _find_jimi_item(code, items):

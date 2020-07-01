@@ -192,3 +192,5 @@ HIGHCHARTS_LICENSEE = 'Sourcefabric Ventures s.r.o.'
 HIGHCHARTS_LICENSEE_CONTACT = 'tech@sourcefabric.org'
 HIGHCHARTS_LICENSE_CUSTOMER_ID = '2'
 HIGHCHARTS_LICENSE_EXPIRY = 'Perpetual'
+
+AP_INGEST_DEBUG = strtobool(env('AP_INGEST_DEBUG', 'true'))

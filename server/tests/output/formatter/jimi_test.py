@@ -47,6 +47,10 @@ class JimiFormatterTestCase(unittest.TestCase):
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
         'firstpublished': datetime(2020, 4, 1, 11, 33, 12, 25, tzinfo=UTC),
 
+        'genre': [
+            {'name': 'NewsAlert', 'qcode': 'NewsAlert'},
+        ],
+
         'extra': {
             cp.HEADLINE2: 'headline2',
         },
@@ -128,6 +132,9 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
         self.assertEqual('2020-04-01T11:13:12', item.find('CreatedDateTime').text)
         self.assertEqual('2020-04-01T07:23:12-04:00', item.find('UpdatedDateTime').text)
+
+        # etc
+        self.assertEqual('NewsAlert', item.find('VersionType').text)
 
     def test_writethru(self):
         expected_data = {
