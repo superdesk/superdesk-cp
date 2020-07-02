@@ -651,7 +651,7 @@
             "translations": {}
         },
         "service": {"all": 1},
-        "init_version": 6,
+        "init_version": 7,
 
         "items": 
         [
@@ -1526,7 +1526,7 @@
          "qcode": "20000002",
          "parent": "01000000",
          "iptc_subject": "01000000",
-         "ap_subject": null,
+         "ap_subject": "5b4319707dd310048b23df092526b43e",
          "in_jimi": false,
          "is_active": true,
          "translations": {
