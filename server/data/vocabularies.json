@@ -694,7 +694,7 @@
    	"service": {
       		"all": 1
    	},
-   	"init_version": 5,
+   	"init_version": 6,
    "items": [
       {
          "name": "arts, culture, entertainment and media",
@@ -851,7 +851,7 @@
          "qcode": "11000000",
          "parent": null,
          "iptc_subject": "11000000",
-         "ap_subject": "86aad5207dac100488ecba7fa5283c3e ",
+         "ap_subject": "86aad5207dac100488ecba7fa5283c3e,8751ff508728100484c5dd689ee7093e",
          "in_jimi": true,
          "is_active": true,
          "translations": {
