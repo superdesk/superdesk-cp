@@ -26,7 +26,6 @@ def find_name_item(cv_id, name):
 
 def callback(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
-    print('macro', kwargs)
     rule = kwargs.get('rule')
     if rule:
         service, destination = rule['name'].split(':')
