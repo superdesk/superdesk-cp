@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 def translate_to_desk_language(item, **kwargs):
+<<<<<<< HEAD
     """
     This macro will set the language of the articles to the Desk language.
         if dest_desk and item_source are present that means macro is applied using desks.
@@ -45,11 +46,25 @@ def translate_to_desk_language(item, **kwargs):
         desk = get_resource_service('desks').find_one(req=None, _id=current_desk_id)
         if desk.get('desk_language') == 'fr-CA':
             item['language'] = 'fr-CA'
+=======
+    """ This macro will set the language of the articles to the Desk language. """
+
+    dest_desk = kwargs.get('dest_desk_id')
+
+    if dest_desk:
+        desk = get_resource_service('desks').find_one(req=None, _id=dest_desk)
+    else:
+        desk = kwargs.get('desk')
+
+    if desk and desk.get('desk_language'):
+        item['language'] = desk.get('desk_language')
+
+>>>>>>> Create a Macro to always set the language of a news item to the Desk language. [SDCP-230]
     return item
 
 
 name = 'Translate To Desk Language'
 label = name
 callback = translate_to_desk_language
-access_type = 'frontend'
+access_type = 'backend'
 action_type = 'direct'
