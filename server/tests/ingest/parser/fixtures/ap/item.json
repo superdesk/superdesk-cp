@@ -302,14 +302,37 @@
         }
       ],
       "organisation": [{
-        "code": "326daccc1a1b47e4a511187eb2bf8b9d",
-        "name": "University of Wyoming",
-        "rels": [
-          "direct"
-        ],
+        "code": "86b5cdb87dac10048932ba7fa5283c3e",
+        "name": "United States Congress",
+        "rels": ["direct"],
+        "scheme": "http://cv.ap.org/id/",
+        "creator": "Machine",
+        "parentids": ["898f52e08921100480efba0a2b2ca13e"]
+      }, {
+        "code": "898f52e08921100480efba0a2b2ca13e",
+        "name": "United States government",
+        "rels": ["ancestor"],
         "scheme": "http://cv.ap.org/id/",
         "creator": "Machine",
         "topparent": true
+      }, {
+        "code": "22b673276e4d4ab0b8120a5944b2dd3d",
+        "name": "Wells Fargo & Co",
+        "scheme": "http://cv.ap.org/id/",
+        "creator": "Machine",
+        "rels": ["direct"],
+        "symbols": [{
+          "instrument": "NYSE:WFC",
+          "exchange": "NYSE",
+          "ticker": "WFC"
+        }],
+        "industries": [{
+          "code": "a475efa92899814f9bbac20152827c56",
+          "name": "Banking and credit"
+        }, {
+          "code": "e55ae0105cb337448557ceca13d587ac",
+          "name": "Financial services"
+        }]
       }],
       "place": [{
           "code": "3677d2f882c810048991df092526b43e",
@@ -522,7 +545,8 @@
           },
           "version": 0,
           "type": "picture",
-          "headline": "WY Exchange Coronavirus Tech"
+          "headline": "WY Exchange Coronavirus Tech",
+          "language": "en"
         }
       }
     },
@@ -536,7 +560,8 @@
           },
           "version": 0,
           "type": "picture",
-          "headline": "WY Exchange Coronavirus Tech"
+          "headline": "WY Exchange Coronavirus Tech",
+          "language": "en"
         }
       }
     }
