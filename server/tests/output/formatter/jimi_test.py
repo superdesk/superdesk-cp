@@ -219,3 +219,17 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('TSX VENTURE:AXL,OTC:NTGSF', item.find('Stocks').text)
         self.assertEqual('Foo', item.find('Headline').text)
         self.assertEqual('Foo', item.find('Headline2').text)
+
+    def test_limits(self):
+        long = 'foo bar {}'.format('x' * 200)
+        item = self.format_item({
+            'headline': long,
+            'extra': {
+                'headline2': long,
+            },
+            'keywords': ['foo', 'bar', long],
+        })
+
+        self.assertEqual('foo bar', item.find('Headline').text)
+        self.assertEqual('foo bar', item.find('Headline2').text)
+        self.assertEqual('foo,bar,foo bar', item.find('Keyword').text)

@@ -19,6 +19,20 @@ DATELINE_MAPPING = OrderedDict((
     ('country', 'Country'),
 ))
 
+OUTPUT_LENGTH_LIMIT = 128
+
+
+def format_maxlength(text):
+    if not text:
+        return text
+    output = ''
+    for word in text.split(' '):
+        space = ' ' if len(output) else ''
+        if len(output) + len(word) + len(space) > OUTPUT_LENGTH_LIMIT:
+            break
+        output = '{}{}{}'.format(output, space, word)
+    return output
+
 
 class JimiFormatter(Formatter):
 
@@ -48,6 +62,7 @@ class JimiFormatter(Formatter):
 
     def _format_item(self, root, item, pub_seq_num, service, services):
         content = etree.SubElement(root, 'ContentItem')
+        extra = item.get('extra') or {}
 
         # root system fields
         etree.SubElement(root, 'Reschedule').text = 'false'
@@ -85,7 +100,9 @@ class JimiFormatter(Formatter):
         # obvious
         word_count = str(item['word_count']) if item.get('word_count') else None
         etree.SubElement(content, 'ContentType').text = item['type'].capitalize()
-        etree.SubElement(content, 'Headline').text = item.get('headline')
+        etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'))
+        etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2)
+                                                                       if extra.get(cp.HEADLINE2) else item['headline'])
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = item.get('creditline')
         etree.SubElement(content, 'Source').text = item.get('source')
@@ -99,12 +116,6 @@ class JimiFormatter(Formatter):
 
         if item.get('keywords') and item.get('source') == globenewswire.SOURCE:
             etree.SubElement(content, 'Stocks').text = ','.join(item['keywords'])
-
-        # extra
-        extra = item.get('extra') or {}
-
-        etree.SubElement(content, 'Headline2').text = extra.get(cp.HEADLINE2) if extra.get(cp.HEADLINE2) \
-            else item['headline']
 
         self._format_index(content, item)
         self._format_category(content, item)
@@ -125,7 +136,7 @@ class JimiFormatter(Formatter):
 
     def _format_keyword(self, content, keywords):
         if keywords:
-            etree.SubElement(content, 'Keyword').text = ','.join(keywords)
+            etree.SubElement(content, 'Keyword').text = format_maxlength(','.join(keywords))
 
     def _format_writethru(self, content, num):
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)
