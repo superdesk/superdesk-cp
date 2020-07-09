@@ -79,8 +79,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         """
         Applying custom CP mapping based on _APWebFeed-1.0-JIMI-3.0.xsl
         """
-        item = super().parse(data, provider=provider)
         ap_item = data['data']['item']
+        item = super().parse(data, provider=provider)
+        item.setdefault('extra', {})
 
         if app.config.get('AP_INGEST_DEBUG'):
             transref = ap_item['altids']['itemid']
@@ -106,6 +107,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item.get('headline'):
             item['headline'] = self.process_headline(item['headline'])
+            item['extra'][cp.HEADLINE2] = item['headline']
 
         if item.get('byline'):
             item['byline'] = ','.join(filter(None, [
@@ -145,11 +147,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 item['dateline']['located']['location'] = {'lat': lat, 'lon': lon}
             except KeyError:
                 pass
-
-        item.setdefault('extra', {})
-
-        if item.get('abstract'):
-            item['extra'][cp.HEADLINE2] = self.process_headline(item.pop('abstract'))
 
         if ap_item.get('description_summary'):
             item['abstract'] = ap_item['description_summary']

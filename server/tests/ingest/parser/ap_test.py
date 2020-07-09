@@ -40,7 +40,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('Story', item['profile'])
         self.assertEqual('WY-Exchange-Coronavirus-Tech', item['slugline'])
         self.assertEqual('headline1', item['headline'])
-        self.assertEqual('headline2', item['extra'][HEADLINE2])
+        self.assertEqual('headline1', item['extra'][HEADLINE2])
         self.assertIn('copyright information', item['copyrightnotice'])
         self.assertIn('editorial use only', item['usageterms'])
         self.assertEqual('The Associated Press', item['source'])
