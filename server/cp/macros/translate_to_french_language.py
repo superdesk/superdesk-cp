@@ -20,6 +20,7 @@ def translate_to_french_language(item, **kwargs):
     """
     If an article language is English then this macro will set it's language to French.
     """
+    not_text_items = ['picture', 'video', 'audio']
 
     desk_id = kwargs.get('dest_desk_id')
     if not desk_id:
@@ -34,6 +35,7 @@ def translate_to_french_language(item, **kwargs):
     desk = get_resource_service('desks').find_one(req=None, _id=desk_id)
 
     if (new_stage == desk.get('incoming_stage')
+            and item.get('type') not in not_text_items
             and (item.get('language') == 'en-CA' or item.get('language') == 'en')):
         translate_service = get_resource_service('translate')
 
