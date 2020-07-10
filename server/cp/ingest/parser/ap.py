@@ -61,6 +61,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
     # use preview for all now
     RENDITIONS_MAPPING = {
+        'original': 'main',
         'baseImage': 'preview',
         'viewImage': 'preview',
         'thumbnail': 'thumbnail',
