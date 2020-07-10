@@ -64,5 +64,9 @@ class GlobeNewswireParserTestCase(unittest.TestCase):
         self.assertEqual('FOR: AUXLY CANNABIS GROUP INC. '
                          'TORONTO, June 09, 2020 (GLOBE NEWSWIRE) -- Auxly Cannabis Group Inc. '
                          '(TSX.V: XLY) (OTCQX: CBWTF) '
-                         '(“Auxly” or the “Company”) has issued an additional $3 million wort',
+                         '(“Auxly” or the “Company”) has issued an additional $3 million worth of',
                          item['abstract'])
+
+    def test_parse_tables(self):
+        item = self.parse('tables.newsml')
+        self.assertNotIn('</strong><br><br></td>', item['body_html'])

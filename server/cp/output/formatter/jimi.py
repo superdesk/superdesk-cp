@@ -8,6 +8,7 @@ from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
 
+from cp.utils import format_maxlength
 import cp.ingest.parser.globenewswire as globenewswire
 
 
@@ -20,18 +21,6 @@ DATELINE_MAPPING = OrderedDict((
 ))
 
 OUTPUT_LENGTH_LIMIT = 128
-
-
-def format_maxlength(text):
-    if not text:
-        return text
-    output = ''
-    for word in text.split(' '):
-        space = ' ' if len(output) else ''
-        if len(output) + len(word) + len(space) > OUTPUT_LENGTH_LIMIT:
-            break
-        output = '{}{}{}'.format(output, space, word)
-    return output
 
 
 class JimiFormatter(Formatter):
@@ -100,9 +89,10 @@ class JimiFormatter(Formatter):
         # obvious
         word_count = str(item['word_count']) if item.get('word_count') else None
         etree.SubElement(content, 'ContentType').text = item['type'].capitalize()
-        etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'))
+        etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2)
-                                                                       if extra.get(cp.HEADLINE2) else item['headline'])
+                                                                       if extra.get(cp.HEADLINE2) else item['headline'],
+                                                                       OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = item.get('creditline')
         etree.SubElement(content, 'Source').text = item.get('source')
@@ -136,7 +126,7 @@ class JimiFormatter(Formatter):
 
     def _format_keyword(self, content, keywords):
         if keywords:
-            etree.SubElement(content, 'Keyword').text = format_maxlength(','.join(keywords))
+            etree.SubElement(content, 'Keyword').text = format_maxlength(','.join(keywords), OUTPUT_LENGTH_LIMIT)
 
     def _format_writethru(self, content, num):
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)

@@ -4,6 +4,7 @@ import logging
 import lxml.etree as etree
 import lxml.html as lxml_html
 
+from cp.utils import format_maxlength
 from superdesk.text_utils import get_word_count, get_text
 from superdesk.io.feed_parsers.newsml_2_0 import NewsMLTwoFeedParser
 
@@ -44,10 +45,10 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
 
         organisation = meta.xpath('./iptc:subject[@type="cpnat:organisation"][@literal]', namespaces=NS)
         if organisation:
-            item['abstract'] = 'FOR: {}. {}'.format(
+            item['abstract'] = format_maxlength('FOR: {}. {}'.format(
                 organisation[0].get('literal').upper().rstrip('.'),
-                get_text(item['body_html']).replace('  ', ' ')[:164],  # not sure about this number
-            )
+                get_text(item['body_html']).replace('  ', ' '),
+            ), 200)
 
         return item
 
@@ -110,6 +111,9 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
                     continue
                 child_html = lxml_html.fromstring(lxml_html.tostring(child, encoding='unicode'))
                 clean_html = cleaner.clean_html(child_html)
+                if clean_html.tag == 'table':
+                    clean_td_br(clean_html)
+                clean_td_br(clean_html)
                 contents.append(lxml_html.tostring(clean_html, encoding='unicode'))
         content['content'] = '\n'.join(contents)
         return content
@@ -131,3 +135,17 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
             return symbols
         subjects = tree.xpath('./iptc:contentMeta/iptc:subject[starts-with(@qcode,"MWSubject:")]', namespaces=NS)
         return [subj.get('qcode').split(':')[-1] for subj in subjects]
+
+
+def clean_td_br(table):
+    """Avoid double <br><br> in <td>.
+
+    SDCP-266
+    """
+    for tr in table:
+        if tr.tag != 'tr':
+            continue
+        for td in tr:
+            for elem in td:
+                if elem.tag == 'br' and elem.getnext() is not None and elem.getnext().tag == 'br':
+                    td.remove(elem)
