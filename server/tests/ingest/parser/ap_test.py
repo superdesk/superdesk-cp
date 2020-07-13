@@ -1,4 +1,5 @@
 
+import cp
 import json
 import flask
 import unittest
@@ -9,7 +10,6 @@ from tests.ingest.parser import get_fixture_path
 
 from tests.mock import resources
 
-from cp import HEADLINE2
 from cp.ingest import CP_APMediaFeedParser
 
 
@@ -40,7 +40,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('Story', item['profile'])
         self.assertEqual('WY-Exchange-Coronavirus-Tech', item['slugline'])
         self.assertEqual('headline1', item['headline'])
-        self.assertEqual('headline1', item['extra'][HEADLINE2])
+        self.assertEqual('headline1', item['extra'][cp.HEADLINE2])
         self.assertIn('copyright information', item['copyrightnotice'])
         self.assertIn('editorial use only', item['usageterms'])
         self.assertEqual('The Associated Press', item['source'])
@@ -57,6 +57,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('', item['ednote'])
 
         self.assertEqual('NYSE:WFC', item['extra']['stocks'])
+        self.assertEqual('m0012', item['extra'][cp.FILENAME])
 
         self.assertIn({
             'name': 'International',

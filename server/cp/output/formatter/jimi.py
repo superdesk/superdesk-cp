@@ -72,7 +72,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'ContentItemID').text = str(item['_id'])
-        etree.SubElement(content, 'FileName').text = str(item['family_id'])
+        etree.SubElement(content, 'FileName').text = str(extra.get(cp.FILENAME) or item['family_id'])
         etree.SubElement(content, 'NewsCompID').text = str(item['family_id'])
         etree.SubElement(content, 'SystemSlug').text = str(item['family_id'])
 
