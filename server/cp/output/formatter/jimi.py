@@ -7,6 +7,7 @@ from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
+from cp import PHOTO_SUPPCATEGORIES
 
 from cp.utils import format_maxlength
 import cp.ingest.parser.globenewswire as globenewswire
@@ -21,6 +22,16 @@ DATELINE_MAPPING = OrderedDict((
 ))
 
 OUTPUT_LENGTH_LIMIT = 128
+
+PICTURE_TYPES = {
+    'picture',
+    'graphic',
+}
+
+PICTURE_CATEGORY_MAPPING = {
+    cp.PHOTO_CATEGORIES: 'Category',
+    cp.PHOTO_SUPPCATEGORIES: 'SupplementalCategories',
+}
 
 
 class JimiFormatter(Formatter):
@@ -61,7 +72,10 @@ class JimiFormatter(Formatter):
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
 
-        if service:
+        if item.get('type') in PICTURE_TYPES:
+            etree.SubElement(root, 'Services').text = 'Pictures'
+            etree.SubElement(root, 'PscCodes').text = 'Online'
+        elif service:
             etree.SubElement(root, 'Services').text = 'Print'
             etree.SubElement(root, 'PscCodes').text = service
         else:
@@ -88,7 +102,8 @@ class JimiFormatter(Formatter):
 
         # obvious
         word_count = str(item['word_count']) if item.get('word_count') else None
-        etree.SubElement(content, 'ContentType').text = item['type'].capitalize()
+        etree.SubElement(content, 'ContentType').text = 'Photo' if item['type'] in PICTURE_TYPES else \
+            item['type'].capitalize()
         etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2)
                                                                        if extra.get(cp.HEADLINE2) else item['headline'],
@@ -96,7 +111,6 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = item.get('creditline')
         etree.SubElement(content, 'Source').text = item.get('source')
-        etree.SubElement(content, 'EditorNote').text = item.get('ednote')
         etree.SubElement(content, 'Length').text = word_count
         etree.SubElement(content, 'WordCount').text = word_count
         etree.SubElement(content, 'BreakWordCount').text = word_count
@@ -111,9 +125,14 @@ class JimiFormatter(Formatter):
         self._format_category(content, item)
         self._format_genre(content, item)
         self._format_urgency(content, item.get('urgency'))
-        self._format_keyword(content, item.get('keywords'))
+        self._format_keyword(content, item.get('keywords'), ', ' if item.get('type') == 'picture' else ',')
         self._format_dateline(content, item.get('dateline'))
         self._format_writethru(content, item.get('rewrite_sequence'))
+
+        if item.get('type') in PICTURE_TYPES:
+            self._format_picture_metadata(content, item)
+        else:
+            etree.SubElement(content, 'EditorNote').text = item.get('ednote')
 
     def _format_urgency(self, content, urgency):
         if urgency is None:
@@ -124,9 +143,9 @@ class JimiFormatter(Formatter):
         if items:
             etree.SubElement(content, 'Ranking').text = items[0]['name']
 
-    def _format_keyword(self, content, keywords):
+    def _format_keyword(self, content, keywords, glue):
         if keywords:
-            etree.SubElement(content, 'Keyword').text = format_maxlength(','.join(keywords), OUTPUT_LENGTH_LIMIT)
+            etree.SubElement(content, 'Keyword').text = format_maxlength(glue.join(keywords), OUTPUT_LENGTH_LIMIT)
 
     def _format_writethru(self, content, num):
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)
@@ -215,6 +234,83 @@ class JimiFormatter(Formatter):
         version_type = etree.SubElement(content, 'VersionType')
         if item.get('genre'):
             version_type.text = item['genre'][0]['name']
+
+    def _format_picture_metadata(self, content, item):
+        extra = item.get('extra') or {}
+        etree.SubElement(content, 'HeadlineService').text = 'false'
+        etree.SubElement(content, 'VideoType').text = 'None'
+        etree.SubElement(content, 'PhotoType').text = 'None'
+        etree.SubElement(content, 'GraphicType').text = 'None'
+
+        etree.SubElement(content, 'DateTaken').text = item['firstcreated'].strftime('%Y-%m-%dT%H:%M:%S')
+
+        if item.get('byline'):
+            etree.SubElement(content, 'Byline').text = item['byline']
+
+        for scheme, elem in PICTURE_CATEGORY_MAPPING.items():
+            code = [subj['qcode'] for subj in item.get('subject', []) if subj.get('scheme') == scheme]
+            if code:
+                dest = content.find(elem) if content.find(elem) is not None \
+                    else etree.SubElement(content, elem)
+                dest.text = code[0]
+
+        pic_filename = self._format_picture_filename(item)
+        if pic_filename:
+            content.find('FileName').text = pic_filename
+            etree.SubElement(content, 'ContentRef').text = '{}.jpg'.format(pic_filename)
+            etree.SubElement(content, 'ViewFile').text = '{}.jpg'.format(pic_filename)
+
+        content.find('SlugProper').text = item['headline']
+
+        if item.get('original_source'):
+            content.find('Source').text = item['original_source']
+
+        if extra.get(cp.ARCHIVE_SOURCE):
+            etree.SubElement(content, 'ArchiveSources').text = extra[cp.ARCHIVE_SOURCE]
+
+        if extra.get(cp.FILENAME):
+            etree.SubElement(content, 'OrigTransRef').text = extra[cp.FILENAME]
+
+        if extra.get(cp.PHOTOGRAPHER_CODE):
+            etree.SubElement(content, 'BylineTitle').text = extra[cp.PHOTOGRAPHER_CODE].upper()
+
+        if item.get('copyrightnotice'):
+            etree.SubElement(content, 'Copyright').text = item['copyrightnotice'][:50]
+
+        if item.get('description_text'):
+            etree.SubElement(content, 'EnglishCaption').text = item['description_text'].replace('  ', ' ')
+
+        if extra.get(cp.CAPTION_WRITER):
+            etree.SubElement(content, 'CaptionWriter').text = extra[cp.CAPTION_WRITER]
+
+        if item.get('ednote'):
+            etree.SubElement(content, 'SpecialInstructions').text = item['ednote']
+
+        credit = content.find('Credit')
+        if credit is not None and credit.text == 'ASSOCIATED PRESS':
+            credit.text = 'THE ASSOCIATED PRESS'
+
+        if extra.get('itemid'):
+            etree.SubElement(content, 'CustomField1').text = extra['itemid']
+
+        if pic_filename:
+            etree.SubElement(content, 'CustomField2').text = '/'.join(pic_filename.split('_', 1))
+
+        if extra.get(cp.INFOSOURCE):
+            etree.SubElement(content, 'CustomField6').text = extra[cp.INFOSOURCE]
+
+        if extra.get(cp.XMP_KEYWORDS):
+            etree.SubElement(content, 'XmpKeywords').text = extra[cp.XMP_KEYWORDS]
+
+    def _format_picture_filename(self, item):
+        if item.get('extra') and item['extra'].get(cp.FILENAME):
+            created = item['firstcreated']
+            return '{transref}-{date}_{year}_{time}'.format(
+                transref=item['extra'][cp.FILENAME],
+                year=created.strftime('%Y'),
+                date='{}{}'.format(created.month, created.day),
+                time=created.strftime('%H%M%S'),
+            )
 
 
 def _find_jimi_item(code, items):

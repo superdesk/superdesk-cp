@@ -1,11 +1,19 @@
 
+from abc import abstractstaticmethod
+import io
+from logging import info
 import re
 import cp
+import PIL
 import json
+import requests
 import superdesk
 
 from typing import List
 from flask import current_app as app
+from PIL import Image
+from PIL.IptcImagePlugin import getiptcinfo
+from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
 
 
@@ -84,6 +92,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         item = super().parse(data, provider=provider)
         item.setdefault('extra', {})
 
+        if item.get('associations') and provider and provider.get('content_types'):
+            item['associations'] = {
+                key: assoc
+                for key, assoc in item['associations'].items()
+                if assoc.get('type') in provider['content_types']
+            }
+
         if app.config.get('AP_INGEST_DEBUG'):
             transref = ap_item['altids']['itemid']
             with open('/tmp/ap/{}.json'.format(transref), 'w') as out:
@@ -92,6 +107,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         item['guid'] = ap_item['altids']['etag']
         try:
             item['extra'][cp.FILENAME] = ap_item['altids']['transref']
+        except KeyError:
+            pass
+        try:
+            item['extra']['itemid'] = ap_item['altids']['itemid']
         except KeyError:
             pass
 
@@ -141,7 +160,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     'city_code': dateline.get('city', ''),
                     'state': dateline.get('countryareaname', ''),
                     'state_code': dateline.get('countryareacode', ''),
-                    'country': dateline.get('countryname', ''),
+                    'country': capitalize(dateline.get('countryname', '')),
                     'country_code': dateline.get('countrycode', ''),
                     'dateline': 'city',
                 }
@@ -156,7 +175,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if ap_item.get('description_summary'):
             item['abstract'] = ap_item['description_summary']
 
-        if ap_item.get('ednote'):
+        if ap_item.get('ednote') and item['type'] == 'text':
             ednote = self._parse_ednote(ap_item['ednote'])
             item['ednote'] = self._format_ednote(ednote)
             item['extra']['update'] = self._format_update(ednote)
@@ -167,12 +186,24 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if item['type'] == 'text':
             self._parse_genre(data['data'], item)
             self._parse_category(data['data'], item)
+        elif item['type'] == 'picture':
+            self._parse_picture_category(data['data'], item)
 
         if ap_item.get('organisation'):
             item['extra']['stocks'] = self._parse_stocks(ap_item['organisation'])
 
         if ap_item.get('embargoed'):
             item['embargoed'] = self.datetime(ap_item['embargoed'])
+
+        photographer = ap_item.get('photographer')
+        if photographer:
+            item['extra'][cp.PHOTOGRAPHER_CODE] = photographer.get('code')
+
+        if ap_item.get('provider'):
+            item['extra']['provider'] = ap_item['provider']
+
+        if ap_item.get('type') == 'picture':
+            self._parse_picture_metadata(data['data'], item)
 
         return item
 
@@ -529,6 +560,57 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     item['anpa_category'].append(
                         {'name': cat['name'], 'qcode': cat['qcode']},
                     )
+
+    def _parse_picture_category(self, data, item):
+        categories = _get_cv_items(cp.PHOTO_CATEGORIES)
+        suppcategories = _get_cv_items(cp.PHOTO_SUPPCATEGORIES)
+        for subj in data['item'].get('subject', []):
+            rels = subj.get('rels', [])
+            if 'category' in rels:
+                append_matching_subject(item, cp.PHOTO_CATEGORIES, subj['code'], categories)
+            elif 'suppcategory' in rels:
+                append_matching_subject(item, cp.PHOTO_SUPPCATEGORIES, subj['code'], suppcategories)
+            else:
+                continue
+
+    def _parse_picture_metadata(self, data, item):
+        item['creditline'] = data['item'].get('description_creditline')
+        item['keywords'] = data['item'].get('keywords', [])
+
+        try:
+            infosource = data['item']['infosource'][0]['name']
+        except KeyError:
+            infosource = 'AP'
+        item['extra'][cp.INFOSOURCE] = infosource
+        item['original_source'] = 'The Associated Press' if infosource == 'AP' else 'Unknown AP'
+        item['extra'][cp.ARCHIVE_SOURCE] = 'AP' if infosource == 'AP' else 'Unknown AP'
+
+        self._parse_exif(data, item)
+
+    def _parse_exif(self, data, item):
+        try:
+            res = requests.get(data['item']['renditions']['preview']['href'], timeout=10)
+        except KeyError:
+            return
+        metadata = get_meta_iptc(io.BytesIO(res.content))
+        if metadata.get('Writer/Editor'):
+            item.setdefault('extra', {})[cp.CAPTION_WRITER] = metadata['Writer/Editor']
+        if metadata.get('Headline'):
+            item.setdefault('extra', {})[cp.HEADLINE2] = metadata['Headline']
+        if metadata.get('Keywords'):
+            item.setdefault('extra', {})[cp.XMP_KEYWORDS] = ', '.join(metadata['Keywords'].split(';'))
+
+
+def append_matching_subject(item, scheme, qcode, cv_items):
+    for cv_item in cv_items:
+        if qcode.upper() == cv_item['qcode'].upper():
+            item.setdefault('subject', []).append({
+                'name': cv_item['name'],
+                'qcode': cv_item['qcode'],
+                'translations': cv_item.get('translations'),
+                'scheme': scheme,
+            })
+            break
 
 
 def capitalize(name):

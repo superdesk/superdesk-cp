@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish>
+    <Reschedule>false</Reschedule>
+    <IsRegional>false</IsRegional>
+    <CanAutoRoute>true</CanAutoRoute>
+    <PublishID>20337386</PublishID>
+    <Services>Pictures</Services>
+    <Username />
+    <UseLocalsOut>false</UseLocalsOut>
+    <PscCodes>Online</PscCodes>
+    <ContentItem d2p1:type="PhotoContentItem" xmlns:d2p1="http://www.w3.org/2001/XMLSchema-instance">
+        <Name />
+        <Cachable>false</Cachable>
+        <NewsCompID>56095746</NewsCompID>
+        <AutoSaveID>0</AutoSaveID>
+        <Type>0</Type>
+        <MediaType>0</MediaType>
+        <Status>0</Status>
+        <SystemSlug>C5049377C43442C09DB33280F3020082</SystemSlug>
+        <FileName>6dd9971f75c24ce59865879cf315d7fe-6dd9971f75c24ce59</FileName>
+        <Byline>Stuart Franklin</Byline>
+        <HeadlineService>false</HeadlineService>
+        <VideoType>None</VideoType>
+        <Category>S</Category>
+        <Ranking>News - Optional</Ranking>
+        <RankingValue>5</RankingValue>
+        <PhotoType>None</PhotoType>
+        <GraphicType>None</GraphicType>
+        <ReadOnlyFlag>true</ReadOnlyFlag>
+        <HoldFlag>false</HoldFlag>
+        <OpenFlag>false</OpenFlag>
+        <TransmittedToWire>false</TransmittedToWire>
+        <TrashFlag>false</TrashFlag>
+        <TopStory>false</TopStory>
+        <ContentRef>6dd9971f75c24ce59865879cf315d7fe-6dd9971f75c24ce59865879.jpg</ContentRef>
+        <Credit>THE ASSOCIATED PRESS</Credit>
+        <ContentType>Photo</ContentType>
+        <SlugProper>Virus Outbreak Germany Soccer Bundesliga</SlugProper>
+        <Source>Unknown AP</Source>
+        <AuthorVersion>0</AuthorVersion>
+        <BreakWordCount>0</BreakWordCount>
+        <ContentItemID>73777439</ContentItemID>
+        <ProfileID>204</ProfileID>
+        <SysContentType>0</SysContentType>
+        <WordCount>0</WordCount>
+        <EmbargoTime>0001-01-01T00:00:00</EmbargoTime>
+        <Language>1</Language>
+        <UpdatedDateTime>2020-06-03T16:28:15.363-04:00</UpdatedDateTime>
+        <CreatedDateTime>2020-06-03T20:28:15.32</CreatedDateTime>
+        <HandledByUserID>0</HandledByUserID>
+        <ContentText />
+        <Length>0</Length>
+        <WritethruValue>0</WritethruValue>
+        <City>Bremen</City>
+        <Country>Germany</Country>
+        <Placeline>Bremen;;Germany</Placeline>
+        <Published>false</Published>
+        <PhotoLinkCount>0</PhotoLinkCount>
+        <VideoLinkCount>0</VideoLinkCount>
+        <AudioLinkCount>0</AudioLinkCount>
+        <IsPublishedAsTopStory>false</IsPublishedAsTopStory>
+        <PhotoContentItemID>23058523</PhotoContentItemID>
+        <OrigTransRef>DMSC113</OrigTransRef>
+        <BylineTitle>POOL</BylineTitle>
+        <CaptionWriter>bl</CaptionWriter>
+        <Copyright>(c) Getty Images Europe/Pool</Copyright>
+        <EnglishCaption>Frankfurt's Stefan IIsanker, right, celebrates after he scores his side second goal during the
+            German Bundesliga soccer match between SV Werder Bremen and Eintracht Frankfurt in Bremen, Germany,
+            Wednesday, June 3, 2020. Because of the coronavirus outbreak all soccer matches of the German Bundesliga
+            take place without spectators. (Stuart Franklin/Pool via AP)</EnglishCaption>
+        <DateTaken>2020-06-03T20:22:03</DateTaken>
+        <SupplementalCategories>SOC</SupplementalCategories>
+        <SpecialInstructions>POOL PHOTO, THE DEUTSCHE FUSSBALL LIGA DFL DOES NOT ALLOW THE IMAGES TO BE USED AS
+            SEQUENCES TO EMULATE VIDEO.</SpecialInstructions>
+        <ViewFile>6dd9971f75c24ce59865879cf315d7fe-6dd9971f75c24ce59865879.jpg</ViewFile>
+        <ArchiveSources>Unknown AP</ArchiveSources>
+        <CustomField1>6dd9971f75c24ce59865879cf315d7fe</CustomField1>
+        <CustomField2>
+            6dd9971f75c24ce59865879cf315d7fe-6dd9971f75c24ce59865879cf315d7fe-0.CPT637267984833741404_03/06/2020_202806-0400
+        </CustomField2>
+        <CustomField6>POOL Getty Images</CustomField6>
+    </ContentItem>
+    <UserProfileID>0</UserProfileID>
+    <PublishOrder>0</PublishOrder>
+    <PublishDateTime>2020-06-03T20:28:15.363</PublishDateTime>
+    <NewCycle>false</NewCycle>
+    <OnlineResend>false</OnlineResend>
+</Publish>

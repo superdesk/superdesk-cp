@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish>
+    <Reschedule>false</Reschedule>
+    <IsRegional>false</IsRegional>
+    <CanAutoRoute>true</CanAutoRoute>
+    <PublishID>20348536</PublishID>
+    <Services>Pictures</Services>
+    <Username />
+    <UseLocalsOut>false</UseLocalsOut>
+    <PscCodes>Online</PscCodes>
+    <ContentItem d2p1:type="PhotoContentItem" xmlns:d2p1="http://www.w3.org/2001/XMLSchema-instance">
+        <Name />
+        <Cachable>false</Cachable>
+        <NewsCompID>56115057</NewsCompID>
+        <AutoSaveID>0</AutoSaveID>
+        <Type>0</Type>
+        <MediaType>0</MediaType>
+        <Status>0</Status>
+        <SystemSlug>53C04D41154D488B9B72061CD044AD62</SystemSlug>
+        <FileName>AB101-65_2020_101001</FileName>
+        <Byline>Alvaro Barrientos</Byline>
+        <HeadlineService>false</HeadlineService>
+        <VideoType>None</VideoType>
+        <Category>I</Category>
+        <Ranking>News - Optional</Ranking>
+        <RankingValue>5</RankingValue>
+        <PhotoType>None</PhotoType>
+        <GraphicType>None</GraphicType>
+        <ReadOnlyFlag>true</ReadOnlyFlag>
+        <HoldFlag>false</HoldFlag>
+        <OpenFlag>false</OpenFlag>
+        <TransmittedToWire>false</TransmittedToWire>
+        <TrashFlag>false</TrashFlag>
+        <TopStory>false</TopStory>
+        <ContentRef>AB101-65_2020_101001.jpg</ContentRef>
+        <Headline2>Santos Munoz</Headline2>
+        <Credit>THE ASSOCIATED PRESS</Credit>
+        <ContentType>Photo</ContentType>
+        <SlugProper>Virus Outbreak Spain</SlugProper>
+        <Source>The Associated Press</Source>
+        <AuthorVersion>0</AuthorVersion>
+        <BreakWordCount>0</BreakWordCount>
+        <ContentItemID>73806385</ContentItemID>
+        <ProfileID>204</ProfileID>
+        <SysContentType>0</SysContentType>
+        <WordCount>0</WordCount>
+        <EmbargoTime>0001-01-01T00:00:00</EmbargoTime>
+        <Language>1</Language>
+        <UpdatedDateTime>2020-06-05T13:11:04.41-04:00</UpdatedDateTime>
+        <CreatedDateTime>2020-06-05T17:11:04.41</CreatedDateTime>
+        <HandledByUserID>0</HandledByUserID>
+        <ContentText />
+        <Keyword>Coronavirus, COVID-19</Keyword>
+        <Length>0</Length>
+        <WritethruValue>0</WritethruValue>
+        <City>Pamplona</City>
+        <Country>Spain</Country>
+        <Latitude>53.818763</Latitude>
+        <Longitude>-89.835093</Longitude>
+        <Placeline>Pamplona;;Spain</Placeline>
+        <Published>false</Published>
+        <PhotoLinkCount>0</PhotoLinkCount>
+        <VideoLinkCount>0</VideoLinkCount>
+        <AudioLinkCount>0</AudioLinkCount>
+        <IsPublishedAsTopStory>false</IsPublishedAsTopStory>
+        <PhotoContentItemID>23071136</PhotoContentItemID>
+        <OrigTransRef>AB101</OrigTransRef>
+        <BylineTitle>STR</BylineTitle>
+        <CaptionWriter>AB</CaptionWriter>
+        <Copyright>Copyright 2019 The Associated Press. All rights re</Copyright>
+        <EnglishCaption>Santo Munoz, left, wearing a face mask to protect against the coronavirus, moves a robot known
+            as "Alexia" to wait on customers at his bar at Plaza del Castillo square, in Pamplona, northern Spain,
+            Friday, June 5, 2020. (AP Photo/Alvaro Barrientos)</EnglishCaption>
+        <DateTaken>2020-06-05T10:10:01</DateTaken>
+        <ViewFile>AB101-65_2020_101001.jpg</ViewFile>
+        <ArchiveSources>AP</ArchiveSources>
+        <XmpKeywords>Coronavirus, COVID-19</XmpKeywords>
+        <CustomField1>de1bb822362146388852c8b7eee93c76</CustomField1>
+        <CustomField2>AB101-65/2020_101001</CustomField2>
+        <CustomField6>AP</CustomField6>
+    </ContentItem>
+    <UserProfileID>0</UserProfileID>
+    <PublishOrder>0</PublishOrder>
+    <PublishDateTime>2020-06-05T17:11:04.41</PublishDateTime>
+    <NewCycle>false</NewCycle>
+    <OnlineResend>false</OnlineResend>
+</Publish>

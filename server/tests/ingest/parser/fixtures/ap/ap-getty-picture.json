@@ -1,0 +1,525 @@
+{
+    "api_version": "2.0",
+    "api_mode": "live",
+    "id": "ULcXmCqiUMI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 31522,
+                "name": "PHOTOSTREAM - AK (ALASKA)"
+            }, {
+                "id": 31523,
+                "name": "PHOTOSTREAM - AL (ALABAMA)"
+            }, {
+                "id": 31536,
+                "name": "PHOTOSTREAM - AR (ARKANSAS)"
+            }, {
+                "id": 31551,
+                "name": "PHOTOSTREAM - AZ (ARIZONA)"
+            }, {
+                "id": 31629,
+                "name": "PHOTOSTREAM - CA (CALIFORNIA)"
+            }, {
+                "id": 31640,
+                "name": "PHOTOSTREAM - CO (COLORADO)"
+            }, {
+                "id": 31643,
+                "name": "PHOTOSTREAM - CT (CONNECTICUT)"
+            }, {
+                "id": 31649,
+                "name": "PHOTOSTREAM - DC (DIST OF COLUMBIA)"
+            }, {
+                "id": 31652,
+                "name": "PHOTOSTREAM - DE (DELAWARE)"
+            }, {
+                "id": 31696,
+                "name": "PHOTOSTREAM - FL (FLORIDA)"
+            }, {
+                "id": 31702,
+                "name": "PHOTOSTREAM - GA (GEORGIA)"
+            }, {
+                "id": 31715,
+                "name": "PHOTOSTREAM - HI (HAWAII)"
+            }, {
+                "id": 31725,
+                "name": "PHOTOSTREAM - IA (IOWA)"
+            }, {
+                "id": 31728,
+                "name": "PHOTOSTREAM - ID (IDAHO)"
+            }, {
+                "id": 31732,
+                "name": "PHOTOSTREAM - IL (ILLINOIS)"
+            }, {
+                "id": 31734,
+                "name": "PHOTOSTREAM - IN (INDIANA)"
+            }, {
+                "id": 31761,
+                "name": "PHOTOSTREAM - KS (KANSAS)"
+            }, {
+                "id": 31763,
+                "name": "PHOTOSTREAM - KY (KENTUCKY)"
+            }, {
+                "id": 31765,
+                "name": "PHOTOSTREAM - LA (LOUISIANA)"
+            }, {
+                "id": 31774,
+                "name": "PHOTOSTREAM - MA (MASSACHUSETTS)"
+            }, {
+                "id": 31778,
+                "name": "PHOTOSTREAM - MD (MARYLAND)"
+            }, {
+                "id": 31780,
+                "name": "PHOTOSTREAM - ME (MAINE)"
+            }, {
+                "id": 31783,
+                "name": "PHOTOSTREAM - MI (MICHIGAN)"
+            }, {
+                "id": 31787,
+                "name": "PHOTOSTREAM - MN (MINNESOTA)"
+            }, {
+                "id": 31788,
+                "name": "PHOTOSTREAM - MO (MISSOURI)"
+            }, {
+                "id": 31790,
+                "name": "PHOTOSTREAM - MS (MISSISSIPPI)"
+            }, {
+                "id": 31791,
+                "name": "PHOTOSTREAM - MT (MONTANA)"
+            }, {
+                "id": 31801,
+                "name": "PHOTOSTREAM - NC (NORTH CAROLINA)"
+            }, {
+                "id": 31803,
+                "name": "PHOTOSTREAM - ND (NORTH DAKOTA)"
+            }, {
+                "id": 31804,
+                "name": "PHOTOSTREAM - NE (NEBRASKA)"
+            }, {
+                "id": 31811,
+                "name": "PHOTOSTREAM - NH (NEW HAMPSHIRE)"
+            }, {
+                "id": 31813,
+                "name": "PHOTOSTREAM - NJ (NEW JERSEY)"
+            }, {
+                "id": 31814,
+                "name": "PHOTOSTREAM - NM (NEW MEXICO)"
+            }, {
+                "id": 31822,
+                "name": "PHOTOSTREAM - NV (NEVADA)"
+            }, {
+                "id": 31824,
+                "name": "PHOTOSTREAM - NY (NEW YORK)"
+            }, {
+                "id": 31830,
+                "name": "PHOTOSTREAM - OH (OHIO)"
+            }, {
+                "id": 31831,
+                "name": "PHOTOSTREAM - OK (OKLAHOMA)"
+            }, {
+                "id": 31835,
+                "name": "PHOTOSTREAM - PA (PENNSYLVANIA)"
+            }, {
+                "id": 31855,
+                "name": "PHOTOSTREAM - RI (RHODE ISLAND)"
+            }, {
+                "id": 31866,
+                "name": "PHOTOSTREAM - SC (SOUTH CAROLINA)"
+            }, {
+                "id": 31868,
+                "name": "PHOTOSTREAM - SD (SOUTH DAKOTA)"
+            }, {
+                "id": 31897,
+                "name": "PHOTOSTREAM - TN (TENNESSEE)"
+            }, {
+                "id": 31904,
+                "name": "PHOTOSTREAM - TX (TEXAS)"
+            }, {
+                "id": 31911,
+                "name": "PHOTOSTREAM - UT (UTAH)"
+            }, {
+                "id": 31913,
+                "name": "PHOTOSTREAM - VA (VIRGINA)"
+            }, {
+                "id": 31917,
+                "name": "PHOTOSTREAM - VT (VERMONT)"
+            }, {
+                "id": 31918,
+                "name": "PHOTOSTREAM - WA (WASHINGTON)"
+            }, {
+                "id": 31924,
+                "name": "PHOTOSTREAM - WI (WISCONSIN)"
+            }, {
+                "id": 31933,
+                "name": "PHOTOSTREAM - WV (WEST VIRGINIA)"
+            }, {
+                "id": 31936,
+                "name": "PHOTOSTREAM - WY (WYOMING)"
+            }, {
+                "id": 31985,
+                "name": "PHOTOSTREAM - OR (OREGON)"
+            }, {
+                "id": 35500,
+                "name": "AP Online Photos (3.1 Exchange Only)"
+            }, {
+                "id": 100484,
+                "name": "MC - Photos"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/6dd9971f75c24ce59865879cf315d7fe?qt=ULcXmCqiUMI&et=0a1aza3c0",
+            "altids": {
+                "itemid": "6dd9971f75c24ce59865879cf315d7fe",
+                "etag": "6dd9971f75c24ce59865879cf315d7fe_0a1aza3c0",
+                "friendlykey": "20155733204407",
+                "referenceid": "20155733204407",
+                "transref": "DMSC113"
+            },
+            "version": 0,
+            "type": "picture",
+            "urgency": 5,
+            "editorialpriority": "d",
+            "language": "en",
+            "versioncreated": "2020-06-03T20:27:08Z",
+            "firstcreated": "2020-06-03T20:22:03Z",
+            "pubstatus": "usable",
+            "ednote": "POOL PHOTO, THE DEUTSCHE FUSSBALL LIGA DFL DOES NOT ALLOW THE IMAGES TO BE USED AS SEQUENCES TO EMULATE VIDEO.",
+            "signals": ["newscontent"],
+            "title": "Virus Outbreak Germany Soccer Bundesliga",
+            "headline": "Virus Outbreak Germany Soccer Bundesliga",
+            "slugline": "Virus Outbreak Germany Soccer Bundesliga",
+            "photographer": {
+                "code": "pool",
+                "title": "POOL",
+                "name": "Stuart Franklin"
+            },
+            "datelinelocation": {
+                "city": "Bremen",
+                "countrycode": "DEU",
+                "countryname": "GERMANY",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [8.80717, 53.07582]
+                }
+            },
+            "description_creditline": "ASSOCIATED PRESS",
+            "copyrightnotice": "(c) Getty Images Europe/Pool",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "provider": "AP",
+            "infosource": [{
+                "name": "POOL Getty Images"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "s",
+                "name": "Sports"
+            }, {
+                "rels": ["suppcategory"],
+                "creator": "Editorial",
+                "code": "soc",
+                "name": "Soccer"
+            }, {
+                "rels": ["suppcategory"],
+                "creator": "Editorial",
+                "code": "wsoc",
+                "name": "WSOC"
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "9cce666bb29344b8ba61f3732d971d32",
+                "name": "Disease outbreaks",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e", "e57b6c907e3810048ae4df092526b43e"]
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e57b6c907e3810048ae4df092526b43e",
+                "name": "Public health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "20df14707e4e10048910d0913b2d075c",
+                "name": "Professional soccer",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["20dbbcf87e4e100488c9d0913b2d075c"]
+            }, {
+                "code": "20dbbcf87e4e100488c9d0913b2d075c",
+                "name": "Soccer",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54df6c687df7100483dedf092526b43e"]
+            }, {
+                "code": "54df6c687df7100483dedf092526b43e",
+                "name": "Sports",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "ea65116628934d1c8503c6133983a317",
+                "name": "International soccer",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["20dbbcf87e4e100488c9d0913b2d075c"]
+            }, {
+                "code": "2aef05d9bc434994bf32acac09f9fe0c",
+                "name": "Men's soccer",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["20dbbcf87e4e100488c9d0913b2d075c", "039d42210158410db74f393deea38897"]
+            }, {
+                "code": "039d42210158410db74f393deea38897",
+                "name": "Men's sports",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54df6c687df7100483dedf092526b43e"]
+            }],
+            "organisation": [{
+                "code": "b35c9c888c0d10048d76e26cb3bf300e",
+                "name": "Eintracht Frankfurt",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "9dad1cf08c0d10048d4de26cb3bf300e",
+                "name": "Bundesliga",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "b35b64088c0d10048d72e26cb3bf300e",
+                "name": "Werder Bremen",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }],
+            "place": [{
+                "code": "61b0aefd98c14da481e28bc5fa0bac8e",
+                "name": "Frankfurt",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6620e8187d5b100482d4c076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [8.68333, 50.11667]
+                }
+            }, {
+                "code": "6620e8187d5b100482d4c076b8e3055c",
+                "name": "Germany",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6618c9f87d5b10048202c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                }
+            }, {
+                "code": "6618c9f87d5b10048202c076b8e3055c",
+                "name": "Western Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f4c076b8e3055c"],
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [9.14062, 48.69096]
+                }
+            }, {
+                "code": "b1afc5677c4c434c965aa3f7c9b98626",
+                "name": "Bremen",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6620e8187d5b100482d4c076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [8.80777, 53.07516]
+                }
+            }],
+            "event": [{
+                "name": "Eintracht Frankfurt vs Werder Bremen 6/3/2020",
+                "creator": "Machine",
+                "externaleventids": [{
+                    "code": "sr:match:21971221",
+                    "creator": "sportradar",
+                    "creatorcode": "sportradar:sr:match:21971221"
+                }],
+                "eventproperties": {
+                    "scheduleddatetime": "2020-06-03T18:30:00.000Z",
+                    "competitorname1": "Werder Bremen",
+                    "competitorabbrv1": "SVW",
+                    "competitorqualifier1": "home",
+                    "competitorcountryname1": "Germany",
+                    "competitorcountrycode1": "DEU",
+                    "competitorname2": "Eintracht Frankfurt",
+                    "competitorabbrv2": "SGE",
+                    "competitorqualifier2": "away",
+                    "competitorcountryname2": "Germany",
+                    "competitorcountrycode2": "DEU",
+                    "seasonname": "Bundesliga 19/20",
+                    "seasonstartdatetime": "2019-08-16T00:00:00.000Z",
+                    "seasonenddatetime": "2020-06-29T00:00:00.000Z",
+                    "tournamentname": "Eintracht Frankfurt vs Werder Bremen 6/3/2020",
+                    "tournamentcategoryname": "Germany",
+                    "tournamentsportname": "Soccer",
+                    "refereename": "Ittrich, Patrick",
+                    "refereenationality": "Germany",
+                    "venuename": "Weserstadion",
+                    "venuecapacity": "42100",
+                    "venuecity": "Bremen",
+                    "venuecountryname": "Germany",
+                    "venuecountrycode": "DEU",
+                    "venuegeocoordinates": "53.066394,8.837628"
+                }
+            }],
+            "description_caption": "Frankfurt's Stefan IIsanker, right, celebrates after he scores his side second goal during the German Bundesliga soccer match between SV Werder Bremen and Eintracht Frankfurt in Bremen, Germany, Wednesday, June 3, 2020.  Because of the coronavirus outbreak all soccer matches of the German Bundesliga take place without spectators. (Stuart Franklin/Pool via AP)",
+            "renditions": {
+                "main": {
+                    "title": "Full Resolution (JPG)",
+                    "rel": "Main",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "74a10db6afd24ca38003367246127639",
+                    "digest": "21c67a88145bb5d29954a3cf8c4c079b",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 2009311,
+                    "width": 2589,
+                    "height": 1726,
+                    "originalfilename": "Virus_Outbreak_Germany_Soccer_Bundesliga_04407.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg",
+                    "pricetag": "Unavailable:MeterExpired_Shutdown"
+                },
+                "preview": {
+                    "title": "Preview (JPG)",
+                    "rel": "Preview",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "d892a79b60da4aec9e9c7160f5ba6efc",
+                    "digest": "cd9bcd343c2a58633fab406c235be18d",
+                    "href": "https://mapi.associatedpress.com/v1/items/6dd9971f75c24ce59865879cf315d7fe.0/preview/preview.jpg?nfe=true&s=512&app=MPK&tag=iid~6dd9971f75c24ce59865879cf315d7fe!rsn~0!cid~d892a79b60da4aec9e9c7160f5ba6efc!ofn~Virus_Outbreak_Germany_Soccer_Bundesliga_04407.jpg!orgId~49091!qt~ULcXmCqiUMI!orgNm~Canadian%20Press!role~Preview!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 65851,
+                    "width": 512,
+                    "height": 341,
+                    "originalfilename": "Virus_Outbreak_Germany_Soccer_Bundesliga_04407.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "thumbnail": {
+                    "title": "Thumbnail (JPG)",
+                    "rel": "Thumbnail",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "3fe6100ccbc94efd82e55c3a0ed64716",
+                    "digest": "90e4f213fd5cee3c0200fc0ab06560c1",
+                    "href": "https://mapi.associatedpress.com/v1/items/6dd9971f75c24ce59865879cf315d7fe.0/thumbnail/thumbnail.jpg?nfe=true&app=MPK&tag=iid~6dd9971f75c24ce59865879cf315d7fe!rsn~0!cid~3fe6100ccbc94efd82e55c3a0ed64716!ofn~Virus_Outbreak_Germany_Soccer_Bundesliga_04407.jpg!orgId~49091!qt~ULcXmCqiUMI!orgNm~Canadian%20Press!role~Thumbnail!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 11931,
+                    "width": 125,
+                    "height": 83,
+                    "originalfilename": "Virus_Outbreak_Germany_Soccer_Bundesliga_04407.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "caption_nitf": {
+                    "title": "NITF Caption Download",
+                    "rel": "Caption",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 52,
+                    "contentid": "6dd9971f75c24ce59865879cf315d7fe",
+                    "href": "https://api.ap.org/media/v/content/6dd9971f75c24ce59865879cf315d7fe.0/download?qt=ULcXmCqiUMI&type=text&format=nitf&text=caption&et=0a1aza3c0"
+                }
+            }
+        }
+    }
+}
