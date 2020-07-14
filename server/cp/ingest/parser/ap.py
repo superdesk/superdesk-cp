@@ -1,6 +1,5 @@
 
 import re
-from unittest.case import expectedFailure
 import cp
 import json
 import superdesk
