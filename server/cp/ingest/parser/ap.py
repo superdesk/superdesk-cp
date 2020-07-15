@@ -90,6 +90,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 json.dump(data['data'], out, indent=2)
 
         item['guid'] = ap_item['altids']['etag']
+        try:
+            item['extra'][cp.FILENAME] = ap_item['altids']['transref']
+        except KeyError:
+            pass
 
         if item.get('slugline'):
             item['slugline'] = self.process_slugline(item['slugline'])

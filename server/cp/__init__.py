@@ -6,6 +6,7 @@ logger.setLevel(logging.INFO)
 
 HEADLINE2 = 'headline_extended'
 SERVICE = '_service'
+FILENAME = 'filename'
 
 NEWS_URGENT = 1
 NEWS_NEED_TO_KNOW = 2
