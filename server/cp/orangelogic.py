@@ -180,7 +180,7 @@ class OrangelogicSearchProvider(SearchProvider):
     def _parse_items(self, data):
         items = []
         for item in data['APIResponse']['Items']:
-            guid = item['MediaNumber']
+            guid = item['SystemIdentifier']
             items.append({
                 '_id': guid,
                 '_fetchable': True,
@@ -211,13 +211,15 @@ class OrangelogicSearchProvider(SearchProvider):
 
     def fetch(self, guid):
         kwargs = {
-            'query': 'MediaNumber:{}'.format(guid),
+            'query': 'SystemIdentifier:{}'.format(guid),
             'fields': ','.join(self.FIELDS),
             'format': 'json',
             'DateFormat': 'u',
         }
         resp = self._auth_request(SEARCH_API, **kwargs)
         data = resp.json()
+        print('data', json.dumps(data, indent=2))
+        print('guid', guid)
         item = self._parse_items(data)[0]
 
         url = self._url(DOWNLOAD_API)

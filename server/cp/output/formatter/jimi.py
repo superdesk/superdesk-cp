@@ -106,7 +106,7 @@ class JimiFormatter(Formatter):
             item['type'].capitalize()
         etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2)
-                                                                       if extra.get(cp.HEADLINE2) else item['headline'],
+                                                                       if extra.get(cp.HEADLINE2) else item.get('headline'),
                                                                        OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = item.get('creditline')
@@ -260,7 +260,8 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'ContentRef').text = '{}.jpg'.format(pic_filename)
             etree.SubElement(content, 'ViewFile').text = '{}.jpg'.format(pic_filename)
 
-        content.find('SlugProper').text = item['headline']
+        if item.get('headline'):
+            content.find('SlugProper').text = item['headline']
 
         if item.get('original_source'):
             content.find('Source').text = item['original_source']
