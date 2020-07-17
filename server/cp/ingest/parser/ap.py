@@ -562,14 +562,12 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     )
 
     def _parse_picture_category(self, data, item):
-        categories = _get_cv_items(cp.PHOTO_CATEGORIES)
-        suppcategories = _get_cv_items(cp.PHOTO_SUPPCATEGORIES)
         for subj in data['item'].get('subject', []):
             rels = subj.get('rels', [])
             if 'category' in rels:
-                append_matching_subject(item, cp.PHOTO_CATEGORIES, subj['code'], categories)
+                append_matching_subject(item, cp.PHOTO_CATEGORIES, subj['code'])
             elif 'suppcategory' in rels:
-                append_matching_subject(item, cp.PHOTO_SUPPCATEGORIES, subj['code'], suppcategories)
+                append_matching_subject(item, cp.PHOTO_SUPPCATEGORIES, subj['code'])
             else:
                 continue
 
@@ -601,7 +599,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item.setdefault('extra', {})[cp.XMP_KEYWORDS] = ', '.join(metadata['Keywords'].split(';'))
 
 
-def append_matching_subject(item, scheme, qcode, cv_items):
+def append_matching_subject(item, scheme, qcode):
+    cv_items = _get_cv_items(scheme)
     for cv_item in cv_items:
         if qcode.upper() == cv_item['qcode'].upper():
             item.setdefault('subject', []).append({

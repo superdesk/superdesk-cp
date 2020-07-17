@@ -1,10 +1,10 @@
 
-import os
 import math
-import pytz
 import requests
 import superdesk
 import mimetypes
+
+import cp
 
 from datetime import datetime
 from urllib.parse import urljoin
@@ -15,6 +15,10 @@ from superdesk.timer import timer
 from superdesk.utc import local_to_utc
 from superdesk.search_provider import SearchProvider
 from superdesk.io.commands.update_ingest import update_renditions
+from superdesk.media.image import get_meta_iptc, get_meta
+
+from cp.utils import parse_xmp
+from cp.ingest.parser.ap import append_matching_subject
 
 
 AUTH_API = '/API/Authentication/v1.0/Login'
@@ -23,6 +27,14 @@ DOWNLOAD_API = '/htm/GetDocumentAPI.aspx'
 
 TIMEOUT = (5, 25)
 DATE_FORMAT = 'u'
+
+IPTC_SOURCE_MAPPING = {
+    'AP Third Party': 'Unknown AP',
+}
+
+COUNTRY_MAPPING = {
+    'CHN': 'China',
+}
 
 
 def get_api_sort(sort):
@@ -217,9 +229,8 @@ class OrangelogicSearchProvider(SearchProvider):
             'DateFormat': 'u',
         }
         resp = self._auth_request(SEARCH_API, **kwargs)
+
         data = resp.json()
-        print('data', json.dumps(data, indent=2))
-        print('guid', guid)
         item = self._parse_items(data)[0]
 
         url = self._url(DOWNLOAD_API)
@@ -232,10 +243,85 @@ class OrangelogicSearchProvider(SearchProvider):
         href = requests.Request('GET', url, params=params).prepare().url
         update_renditions(item, href, None)
 
+        if item['type'] == 'picture':
+            _parse_binary(item)
+
         # it's in superdesk now, so make it ignore the api
         item['fetch_endpoint'] = ''
 
+        item.setdefault('language', 'en')
+
         return item
+
+
+def _parse_binary(item):
+    binary = app.media.get(item['renditions']['original']['media'])
+    iptc = get_meta_iptc(binary)
+    binary.seek(0)
+    xmp = parse_xmp(binary)
+
+    if not iptc:
+        return
+
+    item.setdefault('extra', {})
+    print('iptc', json.dumps(iptc, indent=2))
+
+    if iptc.get('By-line'):
+        item['byline'] = iptc['By-line']
+
+    if iptc.get('Category'):
+        append_matching_subject(item, cp.PHOTO_CATEGORIES, iptc['Category'])
+
+    if iptc.get('Credit'):
+        item['creditline'] = 'THE ASSOCIATED PRESS' if iptc['Credit'] == 'AP' else iptc['Credit']
+
+    if iptc.get('Source'):
+        item['original_source'] = IPTC_SOURCE_MAPPING.get(iptc['Source'], iptc['Source'])
+        item['extra'][cp.ARCHIVE_SOURCE] = item['original_source']
+
+    if iptc.get('City') or item.get('Country/Primary Location Name'):
+        country = iptc.get('Country/Primary Location Name')
+        item['dateline'] = {
+            'located': {
+                'city': iptc.get('City'),
+                'country': COUNTRY_MAPPING.get(country, country) if country else None,
+            }
+        }
+
+    if iptc.get('By-line Title'):
+        item['extra'][cp.PHOTOGRAPHER_CODE] = iptc['By-line Title']
+
+    if iptc.get('Writer/Editor'):
+        item['extra'][cp.CAPTION_WRITER] = iptc['Writer/Editor']
+
+    if iptc.get('Copyright Notice'):
+        item['copyrightnotice'] = iptc['Copyright Notice']
+
+    if iptc.get('Caption/Abstract'):
+        item['description_text'] = iptc['Caption/Abstract']
+
+    if iptc.get('Special Instructions'):
+        item['ednote'] = iptc['Special Instructions']
+    
+    if iptc.get('Original Transmission Reference'):
+        item['extra']['itemid'] = iptc['Original Transmission Reference']
+
+    if not xmp:
+        return
+
+    if xmp.get('http://ns.adobe.com/photoshop/1.0/'):
+        for key, val, _ in xmp['http://ns.adobe.com/photoshop/1.0/']:
+            if key == 'photoshop:Urgency':
+                item['urgency'] = val
+            elif key == 'photoshop:DateCreated':
+                item['firstcreated'] = datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S')
+
+    if xmp.get('http://purl.org/dc/elements/1.1/'):
+        for key, val, _ in xmp['http://purl.org/dc/elements/1.1/']:
+            if key == 'dc:rights' and val:
+                item['extra'][cp.INFOSOURCE] = val
+            elif key == 'dc:rights[1]' and val:
+                item['extra'][cp.INFOSOURCE] = val
 
 
 def rendition(data):

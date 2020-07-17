@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish>
+    <Reschedule>false</Reschedule>
+    <IsRegional>false</IsRegional>
+    <CanAutoRoute>true</CanAutoRoute>
+    <PublishID>20563838</PublishID>
+    <Services>Pictures</Services>
+    <Username />
+    <UseLocalsOut>true</UseLocalsOut>
+    <PscCodes>Online</PscCodes>
+    <ContentItem d2p1:type="PhotoContentItem" xmlns:d2p1="http://www.w3.org/2001/XMLSchema-instance">
+        <Name />
+        <Cachable>false</Cachable>
+        <NewsCompID>56514958</NewsCompID>
+        <AutoSaveID>0</AutoSaveID>
+        <Type>0</Type>
+        <MediaType>0</MediaType>
+        <Status>0</Status>
+        <SystemSlug>3E9FC3D3DA234F43880D53F39BBE1B04</SystemSlug>
+        <FileName>9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88</FileName>
+        <Byline>Zhang Yuwei</Byline>
+        <HeadlineService>false</HeadlineService>
+        <VideoType>None</VideoType>
+        <Category>I</Category>
+        <Ranking>News - Optional</Ranking>
+        <RankingValue>5</RankingValue>
+        <PhotoType>None</PhotoType>
+        <GraphicType>None</GraphicType>
+        <ReadOnlyFlag>true</ReadOnlyFlag>
+        <HoldFlag>false</HoldFlag>
+        <OpenFlag>false</OpenFlag>
+        <TransmittedToWire>false</TransmittedToWire>
+        <TrashFlag>false</TrashFlag>
+        <TopStory>false</TopStory>
+        <ContentRef>9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152.jpg</ContentRef>
+        <Credit>THE ASSOCIATED PRESS</Credit>
+        <ContentType>Photo</ContentType>
+        <SlugProper>Virus Outbreak China Vaccine</SlugProper>
+        <Source>Unknown AP</Source>
+        <AuthorVersion>182</AuthorVersion>
+        <BreakWordCount>0</BreakWordCount>
+        <ContentItemID>74348976</ContentItemID>
+        <ProfileID>917</ProfileID>
+        <SysContentType>0</SysContentType>
+        <WordCount>0</WordCount>
+        <WritethruNum>2nd</WritethruNum>
+        <EmbargoTime>0001-01-01T00:00:00</EmbargoTime>
+        <Language>1</Language>
+        <UpdatedDateTime>2020-07-16T10:06:22.793-04:00</UpdatedDateTime>
+        <CreatedDateTime>2020-07-16T14:06:22.787</CreatedDateTime>
+        <HandledByUserID>0</HandledByUserID>
+        <WriteThruType>Writethru</WriteThruType>
+        <ContentText />
+        <Length>0</Length>
+        <WritethruValue>2</WritethruValue>
+        <City>Beijing</City>
+        <Country>China</Country>
+        <Latitude>43.491148</Latitude>
+        <Longitude>-79.987854</Longitude>
+        <Placeline>Beijing;;China</Placeline>
+        <Published>false</Published>
+        <PhotoLinkCount>0</PhotoLinkCount>
+        <VideoLinkCount>0</VideoLinkCount>
+        <AudioLinkCount>0</AudioLinkCount>
+        <IsPublishedAsTopStory>false</IsPublishedAsTopStory>
+        <PhotoContentItemID>23311922</PhotoContentItemID>
+        <OrigTransRef>XIN902</OrigTransRef>
+        <BylineTitle>SUB</BylineTitle>
+        <CaptionWriter>NHG</CaptionWriter>
+        <Copyright>Xinhua</Copyright>
+        <EnglishCaption>In this April 10, 2020, photo released by Xinhua News Agency, a staff member holds up a sample
+            of a potential COVID-19 vaccine at a production plant of SinoPharm in Beijing. Canadian, British and U.S.
+            security services say hackers they believe are working for Russian intelligence have been trying to steal
+            research on COVID-19 vaccines from organizations in all three countries and around the world. (Zhang
+            Yuwei/Xinhua via AP)</EnglishCaption>
+        <DateTaken>2020-04-12T00:09:37</DateTaken>
+        <SpecialInstructions>NO SALES, PHOTO RELEASED BY XINHUA NEWS AGENCY APRIL 10, 2020 PHOTO</SpecialInstructions>
+        <ViewFile>9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152.jpg</ViewFile>
+        <ArchiveSources>Unknown AP</ArchiveSources>
+        <CustomField1>9e627f74b97841b3b8562b6547ada9c7</CustomField1>
+        <CustomField2>
+            9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152e35a10d6d-0.CPT637304545770664847_12/04/2020_040313-0400
+        </CustomField2>
+        <CustomField6>Xinhua</CustomField6>
+    </ContentItem>
+    <UserProfileID>0</UserProfileID>
+    <PublishOrder>0</PublishOrder>
+    <PublishDateTime>2020-07-16T14:06:22.793</PublishDateTime>
+    <NewCycle>false</NewCycle>
+    <OnlineResend>false</OnlineResend>
+</Publish>
