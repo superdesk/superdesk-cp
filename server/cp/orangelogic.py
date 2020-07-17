@@ -302,7 +302,7 @@ def _parse_binary(item):
 
     if iptc.get('Special Instructions'):
         item['ednote'] = iptc['Special Instructions']
-    
+
     if iptc.get('Original Transmission Reference'):
         item['extra']['itemid'] = iptc['Original Transmission Reference']
 
