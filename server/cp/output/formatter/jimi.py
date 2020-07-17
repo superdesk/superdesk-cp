@@ -2,15 +2,14 @@
 import cp
 import superdesk
 import lxml.etree as etree
+import cp.ingest.parser.globenewswire as globenewswire
 
 from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text
 from superdesk.publish.formatters import Formatter
-from cp import PHOTO_SUPPCATEGORIES
 
 from cp.utils import format_maxlength
-import cp.ingest.parser.globenewswire as globenewswire
 
 
 DEFAULT_DATETIME = '0001-01-01T00:00:00'
@@ -301,6 +300,14 @@ class JimiFormatter(Formatter):
 
         if extra.get(cp.XMP_KEYWORDS):
             etree.SubElement(content, 'XmpKeywords').text = extra[cp.XMP_KEYWORDS]
+
+        refs = [
+            ref.get('guid')
+            for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
+        ]
+
+        if refs:
+            etree.SubElement(content, 'ContainerIDs').text = ', '.join(refs)
 
     def _format_picture_filename(self, item):
         if item.get('extra') and item['extra'].get(cp.FILENAME):

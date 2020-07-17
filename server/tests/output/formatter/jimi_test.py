@@ -20,6 +20,7 @@ class JimiFormatterTestCase(unittest.TestCase):
     formatter = JimiFormatter()
     article = {
         '_id': 'id',
+        'guid': 'id',
         'family_id': 'famid',
         'type': 'text',
         'headline': 'Headline',

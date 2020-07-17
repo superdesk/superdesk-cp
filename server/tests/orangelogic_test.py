@@ -6,6 +6,7 @@ import unittest
 import superdesk
 import lxml.etree as etree
 
+from datetime import datetime
 from unittest.mock import patch
 from httmock import urlmatch, HTTMock
 from requests.exceptions import HTTPError
@@ -137,6 +138,7 @@ class OrangelogicTestCase(unittest.TestCase):
             )
 
         self.assertEqual('picture', fetched['type'])
+        self.assertIsInstance(fetched['firstcreated'], datetime)
 
         # populate ids
         fetched['family_id'] = fetched['guid']

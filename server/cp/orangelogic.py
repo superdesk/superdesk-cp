@@ -6,6 +6,7 @@ import mimetypes
 
 import cp
 
+from pytz import UTC
 from datetime import datetime
 from urllib.parse import urljoin
 from flask import current_app as app, json
@@ -264,7 +265,6 @@ def _parse_binary(item):
         return
 
     item.setdefault('extra', {})
-    print('iptc', json.dumps(iptc, indent=2))
 
     if iptc.get('By-line'):
         item['byline'] = iptc['By-line']
@@ -314,7 +314,7 @@ def _parse_binary(item):
             if key == 'photoshop:Urgency':
                 item['urgency'] = val
             elif key == 'photoshop:DateCreated':
-                item['firstcreated'] = datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S')
+                item['firstcreated'] = datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=UTC)
 
     if xmp.get('http://purl.org/dc/elements/1.1/'):
         for key, val, _ in xmp['http://purl.org/dc/elements/1.1/']:
