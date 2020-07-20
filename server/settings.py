@@ -147,7 +147,7 @@ EDITOR['audio'] = EDITOR['video']
 
 # if there is picture/audio/video content type defined in data/content_types
 # use that
-with open(INIT_DATA_PATH.joinpath('content_types.json')) as _content_types_file:
+with open(os.path.join(INIT_DATA_PATH, 'content_types.json')) as _content_types_file:
     content_types = json.load(_content_types_file)
     for content_type in content_types:
         if content_type['_id'] in SCHEMA:
