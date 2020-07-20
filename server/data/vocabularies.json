@@ -20967,5 +20967,38 @@
             "single": true
         },
         "unique_field": "qcode"
+    },
+    {
+       "_id": "photographer_code",
+       "display_name": "Byline Title",
+       "field_type": "text",
+       "items": [],
+       "service": {"all": 1},
+       "type": "manageable",
+       "field_options": {
+          "single": true
+       }
+    },
+    {
+       "_id": "Filename",
+       "display_name": "Trans Ref",
+       "field_type": "text",
+       "items": [],
+       "service": {"all": 1},
+       "type": "manageable",
+       "field_options": {
+          "single": true
+       }
+    },
+    {
+       "_id": "caption_writer",
+       "display_name": "Caption Writer",
+       "field_type": "text",
+       "items": [],
+       "service": {"all": 1},
+       "type": "manageable",
+       "field_options": {
+          "single": true
+       }
     }
 ]

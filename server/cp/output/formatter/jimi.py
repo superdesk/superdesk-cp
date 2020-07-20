@@ -73,7 +73,9 @@ class JimiFormatter(Formatter):
 
         if item.get('type') in PICTURE_TYPES:
             etree.SubElement(root, 'Services').text = 'Pictures'
-            etree.SubElement(root, 'PscCodes').text = 'Online'
+            self._format_subject_code(root, item, 'PscCodes', 'destinations')
+            if root.find('PscCodes') is None:
+                etree.SubElement(root, 'PscCodes').text = 'Online'
         elif service:
             etree.SubElement(root, 'Services').text = 'Print'
             etree.SubElement(root, 'PscCodes').text = service
