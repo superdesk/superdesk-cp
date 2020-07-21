@@ -1,16 +1,13 @@
 {
   "private": true,
   "main": "dist/extension.js",
+  "name": "upload-iptc",
+  "version": "1.0.0",
   "scripts": {
     "compile": "tsc",
     "watch": "tsc -watch"
   },
   "devDependencies": {
-    "typescript": "3.4.4"
-  },
-  "superdeskExtension": {
-    "dependencies": [
-      "other-extension"
-    ]
+    "typescript": "3.7.2"
   }
 }

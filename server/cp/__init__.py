@@ -4,9 +4,18 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+ORIG_ID = 'itemid'
 HEADLINE2 = 'headline_extended'
 SERVICE = '_service'
 FILENAME = 'filename'
+XMP_KEYWORDS = 'xmp_keywords'
+CAPTION_WRITER = 'caption_writer'
+PHOTOGRAPHER_CODE = 'photographer_code'
+INFOSOURCE = 'infosource'
+ARCHIVE_SOURCE = 'archive_source'
+
+PHOTO_CATEGORIES = 'photo_categories'
+PHOTO_SUPPCATEGORIES = 'photo_supplementalcategories'
 
 NEWS_URGENT = 1
 NEWS_NEED_TO_KNOW = 2

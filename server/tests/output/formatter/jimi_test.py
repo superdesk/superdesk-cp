@@ -3,14 +3,11 @@ import cp
 import unittest
 import superdesk
 import lxml.etree as etree
-from cp import FILENAME
 import cp.ingest.parser.globenewswire as globenewswire
 
 from pytz import UTC
 from datetime import datetime
 from unittest.mock import patch
-
-from superdesk.metadata.utils import generate_guid
 
 from cp.output.formatter.jimi import JimiFormatter
 
@@ -23,6 +20,7 @@ class JimiFormatterTestCase(unittest.TestCase):
     formatter = JimiFormatter()
     article = {
         '_id': 'id',
+        'guid': 'id',
         'family_id': 'famid',
         'type': 'text',
         'headline': 'Headline',
@@ -68,7 +66,6 @@ class JimiFormatterTestCase(unittest.TestCase):
             if _all:
                 return formatted
             seq, xml_str = formatted[0]
-        print('xml', xml_str)
         return xml_str
 
     def get_root(self, xml):
@@ -121,7 +118,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(str(self.article['word_count']), item.find('WordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('BreakWordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('Length').text)
-        self.assertEqual('Abstract', item.find('DirectoryText').text)
+        self.assertEqual('Body HTML', item.find('DirectoryText').text)
         self.assertEqual('<p>Body HTML</p>', item.find('ContentText').text)
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
@@ -235,3 +232,50 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('foo bar', item.find('Headline').text)
         self.assertEqual('foo bar', item.find('Headline2').text)
         self.assertEqual('foo,bar,foo bar', item.find('Keyword').text)
+
+    def test_picture(self):
+        updates = {
+            'type': 'picture',
+            'urgency': 5,
+            'byline': 'photographer',
+            'headline': 'some headline',
+            'firstcreated': datetime(2020, 6, 3, 17, 0, 56, tzinfo=UTC),
+            'extra': {
+                cp.FILENAME: 'NY538',
+                'photographer_code': 'stf',
+            },
+            'subject': [
+                {'name': 'Americas', 'qcode': 'A', 'scheme': 'photo_categories'},
+            ],
+            'creditline': 'THE ASSOCIATED PRESS',
+            'original_source': 'The Associated Press',
+            'copyrightnotice': 'Copyright 2020 The Associated Press. All rights reserved.',
+            'description_text': 'Pedestrians are silhouetted',
+        }
+        root = self.format_item(updates, True)
+
+        self.assertEqual('Pictures', root.find('Services').text)
+        self.assertEqual('Online', root.find('PscCodes').text)
+
+        item = root.find('ContentItem')
+
+        self.assertEqual('NY538-63_2020_170056', item.find('FileName').text)
+        self.assertEqual('NY538-63_2020_170056.jpg', item.find('ContentRef').text)
+        self.assertEqual(updates['byline'], item.find('Byline').text)
+        self.assertEqual('false', item.find('HeadlineService').text)
+        self.assertEqual('A', item.find('Category').text)
+        self.assertEqual('None', item.find('VideoType').text)
+        self.assertEqual('None', item.find('PhotoType').text)
+        self.assertEqual('None', item.find('GraphicType').text)
+        self.assertEqual('News - Optional', item.find('Ranking').text)
+        self.assertEqual('5', item.find('RankingValue').text)
+        self.assertEqual(updates['creditline'], item.find('Credit').text)
+        self.assertEqual('Photo', item.find('ContentType').text)
+        self.assertEqual(updates['headline'], item.find('SlugProper').text)
+        self.assertEqual(updates['original_source'], item.find('Source').text)
+        self.assertEqual(updates['extra'][cp.FILENAME], item.find('OrigTransRef').text)
+        self.assertEqual('STF', item.find('BylineTitle').text)
+        self.assertEqual(updates['copyrightnotice'][:50], item.find('Copyright').text)
+        self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
+        self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
+        self.assertEqual('NY538-63_2020_170056.jpg', item.find('ViewFile').text)

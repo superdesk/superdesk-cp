@@ -1,0 +1,396 @@
+{
+    "api_version": "2.0",
+    "api_mode": "live",
+    "id": "cwd8pyjJ3wI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 31522,
+                "name": "PHOTOSTREAM - AK (ALASKA)"
+            }, {
+                "id": 31523,
+                "name": "PHOTOSTREAM - AL (ALABAMA)"
+            }, {
+                "id": 31536,
+                "name": "PHOTOSTREAM - AR (ARKANSAS)"
+            }, {
+                "id": 31551,
+                "name": "PHOTOSTREAM - AZ (ARIZONA)"
+            }, {
+                "id": 31629,
+                "name": "PHOTOSTREAM - CA (CALIFORNIA)"
+            }, {
+                "id": 31640,
+                "name": "PHOTOSTREAM - CO (COLORADO)"
+            }, {
+                "id": 31643,
+                "name": "PHOTOSTREAM - CT (CONNECTICUT)"
+            }, {
+                "id": 31649,
+                "name": "PHOTOSTREAM - DC (DIST OF COLUMBIA)"
+            }, {
+                "id": 31652,
+                "name": "PHOTOSTREAM - DE (DELAWARE)"
+            }, {
+                "id": 31696,
+                "name": "PHOTOSTREAM - FL (FLORIDA)"
+            }, {
+                "id": 31702,
+                "name": "PHOTOSTREAM - GA (GEORGIA)"
+            }, {
+                "id": 31715,
+                "name": "PHOTOSTREAM - HI (HAWAII)"
+            }, {
+                "id": 31725,
+                "name": "PHOTOSTREAM - IA (IOWA)"
+            }, {
+                "id": 31728,
+                "name": "PHOTOSTREAM - ID (IDAHO)"
+            }, {
+                "id": 31732,
+                "name": "PHOTOSTREAM - IL (ILLINOIS)"
+            }, {
+                "id": 31734,
+                "name": "PHOTOSTREAM - IN (INDIANA)"
+            }, {
+                "id": 31761,
+                "name": "PHOTOSTREAM - KS (KANSAS)"
+            }, {
+                "id": 31763,
+                "name": "PHOTOSTREAM - KY (KENTUCKY)"
+            }, {
+                "id": 31765,
+                "name": "PHOTOSTREAM - LA (LOUISIANA)"
+            }, {
+                "id": 31774,
+                "name": "PHOTOSTREAM - MA (MASSACHUSETTS)"
+            }, {
+                "id": 31778,
+                "name": "PHOTOSTREAM - MD (MARYLAND)"
+            }, {
+                "id": 31780,
+                "name": "PHOTOSTREAM - ME (MAINE)"
+            }, {
+                "id": 31783,
+                "name": "PHOTOSTREAM - MI (MICHIGAN)"
+            }, {
+                "id": 31787,
+                "name": "PHOTOSTREAM - MN (MINNESOTA)"
+            }, {
+                "id": 31788,
+                "name": "PHOTOSTREAM - MO (MISSOURI)"
+            }, {
+                "id": 31790,
+                "name": "PHOTOSTREAM - MS (MISSISSIPPI)"
+            }, {
+                "id": 31791,
+                "name": "PHOTOSTREAM - MT (MONTANA)"
+            }, {
+                "id": 31801,
+                "name": "PHOTOSTREAM - NC (NORTH CAROLINA)"
+            }, {
+                "id": 31803,
+                "name": "PHOTOSTREAM - ND (NORTH DAKOTA)"
+            }, {
+                "id": 31804,
+                "name": "PHOTOSTREAM - NE (NEBRASKA)"
+            }, {
+                "id": 31811,
+                "name": "PHOTOSTREAM - NH (NEW HAMPSHIRE)"
+            }, {
+                "id": 31813,
+                "name": "PHOTOSTREAM - NJ (NEW JERSEY)"
+            }, {
+                "id": 31814,
+                "name": "PHOTOSTREAM - NM (NEW MEXICO)"
+            }, {
+                "id": 31822,
+                "name": "PHOTOSTREAM - NV (NEVADA)"
+            }, {
+                "id": 31824,
+                "name": "PHOTOSTREAM - NY (NEW YORK)"
+            }, {
+                "id": 31830,
+                "name": "PHOTOSTREAM - OH (OHIO)"
+            }, {
+                "id": 31831,
+                "name": "PHOTOSTREAM - OK (OKLAHOMA)"
+            }, {
+                "id": 31835,
+                "name": "PHOTOSTREAM - PA (PENNSYLVANIA)"
+            }, {
+                "id": 31855,
+                "name": "PHOTOSTREAM - RI (RHODE ISLAND)"
+            }, {
+                "id": 31866,
+                "name": "PHOTOSTREAM - SC (SOUTH CAROLINA)"
+            }, {
+                "id": 31868,
+                "name": "PHOTOSTREAM - SD (SOUTH DAKOTA)"
+            }, {
+                "id": 31897,
+                "name": "PHOTOSTREAM - TN (TENNESSEE)"
+            }, {
+                "id": 31904,
+                "name": "PHOTOSTREAM - TX (TEXAS)"
+            }, {
+                "id": 31911,
+                "name": "PHOTOSTREAM - UT (UTAH)"
+            }, {
+                "id": 31913,
+                "name": "PHOTOSTREAM - VA (VIRGINA)"
+            }, {
+                "id": 31917,
+                "name": "PHOTOSTREAM - VT (VERMONT)"
+            }, {
+                "id": 31918,
+                "name": "PHOTOSTREAM - WA (WASHINGTON)"
+            }, {
+                "id": 31924,
+                "name": "PHOTOSTREAM - WI (WISCONSIN)"
+            }, {
+                "id": 31933,
+                "name": "PHOTOSTREAM - WV (WEST VIRGINIA)"
+            }, {
+                "id": 31936,
+                "name": "PHOTOSTREAM - WY (WYOMING)"
+            }, {
+                "id": 31985,
+                "name": "PHOTOSTREAM - OR (OREGON)"
+            }, {
+                "id": 35500,
+                "name": "AP Online Photos (3.1 Exchange Only)"
+            }, {
+                "id": 100484,
+                "name": "MC - Photos"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/de1bb822362146388852c8b7eee93c76?qt=cwd8pyjJ3wI&et=0a1aza3c0",
+            "altids": {
+                "itemid": "de1bb822362146388852c8b7eee93c76",
+                "etag": "de1bb822362146388852c8b7eee93c76_0a1aza3c0",
+                "friendlykey": "20157600857108",
+                "referenceid": "20157600857108",
+                "transref": "AB101"
+            },
+            "version": 0,
+            "type": "picture",
+            "urgency": 5,
+            "editorialpriority": "d",
+            "language": "en",
+            "versioncreated": "2020-06-05T17:09:39Z",
+            "firstcreated": "2020-06-05T10:10:01Z",
+            "pubstatus": "usable",
+            "signals": ["newscontent"],
+            "title": "Virus Outbreak Spain",
+            "headline": "Virus Outbreak Spain",
+            "slugline": "Virus Outbreak Spain",
+            "photographer": {
+                "code": "str",
+                "title": "STRINGER",
+                "name": "Alvaro Barrientos"
+            },
+            "datelinelocation": {
+                "city": "Pamplona",
+                "countrycode": "ESP",
+                "countryname": "SPAIN",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-1.64323, 42.81687]
+                }
+            },
+            "description_creditline": "ASSOCIATED PRESS",
+            "copyrightnotice": "Copyright 2019 The Associated Press. All rights reserved",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Coronavirus", "COVID-19"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "person": [{
+                "name": "Santos Munoz",
+                "creator": "Editorial",
+                "rels": ["personfeatured"],
+                "person_featured": "Santos Munoz"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "i",
+                "name": "International News"
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "9cce666bb29344b8ba61f3732d971d32",
+                "name": "Disease outbreaks",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e", "e57b6c907e3810048ae4df092526b43e"]
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e57b6c907e3810048ae4df092526b43e",
+                "name": "Public health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }],
+            "place": [{
+                "code": "662161307d5b100482dfc076b8e3055c",
+                "name": "Spain",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6618c9f87d5b10048202c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-4, 40]
+                }
+            }, {
+                "code": "6618c9f87d5b10048202c076b8e3055c",
+                "name": "Western Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f4c076b8e3055c"],
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [9.14062, 48.69096]
+                }
+            }],
+            "description_caption": "Santo Munoz, left, wearing a face mask to protect against the coronavirus, moves a robot known as \"Alexia\" to wait on customers at his bar at Plaza del Castillo square, in Pamplona, northern Spain, Friday, June 5, 2020. (AP Photo/Alvaro Barrientos)",
+            "renditions": {
+                "main": {
+                    "title": "Full Resolution (JPG)",
+                    "rel": "Main",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "3a5c61a9b4fb4253b69fc647d0caa4f5",
+                    "digest": "f8b0be96926234481f4696519f18ea1e",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 12705832,
+                    "width": 5568,
+                    "height": 3712,
+                    "originalfilename": "Virus_Outbreak_Spain_57108.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg",
+                    "pricetag": "Unavailable:MeterExpired_Shutdown"
+                },
+                "preview": {
+                    "title": "Preview (JPG)",
+                    "rel": "Preview",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "7da449746c2448aaa88dc881dce67d3d",
+                    "digest": "45f7b3eee742cbd5a4e7e92d71ba1d21",
+                    "href": "https://mapi.associatedpress.com/v1/items/de1bb822362146388852c8b7eee93c76.0/preview/preview.jpg?nfe=true&s=512&app=MPK&tag=iid~de1bb822362146388852c8b7eee93c76!rsn~0!cid~7da449746c2448aaa88dc881dce67d3d!ofn~Virus_Outbreak_Spain_57108.jpg!orgId~49091!qt~cwd8pyjJ3wI!orgNm~Canadian%20Press!role~Preview!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 68236,
+                    "width": 512,
+                    "height": 341,
+                    "originalfilename": "Virus_Outbreak_Spain_57108.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "thumbnail": {
+                    "title": "Thumbnail (JPG)",
+                    "rel": "Thumbnail",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "1d5c03811c294005bcd7b514b06deac9",
+                    "digest": "22ca20385f0c58cd9ad46ff37e2df1c7",
+                    "href": "https://mapi.associatedpress.com/v1/items/de1bb822362146388852c8b7eee93c76.0/thumbnail/thumbnail.jpg?nfe=true&app=MPK&tag=iid~de1bb822362146388852c8b7eee93c76!rsn~0!cid~1d5c03811c294005bcd7b514b06deac9!ofn~Virus_Outbreak_Spain_57108.jpg!orgId~49091!qt~cwd8pyjJ3wI!orgNm~Canadian%20Press!role~Thumbnail!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 17409,
+                    "width": 125,
+                    "height": 83,
+                    "originalfilename": "Virus_Outbreak_Spain_57108.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "caption_nitf": {
+                    "title": "NITF Caption Download",
+                    "rel": "Caption",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 41,
+                    "contentid": "de1bb822362146388852c8b7eee93c76",
+                    "href": "https://api.ap.org/media/v/content/de1bb822362146388852c8b7eee93c76.0/download?qt=cwd8pyjJ3wI&type=text&format=nitf&text=caption&et=0a1aza3c0"
+                }
+            }
+        }
+    }
+}

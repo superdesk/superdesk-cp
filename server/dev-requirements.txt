@@ -5,3 +5,4 @@ nose
 pep8
 httmock
 wooper
+requests_mock

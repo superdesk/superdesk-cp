@@ -2,6 +2,7 @@ gunicorn==19.7.1
 honcho==1.0.1
 newrelic>=2.66,<2.67
 python3-saml>=1.9,<1.10
+python-xmp-toolkit>=2.0.1,<2.1
 
 -e git+git://github.com/superdesk/superdesk-core.git@release/2.0#egg=superdesk-core
 -e git+git://github.com/superdesk/superdesk-analytics.git@release/2.0#egg=superdesk-analytics

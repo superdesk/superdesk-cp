@@ -1,0 +1,268 @@
+{
+    "api_version": "2.0",
+    "api_mode": "live",
+    "id": "hb1iYLPxCQI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 33377,
+                "name": "AP Alerts -  Environment"
+            }, {
+                "id": 33393,
+                "name": "AP Alerts -  Technology"
+            }, {
+                "id": 35534,
+                "name": "AP Alerts -  Automotives"
+            }, {
+                "id": 41019,
+                "name": "News Analysis - DSA"
+            }, {
+                "id": 101264,
+                "name": "AP U.S. National News (Datastream A)"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/f14dd246c9b5efeb56de0141aa50c4fd?qt=hb1iYLPxCQI&et=0a2aza0c0",
+            "altids": {
+                "itemid": "f14dd246c9b5efeb56de0141aa50c4fd",
+                "etag": "f14dd246c9b5efeb56de0141aa50c4fd_0a2aza0c0",
+                "friendlykey": "613290074497",
+                "referenceid": "US--Film Review-And We Go Green",
+                "transref": "e0027"
+            },
+            "version": 0,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Review",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2020-06-02T19:13:57Z",
+            "firstcreated": "2020-06-02T19:13:56Z",
+            "editorialrole": "FullStory",
+            "fixture": {
+                "code": "79d2839d9fab47b587e554d50c24b16d",
+                "name": "Film Reviews"
+            },
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: With AP Photos.",
+            "signals": ["newscontent"],
+            "title": "US--Film Review-And We Go Green",
+            "headline": "Review: Documentary about electric racing holds little spark",
+            "headline_extended": "The green motor sport equivalent to Formula One is called Formula E and it gets a spotlight with the new documentary “And We Go Green.”",
+            "slugline": "BC-US--Film Review-And We Go Green",
+            "bylines": [{
+                "by": "By MARK KENNEDY",
+                "title": "AP Entertainment Writer"
+            }],
+            "copyrightnotice": "Copyright 2020 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Film Review-And We Go Green"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "person": [{
+                "code": "1ed0a4a8258a48d79f6450df44a8777e",
+                "name": "Leonardo Dicaprio",
+                "rels": ["direct"],
+                "types": ["MOVIE_ACTOR", "ENTERTAINMENT_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "1c18136326814fc1b211f311d019bbb3",
+                "name": "Jean-Eric Vergne",
+                "rels": ["direct"],
+                "types": ["PROFESSIONAL_ATHLETE", "SPORTS_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "e1ac8a8a8c15445f8dcc14a6a5e20d49",
+                "name": "Nelson Piquet Jr.",
+                "rels": ["direct"],
+                "types": ["PROFESSIONAL_ATHLETE", "SPORTS_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "2ffaae8f454849a59a9e5b748a45f3f4",
+                "name": "Jean",
+                "rels": ["direct"],
+                "types": ["PROFESSIONAL_ATHLETE", "SPORTS_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "e02da654d6304958a8ec50e1d6863731",
+                "name": "Fisher Stevens",
+                "rels": ["direct"],
+                "types": ["MOVIE_ACTOR", "ENTERTAINMENT_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "e",
+                "name": "e"
+            }, {
+                "code": "16cb0ba3e6d24d97ace39f5a1924669a",
+                "name": "Arts and entertainment",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Arts and entertainment"
+            }, {
+                "code": "c189ae6088be10048dcfb097165a0203",
+                "name": "Movies",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["5b4319707dd310048b23df092526b43e"]
+            }, {
+                "code": "5b4319707dd310048b23df092526b43e",
+                "name": "Entertainment",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["16cb0ba3e6d24d97ace39f5a1924669a"]
+            }, {
+                "code": "70778cb88b6b10048b5ba385cd5ce603",
+                "name": "Automotive technology",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["49b3c0888b6b10048993a385cd5ce603"]
+            }, {
+                "code": "49b3c0888b6b10048993a385cd5ce603",
+                "name": "Industrial technology",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["455ef2b87df7100483d8df092526b43e"]
+            }, {
+                "code": "455ef2b87df7100483d8df092526b43e",
+                "name": "Technology",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "20d7ec687e4e1004889fd0913b2d075c",
+                "name": "Automobile racing",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54df6c687df7100483dedf092526b43e"]
+            }, {
+                "code": "54df6c687df7100483dedf092526b43e",
+                "name": "Sports",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "20dd2c287e4e100488dfd0913b2d075c",
+                "name": "Formula One",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["20d7ec687e4e1004889fd0913b2d075c"]
+            }, {
+                "code": "fa7fd48889ef10048e30d37e1a6ef903",
+                "name": "Documentaries",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["5b4319707dd310048b23df092526b43e"]
+            }, {
+                "code": "a86239008b6d1004897db5b842854103",
+                "name": "Electric vehicles",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c94627508b6b10048d79a385cd5ce603"]
+            }, {
+                "code": "c94627508b6b10048d79a385cd5ce603",
+                "name": "Green vehicle technology",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["707877188b6b10048bf4a385cd5ce603"]
+            }, {
+                "code": "707877188b6b10048bf4a385cd5ce603",
+                "name": "Green technology",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["455ef2b87df7100483d8df092526b43e", "38284d5088e8100485efba0a2b2ca13e"]
+            }, {
+                "code": "38284d5088e8100485efba0a2b2ca13e",
+                "name": "Environment",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["8783d248894710048286ba0a2b2ca13e"]
+            }, {
+                "code": "8783d248894710048286ba0a2b2ca13e",
+                "name": "Environment and nature",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 563,
+                    "contentid": "a159f7417d2c4eea82b204e044c73fcb",
+                    "href": "https://api.ap.org/media/v/content/f14dd246c9b5efeb56de0141aa50c4fd.0/download?type=text&format=NITF&rid=71798c9351969fc75178cb944248b1b6&cid=0&fid=a159f7417d2c4eea82b204e044c73fcb&trf=e0027&qt=hb1iYLPxCQI&dt=hxyS9FNoLG&et=0a2aza0c0",
+                    "mediafilterid": "2"
+                },
+                "anpa": {
+                    "title": "ANPA Story Download",
+                    "rel": "Main",
+                    "format": "ANPA1312",
+                    "type": "text",
+                    "mimetype": "application/octet-stream",
+                    "fileextension": "anpa",
+                    "mediafilterid": "1",
+                    "words": 563,
+                    "contentid": "a159f7417d2c4eea82b204e044c73fcb",
+                    "href": "https://api.ap.org/media/v/content/f14dd246c9b5efeb56de0141aa50c4fd.0/download?type=text&format=ANPA&rid=71798c9351969fc75178cb944248b1b6&cid=0&fid=a159f7417d2c4eea82b204e044c73fcb&trf=e0027&qt=hb1iYLPxCQI&dt=hxyS9FNoLG&et=0a2aza0c0"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/f14dd246c9b5efeb56de0141aa50c4fd",
+                "rel": "canonical"
+            }]
+        }
+    },
+    "nitf": {
+        "body_html": "<p>For proof that Leonardo DiCaprio can't save every film he touches, look no further than “And We Go Green,” a languid documentary about the electric car racing circuit.</p>\n<p>DiCaprio, who is a producer of the film, makes a cameo in the 26th minute, adding a dash of Hollywood glamour but not really helping clean up this messy project. For a film about super-fast cars making hairpin turns at hundreds of miles per hour, it really meanders. </p>\n<p>The documentary’s spine is the fourth Formula E championship of 2017-18, which had 12 races in 10 cities, pitting 20 drivers from 10 teams. It begins with a false start in Hong Kong and ends with the crowning of a winner in New York.</p>\n<p>Along the way, we have quite revealing snapshots of the drivers. Some are arrogant, others more humble. One is mourning a friend's death on the track, another feels overshadowed by his more successful racing father. They're all struggling with the demands of electric race cars. “It’s like playing chess at 200 kph.” one driver says.</p>\n<p>Many of the drivers — including Britain's Sam Bird, France's Jean-Eric Vergne and Brazil's Nelson Piquet Jr. — are seeking redemption after falling out of favor or never getting to race at the gas-powered bigger brother Formula One. </p>\n<p>Co-directors Fisher Stevens and Malcolm Venville fill the film with many of these snapshots but they don't connect them into a single coherent arc or pare them down to a single rivalry.</p>\n<p>The film — which streams Thursday on Hulu — then makes maddening detours into the nuts and bolts of making electric racing cars, a look at Formula One gods like Ayrton Senna and an overly gauzy portrait of Alejandro Agag, the head of Formula E, who says things like: “The revolution is coming. It’s just a matter of time.\"</p>\n<p>Agag, a charismatic Formula One veteran and a former Spanish politician, is a cigar-smoking race fan who admits creating a green Formula One was more a business decision than the product of an environmental activist, which is a little deflating.</p>\n<p>Enter uber-cool green guy DiCaprio, in sunglasses he never removes. He asks questions about how batteries stay cool and gets a lesson on environmental race fuel Aquafuel — even tasting it. DiCaprio seems to try to pull the film into the science side. “It’s almost like a tech race now,” he concludes. Then he vanishes.</p>\n<p>While the documentary cameras beautifully capture the sleek Formula E cars as they rev and whine, there are also a lot of distractions, like slow-motion dancers welcoming fans on the Mexico City track. </p>\n<p>At times, it seems like “And We Go Green” is really a long commercial for Formula E, with a little soap opera among the drivers thrown in and a peek into the tech of the cars. But none of it really stays on the road. It's not a compelling environmental film or a good drama about racers. Like many of the electric cars on the track that season, it stalls. </p>\n<p>“And We Go Green,” a RadicalMedia release, is not rated but has strong language and footage of deadly car crashes. Running time: 98 minutes. One star out of four. </p>\n<p>___ </p>\n<p>Online: <a href=\"https://www.fiaformulae.com/en/watch/andwegogreen\">https://www.fiaformulae.com/en/watch/andwegogreen</a></p>\n<p>___ </p>\n<p>Mark Kennedy is at <a href=\"http://twitter.com/KennedyTwits\">http://twitter.com/KennedyTwits</a></p>\n"
+    }
+}

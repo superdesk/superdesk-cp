@@ -10,6 +10,8 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import os
+
+from flask import json
 from pathlib import Path
 from superdesk.default_settings import strtobool, env, SERVER_URL, CORE_APPS as _core_apps
 
@@ -98,7 +100,6 @@ NEWSML_PROVIDER_ID = 'thecanadianpress.com'
 ORGANIZATION_NAME = env('ORGANIZATION_NAME', 'THE CANADIAN PRESS')
 ORGANIZATION_NAME_ABBREVIATION = env('ORGANIZATION_NAME_ABBREVIATION', 'CP')
 
-# schema for images, video, audio
 SCHEMA = {
     'picture': {
         'slugline': {'required': False},
@@ -145,6 +146,16 @@ EDITOR = {
 SCHEMA['audio'] = SCHEMA['video']
 EDITOR['audio'] = EDITOR['video']
 
+# if there is picture/audio/video content type defined in data/content_types
+# use that
+with open(os.path.join(str(INIT_DATA_PATH), 'content_types.json')) as _content_types_file:
+    content_types = json.load(_content_types_file)
+    for content_type in content_types:
+        if content_type['_id'] in SCHEMA:
+            SCHEMA[content_type['_id']] = content_type['schema']
+            EDITOR[content_type['_id']] = content_type['editor']
+
+
 # media required fields for upload
 VALIDATOR_MEDIA_METADATA = {
     "slugline": {
@@ -160,9 +171,6 @@ VALIDATOR_MEDIA_METADATA = {
         "required": False,
     },
     "copyrightnotice": {
-        "required": False,
-    },
-    "usageterms": {
         "required": False,
     },
 }

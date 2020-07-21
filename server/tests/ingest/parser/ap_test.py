@@ -4,6 +4,7 @@ import json
 import flask
 import unittest
 import superdesk
+import requests_mock
 
 from unittest.mock import MagicMock, patch
 from tests.ingest.parser import get_fixture_path
@@ -15,6 +16,12 @@ from cp.ingest import CP_APMediaFeedParser
 
 with open(get_fixture_path('item.json', 'ap')) as fp:
     data = json.load(fp)
+
+with open(get_fixture_path('picture.json', 'ap')) as fp:
+    picture_data = json.load(fp)
+
+provider = {}
+parser = CP_APMediaFeedParser()
 
 
 class CP_AP_ParseTestCase(unittest.TestCase):
@@ -29,8 +36,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('foo-bar', parser.process_slugline('foo - bar'))
 
     def test_parse(self):
-        provider = {}
-        parser = CP_APMediaFeedParser()
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
@@ -85,3 +90,30 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn('associations', item)
         self.assertIn('media-gallery--1', item['associations'])
         self.assertIn('media-gallery--2', item['associations'])
+
+    def test_parse_ignore_associations_based_on_type_config(self):
+        _provider = {
+            'content_types': ['text'],
+        }
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(data, _provider)
+
+        self.assertFalse(item.get('associations'))
+
+    def test_parse_picture(self):
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                with requests_mock.mock() as mock:
+                    with open(get_fixture_path('preview.jpg', 'ap'), 'rb') as f:
+                        mock.get(picture_data['data']['item']['renditions']['preview']['href'], content=f.read())
+                    item = parser.parse(picture_data, provider)
+
+        self.assertEqual('Jae C. Hong', item['byline'])
+        self.assertEqual(5, item['urgency'])
+        self.assertEqual('ASSOCIATED PRESS', item['creditline'])
+        self.assertEqual('America Protests Racial Economics', item['headline'])
+        self.assertEqual('stf', item['extra']['photographer_code'])
+        self.assertIn('Pedestrians are silhouetted', item['description_text'])
+        self.assertEqual('AP', item['extra']['provider'])

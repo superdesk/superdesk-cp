@@ -1,0 +1,422 @@
+{
+    "api_version": "2.0",
+    "api_mode": "live",
+    "id": "krYmF5gjQPI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 31522,
+                "name": "PHOTOSTREAM - AK (ALASKA)"
+            }, {
+                "id": 31523,
+                "name": "PHOTOSTREAM - AL (ALABAMA)"
+            }, {
+                "id": 31536,
+                "name": "PHOTOSTREAM - AR (ARKANSAS)"
+            }, {
+                "id": 31551,
+                "name": "PHOTOSTREAM - AZ (ARIZONA)"
+            }, {
+                "id": 31629,
+                "name": "PHOTOSTREAM - CA (CALIFORNIA)"
+            }, {
+                "id": 31640,
+                "name": "PHOTOSTREAM - CO (COLORADO)"
+            }, {
+                "id": 31643,
+                "name": "PHOTOSTREAM - CT (CONNECTICUT)"
+            }, {
+                "id": 31649,
+                "name": "PHOTOSTREAM - DC (DIST OF COLUMBIA)"
+            }, {
+                "id": 31652,
+                "name": "PHOTOSTREAM - DE (DELAWARE)"
+            }, {
+                "id": 31696,
+                "name": "PHOTOSTREAM - FL (FLORIDA)"
+            }, {
+                "id": 31702,
+                "name": "PHOTOSTREAM - GA (GEORGIA)"
+            }, {
+                "id": 31715,
+                "name": "PHOTOSTREAM - HI (HAWAII)"
+            }, {
+                "id": 31725,
+                "name": "PHOTOSTREAM - IA (IOWA)"
+            }, {
+                "id": 31728,
+                "name": "PHOTOSTREAM - ID (IDAHO)"
+            }, {
+                "id": 31732,
+                "name": "PHOTOSTREAM - IL (ILLINOIS)"
+            }, {
+                "id": 31734,
+                "name": "PHOTOSTREAM - IN (INDIANA)"
+            }, {
+                "id": 31761,
+                "name": "PHOTOSTREAM - KS (KANSAS)"
+            }, {
+                "id": 31763,
+                "name": "PHOTOSTREAM - KY (KENTUCKY)"
+            }, {
+                "id": 31765,
+                "name": "PHOTOSTREAM - LA (LOUISIANA)"
+            }, {
+                "id": 31774,
+                "name": "PHOTOSTREAM - MA (MASSACHUSETTS)"
+            }, {
+                "id": 31778,
+                "name": "PHOTOSTREAM - MD (MARYLAND)"
+            }, {
+                "id": 31780,
+                "name": "PHOTOSTREAM - ME (MAINE)"
+            }, {
+                "id": 31783,
+                "name": "PHOTOSTREAM - MI (MICHIGAN)"
+            }, {
+                "id": 31787,
+                "name": "PHOTOSTREAM - MN (MINNESOTA)"
+            }, {
+                "id": 31788,
+                "name": "PHOTOSTREAM - MO (MISSOURI)"
+            }, {
+                "id": 31790,
+                "name": "PHOTOSTREAM - MS (MISSISSIPPI)"
+            }, {
+                "id": 31791,
+                "name": "PHOTOSTREAM - MT (MONTANA)"
+            }, {
+                "id": 31801,
+                "name": "PHOTOSTREAM - NC (NORTH CAROLINA)"
+            }, {
+                "id": 31803,
+                "name": "PHOTOSTREAM - ND (NORTH DAKOTA)"
+            }, {
+                "id": 31804,
+                "name": "PHOTOSTREAM - NE (NEBRASKA)"
+            }, {
+                "id": 31811,
+                "name": "PHOTOSTREAM - NH (NEW HAMPSHIRE)"
+            }, {
+                "id": 31813,
+                "name": "PHOTOSTREAM - NJ (NEW JERSEY)"
+            }, {
+                "id": 31814,
+                "name": "PHOTOSTREAM - NM (NEW MEXICO)"
+            }, {
+                "id": 31822,
+                "name": "PHOTOSTREAM - NV (NEVADA)"
+            }, {
+                "id": 31824,
+                "name": "PHOTOSTREAM - NY (NEW YORK)"
+            }, {
+                "id": 31830,
+                "name": "PHOTOSTREAM - OH (OHIO)"
+            }, {
+                "id": 31831,
+                "name": "PHOTOSTREAM - OK (OKLAHOMA)"
+            }, {
+                "id": 31835,
+                "name": "PHOTOSTREAM - PA (PENNSYLVANIA)"
+            }, {
+                "id": 31855,
+                "name": "PHOTOSTREAM - RI (RHODE ISLAND)"
+            }, {
+                "id": 31866,
+                "name": "PHOTOSTREAM - SC (SOUTH CAROLINA)"
+            }, {
+                "id": 31868,
+                "name": "PHOTOSTREAM - SD (SOUTH DAKOTA)"
+            }, {
+                "id": 31897,
+                "name": "PHOTOSTREAM - TN (TENNESSEE)"
+            }, {
+                "id": 31904,
+                "name": "PHOTOSTREAM - TX (TEXAS)"
+            }, {
+                "id": 31911,
+                "name": "PHOTOSTREAM - UT (UTAH)"
+            }, {
+                "id": 31913,
+                "name": "PHOTOSTREAM - VA (VIRGINA)"
+            }, {
+                "id": 31917,
+                "name": "PHOTOSTREAM - VT (VERMONT)"
+            }, {
+                "id": 31918,
+                "name": "PHOTOSTREAM - WA (WASHINGTON)"
+            }, {
+                "id": 31924,
+                "name": "PHOTOSTREAM - WI (WISCONSIN)"
+            }, {
+                "id": 31933,
+                "name": "PHOTOSTREAM - WV (WEST VIRGINIA)"
+            }, {
+                "id": 31936,
+                "name": "PHOTOSTREAM - WY (WYOMING)"
+            }, {
+                "id": 31985,
+                "name": "PHOTOSTREAM - OR (OREGON)"
+            }, {
+                "id": 33402,
+                "name": "Photostream - CA Dateline Only"
+            }, {
+                "id": 100484,
+                "name": "MC - Photos"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/9a467a0956534f038736f4158bccb6cd?qt=krYmF5gjQPI&et=1a1aza3c0",
+            "altids": {
+                "itemid": "9a467a0956534f038736f4158bccb6cd",
+                "etag": "9a467a0956534f038736f4158bccb6cd_1a1aza3c0",
+                "friendlykey": "20156792506258",
+                "referenceid": "20156792506258",
+                "transref": "NY538"
+            },
+            "version": 1,
+            "type": "picture",
+            "urgency": 5,
+            "editorialpriority": "d",
+            "language": "en",
+            "versioncreated": "2020-06-08T16:01:07Z",
+            "firstcreated": "2020-06-03T17:00:56Z",
+            "pubstatus": "usable",
+            "signals": ["newscontent"],
+            "title": "America Protests Racial Economics",
+            "headline": "America Protests Racial Economics",
+            "slugline": "America Protests Racial Economics",
+            "photographer": {
+                "code": "stf",
+                "title": "STAFF",
+                "name": "Jae C. Hong"
+            },
+            "datelinelocation": {
+                "city": "Los Angeles",
+                "countryareacode": "CA",
+                "countryareaname": "CALIFORNIA",
+                "countrycode": "USA",
+                "countryname": "UNITED STATES",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-118.24368, 34.05223]
+                }
+            },
+            "description_creditline": "ASSOCIATED PRESS",
+            "copyrightnotice": "Copyright 2020 The Associated Press. All rights reserved.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "a",
+                "name": "Domestic News"
+            }, {
+                "rels": ["suppcategory"],
+                "creator": "Editorial",
+                "code": "file",
+                "name": "File photo"
+            }, {
+                "code": "92f37e658701429ba309bf57247f34c8",
+                "name": "Death of George Floyd",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "0e8cf338896510048024d56c852d093e",
+                "name": "Protests and demonstrations",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["2bae705e15fc487fba00746f63b682dc"]
+            }, {
+                "code": "2bae705e15fc487fba00746f63b682dc",
+                "name": "Political and civil unrest",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "topparent": true
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }],
+            "place": [{
+                "code": "789fdd8882af10048263df092526b43e",
+                "name": "California",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661e48387d5b10048291c076b8e3055c"],
+                "locationtype": {
+                    "code": "0ae5eb8e00e04295a4fc209c94bfe6ef",
+                    "name": "State"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-119.75126, 37.25022]
+                }
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f7c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-98.5, 39.76]
+                }
+            }, {
+                "code": "661850e07d5b100481f7c076b8e3055c",
+                "name": "North America",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-100.54688, 46.07323]
+                }
+            }, {
+                "code": "8345b5f082af10048280df092526b43e",
+                "name": "Los Angeles",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["789fdd8882af10048263df092526b43e"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-118.24368, 34.05223]
+                }
+            }],
+            "description_caption": "Pedestrians are silhouetted as they walk past a shop boarded up with plywood panels to protect the building against potential vandalism and looting Wednesday, June 3, 2020, in downtown Los Angeles, as protests continue over the death of George Floyd on May 25 in Minneapolis. Los Angeles County pushed back the start of its curfew from 6 p.m. to 9 p.m., a help to newly reopened restaurants and retail stores that were shut down for weeks by anti-coronavirus orders. (AP Photo/Jae C. Hong)",
+            "renditions": {
+                "main": {
+                    "title": "Full Resolution (JPG)",
+                    "rel": "Main",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "484b0258804c415997f01e194f08cf73",
+                    "digest": "d42b2406ffc1b092b2dbbf417764630b",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 3124481,
+                    "width": 5000,
+                    "height": 3334,
+                    "originalfilename": "America_Protests_Racial_Economics_06258.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg",
+                    "pricetag": "Unavailable:MeterExpired_Shutdown"
+                },
+                "preview": {
+                    "title": "Preview (JPG)",
+                    "rel": "Preview",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "294b6543ade147e29249e49f9d0340cd",
+                    "digest": "4c1238200d726dbc7b0216cc4dd5f65f",
+                    "href": "https://mapi.associatedpress.com/v1/items/9a467a0956534f038736f4158bccb6cd.1/preview/preview.jpg?nfe=true&s=512&app=MPK&tag=iid~9a467a0956534f038736f4158bccb6cd!rsn~1!cid~294b6543ade147e29249e49f9d0340cd!ofn~America_Protests_Racial_Economics_06258.jpg!orgId~49091!qt~krYmF5gjQPI!orgNm~Canadian%20Press!role~Preview!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 38711,
+                    "width": 512,
+                    "height": 341,
+                    "originalfilename": "America_Protests_Racial_Economics_06258.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "thumbnail": {
+                    "title": "Thumbnail (JPG)",
+                    "rel": "Thumbnail",
+                    "format": "JPEG Baseline",
+                    "type": "picture",
+                    "contentid": "f7bbc5075a6f4cde9748b0306615c56d",
+                    "digest": "7bc8917b4ce03252d1fb1ef201172ae3",
+                    "href": "https://mapi.associatedpress.com/v1/items/9a467a0956534f038736f4158bccb6cd.1/thumbnail/thumbnail.jpg?nfe=true&app=MPK&tag=iid~9a467a0956534f038736f4158bccb6cd!rsn~1!cid~f7bbc5075a6f4cde9748b0306615c56d!ofn~America_Protests_Racial_Economics_06258.jpg!orgId~49091!qt~krYmF5gjQPI!orgNm~Canadian%20Press!role~Thumbnail!mt~photo!fmt~JPEG%20Baseline",
+                    "orientation": "Horizontal",
+                    "sizeinbytes": 9808,
+                    "width": 125,
+                    "height": 83,
+                    "originalfilename": "America_Protests_Racial_Economics_06258.jpg",
+                    "fileextension": "jpg",
+                    "mimetype": "image/jpeg"
+                },
+                "caption_nitf": {
+                    "title": "NITF Caption Download",
+                    "rel": "Caption",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 83,
+                    "contentid": "d94f6ae181744c5ca39597bf0fe19ff4",
+                    "href": "https://api.ap.org/media/v/content/9a467a0956534f038736f4158bccb6cd.1/download?qt=krYmF5gjQPI&type=text&format=nitf&text=caption&et=1a1aza3c0"
+                }
+            }
+        }
+    }
+}

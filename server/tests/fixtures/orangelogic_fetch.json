@@ -1,0 +1,57 @@
+{
+    "APIRequestInfo": {
+        "Module": "Search",
+        "APIVersion": "v3.0",
+        "Resource": "search",
+        "IsLoggedIn": true,
+        "ProviderVersion": "TORONTO.R7.1528J.89859",
+        "ProviderIdentity": "CP0-AWS-ORG-134",
+        "Status": "LoggedIn",
+        "UserLogin": "superdesk_RW",
+        "TimeoutPeriodMinutes": 60
+    },
+    "APIResponse": {
+        "GlobalInfo": {
+            "TotalCount": 1,
+            "QueryDurationMilliseconds": 79,
+            "Sort": "Relevancy"
+        },
+        "Items": [{
+            "Title": "Virus Outbreak China Vaccine",
+            "SystemIdentifier": "CP18055230",
+            "MediaNumber": "9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152e35a10d6d-0",
+            "Caption": "In this April 10, 2020, photo released by Xinhua News Agency, a staff member holds up a sample of a potential COVID-19 vaccine at a production plant of SinoPharm in Beijing. In the global race to make a coronavirus vaccine, the state-owned Chinese company is boasting that it gave its employees, including top executives, experimental shots even before the government OK\u0027d testing in people. (Zhang Yuwei/Xinhua via AP)",
+            "CaptionShort": "",
+            "EditDate": "",
+            "MediaDate": "4/12/2020 12:00:00 AM",
+            "CreateDate": "7/16/2020 12:05:34 AM",
+            "GlobalEditDate": "7/16/2020 12:05:56 AM",
+            "MediaType": "Image",
+            "Path_TR1": {
+                "URI": "https://s3.us-west-2.amazonaws.com/cortex-canadianpress-prod-proxies/CP0/TR1/fd/d4/e9/af/62/CP18055230.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARSOQ3MKBQVRXBH5M%2F20200717%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200717T080908Z&X-Amz-Expires=600&X-Amz-SignedHeaders=host&X-Amz-Signature=b6ad032859a91dfcb02c9ce592139e862ac5a6c29dbdd01af391d5b6c6af791c",
+                "Width": 1200,
+                "Height": 800
+            },
+            "Path_TR4": {
+                "URI": "https://s3.us-west-2.amazonaws.com/cortex-canadianpress-prod-proxies/CP0/TR4/b9/81/0f/e8/8c/CP18055230.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARSOQ3MKBQVRXBH5M%2F20200717%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200717T080908Z&X-Amz-Expires=600&X-Amz-SignedHeaders=host&X-Amz-Signature=5a787cf25dbd96e00ed8d69a4a4c9a5262bf1847b88cd8236bb074746d1a787f",
+                "Width": 528,
+                "Height": 352
+            },
+            "Path_TR7": {
+                "URI": "https://s3.us-west-2.amazonaws.com/cortex-canadianpress-prod-proxies/CP0/TR7/66/ba/67/be/2c/CP18055230.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIARSOQ3MKBQVRXBH5M%2F20200717%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20200717T080908Z&X-Amz-Expires=600&X-Amz-SignedHeaders=host&X-Amz-Signature=1711363d79377be51e5ee2737ececd74dad1df227cdfc17854d37b62f688708b",
+                "Width": 288,
+                "Height": 192
+            },
+            "Path_WebHigh": {
+                "URI": "",
+                "Width": "",
+                "Height": "",
+                "Warning": "The requested format is not available on this media WebHigh"
+            },
+            "Photographer": "AP Third Party",
+            "PhotographerFastId": "AP Third Party",
+            "copyright": "Xinhua",
+            "MediaEncryptedIdentifier": "2RLQZBCB4R4R4"
+        }]
+    }
+}
