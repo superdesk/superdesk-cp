@@ -258,9 +258,6 @@ class OrangelogicSearchProvider(SearchProvider):
 def _parse_binary(item):
     binary = app.media.get(item['renditions']['original']['media'])
     iptc = get_meta_iptc(binary)
-    binary.seek(0)
-    xmp = parse_xmp(binary)
-
     if not iptc:
         return
 
@@ -306,6 +303,8 @@ def _parse_binary(item):
     if iptc.get('Original Transmission Reference'):
         item['extra']['itemid'] = iptc['Original Transmission Reference']
 
+    binary.seek(0)
+    xmp = parse_xmp(binary)
     if not xmp:
         return
 

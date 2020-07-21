@@ -574,7 +574,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         try:
             infosource = data['item']['infosource'][0]['name']
-        except KeyError:
+        except (KeyError, IndexError):
             infosource = 'AP'
         item['extra'][cp.INFOSOURCE] = infosource
         item['original_source'] = 'The Associated Press' if infosource == 'AP' else 'Unknown AP'
