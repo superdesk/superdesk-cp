@@ -66,7 +66,6 @@ class JimiFormatterTestCase(unittest.TestCase):
             if _all:
                 return formatted
             seq, xml_str = formatted[0]
-        print('xml', xml_str)
         return xml_str
 
     def get_root(self, xml):

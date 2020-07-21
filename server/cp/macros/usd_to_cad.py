@@ -51,7 +51,6 @@ def callback(item, **kwargs):
             num = m.group('num').replace(',', '.').replace(' ', '')
         else:
             num = m.group('num').replace(',', '')
-        print('num', num)
         converted = decimal.Decimal(num) * rate
         if m.group('decimal'):
             _format = '{:.3f}'  # convert 55.21 to 73.73 - round to 3 decimals and strip last one

@@ -121,7 +121,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             for subj in ap_item.get('subject', [])
             if subj.get('scheme') == AP_SUBJECT_SCHEME
         ]
-        print('keywords', item['keywords'])
 
         if ap_item.get('subject'):
             item['subject'] = self._parse_subject(ap_item['subject'])
