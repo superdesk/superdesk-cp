@@ -4,6 +4,7 @@ import json
 import flask
 import unittest
 import superdesk
+import requests_mock
 
 from unittest.mock import MagicMock, patch
 from tests.ingest.parser import get_fixture_path
@@ -104,7 +105,10 @@ class CP_AP_ParseTestCase(unittest.TestCase):
     def test_parse_picture(self):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                item = parser.parse(picture_data, provider)
+                with requests_mock.mock() as mock:
+                    with open(get_fixture_path('preview.jpg', 'ap'), 'rb') as f:
+                        mock.get(picture_data['data']['item']['renditions']['preview']['href'], content=f.read())
+                    item = parser.parse(picture_data, provider)
 
         self.assertEqual('Jae C. Hong', item['byline'])
         self.assertEqual(5, item['urgency'])
