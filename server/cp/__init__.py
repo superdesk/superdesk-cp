@@ -4,6 +4,7 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+ORIG_ID = 'itemid'
 HEADLINE2 = 'headline_extended'
 SERVICE = '_service'
 FILENAME = 'filename'

@@ -1,18 +1,14 @@
 
-from abc import abstractstaticmethod
 import io
-from logging import info
 import re
 import cp
-import PIL
 import json
 import requests
 import superdesk
 
 from typing import List
 from flask import current_app as app
-from PIL import Image
-from PIL.IptcImagePlugin import getiptcinfo
+from superdesk.text_utils import get_text
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
 
@@ -110,7 +106,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         except KeyError:
             pass
         try:
-            item['extra']['itemid'] = ap_item['altids']['itemid']
+            item['extra'][cp.ORIG_ID] = ap_item['altids']['itemid']
         except KeyError:
             pass
 
@@ -125,6 +121,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             for subj in ap_item.get('subject', [])
             if subj.get('scheme') == AP_SUBJECT_SCHEME
         ]
+        print('keywords', item['keywords'])
 
         if ap_item.get('subject'):
             item['subject'] = self._parse_subject(ap_item['subject'])
@@ -560,6 +557,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     item['anpa_category'].append(
                         {'name': cat['name'], 'qcode': cat['qcode']},
                     )
+                    break
 
     def _parse_picture_category(self, data, item):
         for subj in data['item'].get('subject', []):

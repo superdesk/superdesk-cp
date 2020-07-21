@@ -27,15 +27,16 @@ class AP2JimiTestCase(unittest.TestCase):
     provider = {}
     subscriber = {}
 
-    def parse_format(self, source, binary):
+    def parse_format(self, source, binary=None):
         with open(get_fixture_path(source, 'ap')) as fp:
             data = json.load(fp)
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 with requests_mock.mock() as mock:
-                    with open(get_fixture_path(binary, 'ap'), 'rb') as f:
-                        mock.get(data['data']['item']['renditions']['preview']['href'], content=f.read())
+                    if binary:
+                        with open(get_fixture_path(binary, 'ap'), 'rb') as f:
+                            mock.get(data['data']['item']['renditions']['preview']['href'], content=f.read())
                     parsed = parser.parse(data, self.provider)
                 parsed['_id'] = 'generated-id'
                 parsed['family_id'] = parsed['_id']
@@ -101,3 +102,32 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField1').text)
         self.assertEqual('AB101-65/2020_101001', item.find('CustomField2').text)
         self.assertEqual('AP', item.find('CustomField6').text)
+
+    def test_ap_text_broadcast(self):
+        """
+        ref: tests/io/fixtures/5d846ed8-96b6-4adc-a028-017b0fa5e2c1.xml
+        """
+        item = self.parse_format('ap-text.json')
+        self.assertEqual('f14dd246c9b5efeb56de0141aa50c4fd', item.find('SystemSlug').text)
+        self.assertEqual('e0027', item.find('FileName').text)  # diverging here form the original file
+        self.assertEqual('Mark Kennedy', item.find('Byline').text)
+        self.assertEqual('Review: Documentary about electric racing holds little spark', item.find('Headline').text)
+        self.assertIn('Entertainment', item.find('Category').text)
+        self.assertIn('Entertainment', item.find('IndexCode').text)
+        self.assertEqual('Feature - Regular', item.find('Ranking').text)
+        self.assertEqual('6', item.find('RankingValue').text)
+        self.assertEqual('Review: Documentary about electric racing holds little spark', item.find('Headline2').text)
+        self.assertEqual('THE ASSOCIATED PRESS', item.find('Credit').text)
+        self.assertEqual('Text', item.find('ContentType').text)
+        self.assertEqual('US-Film-Review-And-We-Go-Green', item.find('SlugProper').text)
+        self.assertEqual('The Associated Press', item.find('Source').text)
+        self.assertEqual('UPDATES: With AP Photos.', item.find('UpdateNote').text)
+        self.assertIn('54', item.find('BreakWordCount').text)
+        self.assertIn('54', item.find('WordCount').text)
+        self.assertEqual('1', item.find('Language').text)
+        self.assertEqual("For proof that Leonardo DiCaprio can't save every film he touches, look no further than "
+                         "“And We Go Green,” a languid documentary about the electric car racing circuit. DiCaprio, "
+                         "who is a producer of", item.find('DirectoryText').text)
+        self.assertEqual('2020-06-02T19:13:56', item.find('CreatedDateTime').text)  # using api data
+        self.assertIn("Arts and entertainment,Movies,Entertainment,Automotive technology,Industrial "
+                      "technology,Technology,Automobile racing,Sports,Form", item.find('Keyword').text)

@@ -119,7 +119,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(str(self.article['word_count']), item.find('WordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('BreakWordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('Length').text)
-        self.assertEqual('Abstract', item.find('DirectoryText').text)
+        self.assertEqual('Body HTML', item.find('DirectoryText').text)
         self.assertEqual('<p>Body HTML</p>', item.find('ContentText').text)
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
