@@ -393,7 +393,8 @@
         "display_name": "Ranking",
         "type": "manageable",
         "unique_field": "qcode",
-        "init_version": 4,
+        "init_version": 5,
+        "selection_type": "single selection",
         "schema": {
             "name": {},
             "qcode": {},

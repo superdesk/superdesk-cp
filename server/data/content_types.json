@@ -293,7 +293,8 @@
             "urgency": {
                 "order": 4,
                 "sdWidth": "half",
-                "required": false
+                "required": false,
+                "displayOnMediaEditor": false
             },
             "ednote": {
                 "order": 4,
