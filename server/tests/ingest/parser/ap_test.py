@@ -128,6 +128,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 source = copy.deepcopy(data)
                 embargoed = datetime.now(pytz.utc).replace(microsecond=0) + timedelta(hours=2)
                 source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')
+                source['data']['item']['pubstatus'] = 'embargoed'
                 item = parser.parse(source, provider)
                 self.assertEqual(embargoed, item['embargoed'])
                 self.assertIn('embargo', item)
@@ -135,6 +136,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     'utc_embargo': embargoed,
                     'time_zone': cp.TZ,
                 }, item[SCHEDULE_SETTINGS])
+                self.assertEqual('hold', item['pubstatus'])
 
                 embargoed = embargoed - timedelta(hours=5)
                 source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')

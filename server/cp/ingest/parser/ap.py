@@ -209,6 +209,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if ap_item.get('type') == 'picture':
             self._parse_picture_metadata(data['data'], item)
 
+        if item.get('pubstatus') == 'embargoed':
+            item['pubstatus'] = 'hold'
+
         return item
 
     def _parse_stocks(self, organisations):
