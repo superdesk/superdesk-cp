@@ -311,7 +311,7 @@ def _parse_binary(item):
     if xmp.get('http://ns.adobe.com/photoshop/1.0/'):
         for key, val, _ in xmp['http://ns.adobe.com/photoshop/1.0/']:
             if key == 'photoshop:Urgency':
-                item['urgency'] = val
+                item['urgency'] = int(val)
             elif key == 'photoshop:DateCreated':
                 item['firstcreated'] = datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=UTC)
 
