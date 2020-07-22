@@ -242,7 +242,6 @@
             "urgency": {
                 "required": true,
                 "nullable": false,
-                "sdWidth": "half",
                 "type": "integer"
             },
             "keywords": null,
