@@ -1,5 +1,6 @@
 
 import cp
+import arrow
 import superdesk
 import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
@@ -8,6 +9,7 @@ from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
+from apps.publish.enqueue import get_enqueue_service
 
 from cp.utils import format_maxlength
 
@@ -86,10 +88,10 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'ContentItemID').text = str(item['_id'])
-        etree.SubElement(content, 'FileName').text = str(extra.get(cp.FILENAME) or item['family_id'])
-        etree.SubElement(content, 'NewsCompID').text = str(item['family_id'])
-        etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or item['family_id'])
+        etree.SubElement(content, 'ContentItemID').text = str(item['guid'])
+        etree.SubElement(content, 'FileName').text = str(extra.get(cp.FILENAME) or item['guid'])
+        etree.SubElement(content, 'NewsCompID').text = str(item['guid'])
+        etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or item['guid'])
 
         if service:
             etree.SubElement(content, 'Note').text = ','.join(services)
@@ -147,6 +149,9 @@ class JimiFormatter(Formatter):
             if extra.get('update'):
                 etree.SubElement(content, 'UpdateNote').text = extra['update']
 
+        if item.get('associations'):
+            self._format_associations(item)
+
     def _format_credit(self, item):
         credit = item.get('creditline')
         if not credit or credit == 'ASSOCIATED PRESS' or item.get('original_source') == 'AP':
@@ -191,6 +196,7 @@ class JimiFormatter(Formatter):
     def _format_datetime(self, datetime, rel=False):
         if not datetime:
             return DEFAULT_DATETIME
+        datetime = to_datetime(datetime)
         if rel:
             relative = utc_to_local('America/Toronto', datetime)
             formatted = relative.strftime('%Y-%m-%dT%H:%M:%S%z')
@@ -263,7 +269,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'PhotoType').text = 'None'
         etree.SubElement(content, 'GraphicType').text = 'None'
 
-        etree.SubElement(content, 'DateTaken').text = item['firstcreated'].strftime('%Y-%m-%dT%H:%M:%S')
+        etree.SubElement(content, 'DateTaken').text = self._format_datetime(item.get('firstcreated'))
 
         for scheme, elem in PICTURE_CATEGORY_MAPPING.items():
             code = [subj['qcode'] for subj in item.get('subject', []) if subj.get('scheme') == scheme]
@@ -317,6 +323,12 @@ class JimiFormatter(Formatter):
         if extra.get(cp.XMP_KEYWORDS):
             etree.SubElement(content, 'XmpKeywords').text = extra[cp.XMP_KEYWORDS]
 
+        if extra.get('container'):
+            etree.SubElement(content, 'ContainerIDs').text = extra['container']
+        else:
+            self._format_refs(content, item)
+
+    def _format_refs(self, content, item):
         refs = [
             ref.get('guid')
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
@@ -327,13 +339,39 @@ class JimiFormatter(Formatter):
 
     def _format_picture_filename(self, item):
         if item.get('extra') and item['extra'].get(cp.FILENAME):
-            created = item['firstcreated']
+            created = to_datetime(item['firstcreated'])
             return '{transref}-{date}_{year}_{time}'.format(
                 transref=item['extra'][cp.FILENAME],
                 year=created.strftime('%Y'),
                 date='{}{}'.format(created.month, created.day),
                 time=created.strftime('%H%M%S'),
             )
+
+    def _format_associations(self, item):
+        """When association is already published we need to resend it again
+        with link to text item.
+        """
+        for assoc in item['associations'].values():
+            if assoc:
+                published = superdesk.get_resource_service('published').get_last_published_version(assoc['_id'])
+                if published and published['pubstatus'] == 'usable':
+                    published.setdefault('extra', {})['container'] = item['guid']
+                    publish_service = get_enqueue_service('publish')
+                    subscribers = [
+                        subs
+                        for subs in publish_service.get_subscribers(published, None)[0]
+                        if any([
+                            dest['format'] == 'jimi'
+                            for dest in subs.get('destinations', [])
+                        ])
+                    ]
+                    publish_service.resend(published, subscribers)
+
+
+def to_datetime(value):
+    if value and isinstance(value, str):
+        return arrow.get(value)
+    return value
 
 
 def _find_jimi_item(code, items):

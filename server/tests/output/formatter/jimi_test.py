@@ -103,8 +103,8 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         # ids
         self.assertEqual(self.article['_id'], item.find('ContentItemID').text)
-        self.assertEqual(self.article['family_id'], item.find('NewsCompID').text)
-        self.assertEqual(self.article['family_id'], item.find('SystemSlug').text)
+        self.assertEqual(self.article['guid'], item.find('NewsCompID').text)
+        self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
         self.assertEqual(self.article['extra'][cp.FILENAME], item.find('FileName').text)
 
         # obvious
