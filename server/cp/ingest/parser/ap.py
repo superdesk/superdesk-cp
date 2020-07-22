@@ -12,7 +12,7 @@ from datetime import timedelta
 from superdesk.utc import utc_to_local, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
-from superdesk.metadata.item import SCHEDULE_SETTINGS
+from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 
 
 AP_SOURCE = 'The Associated Press'
@@ -210,7 +210,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             self._parse_picture_metadata(data['data'], item)
 
         if item.get('pubstatus') == 'embargoed':
-            item['pubstatus'] = 'hold'
+            item['pubstatus'] = PUB_STATUS.HOLD
 
         return item
 

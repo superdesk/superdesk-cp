@@ -11,7 +11,7 @@ import requests_mock
 
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
-from superdesk.metadata.item import SCHEDULE_SETTINGS
+from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 from tests.ingest.parser import get_fixture_path
 
 from tests.mock import resources
@@ -136,7 +136,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     'utc_embargo': embargoed,
                     'time_zone': cp.TZ,
                 }, item[SCHEDULE_SETTINGS])
-                self.assertEqual('hold', item['pubstatus'])
+                self.assertEqual(PUB_STATUS.HOLD, item['pubstatus'])
 
                 embargoed = embargoed - timedelta(hours=5)
                 source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')
