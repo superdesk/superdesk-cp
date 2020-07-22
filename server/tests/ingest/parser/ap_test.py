@@ -1,12 +1,17 @@
 
+from superdesk.utc import utc_to_local
 import cp
+import pytz
+import copy
 import json
 import flask
 import unittest
 import superdesk
 import requests_mock
 
+from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
+from superdesk.metadata.item import SCHEDULE_SETTINGS
 from tests.ingest.parser import get_fixture_path
 
 from tests.mock import resources
@@ -36,7 +41,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('foo-bar', parser.process_slugline('foo - bar'))
 
     def test_parse(self):
-
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = parser.parse(data, provider)
@@ -117,3 +121,23 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual('stf', item['extra']['photographer_code'])
         self.assertIn('Pedestrians are silhouetted', item['description_text'])
         self.assertEqual('AP', item['extra']['provider'])
+
+    def test_parse_embargoed(self):
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                source = copy.deepcopy(data)
+                embargoed = datetime.now(pytz.utc).replace(microsecond=0) + timedelta(hours=2)
+                source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')
+                item = parser.parse(source, provider)
+                self.assertEqual(embargoed, item['embargoed'])
+                self.assertIn('embargo', item)
+                self.assertEqual({
+                    'utc_embargo': embargoed,
+                    'time_zone': cp.TZ,
+                }, item[SCHEDULE_SETTINGS])
+
+                embargoed = embargoed - timedelta(hours=5)
+                source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')
+                item = parser.parse(source, provider)
+                self.assertEqual(embargoed, item['embargoed'])
+                self.assertNotIn('embargo', item)

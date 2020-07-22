@@ -10,6 +10,7 @@ from datetime import datetime
 from unittest.mock import patch
 
 from cp.output.formatter.jimi import JimiFormatter
+from superdesk.metadata.item import SCHEDULE_SETTINGS
 
 from tests.mock import resources, SEQUENCE_NUMBER
 
@@ -155,10 +156,6 @@ class JimiFormatterTestCase(unittest.TestCase):
             self.assertEqual(str(val), item.find('WritethruValue').text)
             self.assertEqual('Writethru', item.find('WriteThruType').text)
 
-    def test_embargo(self):
-        item = self.format_item({'embargoed': self.article['firstcreated']})
-        self.assertEqual('2020-04-01T11:13:12', item.find('EmbargoTime').text)
-
     def test_dateline(self):
         item = self.format_item({
             'dateline': {
@@ -279,3 +276,16 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
         self.assertEqual('NY538-63_2020_170056.jpg', item.find('ViewFile').text)
+
+    def test_embargo(self):
+        updates = {
+            SCHEDULE_SETTINGS: {
+                'utc_embargo': datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
+            },
+        }
+        item = self.format_item(updates)
+        self.assertEqual('2020-07-22T09:10:05', item.find('EmbargoTime').text)
+
+    def test_embargo(self):
+        item = self.format_item({'embargoed': self.article['firstcreated']})
+        self.assertEqual('2020-04-01T07:13:12', item.find('EmbargoTime').text)

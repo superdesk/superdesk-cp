@@ -1,4 +1,5 @@
 
+from superdesk.metadata.item import SCHEDULE_SETTINGS
 import cp
 import superdesk
 import lxml.etree as etree
@@ -97,7 +98,13 @@ class JimiFormatter(Formatter):
         # timestamps
         firstpublished = item.get('firstpublished') or item['versioncreated']
         etree.SubElement(root, 'PublishDateTime').text = self._format_datetime(firstpublished)
-        etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(item.get('embargoed'))
+        try:
+            etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(
+                item[SCHEDULE_SETTINGS]['utc_embargo'],
+                local=True,
+            )
+        except KeyError:
+            etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(item.get('embargoed'), local=True)
         etree.SubElement(content, 'CreatedDateTime').text = self._format_datetime(item['firstcreated'])
         etree.SubElement(content, 'UpdatedDateTime').text = self._format_datetime(item['versioncreated'], True)
 
@@ -188,12 +195,13 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'WritethruNum').text = '{}{}'.format(num, ending)
         etree.SubElement(content, 'WriteThruType').text = 'Writethru'
 
-    def _format_datetime(self, datetime, rel=False):
+    def _format_datetime(self, datetime, rel=False, local=False):
         if not datetime:
             return DEFAULT_DATETIME
+        if rel or local:
+            datetime = utc_to_local(cp.TZ, datetime)
         if rel:
-            relative = utc_to_local('America/Toronto', datetime)
-            formatted = relative.strftime('%Y-%m-%dT%H:%M:%S%z')
+            formatted = datetime.strftime('%Y-%m-%dT%H:%M:%S%z')
             return formatted[:-2] + ':' + formatted[-2:]  # add : to timezone offset
         return datetime.strftime('%Y-%m-%dT%H:%M:%S')
 
