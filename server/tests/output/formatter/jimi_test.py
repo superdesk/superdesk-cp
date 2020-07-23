@@ -278,14 +278,15 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('NY538-63_2020_170056.jpg', item.find('ViewFile').text)
 
     def test_embargo(self):
+        embargo = datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
         updates = {
             SCHEDULE_SETTINGS: {
-                'utc_embargo': datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
+                'utc_embargo': embargo,
             },
         }
+
         item = self.format_item(updates)
         self.assertEqual('2020-07-22T09:10:05', item.find('EmbargoTime').text)
 
-    def test_embargo(self):
-        item = self.format_item({'embargoed': self.article['firstcreated']})
-        self.assertEqual('2020-04-01T07:13:12', item.find('EmbargoTime').text)
+        item = self.format_item({'embargoed': embargo})
+        self.assertEqual('2020-07-22T09:10:05', item.find('EmbargoTime').text)
