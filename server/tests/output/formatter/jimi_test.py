@@ -104,8 +104,8 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         # ids
         self.assertEqual(self.article['_id'], item.find('ContentItemID').text)
-        self.assertEqual(self.article['family_id'], item.find('NewsCompID').text)
-        self.assertEqual(self.article['family_id'], item.find('SystemSlug').text)
+        self.assertEqual(self.article['guid'], item.find('NewsCompID').text)
+        self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
         self.assertEqual(self.article['extra'][cp.FILENAME], item.find('FileName').text)
 
         # obvious
@@ -290,3 +290,29 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         item = self.format_item({'embargoed': embargo})
         self.assertEqual('2020-07-22T09:10:05', item.find('EmbargoTime').text)
+
+    def test_format_credit(self):
+        item = self.format_item({'source': 'CP', 'creditline': None})
+        self.assertEqual('THE CANADIAN PRESS', item.find('Credit').text)
+
+    def test_item_with_picture(self):
+        updates = {
+            'source': 'CP',
+            'associations': {
+                'gallery--1': {
+                    '_id': 'foo',
+                    'type': 'picture',
+                    'guid': 'foo:guid'
+                },
+                'gallery--2': {
+                    '_id': 'bar',
+                    'type': 'picture',
+                    'guid': 'bar:guid',
+                },
+            },
+        }
+
+        item = self.format_item(updates)
+
+        self.assertEqual('Many', item.find('PhotoType').text)
+        self.assertEqual('foo:guid,bar:guid', item.find('PhotoReference').text)

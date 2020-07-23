@@ -103,16 +103,15 @@ module.exports = function(grunt) {
         search_cvs: [
             {id: 'categories', name:'Categories', field: 'anpa_category', list: 'categories'},
             {id: 'subject_custom', name:'Index', field: 'subject', list: 'subject_custom'},
-            {id: 'distribution', name:'Services', field: 'subject', list: 'distribution'},
-            {id: 'languages', name:'Language', field: 'subject', list: 'languages'}
+            {id: 'distribution', name:'Services', field: 'subject', list: 'distribution'}
         ],
         
         search: {
             'slugline': 1,
             'headline': 1,
-            'short_headline': 1,
             'unique_name': 1,
             'story_text': 1,
+            'language': 1,
             'byline': 1,
             'keywords': 0,
             'creator': 1,
