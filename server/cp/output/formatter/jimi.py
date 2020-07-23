@@ -150,12 +150,14 @@ class JimiFormatter(Formatter):
                 etree.SubElement(content, 'UpdateNote').text = extra['update']
 
         if item.get('associations'):
-            self._format_associations(item)
+            self._format_associations(content, item)
 
     def _format_credit(self, item):
         credit = item.get('creditline')
-        if not credit or credit == 'ASSOCIATED PRESS' or item.get('original_source') == 'AP':
-            credit = 'THE ASSOCIATED PRESS'
+        if credit == 'ASSOCIATED PRESS' or item.get('original_source') == 'AP':
+            return 'THE ASSOCIATED PRESS'
+        elif not credit and item.get('source') == 'CP':
+            return 'THE CANADIAN PRESS'
         return credit or ''
 
     def _format_urgency(self, content, urgency):
@@ -347,10 +349,11 @@ class JimiFormatter(Formatter):
                 time=created.strftime('%H%M%S'),
             )
 
-    def _format_associations(self, item):
+    def _format_associations(self, content, item):
         """When association is already published we need to resend it again
         with link to text item.
         """
+        photos = []
         for assoc in item['associations'].values():
             if assoc:
                 published = superdesk.get_resource_service('published').get_last_published_version(assoc['_id'])
@@ -366,6 +369,24 @@ class JimiFormatter(Formatter):
                         ])
                     ]
                     publish_service.resend(published, subscribers)
+                if assoc.get('type') == 'picture':
+                    photos.append(assoc)
+        etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos))
+        if photos:
+            etree.SubElement(content, 'PhotoReference').text = ','.join(filter(None, [
+                photo.get('guid')
+                for photo
+                in photos
+            ]))
+
+
+def get_count_label(count):
+    if count == 0:
+        return 'None'
+    elif count == 1:
+        return 'One'
+    else:
+        return 'Many'
 
 
 def to_datetime(value):

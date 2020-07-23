@@ -279,3 +279,28 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
         self.assertEqual('NY538-63_2020_170056.jpg', item.find('ViewFile').text)
+
+    def test_format_credit(self):
+        item = self.format_item({'source': 'CP', 'creditline': None})
+        self.assertEqual('THE CANADIAN PRESS', item.find('Credit').text)
+
+    def test_item_with_picture(self):
+        updates = {
+            'source': 'CP',
+            'associations': {
+                'gallery--1': {
+                    '_id': 'foo',
+                    'type': 'picture',
+                    'guid': 'foo:guid'
+                },
+                'gallery--2': {
+                    '_id': 'bar',
+                    'type': 'picture',
+                    'guid': 'bar:guid',
+                },
+            },
+        }
+
+        item = self.format_item(updates)
+        self.assertEqual('Many', item.find('PhotoType').text)
+        self.assertEqual('foo:guid,bar:guid', item.find('PhotoReference').text)
