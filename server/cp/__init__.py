@@ -4,6 +4,8 @@ import logging
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+TZ = 'America/Toronto'
+
 ORIG_ID = 'itemid'
 HEADLINE2 = 'headline_extended'
 SERVICE = '_service'
