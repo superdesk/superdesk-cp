@@ -8,9 +8,11 @@ import superdesk
 
 from typing import List
 from flask import current_app as app
-from superdesk.text_utils import get_text
+from datetime import timedelta
+from superdesk.utc import utc_to_local, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
+from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 
 
 AP_SOURCE = 'The Associated Press'
@@ -189,6 +191,12 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if ap_item.get('embargoed'):
             item['embargoed'] = self.datetime(ap_item['embargoed'])
+            if item['embargoed'] > utcnow():
+                item['embargo'] = utc_to_local(cp.TZ, item['embargoed']).replace(tzinfo=None)
+                item[SCHEDULE_SETTINGS] = {
+                    'time_zone': cp.TZ,
+                    'utc_embargo': item['embargoed'],
+                }
 
         photographer = ap_item.get('photographer')
         if photographer:
@@ -209,6 +217,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                             assoc['renditions'][key]['href'] = href + '&apikey=' + \
                                 provider.get('config', {}).get('apikey') if '?' in href else \
                                 href + '?apikey=' + provider.get('config', {}).get('apikey')
+
+        if item.get('pubstatus') == 'embargoed':
+            item['pubstatus'] = PUB_STATUS.HOLD
+
         return item
 
     def _parse_stocks(self, organisations):
