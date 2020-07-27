@@ -23,6 +23,13 @@ const parseDatetime = (date?: string, time?: string) => (date && time) ?
     `${parseDate(date)}T${parseTime(time)}` :
     null;
 
+const copySubj = (scheme: string) => (subj: ISubject) => ({
+    name: subj.name,
+    qcode: subj.qcode,
+    scheme: scheme,
+    translations: subj.translations,
+});
+
 const extension: IExtension = {
     id: 'upload-iptc',
     activate: (superdesk: ISuperdesk) => {
@@ -45,13 +52,18 @@ const extension: IExtension = {
                         keywords: data.SubjectReference ? data.SubjectReference.split('\n').map((keyword) => keyword.trim()) : [],
                         subject: (item.subject || []).concat(
                             data.Category != null ?
-                                categories.filter((subj) => subj.qcode === data.Category) :
+                                categories.filter((subj) => subj.qcode === data.Category).map(copySubj(PHOTO_CAT_ID)) :
                                 [],
                             data.SupplementalCategories != null ?
-                                supp_categories.filter((subj) => subj.qcode === data.SupplementalCategories) :
+                                supp_categories.filter((subj) => subj.qcode === data.SupplementalCategories).map(copySubj(PHOTO_SUPPCAT_ID)) :
                                 [],
                         ),
                         dateline: {
+                            text: [
+                                data.City,
+                                data['Province-State'],
+                                data['Country-PrimaryLocationName'],
+                            ].filter((x) => !!x).join(', '),
                             located: {
                                 city: data.City,
                                 state: data['Province-State'],

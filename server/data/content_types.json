@@ -349,7 +349,13 @@
                 "textarea": true,
                 "section": "content"
             },
-            "usageterms": null
+            "usageterms": null,
+            "dateline": {
+                "required": false,
+                "order": 12,
+                "sdWidth": "half",
+                "section": "content"
+            }
         },
         "schema": {
             "byline": {
@@ -434,7 +440,13 @@
                 "nullable": true,
                 "required": false
             },
-            "usageterms": null
+            "usageterms": null,
+            "dateline": {
+                "enabled": true,
+                "required": false,
+                "nullable": true,
+                "type": "dict"
+            }
         }
     }
 ]
