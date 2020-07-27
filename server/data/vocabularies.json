@@ -20782,6 +20782,7 @@
         "display_name": "Image Crop Sizes",
         "type": "manageable",
         "unique_field": "name",
+    	"init_version": 1,
         "items": [
             {
                 "is_active": true,
