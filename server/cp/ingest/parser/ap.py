@@ -65,10 +65,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
     PROFILE_ID = 'Story'
     RELATED_ID = 'media-gallery'
 
-    # use preview for all now
     RENDITIONS_MAPPING = {
         'original': 'main',
-        'baseImage': 'preview',
+        'baseImage': 'main',
         'viewImage': 'preview',
         'thumbnail': 'thumbnail',
     }
@@ -208,6 +207,16 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if ap_item.get('type') == 'picture':
             self._parse_picture_metadata(data['data'], item)
+
+        if item.get('associations'):
+            for key, assoc in item.get('associations', {}).items():
+                if assoc.get('renditions'):
+                    for key, value in self.RENDITIONS_MAPPING.items():
+                        if value == 'main':
+                            href = assoc['renditions'].get(key, {}).get('href')
+                            assoc['renditions'][key]['href'] = href + '&apikey=' + \
+                                provider.get('config', {}).get('apikey') if '?' in href else \
+                                href + '?apikey=' + provider.get('config', {}).get('apikey')
 
         if item.get('pubstatus') == 'embargoed':
             item['pubstatus'] = PUB_STATUS.HOLD
