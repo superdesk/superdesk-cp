@@ -365,7 +365,7 @@ class JimiFormatter(Formatter):
         for assoc in item['associations'].values():
             if assoc:
                 published = superdesk.get_resource_service('published').get_last_published_version(assoc['_id'])
-                if published and published['pubstatus'] == 'usable':
+                if published and published['pubstatus'] == 'usable' and False:  # disable for the time being
                     published.setdefault('extra', {})['container'] = item['guid']
                     publish_service = get_enqueue_service('publish')
                     subscribers = [
