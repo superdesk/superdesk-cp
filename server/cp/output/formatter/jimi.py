@@ -348,6 +348,11 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'ContainerIDs').text = ', '.join(refs)
 
     def _format_picture_filename(self, item):
+        try:
+            orig_media = item['renditions']['original']['media']
+            return str(orig_media)
+        except KeyError:
+            pass
         if item.get('extra') and item['extra'].get(cp.FILENAME):
             created = to_datetime(item['firstcreated'])
             return '{transref}-{date}_{year}_{time}'.format(

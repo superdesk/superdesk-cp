@@ -248,6 +248,11 @@ class JimiFormatterTestCase(unittest.TestCase):
             'original_source': 'The Associated Press',
             'copyrightnotice': 'Copyright 2020 The Associated Press. All rights reserved.',
             'description_text': 'Pedestrians are silhouetted',
+            'renditions': {
+                'original': {
+                    'media': 'media_id',
+                },
+            },
         }
         root = self.format_item(updates, True)
 
@@ -256,8 +261,6 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         item = root.find('ContentItem')
 
-        self.assertEqual('NY538-63_2020_170056', item.find('FileName').text)
-        self.assertEqual('NY538-63_2020_170056.jpg', item.find('ContentRef').text)
         self.assertEqual(updates['byline'], item.find('Byline').text)
         self.assertEqual('false', item.find('HeadlineService').text)
         self.assertEqual('A', item.find('Category').text)
@@ -275,7 +278,10 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(updates['copyrightnotice'][:50], item.find('Copyright').text)
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
-        self.assertEqual('NY538-63_2020_170056.jpg', item.find('ViewFile').text)
+
+        self.assertEqual('media_id', item.find('FileName').text)
+        self.assertEqual('media_id.jpg', item.find('ViewFile').text)
+        self.assertEqual('media_id.jpg', item.find('ContentRef').text)
 
     def test_embargo(self):
         embargo = datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
