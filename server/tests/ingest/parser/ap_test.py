@@ -137,6 +137,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     'time_zone': cp.TZ,
                 }, item[SCHEDULE_SETTINGS])
                 self.assertEqual(PUB_STATUS.HOLD, item['pubstatus'])
+                self.assertEqual(['Advance'], [genre['name'] for genre in item['genre']])
 
                 embargoed = embargoed - timedelta(hours=5)
                 source['data']['item']['embargoed'] = embargoed.strftime('%Y-%m-%dT%H:%M:%SZ')

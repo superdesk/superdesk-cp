@@ -547,7 +547,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         elif 'withheld' == data['item']['pubstatus']:
             genre = 'Withhold'
         elif 'embargoed' == data['item']['pubstatus']:
-            genre = 'Embargoed'
+            genre = 'Advance'
         else:
             genre = data['item'].get('profile')
 
