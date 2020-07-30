@@ -4,7 +4,7 @@
     "sp": {
         "entityId": "https://cp-uat-api.superdesk.pro/api/login/saml?acs",
         "assertionConsumerService": {
-            "url": "https://cp-aut-api.superdesk.pro/api/login/saml?acs",
+            "url": "https://cp-uat-api.superdesk.pro/api/login/saml?acs",
             "binding": "urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
         },
         "singleLogoutService": {
