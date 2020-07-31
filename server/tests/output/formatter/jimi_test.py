@@ -103,8 +103,8 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('false', item.find('Cachable').text)
 
         # ids
-        self.assertEqual(self.article['_id'], item.find('ContentItemID').text)
-        self.assertEqual(self.article['guid'], item.find('NewsCompID').text)
+        self.assertIsNone(item.find('ContentItemID'))
+        self.assertEqual('00000100', item.find('NewsCompID').text)
         self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
         self.assertEqual(self.article['extra'][cp.FILENAME], item.find('FileName').text)
 

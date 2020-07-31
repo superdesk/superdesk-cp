@@ -89,9 +89,8 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'ContentItemID').text = str(item['guid'])
         etree.SubElement(content, 'FileName').text = str(extra.get(cp.FILENAME) or item['guid'])
-        etree.SubElement(content, 'NewsCompID').text = str(item['guid'])
+        etree.SubElement(content, 'NewsCompID').text = '{:08d}'.format(pub_seq_num % 100000000)
         etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or item['guid'])
 
         if service:
