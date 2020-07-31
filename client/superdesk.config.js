@@ -76,6 +76,11 @@ module.exports = function(grunt) {
 
         features: {
             preview: 1,
+            customAuthoringTopbar: {
+                toDesk: true,
+                publish: true,
+                publishAndContinue: true,
+            },
             swimlane: {defaultNumberOfColumns: 4},
             editor3: true,
             validatePointOfInterestForImages: true,
