@@ -122,8 +122,8 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('US-Film-Review-And-We-Go-Green', item.find('SlugProper').text)
         self.assertEqual('The Associated Press', item.find('Source').text)
         self.assertEqual('UPDATES: With AP Photos.', item.find('UpdateNote').text)
-        self.assertIn('54', item.find('BreakWordCount').text)
-        self.assertIn('54', item.find('WordCount').text)
+        self.assertEqual('539', item.find('BreakWordCount').text)
+        self.assertEqual('539', item.find('WordCount').text)
         self.assertEqual('1', item.find('Language').text)
         self.assertEqual("For proof that Leonardo DiCaprio can't save every film he touches, look no further than "
                          "“And We Go Green,” a languid documentary about the electric car racing circuit. DiCaprio, "
