@@ -192,7 +192,7 @@ else:
     SAML_PATH = os.path.join(SAML_BASE_PATH, 'prod')
 
 # disable db auth if saml is configured properly
-if os.path.exists(os.path.join(SAML_PATH, 'certs')):
+if os.path.exists(os.path.join(SAML_PATH, 'certs')) and not strtobool(env('SUPERDESK_AUTH', '')):
     CORE_APPS = [app for app in _core_apps if app != 'apps.auth.db']
 
 
