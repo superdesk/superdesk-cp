@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'analytics',
 
     'superdesk.auth.saml',
-    'superdesk.macros',
     'superdesk.macros.imperial',
 
     'cp.orangelogic',
