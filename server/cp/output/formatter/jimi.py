@@ -10,6 +10,7 @@ from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
+from superdesk.media.renditions import get_rendition_file_name
 from apps.publish.enqueue import get_enqueue_service
 
 from cp.utils import format_maxlength
@@ -290,8 +291,8 @@ class JimiFormatter(Formatter):
         pic_filename = self._format_picture_filename(item)
         if pic_filename:
             content.find('FileName').text = pic_filename
-            etree.SubElement(content, 'ContentRef').text = '{}.jpg'.format(pic_filename)
-            etree.SubElement(content, 'ViewFile').text = '{}.jpg'.format(pic_filename)
+            etree.SubElement(content, 'ContentRef').text = pic_filename
+            etree.SubElement(content, 'ViewFile').text = pic_filename
 
         if item.get('headline'):
             content.find('SlugProper').text = item['headline']
@@ -348,8 +349,7 @@ class JimiFormatter(Formatter):
 
     def _format_picture_filename(self, item):
         try:
-            orig_media = item['renditions']['original']['media']
-            return str(orig_media)
+            return get_rendition_file_name(item['renditions']['original'])
         except KeyError:
             pass
         if item.get('extra') and item['extra'].get(cp.FILENAME):

@@ -251,6 +251,7 @@ class JimiFormatterTestCase(unittest.TestCase):
             'renditions': {
                 'original': {
                     'media': 'media_id',
+                    'mimetype': 'image/jpeg',
                 },
             },
         }
@@ -279,9 +280,24 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
 
-        self.assertEqual('media_id', item.find('FileName').text)
+        self.assertEqual('media_id.jpg', item.find('FileName').text)
         self.assertEqual('media_id.jpg', item.find('ViewFile').text)
         self.assertEqual('media_id.jpg', item.find('ContentRef').text)
+
+    def test_picture_amazon(self):
+        updates = {
+            'type': 'picture',
+            'renditions': {
+                'original': {
+                    'media': '20200807100836/5f2d12c8ced0b19f31ea318ajpeg.jpg',
+                },
+            },
+        }
+        item = self.format_item(updates)
+        filename = updates['renditions']['original']['media'].replace('/', '-')
+        self.assertEqual(filename, item.find('FileName').text)
+        self.assertEqual(filename, item.find('ViewFile').text)
+        self.assertEqual(filename, item.find('ContentRef').text)
 
     def test_embargo(self):
         embargo = datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
