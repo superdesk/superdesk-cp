@@ -2,12 +2,13 @@
 import os
 import json
 
-from unittest.mock import create_autospec, patch
+from unittest.mock import create_autospec
 
 from superdesk.publish.subscribers import SubscribersService
 from superdesk.vocabularies import VocabulariesService
 from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
 from apps.archive.news import NewsService
+from apps.archive.archive import ArchiveService
 from apps.publish.published_item import PublishedItemService
 
 SEQUENCE_NUMBER = 100
@@ -36,6 +37,7 @@ vocabularies_service = create_autospec(VocabulariesService)
 vocabularies_service.find_one.side_effect = get_cv
 
 news_service = create_autospec(NewsService)
+archive_service = create_autospec(ArchiveService)
 published_service = create_autospec(PublishedItemService)
 
 media_storage = create_autospec(SuperdeskGridFSMediaStorage)
@@ -43,6 +45,7 @@ media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
 resources = {
     'news': Resource(news_service),
+    'archive': Resource(archive_service),
     'published': Resource(published_service),
     'subscribers': Resource(subscriber_service),
     'vocabularies': Resource(vocabularies_service),

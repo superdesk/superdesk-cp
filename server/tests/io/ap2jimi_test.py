@@ -109,7 +109,7 @@ class AP2JimiTestCase(unittest.TestCase):
         """
         item = self.parse_format('ap-text.json')
         self.assertEqual('f14dd246c9b5efeb56de0141aa50c4fd', item.find('SystemSlug').text)
-        self.assertEqual('e0027', item.find('FileName').text)  # diverging here form the original file
+        self.assertEqual('f14dd246c9b5efeb56de0141aa50c4fd', item.find('FileName').text)
         self.assertEqual('Mark Kennedy', item.find('Byline').text)
         self.assertEqual('Review: Documentary about electric racing holds little spark', item.find('Headline').text)
         self.assertIn('Entertainment', item.find('Category').text)

@@ -106,7 +106,8 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertIsNone(item.find('ContentItemID'))
         self.assertEqual('00000100', item.find('NewsCompID').text)
         self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
-        self.assertEqual(self.article['extra'][cp.FILENAME], item.find('FileName').text)
+        self.assertEqual(self.article['guid'], item.find('FileName').text)
+        self.assertEqual(self.article['extra'][cp.FILENAME], item.find('OrigTransRef').text)
 
         # obvious
         self.assertEqual('Text', item.find('ContentType').text)
@@ -338,3 +339,8 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         self.assertEqual('Many', item.find('PhotoType').text)
         self.assertEqual('foo:guid,bar:guid', item.find('PhotoReference').text)
+
+    def test_format_filename_rewrite(self):
+        resources['archive'].service.find_one.return_value = None
+        item = self.format_item({'rewrite_of': 'abcd', 'extra': {}})
+        self.assertEqual('abcd', item.find('FileName').text)

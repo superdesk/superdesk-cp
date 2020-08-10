@@ -37,6 +37,11 @@ PICTURE_CATEGORY_MAPPING = {
 }
 
 
+def guid(_guid):
+    """Fix ap guids containing etag."""
+    return str(_guid).split('_')[0]
+
+
 class JimiFormatter(Formatter):
 
     ENCODING = 'utf-8'
@@ -90,9 +95,12 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'FileName').text = str(extra.get(cp.FILENAME) or item['guid'])
+        etree.SubElement(content, 'FileName').text = self._format_filename(content, item)
         etree.SubElement(content, 'NewsCompID').text = '{:08d}'.format(pub_seq_num % 100000000)
-        etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or item['guid'])
+        etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or guid(item['guid']))
+
+        if extra.get(cp.FILENAME):
+            etree.SubElement(content, 'OrigTransRef').text = extra[cp.FILENAME]
 
         if service:
             etree.SubElement(content, 'Note').text = ','.join(services)
@@ -122,7 +130,7 @@ class JimiFormatter(Formatter):
 
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
-        etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language') else '1'
+        etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
 
         if item['type'] == 'text' and item.get('body_html'):
             content.find('DirectoryText').text = format_maxlength(
@@ -303,9 +311,6 @@ class JimiFormatter(Formatter):
         if extra.get(cp.ARCHIVE_SOURCE):
             etree.SubElement(content, 'ArchiveSources').text = extra[cp.ARCHIVE_SOURCE]
 
-        if extra.get(cp.FILENAME):
-            etree.SubElement(content, 'OrigTransRef').text = extra[cp.FILENAME]
-
         if extra.get(cp.PHOTOGRAPHER_CODE):
             etree.SubElement(content, 'BylineTitle').text = extra[cp.PHOTOGRAPHER_CODE].upper()
 
@@ -340,7 +345,7 @@ class JimiFormatter(Formatter):
 
     def _format_refs(self, content, item):
         refs = [
-            ref.get('guid')
+            guid(ref.get('guid'))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
         ]
 
@@ -386,10 +391,29 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos))
         if photos:
             etree.SubElement(content, 'PhotoReference').text = ','.join(filter(None, [
-                photo.get('guid')
+                guid(photo.get('guid'))
                 for photo
                 in photos
             ]))
+
+    def _format_filename(self, content, item):
+        """Use external filename if there is one,
+        otherwise resolve it to original item guid
+        for updates.
+
+        It's later used by publish service for actuall filename.
+        """
+        orig = item
+        for i in range(100):
+            if not orig.get('rewrite_of'):
+                break
+            next_orig = superdesk.get_resource_service('archive').find_one(req=None, _id=orig['rewrite_of'])
+            if next_orig is not None:
+                orig = next_orig
+                continue
+            break
+        filename = orig.get('rewrite_of') or orig['guid']
+        etree.SubElement(content, 'FileName').text = guid(filename)
 
 
 def get_count_label(count):
