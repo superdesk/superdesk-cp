@@ -281,7 +281,8 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
 
-        self.assertEqual('media_id.jpg', item.find('FileName').text)
+        self.assertEqual('id', item.find('FileName').text)
+
         self.assertEqual('media_id.jpg', item.find('ViewFile').text)
         self.assertEqual('media_id.jpg', item.find('ContentRef').text)
 
@@ -298,7 +299,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         }
         item = self.format_item(updates)
         filename = updates['renditions']['original']['media'].replace('/', '-')
-        self.assertEqual(filename, item.find('FileName').text)
+        self.assertEqual('id', item.find('FileName').text)
         self.assertEqual(filename, item.find('ViewFile').text)
         self.assertEqual(filename, item.find('ContentRef').text)
 

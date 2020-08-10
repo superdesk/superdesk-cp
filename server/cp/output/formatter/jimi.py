@@ -298,7 +298,6 @@ class JimiFormatter(Formatter):
 
         pic_filename = self._format_picture_filename(item)
         if pic_filename:
-            content.find('FileName').text = pic_filename
             etree.SubElement(content, 'ContentRef').text = pic_filename
             etree.SubElement(content, 'ViewFile').text = pic_filename
 

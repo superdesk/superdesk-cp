@@ -80,7 +80,7 @@ class AP2JimiTestCase(unittest.TestCase):
         ref: tests/io/fixtures/AB101-65_2020_101001.xml
         """
         item = self.parse_format('ap-picture.json', 'preview-keywords.jpg')
-        self.assertEqual('AB101-65_2020_101001', item.find('FileName').text)
+        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('FileName').text)
         self.assertEqual('I', item.find('Category').text)
         self.assertEqual('Santos Munoz', item.find('Headline2').text)
         self.assertEqual('THE ASSOCIATED PRESS', item.find('Credit').text)
