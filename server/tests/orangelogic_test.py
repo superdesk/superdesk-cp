@@ -1,6 +1,7 @@
 
 import os
 import io
+import pytz
 import flask
 import unittest
 import superdesk
@@ -10,9 +11,10 @@ from datetime import datetime
 from unittest.mock import patch
 from httmock import urlmatch, HTTMock
 from requests.exceptions import HTTPError
+from superdesk.utc import tzinfo
 from tests.mock import resources, media_storage
 
-from cp.orangelogic import OrangelogicSearchProvider
+from cp.orangelogic import OrangelogicSearchProvider, _parse_xmp_datetime
 from cp.output.formatter.jimi import JimiFormatter
 
 
@@ -175,3 +177,19 @@ class OrangelogicTestCase(unittest.TestCase):
         self.assertEqual('Unknown AP', item.find('ArchiveSources').text)
         self.assertEqual('9e627f74b97841b3b8562b6547ada9c7', item.find('CustomField1').text)
         self.assertEqual('Xinhua', item.find('CustomField6').text)
+
+    def test_parse_datetime(self):
+        self.assertEqual(
+            datetime(2015, 4, 13, 0, 0, 0, tzinfo=pytz.UTC),
+            _parse_xmp_datetime('2015-04-13'),
+        )
+
+        self.assertEqual(
+            datetime(2015, 4, 13, 1, 2, 3, tzinfo=pytz.UTC),
+            _parse_xmp_datetime('2015-04-13T01:02:03'),
+        )
+
+        self.assertEqual(
+            datetime(2015, 4, 13, 1, 2, 3, tzinfo=pytz.UTC),
+            _parse_xmp_datetime('2015-04-13T01:02:03.000'),
+        )

@@ -313,7 +313,7 @@ def _parse_binary(item):
             if key == 'photoshop:Urgency':
                 item['urgency'] = int(val)
             elif key == 'photoshop:DateCreated':
-                item['firstcreated'] = datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=UTC)
+                item['firstcreated'] = _parse_xmp_datetime(val)
 
     if xmp.get('http://purl.org/dc/elements/1.1/'):
         for key, val, _ in xmp['http://purl.org/dc/elements/1.1/']:
@@ -321,6 +321,13 @@ def _parse_binary(item):
                 item['extra'][cp.INFOSOURCE] = val
             elif key == 'dc:rights[1]' and val:
                 item['extra'][cp.INFOSOURCE] = val
+
+
+def _parse_xmp_datetime(val):
+    try:
+        return datetime.strptime(val[:19], '%Y-%m-%dT%H:%M:%S').replace(tzinfo=UTC)
+    except ValueError:
+        return datetime.strptime(val[:19], '%Y-%m-%d').replace(tzinfo=UTC)
 
 
 def rendition(data):
