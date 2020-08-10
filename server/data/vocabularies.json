@@ -527,8 +527,8 @@
             "qcode": {},
             "translations": {}
         },
-	"service": null,
-        "init_version": 8,
+	     "service": {},
+        "init_version": 9,
 
         "items": 
         	[
