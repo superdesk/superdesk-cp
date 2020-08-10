@@ -95,7 +95,7 @@ class JimiFormatter(Formatter):
         # content system fields
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'FileName').text = self._format_filename(content, item)
+        etree.SubElement(content, 'FileName').text = self._format_filename(item)
         etree.SubElement(content, 'NewsCompID').text = '{:08d}'.format(pub_seq_num % 100000000)
         etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or guid(item['guid']))
 
@@ -396,7 +396,7 @@ class JimiFormatter(Formatter):
                 in photos
             ]))
 
-    def _format_filename(self, content, item):
+    def _format_filename(self, item):
         """Use external filename if there is one,
         otherwise resolve it to original item guid
         for updates.
@@ -413,7 +413,7 @@ class JimiFormatter(Formatter):
                 continue
             break
         filename = orig.get('rewrite_of') or orig['guid']
-        etree.SubElement(content, 'FileName').text = guid(filename)
+        return guid(filename)
 
 
 def get_count_label(count):

@@ -285,6 +285,8 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('media_id.jpg', item.find('ViewFile').text)
         self.assertEqual('media_id.jpg', item.find('ContentRef').text)
 
+        self.assertEqual(1, len(item.findall('FileName')))
+
     def test_picture_amazon(self):
         updates = {
             'type': 'picture',
