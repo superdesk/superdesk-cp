@@ -70,7 +70,13 @@ class JimiFormatter(Formatter):
                 etree.SubElement(root, elem).text = subj['qcode']
 
     def _format_item(self, root, item, pub_seq_num, service, services):
-        content = etree.SubElement(root, 'ContentItem')
+        if is_picture(item):
+            D2P1 = 'http://www.w3.org/2001/XMLSchema-instance'
+            content = etree.SubElement(root, 'ContentItem', {'{%s}type' % D2P1: 'PhotoContentItem'}, nsmap={
+                'd2p1': D2P1,
+            })
+        else:
+            content = etree.SubElement(root, 'ContentItem')
         extra = item.get('extra') or {}
 
         # root system fields
@@ -81,7 +87,13 @@ class JimiFormatter(Formatter):
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
 
-        if item.get('type') in PICTURE_TYPES:
+        # item system fields
+        etree.SubElement(content, 'AutoSaveID').text = '0'
+        etree.SubElement(content, 'Type').text = '0'
+        etree.SubElement(content, 'MediaType').text = '0'
+        etree.SubElement(content, 'Status').text = '0'
+
+        if is_picture(item):
             etree.SubElement(root, 'Services').text = 'Pictures'
             self._format_subject_code(root, item, 'PscCodes', 'destinations')
             if root.find('PscCodes') is None:
@@ -94,11 +106,18 @@ class JimiFormatter(Formatter):
             self._format_subject_code(root, item, 'PscCodes', 'destinations')
 
         # content system fields
+        seq_id = '{:08d}'.format(pub_seq_num % 100000000)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = self._format_filename(item)
-        etree.SubElement(content, 'NewsCompID').text = '{:08d}'.format(pub_seq_num % 100000000)
+        etree.SubElement(content, 'NewsCompID').text = seq_id
         etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or guid(item['guid']))
+        etree.SubElement(content, 'ContentItemID').text = seq_id
+        etree.SubElement(content, 'ProfileID').text = '204'
+        etree.SubElement(content, 'SysContentType').text = '0'
+
+        if is_picture(item):
+            etree.SubElement(content, 'PhotoContentItemID').text = seq_id
 
         if extra.get(cp.FILENAME):
             etree.SubElement(content, 'OrigTransRef').text = extra[cp.FILENAME]
@@ -117,12 +136,12 @@ class JimiFormatter(Formatter):
         except KeyError:
             etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(item.get('embargoed'), local=True)
         etree.SubElement(content, 'CreatedDateTime').text = self._format_datetime(item['firstcreated'])
-        etree.SubElement(content, 'UpdatedDateTime').text = self._format_datetime(item['versioncreated'], True)
+        etree.SubElement(content, 'UpdatedDateTime').text = self._format_datetime(item['versioncreated'], rel=True)
 
         # obvious
-        etree.SubElement(content, 'ContentType').text = 'Photo' if item['type'] in PICTURE_TYPES else \
-            item['type'].capitalize()
-        etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
+        etree.SubElement(content, 'ContentType').text = 'Photo' if is_picture(item) else item['type'].capitalize()
+        if not is_picture(item):
+            etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2) or item.get('headline'),
                                                                        OUTPUT_LENGTH_LIMIT)
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
@@ -158,7 +177,7 @@ class JimiFormatter(Formatter):
         if item.get('byline'):
             etree.SubElement(content, 'Byline').text = item['byline']
 
-        if item.get('type') in PICTURE_TYPES:
+        if is_picture(item):
             self._format_picture_metadata(content, item)
         else:
             etree.SubElement(content, 'EditorNote').text = item.get('ednote')
@@ -217,10 +236,13 @@ class JimiFormatter(Formatter):
         datetime = to_datetime(datetime)
         if rel or local:
             datetime = utc_to_local(cp.TZ, datetime)
+        fmt = '%Y-%m-%dT%H:%M:%S{}'.format(
+            '%z' if rel else '',
+        )
+        formatted = datetime.strftime(fmt)
         if rel:
-            formatted = datetime.strftime('%Y-%m-%dT%H:%M:%S%z')
             return formatted[:-2] + ':' + formatted[-2:]  # add : to timezone offset
-        return datetime.strftime('%Y-%m-%dT%H:%M:%S')
+        return formatted
 
     def _format_text(self, value):
         return get_text(value or '', 'html', True).strip()
@@ -282,12 +304,29 @@ class JimiFormatter(Formatter):
             version_type.text = item['genre'][0]['name']
 
     def _format_picture_metadata(self, content, item):
-        extra = item.get('extra') or {}
+        # no idea how to populate these
         etree.SubElement(content, 'HeadlineService').text = 'false'
         etree.SubElement(content, 'VideoType').text = 'None'
         etree.SubElement(content, 'PhotoType').text = 'None'
         etree.SubElement(content, 'GraphicType').text = 'None'
+        etree.SubElement(content, 'ReadOnlyFlag').text = 'true'
+        etree.SubElement(content, 'HoldFlag').text = 'false'
+        etree.SubElement(content, 'OpenFlag').text = 'false'
+        etree.SubElement(content, 'TransmittedToWire').text = 'false'
+        etree.SubElement(content, 'TrashFlag').text = 'false'
+        etree.SubElement(content, 'TopStory').text = 'false'
+        etree.SubElement(content, 'AuthorVersion').text = '0'
+        etree.SubElement(content, 'BreakWordCount').text = '0'
+        etree.SubElement(content, 'WordCount').text = '0'
+        etree.SubElement(content, 'HandledByUserID').text = '0'
+        etree.SubElement(content, 'Length').text = '0'
+        etree.SubElement(content, 'Published').text = 'false'
+        etree.SubElement(content, 'PhotoLinkCount').text = '0'
+        etree.SubElement(content, 'VideoLinkCount').text = '0'
+        etree.SubElement(content, 'AudioLinkCount').text = '0'
+        etree.SubElement(content, 'IsPublishedAsTopStory').text = 'false'
 
+        extra = item.get('extra') or {}
         etree.SubElement(content, 'DateTaken').text = self._format_datetime(item.get('firstcreated'))
 
         for scheme, elem in PICTURE_CATEGORY_MAPPING.items():
@@ -330,7 +369,7 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'CustomField1').text = extra['itemid']
 
         if pic_filename:
-            etree.SubElement(content, 'CustomField2').text = '/'.join(pic_filename.split('_', 1))
+            etree.SubElement(content, 'CustomField2').text = content.find('FileName').text
 
         if extra.get(cp.INFOSOURCE):
             etree.SubElement(content, 'CustomField6').text = extra[cp.INFOSOURCE]
@@ -359,7 +398,7 @@ class JimiFormatter(Formatter):
             pass
         if item.get('extra') and item['extra'].get(cp.FILENAME):
             created = to_datetime(item['firstcreated'])
-            return '{transref}-{date}_{year}_{time}'.format(
+            return '{transref}-{date}_{year}_{time}.jpg'.format(
                 transref=item['extra'][cp.FILENAME],
                 year=created.strftime('%Y'),
                 date='{}{}'.format(created.month, created.day),
@@ -388,7 +427,7 @@ class JimiFormatter(Formatter):
                     publish_service.resend(published, subscribers)
                 if assoc.get('type') == 'picture':
                     photos.append(assoc)
-        etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos))
+        etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos), item['language'])
         if photos:
             etree.SubElement(content, 'PhotoReference').text = ','.join(filter(None, [
                 guid(photo.get('guid'))
@@ -416,9 +455,10 @@ class JimiFormatter(Formatter):
         return guid(filename)
 
 
-def get_count_label(count):
+def get_count_label(count, lang):
+    is_fr = 'fr' in (lang or '')
     if count == 0:
-        return 'None'
+        return 'None' if not is_fr else 'Aucun'
     elif count == 1:
         return 'One'
     else:
@@ -465,3 +505,7 @@ def _is_same_news_cycle(a, b):
         return False
 
     return min_dt.date() == max_dt.date()
+
+
+def is_picture(item):
+    return item.get('type') in PICTURE_TYPES

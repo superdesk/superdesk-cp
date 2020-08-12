@@ -8,7 +8,7 @@ import requests_mock
 from flask import json
 from unittest.mock import MagicMock, patch
 
-from tests.mock import resources
+from tests.mock import SEQUENCE_NUMBER, resources
 from tests.ingest.parser import get_fixture_path
 
 from cp.ingest import CP_APMediaFeedParser
@@ -40,6 +40,7 @@ class AP2JimiTestCase(unittest.TestCase):
                     parsed = parser.parse(data, self.provider)
                 parsed['_id'] = 'generated-id'
                 parsed['family_id'] = parsed['_id']
+                parsed['renditions'] = {'original': {'media': 'abcd-media', 'mimetype': 'image/jpeg'}}
                 jimi = formatter.format(parsed, self.subscriber)[0][1]
 
         root = etree.fromstring(jimi.encode(formatter.ENCODING))
@@ -80,28 +81,89 @@ class AP2JimiTestCase(unittest.TestCase):
         ref: tests/io/fixtures/AB101-65_2020_101001.xml
         """
         item = self.parse_format('ap-picture.json', 'preview-keywords.jpg')
-        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('FileName').text)
+        self.assertEqual('PhotoContentItem', item.get('{http://www.w3.org/2001/XMLSchema-instance}type'))
+        self.assertIsNone(item.find('Name').text)
+        self.assertEqual('false', item.find('Cachable').text)
+        self.assertIsNotNone(item.find('NewsCompID').text)
+        self.assertEqual('0', item.find('AutoSaveID').text)
+        self.assertEqual('0', item.find('Type').text)
+        self.assertEqual('0', item.find('MediaType').text)
+        self.assertEqual('0', item.find('Status').text)
+        self.assertIsNotNone(item.find('SystemSlug').text)
+        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('FileName').text)  # using guid
+        self.assertEqual('Alvaro Barrientos', item.find('Byline').text)
+        self.assertEqual('false', item.find('HeadlineService').text)
+        self.assertEqual('None', item.find('VideoType').text)
         self.assertEqual('I', item.find('Category').text)
+        self.assertEqual('News - Optional', item.find('Ranking').text)
+        self.assertEqual('5', item.find('RankingValue').text)
+        self.assertEqual('None', item.find('PhotoType').text)
+        self.assertEqual('None', item.find('GraphicType').text)
+        self.assertEqual('true', item.find('ReadOnlyFlag').text)
+        self.assertEqual('false', item.find('HoldFlag').text)
+        self.assertEqual('false', item.find('OpenFlag').text)
+        self.assertEqual('false', item.find('TransmittedToWire').text)
+        self.assertEqual('false', item.find('TrashFlag').text)
+        self.assertEqual('false', item.find('TopStory').text)
+        self.assertEqual('abcd-media.jpg', item.find('ContentRef').text)
         self.assertEqual('Santos Munoz', item.find('Headline2').text)
         self.assertEqual('THE ASSOCIATED PRESS', item.find('Credit').text)
+        self.assertEqual('Photo', item.find('ContentType').text)
         self.assertEqual('Virus Outbreak Spain', item.find('SlugProper').text)
         self.assertEqual('The Associated Press', item.find('Source').text)
+        self.assertEqual('0', item.find('AuthorVersion').text)
+        self.assertEqual('0', item.find('BreakWordCount').text)
+        self.assertIsNotNone(item.find('ContentItemID').text)
+        self.assertEqual('204', item.find('ProfileID').text)
+        self.assertEqual('0', item.find('SysContentType').text)
+        self.assertEqual('0', item.find('WordCount').text)
+        self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
+        self.assertEqual('1', item.find('Language').text)
+        self.assertEqual('2020-06-05T13:09:39-04:00', item.find('UpdatedDateTime').text)
+        self.assertEqual('2020-06-05T10:10:01', item.find('CreatedDateTime').text)
+        self.assertEqual('0', item.find('HandledByUserID').text)
+        self.assertIsNone(item.find('ContentText').text)
         self.assertEqual('Coronavirus, COVID-19', item.find('Keyword').text)
+        self.assertEqual('0', item.find('Length').text)
+        self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Pamplona', item.find('City').text)
         self.assertEqual('Spain', item.find('Country').text)
         self.assertEqual('42.81687', item.find('Latitude').text)  # using data from ap, jimi has it wrong
         self.assertEqual('-1.64323', item.find('Longitude').text)
         self.assertEqual('Pamplona;;Spain', item.find('Placeline').text)
+        self.assertEqual('false', item.find('Published').text)
+        self.assertEqual('0', item.find('PhotoLinkCount').text)
+        self.assertEqual('0', item.find('VideoLinkCount').text)
+        self.assertEqual('0', item.find('AudioLinkCount').text)
+        self.assertEqual('false', item.find('IsPublishedAsTopStory').text)
+        self.assertIsNotNone(item.find('PhotoContentItemID').text)
         self.assertEqual('AB101', item.find('OrigTransRef').text)
         self.assertEqual('STR', item.find('BylineTitle').text)
         self.assertEqual('AB', item.find('CaptionWriter').text)
         self.assertEqual('Copyright 2019 The Associated Press. All rights re', item.find('Copyright').text)
+        self.assertEqual('Santo Munoz, left, wearing a face mask to protect against the coronavirus, moves a robot '
+                         'known as "Alexia" to wait on customers at his bar at Plaza del Castillo square, in Pamplona, '
+                         'northern Spain, Friday, June 5, 2020. (AP Photo/Alvaro Barrientos)',
+                         item.find('EnglishCaption').text)
         self.assertEqual('2020-06-05T10:10:01', item.find('DateTaken').text)
+        self.assertEqual('abcd-media.jpg', item.find('ViewFile').text)
         self.assertEqual('AP', item.find('ArchiveSources').text)
         self.assertEqual('Coronavirus, COVID-19', item.find('XmpKeywords').text)
         self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField1').text)
-        self.assertEqual('AB101-65/2020_101001', item.find('CustomField2').text)
+        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField2').text)
         self.assertEqual('AP', item.find('CustomField6').text)
+
+        self.assertIsNone(item.find('Headline'))
+
+        root = item.getparent()
+        self.assertEqual('Publish', root.tag)
+        self.assertEqual('false', root.find('Reschedule').text)
+        self.assertEqual('true', root.find('CanAutoRoute').text)
+        self.assertEqual(str(SEQUENCE_NUMBER), root.find('PublishID').text)
+        self.assertEqual('Pictures', root.find('Services').text)
+        self.assertIsNone(root.find('Username').text)
+        self.assertEqual('false', root.find('UseLocalsOut').text)
+        self.assertEqual('Online', root.find('PscCodes').text)
 
     def test_ap_text_broadcast(self):
         """
