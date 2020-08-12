@@ -1,4 +1,5 @@
 
+from time import strftime
 from superdesk.metadata.item import SCHEDULE_SETTINGS
 import cp
 import arrow
@@ -407,11 +408,11 @@ class JimiFormatter(Formatter):
             if not orig.get('rewrite_of'):
                 break
             next_orig = superdesk.get_resource_service('archive').find_one(req=None, _id=orig['rewrite_of'])
-            if next_orig is not None:
+            if next_orig is not None and _is_same_news_cycle(next_orig, orig):
                 orig = next_orig
                 continue
             break
-        filename = orig.get('rewrite_of') or orig['guid']
+        filename = orig['guid']
         return guid(filename)
 
 
@@ -448,3 +449,19 @@ def _get_name(item, language):
         return item['translations']['name'][lang]
     except (KeyError, ):
         return item['name']
+
+
+def _is_same_news_cycle(a, b):
+    CYCLE_TZ = 'America/New_York'
+    CYCLE_START_HOUR = 2
+
+    edt_time_a = utc_to_local(CYCLE_TZ, a['firstcreated'])
+    edt_time_b = utc_to_local(CYCLE_TZ, b['firstcreated'])
+
+    min_dt = min(edt_time_a, edt_time_b)
+    max_dt = max(edt_time_a, edt_time_b)
+
+    if min_dt.hour < CYCLE_START_HOUR and max_dt.hour >= CYCLE_START_HOUR:
+        return False
+
+    return min_dt.date() == max_dt.date()

@@ -6,7 +6,7 @@ import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
 
 from pytz import UTC
-from datetime import datetime
+from datetime import datetime, timedelta
 from unittest.mock import patch
 
 from cp.output.formatter.jimi import JimiFormatter
@@ -344,6 +344,14 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('foo:guid,bar:guid', item.find('PhotoReference').text)
 
     def test_format_filename_rewrite(self):
-        resources['archive'].service.find_one.return_value = None
-        item = self.format_item({'rewrite_of': 'abcd', 'extra': {}})
-        self.assertEqual('abcd', item.find('FileName').text)
+        date_1am_et = datetime(2020, 8, 12, 5, tzinfo=UTC)
+        date_2am_et = date_1am_et + timedelta(hours=1)
+        date_3am_et = date_1am_et + timedelta(hours=2)
+
+        resources['archive'].service.find_one.side_effect = [
+            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et},
+            {'guid': 'prev-cycle', 'rewrite_of': 'another-cycle', 'firstcreated': date_1am_et},
+        ]
+
+        item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
+        self.assertEqual('same-cycle', item.find('FileName').text)

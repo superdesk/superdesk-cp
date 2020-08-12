@@ -15,13 +15,18 @@ class CPPublishServiceTestCase(unittest.TestCase):
     formatter = JimiFormatter()
 
     def test_get_filename(self):
+        now = utcnow()
         with patch.dict(superdesk.resources, resources):
+            resources['archive'].service.find_one.side_effect = [
+                {'guid': 'bar', 'firstcreated': now},
+            ]
+
             item = {
                 'type': 'text',
                 'guid': 'foo',
                 'rewrite_of': 'bar',
-                'firstcreated': utcnow(),
-                'versioncreated': utcnow(),
+                'firstcreated': now,
+                'versioncreated': now,
             }
 
             queue_item = {
