@@ -237,6 +237,7 @@ class JimiFormatterTestCase(unittest.TestCase):
             'urgency': 5,
             'byline': 'photographer',
             'headline': 'some headline',
+            'slugline': 'slug',
             'firstcreated': datetime(2020, 6, 3, 17, 0, 56, tzinfo=UTC),
             'extra': {
                 cp.FILENAME: 'NY538',
@@ -273,7 +274,7 @@ class JimiFormatterTestCase(unittest.TestCase):
         self.assertEqual('5', item.find('RankingValue').text)
         self.assertEqual(updates['creditline'], item.find('Credit').text)
         self.assertEqual('Photo', item.find('ContentType').text)
-        self.assertEqual(updates['headline'], item.find('SlugProper').text)
+        self.assertEqual(updates['slugline'], item.find('SlugProper').text)
         self.assertEqual(updates['original_source'], item.find('Source').text)
         self.assertEqual(updates['extra'][cp.FILENAME], item.find('OrigTransRef').text)
         self.assertEqual('STF', item.find('BylineTitle').text)

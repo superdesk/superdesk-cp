@@ -341,7 +341,7 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'ContentRef').text = pic_filename
             etree.SubElement(content, 'ViewFile').text = pic_filename
 
-        if item.get('headline'):
+        if item.get('headline') and not item.get('slugline'):
             content.find('SlugProper').text = item['headline']
 
         if item.get('original_source'):
