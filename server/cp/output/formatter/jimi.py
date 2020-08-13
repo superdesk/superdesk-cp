@@ -496,6 +496,7 @@ def _get_name(item, language):
 
 
 def _is_same_news_cycle(a, b):
+    return True  # not sure if we will need this cycle thing so keeping it for now
     CYCLE_TZ = 'America/New_York'
     CYCLE_START_HOUR = 2
 

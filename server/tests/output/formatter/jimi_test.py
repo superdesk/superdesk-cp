@@ -351,8 +351,8 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         resources['archive'].service.find_one.side_effect = [
             {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et},
-            {'guid': 'prev-cycle', 'rewrite_of': 'another-cycle', 'firstcreated': date_1am_et},
+            {'guid': 'prev-cycle', 'firstcreated': date_1am_et},
         ]
 
         item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
-        self.assertEqual('same-cycle', item.find('FileName').text)
+        self.assertEqual('prev-cycle', item.find('FileName').text)
