@@ -527,9 +527,7 @@
             "qcode": {},
             "translations": {}
         },
-	     "service": {},
-        "init_version": 9,
-
+        "init_version": 10,
         "items": 
         	[
             {
@@ -730,7 +728,7 @@
                     }
                 }
             }
-            ]
+         ]
     },
     {
         "_id": "categories",
