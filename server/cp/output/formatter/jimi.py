@@ -115,7 +115,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = self._format_filename(item)
         etree.SubElement(content, 'NewsCompID').text = seq_id
-        etree.SubElement(content, 'SystemSlug').text = str(extra.get(cp.ORIG_ID) or guid(item['guid']))
+        etree.SubElement(content, 'SystemSlug').text = guid(item['guid'])
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
