@@ -86,6 +86,10 @@ class JimiFormatter(Formatter):
         etree.SubElement(root, 'PublishID').text = str(pub_seq_num)
         etree.SubElement(root, 'Username')
         etree.SubElement(root, 'UseLocalsOut').text = 'false'
+        etree.SubElement(root, 'UserProfileID').text = '0'
+        etree.SubElement(root, 'PublishOrder').text = '0'
+        etree.SubElement(root, 'NewCycle').text = 'false'
+        etree.SubElement(root, 'OnlineResend').text = 'false'
 
         # item system fields
         etree.SubElement(content, 'AutoSaveID').text = '0'

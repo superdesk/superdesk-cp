@@ -164,6 +164,11 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertIsNone(root.find('Username').text)
         self.assertEqual('false', root.find('UseLocalsOut').text)
         self.assertEqual('Online', root.find('PscCodes').text)
+        self.assertEqual('0', root.find('UserProfileID').text)
+        self.assertEqual('0', root.find('PublishOrder').text)
+        self.assertEqual('2020-06-05T17:09:39', root.find('PublishDateTime').text)
+        self.assertEqual('false', root.find('NewCycle').text)
+        self.assertEqual('false', root.find('OnlineResend').text)
 
     def test_ap_text_broadcast(self):
         """
