@@ -356,3 +356,4 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
         self.assertEqual('prev-cycle', item.find('FileName').text)
+        self.assertEqual('prev-cycle', item.find('SystemSlug').text)

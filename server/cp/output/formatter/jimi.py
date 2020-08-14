@@ -111,11 +111,12 @@ class JimiFormatter(Formatter):
 
         # content system fields
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
+        filename = self._format_filename(item)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'FileName').text = self._format_filename(item)
+        etree.SubElement(content, 'FileName').text = filename
         etree.SubElement(content, 'NewsCompID').text = seq_id
-        etree.SubElement(content, 'SystemSlug').text = guid(item['guid'])
+        etree.SubElement(content, 'SystemSlug').text = filename
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
@@ -388,7 +389,7 @@ class JimiFormatter(Formatter):
 
     def _format_refs(self, content, item):
         refs = [
-            guid(ref.get('guid'))
+            self._format_filename(ref)
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
         ]
 
@@ -440,12 +441,7 @@ class JimiFormatter(Formatter):
             ]))
 
     def _format_filename(self, item):
-        """Use external filename if there is one,
-        otherwise resolve it to original item guid
-        for updates.
-
-        It's later used by publish service for actuall filename.
-        """
+        """Keep original guid for updates."""
         orig = item
         for i in range(100):
             if not orig.get('rewrite_of'):
