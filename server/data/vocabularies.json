@@ -741,7 +741,9 @@
             "qcode": {},
             "translations": {}
         },
-        "service": null,
+        "service": {
+            "all": 1
+        },
         "init_version": 10,
         "items": 
         [
