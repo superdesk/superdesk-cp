@@ -761,7 +761,8 @@
 		{"name": "Spare News","qcode": "y","is_active": true,"translations": {"name": {"en-CA": "Spare News","fr-CA": "Nouvelles supplémentaire"}}},
 		{"name": "Spare Sports","qcode": "x","is_active": true,"translations": {"name": {"en-CA": "Spare Sports","fr-CA": "Événements spéciaux"}}},
 		{"name": "Sports","qcode": "s","is_active": true,"translations": {"name": {"en-CA": "Sports","fr-CA": "Sports"}}},
-		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
+		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}},
+		{"name": "General News","qcode": "n","is_active": true,"translations": {"name": {"en-CA": "General News","fr-CA": "Nouvelles Generales"}}}
         ]
     }, 
     {
