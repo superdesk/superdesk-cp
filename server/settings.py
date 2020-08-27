@@ -83,8 +83,8 @@ DISALLOWED_CHARACTERS = ['!', '#', '$', '%', '&', '"', '(', ')', '*', '+', ',', 
                          '>', '?', '@', '[', ']', '\\', '^', '_', '`', '{', '|', '}', '~']
 
 TANSA_PROFILES = {
-    'en-CA': 1108,
-    'fr-CA': 1108,
+    'en_CA': 1108,
+    'fr_CA': 1108,
 }
 
 GENERATE_SHORT_GUID = True
