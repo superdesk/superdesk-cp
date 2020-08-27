@@ -111,8 +111,11 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         # obvious
         self.assertEqual('Text', item.find('ContentType').text)
-        self.assertEqual(self.article['headline'], item.find('Headline').text)
-        self.assertEqual('headline2', item.find('Headline2').text)
+
+        # SDCP-309
+        self.assertEqual(self.article['headline'], item.find('Headline2').text)
+        self.assertEqual('headline2', item.find('Headline').text)
+
         self.assertEqual(self.article['creditline'], item.find('Credit').text)
         self.assertEqual(self.article['slugline'], item.find('SlugProper').text)
         self.assertEqual(self.article['source'], item.find('Source').text)
