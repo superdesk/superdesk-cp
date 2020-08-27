@@ -36,10 +36,10 @@ def translate_to_french_language(item, **kwargs):
 
     if (new_stage == desk.get('incoming_stage')
             and item.get('type') not in not_text_items
-            and (item.get('language') == 'en-CA' or item.get('language') == 'en')):
+            and (item.get('language') == 'en_CA' or item.get('language') == 'en')):
         translate_service = get_resource_service('translate')
 
-        translate_service._translate_item(item['guid'], 'fr-CA', item['task'], state='routed')
+        translate_service._translate_item(item['guid'], 'fr_CA', item['task'], state='routed')
 
         # no need for further treatment, we stop here internal_destinations workflow
         raise StopDuplication

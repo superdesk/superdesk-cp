@@ -73,7 +73,7 @@ LANGUAGES = [
     {'language': 'fr_CA', 'label': 'Français', 'source': True, 'destination': True}
 ]
 
-DEFAULT_LANGUAGE = 'en-CA'
+DEFAULT_LANGUAGE = 'en_CA'
 
 ARCHIVE_AUTOCOMPLETE = True
 ARCHIVE_AUTOCOMPLETE_DAYS = 2

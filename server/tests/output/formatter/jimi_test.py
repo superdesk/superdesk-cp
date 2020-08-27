@@ -43,7 +43,7 @@ class JimiFormatterTestCase(unittest.TestCase):
             {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': 'destinations'},
         ],
         'urgency': 2,
-        'language': 'en-CA',
+        'language': 'en_CA',
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
