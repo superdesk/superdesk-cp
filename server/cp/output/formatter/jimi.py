@@ -145,10 +145,13 @@ class JimiFormatter(Formatter):
 
         # obvious
         etree.SubElement(content, 'ContentType').text = 'Photo' if is_picture(item) else item['type'].capitalize()
+
+        # SDCP-309
+        etree.SubElement(content, 'Headline').text = format_maxlength(extra.get(cp.HEADLINE2) or item.get('headline'),
+                                                                      OUTPUT_LENGTH_LIMIT)
         if not is_picture(item):
-            etree.SubElement(content, 'Headline').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
-        etree.SubElement(content, 'Headline2').text = format_maxlength(extra.get(cp.HEADLINE2) or item.get('headline'),
-                                                                       OUTPUT_LENGTH_LIMIT)
+            etree.SubElement(content, 'Headline2').text = format_maxlength(item.get('headline'), OUTPUT_LENGTH_LIMIT)
+
         etree.SubElement(content, 'SlugProper').text = item.get('slugline')
         etree.SubElement(content, 'Credit').text = self._format_credit(item)
         etree.SubElement(content, 'Source').text = item.get('source')

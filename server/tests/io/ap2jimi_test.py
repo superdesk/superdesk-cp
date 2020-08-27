@@ -106,7 +106,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('false', item.find('TrashFlag').text)
         self.assertEqual('false', item.find('TopStory').text)
         self.assertEqual('abcd-media.jpg', item.find('ContentRef').text)
-        self.assertEqual('Santos Munoz', item.find('Headline2').text)
+        self.assertEqual('Santos Munoz', item.find('Headline').text)
         self.assertEqual('THE ASSOCIATED PRESS', item.find('Credit').text)
         self.assertEqual('Photo', item.find('ContentType').text)
         self.assertEqual('Virus-Outbreak-Spain', item.find('SlugProper').text)
@@ -153,7 +153,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField2').text)
         self.assertEqual('AP', item.find('CustomField6').text)
 
-        self.assertIsNone(item.find('Headline'))
+        self.assertIsNone(item.find('Headline2'))
 
         root = item.getparent()
         self.assertEqual('Publish', root.tag)
@@ -189,8 +189,8 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('US-Film-Review-And-We-Go-Green', item.find('SlugProper').text)
         self.assertEqual('The Associated Press', item.find('Source').text)
         self.assertEqual('UPDATES: With AP Photos.', item.find('UpdateNote').text)
-        self.assertEqual('539', item.find('BreakWordCount').text)
-        self.assertEqual('539', item.find('WordCount').text)
+        self.assertEqual('533', item.find('BreakWordCount').text)
+        self.assertEqual('533', item.find('WordCount').text)
         self.assertEqual('1', item.find('Language').text)
         self.assertEqual("For proof that Leonardo DiCaprio can't save every film he touches, look no further than "
                          "“And We Go Green,” a languid documentary about the electric car racing circuit. DiCaprio, "
