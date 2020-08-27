@@ -69,8 +69,8 @@ HIGHCHARTS_SERVER_HOST = env('HIGHCHARTS_SERVER_HOST', 'localhost')
 HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
 
 LANGUAGES = [
-    {'language': 'en-CA', 'label': 'English', 'source': True, 'destination': True},
-    {'language': 'fr-CA', 'label': 'Français', 'source': True, 'destination': True}
+    {'language': 'en_CA', 'label': 'English', 'source': True, 'destination': True},
+    {'language': 'fr_CA', 'label': 'Français', 'source': True, 'destination': True}
 ]
 
 DEFAULT_LANGUAGE = 'en-CA'
