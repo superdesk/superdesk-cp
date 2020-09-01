@@ -10,6 +10,7 @@
 
 import logging
 import superdesk
+from flask_babel import _
 
 
 logger = logging.getLogger(__name__)
@@ -48,6 +49,6 @@ def callback(item, **kwargs):
 
 
 name = 'auto-routing'
-label = 'AutoRouting macro'
+label = _('AutoRouting macro')
 access_type = 'backend'
 action_type = 'direct'
