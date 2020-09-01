@@ -5,7 +5,7 @@ import logging
 import requests
 import functools
 
-from flask_babel import _
+from flask_babel import lazy_gettext
 from superdesk.text_utils import get_text
 
 SERVICE_URL = 'https://www.bankofcanada.ca/valet/observations/FXUSDCAD/json?recent=1'
@@ -80,7 +80,7 @@ def callback(item, **kwargs):
 
 
 name = 'usd_to_cad'
-label = _('USD to CAD')
+label = lazy_gettext('USD to CAD')
 access_type = 'frontend'
 action_type = 'interactive'
 group = 'currency'

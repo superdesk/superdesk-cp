@@ -9,7 +9,7 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import logging
-from flask_babel import _
+from flask_babel import lazy_gettext
 from superdesk import get_resource_service
 from superdesk.errors import StopDuplication
 
@@ -49,7 +49,8 @@ def translate_to_french_language(item, **kwargs):
 
 
 name = 'Translate To French Language'
-label = _('Translate To French Language')
+label = lazy_gettext('Translate To French Language')
 callback = translate_to_french_language
 access_type = 'frontend'
 action_type = 'direct'
+print(label)
