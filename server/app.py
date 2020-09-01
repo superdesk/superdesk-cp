@@ -41,7 +41,8 @@ def get_app(config=None):
 
     app = superdesk_app(config)
 
-    app.config['BABEL_TRANSLATION_DIRECTORIES'] = app.config.get('BABEL_TRANSLATION_DIRECTORIES') + ';' + os.path.join(SUPERDESK_PATH, 'server/translations')
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = app.config.get('BABEL_TRANSLATION_DIRECTORIES') + \
+        ';' + os.path.join(SUPERDESK_PATH, 'server/translations')
 
     return app
 
