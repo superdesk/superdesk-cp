@@ -1,6 +1,4 @@
 
-from time import strftime
-from superdesk.metadata.item import SCHEDULE_SETTINGS
 import cp
 import arrow
 import superdesk
@@ -12,6 +10,7 @@ from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
 from superdesk.media.renditions import get_rendition_file_name
+from superdesk.metadata.item import SCHEDULE_SETTINGS
 from apps.publish.enqueue import get_enqueue_service
 
 from cp.utils import format_maxlength
@@ -253,10 +252,12 @@ class JimiFormatter(Formatter):
         return formatted
 
     def _format_text(self, value):
-        return get_text(value or '', 'html', True).strip()
+        return get_text(self._format_html(value), 'html', True, True).strip()
 
     def _format_html(self, value):
-        return value or ''
+        html = value or ''
+        html = html.replace('<br>', '<br />')
+        return html
 
     def _format_dateline(self, content, dateline):
         if dateline and dateline.get('located'):
