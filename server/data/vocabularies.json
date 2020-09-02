@@ -20658,7 +20658,7 @@
         "display_name": "Subscriber Types",
         "type": "unmanageable",
         "selection_type": "do not show",
-        "init_version": 3,
+        "init_version": 4,
         "items": [
             {
                 "is_active": true,
@@ -20676,6 +20676,10 @@
                     {
                         "name": "NewsML G2",
                         "qcode": "newsmlg2"
+                    },
+                    {
+                        "name": "CP NewsML G2",
+                        "qcode": "cpnewsmlg2"
                     },
                     {
                         "name": "Email",
@@ -20715,6 +20719,10 @@
                     {
                         "name": "NewsML G2",
                         "qcode": "newsmlg2"
+                    },
+                    {
+                        "name": "CP NewsML G2",
+                        "qcode": "cpnewsmlg2"
                     },
                     {
                         "name": "Email",

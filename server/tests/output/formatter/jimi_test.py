@@ -1,23 +1,20 @@
 
 import cp
-import unittest
-import superdesk
-import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
 
 from pytz import UTC
 from datetime import datetime, timedelta
-from unittest.mock import patch
 
 from cp.output.formatter.jimi import JimiFormatter
 from superdesk.metadata.item import SCHEDULE_SETTINGS
 
 from tests.mock import resources, SEQUENCE_NUMBER
 
+from . import BaseXmlFormatterTestCase
 
-class JimiFormatterTestCase(unittest.TestCase):
 
-    subscriber = {}
+class JimiFormatterTestCase(BaseXmlFormatterTestCase):
+
     formatter = JimiFormatter()
     article = {
         '_id': 'id',
@@ -59,22 +56,9 @@ class JimiFormatterTestCase(unittest.TestCase):
         },
     }
 
-    def format(self, updates=None, _all=False):
-        article = self.article.copy()
-        article.update(updates or {})
-        with patch.dict(superdesk.resources, resources):
-            formatted = self.formatter.format(article, self.subscriber)
-            if _all:
-                return formatted
-            seq, xml_str = formatted[0]
-        return xml_str
-
-    def get_root(self, xml):
-        return etree.fromstring(xml.encode(self.formatter.ENCODING))
-
     def format_item(self, updates=None, return_root=False):
         xml = self.format(updates)
-        root = self.get_root(xml)
+        root = self.parse(xml)
         if return_root:
             return root
         return root.find('ContentItem')
@@ -85,7 +69,7 @@ class JimiFormatterTestCase(unittest.TestCase):
     def test_format(self):
         xml = self.format()
         self.assertIn("<?xml version='1.0' encoding='utf-8'?>", xml)
-        root = etree.fromstring(xml.encode(self.formatter.ENCODING))
+        root = self.parse(xml)
 
         self.assertEqual('Publish', root.tag)
         self.assertEqual('false', root.find('Reschedule').text)
@@ -207,7 +191,7 @@ class JimiFormatterTestCase(unittest.TestCase):
 
         self.assertEqual(2, len(output))
 
-        root = etree.fromstring(output[0][1].encode(self.formatter.ENCODING))
+        root = self.parse(output[0][1])
         item = root.find('ContentItem')
 
         self.assertEqual('Print', root.find('Services').text)
