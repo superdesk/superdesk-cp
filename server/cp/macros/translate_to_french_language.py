@@ -53,4 +53,3 @@ label = lazy_gettext('Translate To French Language')
 callback = translate_to_french_language
 access_type = 'frontend'
 action_type = 'direct'
-print(label)
