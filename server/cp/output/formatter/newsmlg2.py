@@ -1,5 +1,4 @@
 
-from superdesk.publish import formatters
 import cp
 
 from superdesk.publish.formatters.newsml_g2_formatter import NewsMLG2Formatter, SubElement
