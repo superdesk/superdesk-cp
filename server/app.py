@@ -14,6 +14,7 @@ import settings
 
 from superdesk.factory import get_app as superdesk_app
 
+SUPERDESK_PATH = os.path.abspath(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
 if os.environ.get('NEW_RELIC_LICENSE_KEY'):
     try:
@@ -39,6 +40,10 @@ def get_app(config=None):
             config.setdefault(key, getattr(settings, key))
 
     app = superdesk_app(config)
+
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = app.config.get('BABEL_TRANSLATION_DIRECTORIES') + \
+        ';' + os.path.join(SUPERDESK_PATH, 'server/translations')
+
     return app
 
 

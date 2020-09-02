@@ -9,6 +9,7 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import logging
+from flask_babel import lazy_gettext
 from superdesk import get_resource_service
 
 
@@ -32,7 +33,7 @@ def translate_to_desk_language(item, **kwargs):
 
 
 name = 'Translate To Desk Language'
-label = name
+label = lazy_gettext('Translate To Desk Language')
 callback = translate_to_desk_language
 access_type = 'backend'
 action_type = 'direct'
