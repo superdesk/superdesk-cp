@@ -175,10 +175,11 @@ VALIDATOR_MEDIA_METADATA = {
 }
 
 
-# saml
-SAML_LABEL = env('SAML_LABEL', 'SSO')
+# saml auth
 USER_EXTERNAL_CREATE = True
 USER_EXTERNAL_DESK = "CP New User"
+USER_EXTERNAL_USERNAME_STRIP_DOMAIN = True
+SAML_LABEL = env('SAML_LABEL', 'SSO')
 SAML_BASE_PATH = env('SAML_PATH', os.path.join(ABS_PATH, 'saml'))
 if SERVER_URL == 'http://localhost:5000/api':
     SAML_PATH = os.path.join(SAML_BASE_PATH, 'localhost')
