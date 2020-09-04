@@ -5,6 +5,7 @@ import superdesk
 import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
 
+from num2words import num2words
 from collections import OrderedDict
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text, get_word_count
@@ -176,10 +177,10 @@ class JimiFormatter(Formatter):
         self._format_index(content, item)
         self._format_category(content, item)
         self._format_genre(content, item)
-        self._format_urgency(content, item.get('urgency'))
+        self._format_urgency(content, item.get('urgency'), item['language'])
         self._format_keyword(content, item.get('keywords'), ', ' if item.get('type') == 'picture' else ',')
         self._format_dateline(content, item.get('dateline'))
-        self._format_writethru(content, item.get('rewrite_sequence'))
+        self._format_writethru(content, item.get('rewrite_sequence'), item['language'])
 
         if item.get('byline'):
             etree.SubElement(content, 'Byline').text = item['byline']
@@ -200,42 +201,30 @@ class JimiFormatter(Formatter):
             return 'THE ASSOCIATED PRESS'
         elif not credit and item.get('source') == 'CP':
             return 'THE CANADIAN PRESS'
-        return credit or ''
+        return credit or item.get('source') or ''
 
-    def _format_urgency(self, content, urgency):
+    def _format_urgency(self, content, urgency, language):
         if urgency is None:
             urgency = 3
         etree.SubElement(content, 'RankingValue').text = str(urgency)
         cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id='urgency')
         items = [item for item in cv['items'] if str(item.get('qcode')) == str(urgency)]
         if items:
-            etree.SubElement(content, 'Ranking').text = items[0]['name']
+            name = _get_name(items[0], language)
+            etree.SubElement(content, 'Ranking').text = name
 
     def _format_keyword(self, content, keywords, glue):
         if keywords:
             etree.SubElement(content, 'Keyword').text = format_maxlength(glue.join(keywords), 150)
 
-    def _format_writethru(self, content, num):
+    def _format_writethru(self, content, num, language):
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)
-
         if not num:
             return
-
-        endings = {
-            1: 'st',
-            2: 'nd',
-            3: 'rd',
-        }
-
-        test_num = num % 100
-
-        if 4 <= test_num <= 20:
-            ending = 'th'
-        else:
-            ending = endings.get(test_num % 10, 'th')
-
-        etree.SubElement(content, 'WritethruNum').text = '{}{}'.format(num, ending)
-        etree.SubElement(content, 'WriteThruType').text = 'Writethru'
+        etree.SubElement(content, 'WritethruNum').text = num2words(
+            num, to='ordinal_num', lang=language.replace('-', '_')
+        ).replace('me', 'ème')  # stick with jimi
+        etree.SubElement(content, 'WriteThruType').text = 'Lead' if 'fr' in language else 'Writethru'
 
     def _format_datetime(self, datetime, rel=False, local=False):
         if not datetime:
@@ -277,40 +266,44 @@ class JimiFormatter(Formatter):
 
     def _format_index(self, content, item):
         SUBJECTS_ID = 'subject_custom'
-        cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id=SUBJECTS_ID)
 
-        codes = [
-            s['qcode'] for s in item.get('subject', [])
+        subject = [
+            s for s in item.get('subject', [])
             if s.get('name') and s.get('scheme') in (None, SUBJECTS_ID)
         ]
 
-        names = self._resolve_names(codes, cv, item.get('language'))
+        names = self._resolve_names(subject, item['language'], SUBJECTS_ID)
 
         if names:
             etree.SubElement(content, 'IndexCode').text = ','.join(names)
         else:
             etree.SubElement(content, 'IndexCode')
 
-    def _resolve_names(self, codes, cv, language):
+    def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
+        cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id=cv_id)
         names = []
-        for code in codes:
-            item = _find_jimi_item(code, cv['items'])
-            if item:
-                name = _get_name(item, language)
-                if name not in names:
-                    names.append(name)
+        if not cv:
+            return names
+        for selected_item in selected_items:
+            item = _find_qcode_item(selected_item['qcode'], cv['items'], jimi_only)
+            name = _get_name(item, language) if item else _get_name(selected_item, language)
+            if name and name not in names:
+                names.append(name)
         return names
 
     def _format_category(self, content, item):
-        try:
-            etree.SubElement(content, 'Category').text = ','.join([cat['name'] for cat in item['anpa_category']])
-        except (KeyError):
-            pass
+        if not item.get('anpa_category'):
+            return
+        names = self._resolve_names(item['anpa_category'], item['language'], 'categories', False)
+        if names:
+            etree.SubElement(content, 'Category').text = ','.join(names)
 
     def _format_genre(self, content, item):
         version_type = etree.SubElement(content, 'VersionType')
         if item.get('genre'):
-            version_type.text = item['genre'][0]['name']
+            names = self._resolve_names(item['genre'], item['language'], 'genre', False)
+            if names:
+                version_type.text = names[0]
 
     def _format_picture_metadata(self, content, item):
         # no idea how to populate these
@@ -475,13 +468,15 @@ def to_datetime(value):
     return value
 
 
-def _find_jimi_item(code, items):
+def _find_qcode_item(code, items, jimi_only=True):
     for item in items:
         if item.get('qcode') == code:
+            if not jimi_only:
+                return item
             if item.get('in_jimi'):
                 return item
             elif item.get('parent'):
-                return _find_jimi_item(item['parent'], items)
+                return _find_qcode_item(item['parent'], items, jimi_only)
             break
 
 
@@ -492,7 +487,12 @@ def _get_name(item, language):
     try:
         return item['translations']['name'][lang]
     except (KeyError, ):
-        return item['name']
+        pass
+    try:
+        return item['translations']['name'][lang.split('-')[0]]
+    except (KeyError, ):
+        pass
+    return item['name']
 
 
 def _is_same_news_cycle(a, b):

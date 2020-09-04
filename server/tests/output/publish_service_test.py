@@ -24,6 +24,7 @@ class CPPublishServiceTestCase(unittest.TestCase):
             item = {
                 'type': 'text',
                 'guid': 'foo',
+                'language': 'en',
                 'rewrite_of': 'bar',
                 'firstcreated': now,
                 'versioncreated': now,
