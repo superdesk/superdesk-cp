@@ -83,4 +83,4 @@ name = 'usd_to_cad'
 label = lazy_gettext('USD to CAD')
 access_type = 'frontend'
 action_type = 'interactive'
-group = 'currency'
+group = lazy_gettext('currency')
