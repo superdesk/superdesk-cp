@@ -18,6 +18,7 @@ class BaseXmlFormatterTestCase(unittest.TestCase):
         self.app = flask.Flask(__name__)
         self.app.config.update({
             'VERSION': 'version',
+            'DEFAULT_LANGUAGE': 'en',
         })
         self.app.app_context().push()
 
