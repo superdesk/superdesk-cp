@@ -156,7 +156,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Source').text = item.get('source')
 
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
-        etree.SubElement(content, 'ContentText').text = self._format_html(item.get('body_html'))
+        etree.SubElement(content, 'ContentText').text = self._format_html(self._format_content(item))
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
 
         if item['type'] == 'text' and item.get('body_html'):
@@ -188,8 +188,10 @@ class JimiFormatter(Formatter):
             self._format_picture_metadata(content, item)
         else:
             etree.SubElement(content, 'EditorNote').text = item.get('ednote')
-            if extra.get('update'):
-                etree.SubElement(content, 'UpdateNote').text = extra['update']
+            if extra.get(cp.UPDATE):
+                etree.SubElement(content, 'UpdateNote').text = extra[cp.UPDATE]
+            if extra.get(cp.CORRECTION):
+                etree.SubElement(content, 'Corrections').text = extra[cp.CORRECTION]
 
         if item.get('associations'):
             self._format_associations(content, item)
@@ -457,6 +459,9 @@ class JimiFormatter(Formatter):
             break
         filename = orig['guid']
         return guid(filename)
+
+    def _format_content(self, item):
+        return item.get('body_html') or ''
 
 
 def get_count_label(count, lang):

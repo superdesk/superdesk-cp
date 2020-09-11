@@ -345,3 +345,11 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
         self.assertEqual('prev-cycle', item.find('FileName').text)
         self.assertEqual('prev-cycle', item.find('SystemSlug').text)
+
+    def test_correction_update(self):
+        item = self.format_item({'extra': {
+            cp.UPDATE: 'update text',
+            cp.CORRECTION: 'correction text',
+        }})
+        self.assertEqual('update text', item.find('UpdateNote').text)
+        self.assertEqual('correction text', item.find('Corrections').text)
