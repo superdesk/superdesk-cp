@@ -15,6 +15,8 @@ CAPTION_WRITER = 'caption_writer'
 PHOTOGRAPHER_CODE = 'photographer_code'
 INFOSOURCE = 'infosource'
 ARCHIVE_SOURCE = 'archive_source'
+UPDATE = 'update'
+CORRECTION = 'correction'
 
 PHOTO_CATEGORIES = 'photo_categories'
 PHOTO_SUPPCATEGORIES = 'photo_supplementalcategories'
