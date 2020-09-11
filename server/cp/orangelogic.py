@@ -77,7 +77,7 @@ class OrangelogicSearchProvider(SearchProvider):
     RENDITIONS_MAP = {
         'original': 'Path_TR1',
         'baseImage': 'Path_TR1',
-        'viewImage': 'Path_TR4',
+        'viewImage': 'Path_TR7',
         'thumbnail': 'Path_TR7',
         'webHigh': 'Path_WebHigh',
     }
