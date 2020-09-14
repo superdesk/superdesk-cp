@@ -1,963 +1,1085 @@
 [{
-        "_id": "Story",
-        "enabled": true,
-        "priority": 0,
-        "created_by": null,
-        "is_used": true,
-        "editor": {
-            "urgency": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 4
-            },
-            "media-gallery": {
-                "required": false,
-                "section": "content",
-                "order": 16
-            },
-            "footer": null,
-            "languages": null,
-            "distribution": {
-                "sdWidth": "half",
-                "required": true,
-                "section": "header",
-                "order": 6
-            },
-            "sms": null,
-            "abstract": null,
-            "ednote": {
-                "sdWidth": "full",
-                "required": false,
-                "order": 8
-            },
-            "anpa_take_key": {
-                "sdWidth": "half",
-                "required": false,
-                "section": "header",
-                "readonly": true,
-                "order": 2
-            },
-            "subject_custom": {
-                "sdWidth": "full",
-                "required": false,
-                "section": "header",
-                "readonly": false,
-                "order": 7
-            },
-            "categories": null,
-            "byline": {
-                "sdWidth": "half",
-                "required": false,
-                "order": 11
-            },
-            "media_description": null,
-            "media_topics": null,
-            "related-articles": null,
-            "headline": {
-                "formatOptions": [],
-                "required": false,
-                "sdWidth": "full",
-                "order": 9
-            },
-            "short_headline": null,
-            "language": null,
-            "place": null,
-            "attachments": null,
-            "geographical_restrictions": null,
-            "regions": null,
-            "genre": {
-                "sdWidth": "half",
-                "required": false,
-                "readonly": false,
-                "order": 3
-            },
-            "sign_off": null,
-            "body_html": {
-                "formatOptions": ["h2", "bold", "link"],
-                "required": true,
-                "editor3": true,
-                "order": 13,
-                "cleanPastedHTML": false
-            },
-            "keywords": null,
-            "update": {
-                "sdWidth": "full",
-                "required": false,
-                "section": "content",
-                "order": 14
-            },
-            "photo_categories": null,
-            "dateline": {
-                "sdWidth": "half",
-                "required": false,
-                "order": 12
-            },
-            "body_footer": null,
-            "slugline": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 1
-            },
-            "usageterms": null,
-            "photographer_code": null,
-            "Filename": null,
-            "feature_media": null,
-            "caption_writer": null,
-            "anpa_category": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 5
-            },
-            "authors": null,
-            "photo_supplementalcategories": null,
-            "destinations": null,
-            "headline_extended": {
-                "required": false,
-                "section": "content",
-                "order": 10
-            },
-            "correction": {
-                "required": false,
-                "section": "content",
-                "order": 15
-            },
-            "priority": null,
-            "company_codes": null
-            },
-            "schema": {
-            "caption_writer": null,
-            "urgency": {
-                "required": true,
-                "type": "integer",
-                "nullable": false
-            },
-            "anpa_category": {
-                "required": true,
-                "type": "list",
-                "nullable": false
-            },
-            "media-gallery": {
-                "required": false,
-                "type": "media",
-                "nullable": true,
-                "enabled": true
-            },
-            "footer": null,
-            "headline_extended": {
-                "required": false,
-                "nullable": true,
-                "maxlength": 85,
-                "minlength": 35,
-                "enabled": true,
-                "type": "text"
-            },
-            "sign_off": null,
-            "body_html": {
-                "required": true,
-                "type": "string",
-                "nullable": false
-            },
-            "usageterms": null,
-            "sms": null,
-            "abstract": null,
-            "ednote": {
-                "required": false,
-                "type": "string",
-                "nullable": true,
-                "maxlength": 1000
-            },
-            "anpa_take_key": {
-                "required": false,
-                "type": "string",
-                "readonly": true,
-                "enabled": true,
-                "nullable": true
-            },
-            "update": {
-                "required": false,
-                "type": "text",
-                "nullable": true,
-                "enabled": true,
-                "maxlength": 500
-            },
-            "company_codes": null,
-            "dateline": {
-                "required": false,
-                "type": "dict",
-                "nullable": true
-            },
-            "attachments": null,
-            "slugline": {
-                "required": true,
-                "type": "string",
-                "nullable": false,
-                "maxlength": 50
-            },
-            "media_description": null,
-            "related-articles": null,
-            "headline": {
-                "required": false,
-                "type": "string",
-                "nullable": true,
-                "minlength": 35,
-                "maxlength": 50
-            },
-            "photographer_code": null,
-            "Filename": null,
-            "byline": {
-                "required": false,
-                "type": "string",
-                "nullable": true,
-                "maxlength": 500
-            },
-            "feature_media": null,
-            "body_footer": null,
-            "subject": {
-                "default": [],
-                "mandatory_in_list": {
-                    "scheme": {
-                        "photo_supplementalcategories": null,
-                        "regions": null,
-                        "subject": null,
-                        "categories": null,
-                        "destinations": null,
-                        "genre": null,
-                        "languages": null,
-                        "media_topics": null,
-                        "distribution": {
-                            "required": true,
-                            "readonly": false
-                        },
-                        "photo_categories": null,
-                        "geographical_restrictions": null
+    "_updated": "2020-09-11T18:38:25+0000",
+    "widgets_config": [{
+        "widget_id": "related-item",
+        "is_displayed": true
+    }],
+    "created_by": null,
+    "label": "Story",
+    "schema": {
+        "subject": {
+            "required": false,
+            "nullable": true,
+            "mandatory_in_list": {
+                "scheme": {
+                    "photo_categories": null,
+                    "subject": null,
+                    "categories": null,
+                    "languages": null,
+                    "distribution": {
+                        "required": true,
+                        "readonly": false
+                    },
+                    "regions": null,
+                    "photo_supplementalcategories": null,
+                    "geographical_restrictions": null,
+                    "destinations": {
+                        "required": true,
+                        "readonly": false
                     }
-                },
-                "required": false,
-                "nullable": true,
-                "schema": {
-                    "schema": {
-                        "parent": {
-                            "nullable": true
-                        },
-                        "name": {},
-                        "qcode": {},
-                        "scheme": {
-                            "required": true,
-                            "type": "string",
-                            "nullable": true,
-                            "allowed": ["genre", "subject_custom", "distribution"]
-                        },
-                        "service": {
-                            "nullable": true
-                        }
-                    },
-                    "type": "dict"
-                },
-                "type": "list"
+                }
             },
-            "language": null,
-            "authors": null,
-            "genre": {
-                "required": false,
-                "type": "list",
-                "nullable": true
-            },
-            "place": null,
-            "short_headline": null,
-            "correction": {
-                "required": false,
-                "type": "text",
-                "nullable": true,
-                "enabled": true,
-                "maxlength": 500
-            },
-            "priority": null,
-            "keywords": null
-        },
-        "label": "Story",
-        "init_version": 4,
-        "widgets_config": [{
-            "widget_id": "related-item",
-            "is_displayed": true
-        }]
-    },
-    {
-        "_id": "autorouting",
-        "enabled": true,
-        "priority": 0,
-        "created_by": null,
-        "is_used": true,
-        "editor": {
-            "urgency": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 4
-            },
-            "media-gallery": {
-                "required": false,
-                "section": "content",
-                "order": 16
-            },
-            "footer": null,
-            "languages": null,
-            "distribution": {
-                "sdWidth": "half",
-                "required": true,
-                "section": "header",
-                "order": 6
-            },
-            "sms": null,
-            "abstract": null,
-            "ednote": {
-                "sdWidth": "full",
-                "required": false,
-                "order": 8
-            },
-            "anpa_take_key": {
-                "sdWidth": "half",
-                "required": false,
-                "section": "header",
-                "readonly": true,
-                "order": 2
-            },
-            "subject_custom": {
-                "sdWidth": "full",
-                "required": false,
-                "section": "header",
-                "readonly": false,
-                "order": 7
-            },
-            "categories": null,
-            "byline": {
-                "sdWidth": "half",
-                "required": false,
-                "order": 11
-            },
-            "media_description": null,
-            "media_topics": null,
-            "related-articles": null,
-            "headline": {
-                "formatOptions": [],
-                "required": false,
-                "sdWidth": "full",
-                "order": 9
-            },
-            "short_headline": null,
-            "language": null,
-            "place": null,
-            "attachments": null,
-            "geographical_restrictions": null,
-            "regions": null,
-            "genre": {
-                "sdWidth": "half",
-                "required": false,
-                "readonly": false,
-                "order": 3
-            },
-            "sign_off": null,
-            "body_html": {
-                "formatOptions": ["h2", "bold", "link"],
-                "required": true,
-                "editor3": true,
-                "order": 13,
-                "cleanPastedHTML": false
-            },
-            "keywords": null,
-            "update": {
-                "sdWidth": "full",
-                "required": false,
-                "section": "content",
-                "order": 14
-            },
-            "photo_categories": null,
-            "dateline": {
-                "sdWidth": "half",
-                "required": false,
-                "order": 12
-            },
-            "body_footer": null,
-            "slugline": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 1
-            },
-            "usageterms": null,
-            "photographer_code": null,
-            "Filename": null,
-            "feature_media": null,
-            "caption_writer": null,
-            "anpa_category": {
-                "sdWidth": "half",
-                "required": true,
-                "order": 5
-            },
-            "authors": null,
-            "photo_supplementalcategories": null,
-            "destinations": null,
-            "headline_extended": {
-                "required": false,
-                "section": "content",
-                "order": 10
-            },
-            "correction": {
-                "required": false,
-                "section": "content",
-                "order": 15
-            },
-            "priority": null,
-            "company_codes": null
-            },
+            "type": "list",
             "schema": {
-            "caption_writer": null,
-            "urgency": {
-                "required": true,
-                "type": "integer",
-                "nullable": false
-            },
-            "anpa_category": {
-                "required": true,
-                "type": "list",
-                "nullable": false
-            },
-            "media-gallery": {
-                "required": false,
-                "type": "media",
-                "nullable": true,
-                "enabled": true
-            },
-            "footer": null,
-            "headline_extended": {
-                "required": false,
-                "nullable": true,
-                "enabled": true,
-                "type": "text"
-            },
-            "sign_off": null,
-            "body_html": {
-                "required": true,
-                "type": "string",
-                "nullable": false
-            },
-            "usageterms": null,
-            "sms": null,
-            "abstract": null,
-            "ednote": {
-                "required": false,
-                "type": "string",
-                "nullable": true,
-                "maxlength": 1000
-            },
-            "anpa_take_key": {
-                "required": false,
-                "type": "string",
-                "readonly": true,
-                "enabled": true,
-                "nullable": true
-            },
-            "update": {
-                "required": false,
-                "type": "text",
-                "nullable": true,
-                "enabled": true,
-                "maxlength": 500
-            },
-            "company_codes": null,
-            "dateline": {
-                "required": false,
-                "type": "dict",
-                "nullable": true
-            },
-            "attachments": null,
-            "slugline": {
-                "required": true,
-                "type": "string",
-                "nullable": false
-            },
-            "media_description": null,
-            "related-articles": null,
-            "headline": {
-                "required": false,
-                "type": "string",
-                "nullable": true
-            },
-            "photographer_code": null,
-            "Filename": null,
-            "byline": {
-                "required": false,
-                "type": "string",
-                "nullable": true,
-                "maxlength": 500
-            },
-            "feature_media": null,
-            "body_footer": null,
-            "subject": {
-                "default": [],
-                "mandatory_in_list": {
+                "schema": {
+                    "parent": {
+                        "nullable": true
+                    },
+                    "name": {},
+                    "service": {
+                        "nullable": true
+                    },
                     "scheme": {
-                        "photo_supplementalcategories": null,
-                        "regions": null,
-                        "subject": null,
-                        "categories": null,
-                        "destinations": null,
-                        "genre": null,
-                        "languages": null,
-                        "media_topics": null,
-                        "distribution": {
-                            "required": true,
-                            "readonly": false
-                        },
-                        "photo_categories": null,
-                        "geographical_restrictions": null
-                    }
-                },
-                "required": false,
-                "nullable": true,
-                "schema": {
-                    "schema": {
-                        "parent": {
-                            "nullable": true
-                        },
-                        "name": {},
-                        "qcode": {},
-                        "scheme": {
-                            "required": true,
-                            "type": "string",
-                            "nullable": true,
-                            "allowed": ["genre", "subject_custom", "distribution"]
-                        },
-                        "service": {
-                            "nullable": true
-                        }
+                        "required": true,
+                        "nullable": true,
+                        "allowed": ["subject_custom", "distribution", "destinations"],
+                        "type": "string"
                     },
-                    "type": "dict"
+                    "qcode": {}
                 },
-                "type": "list"
-            },
-            "language": null,
-            "authors": null,
-            "genre": {
-                "required": false,
-                "type": "list",
-                "nullable": true
-            },
-            "place": null,
-            "short_headline": null,
-            "correction": {
-                "required": false,
-                "type": "text",
-                "nullable": true,
-                "enabled": true,
-                "maxlength": 500
-            },
-            "priority": null,
-            "keywords": null
-        },
-        "label": "Autorouting",
-        "init_version": 4,
-        "widgets_config": [{
-            "widget_id": "related-item",
-            "is_displayed": true
-        }]
-    },
-    {
-        "_id": "picture",
-        "label": "Picture",
-        "priority": 0,
-        "enabled": false,
-        "is_used": true,
-        "editor": {
-            "slugline": {
-                "order": 5,
-                "sdWidth": "full",
-                "required": false,
-                "section": "content"
-            },
-            "urgency": {
-                "order": 4,
-                "sdWidth": "half",
-                "required": false,
-                "displayOnMediaEditor": false
-            },
-            "ednote": {
-                "order": 4,
-                "sdWidth": "full",
-                "required": false
-            },
-            "headline": {
-                "order": 6,
-                "formatOptions": [],
-                "required": false
-            },
-            "byline": {
-                "order": 7,
-                "required": false
-            },
-            "photo_categories": {
-                "order": 1,
-                "section": "header",
-                "sdWidth": "half",
-                "required": false
-            },
-            "photo_supplementalcategories": {
-                "order": 2,
-                "section": "header",
-                "sdWidth": "half",
-                "required": false
-            },
-            "destinations": {
-                "order": 3,
-                "section": "header",
-                "sdWidth": "half",
-                "required": false
-            },
-            "photographer_code": {
-                "order": 8,
-                "section": "content",
-                "required": false
-            },
-            "caption_writer": {
-                "order": 9,
-                "section": "content",
-                "required": false
-            },
-            "description_text": {
-                "order": 10,
-                "section": "content",
-                "required": true
-            },
-            "copyrightnotice": {
-                "order": 11,
-                "sdWidth": "full",
-                "textarea": true,
-                "section": "content"
-            },
-            "usageterms": null,
-            "dateline": {
-                "required": false,
-                "order": 12,
-                "sdWidth": "half",
-                "section": "content"
-            }
-        },
-        "schema": {
-            "byline": {
-                "type": "string",
-                "required": false,
-                "nullable": true
-            },
-            "ednote": {
-                "type": "string",
-                "required": false,
-                "nullable": true
-            },
-            "headline": {
-                "type": "string",
-                "required": false,
-                "maxlength": 50,
-                "nullable": true
-            },
-            "slugline": {
-                "type": "string",
-                "required": false,
-                "maxlength": 50,
-                "enabled": true,
-                "nullable": true
-            },
-            "urgency": {
-                "type": "integer",
-                "required": false,
-                "nullable": true
-            },
-            "photographer_code": {
-                "type": "text",
-                "required": false,
-                "enabled": true,
-                "nullable": true
-            },
-            "caption_writer": {
-                "type": "text",
-                "required": false,
-                "enabled": true,
-                "nullable": true
-            },
-            "subject": {
-                "mandatory_in_list": {
-                    "scheme": {}
-                },
-                "schema": {
-                    "schema": {
-                        "name": {},
-                        "qcode": {},
-                        "scheme": {
-                            "type": "string",
-                            "required": true,
-                            "nullable": true,
-                            "allowed": [
-                                "photo_categories",
-                                "photo_supplementalcategories",
-                                "destinations"
-                            ]
-                        },
-                        "service": {
-                            "nullable": true
-                        },
-                        "parent": {
-                            "nullable": true
-                        }
-                    },
-                    "type": "dict"
-                },
-                "type": "list",
-                "required": false,
-                "default": []
-            },
-            "description_text": {
-                "type": "string",
-                "nullable": true,
-                "required": true
-            },
-            "copyrightnotice": {
-                "type": "string",
-                "enabled": true,
-                "nullable": true,
-                "required": false
-            },
-            "usageterms": null,
-            "dateline": {
-                "enabled": true,
-                "required": false,
-                "nullable": true,
                 "type": "dict"
-            }
-        }
-    },{
-        "_id": "broadcast-story",
-        "created_by": null,
-        "label": "Broadcast Story",
-        "description": "English Broadcast Story.",
-        "priority": 0,
-        "enabled": true,
-        "is_used": false,
-        "schema": {
-            "correction": null,
-            "feature_media": null,
-            "genre": {
-                "required": false,
-                "type": "list",
-                "enabled": true,
-                "nullable": true
             },
-            "update": {
-                "required": false,
-                "type": "text",
-                "enabled": true,
-                "nullable": true
-            },
-            "anpa_take_key": null,
-            "authors": null,
-            "related-articles": null,
-            "media-gallery": null,
-            "anpa_category": {
-                "required": true,
-                "type": "list",
-                "enabled": true,
-                "nullable": false
-            },
-            "media_description": null,
-            "slugline": {
-                "required": true,
-                "type": "string",
-                "maxlength": 50,
-                "nullable": false
-            },
-            "byline": null,
-            "urgency": {
-                "required": true,
-                "type": "integer",
-                "nullable": false
-            },
-            "headline_extended": null,
-            "headline": null,
-            "caption_writer": null,
-            "body_footer": null,
-            "attachments": null,
-            "photographer_code": null,
-            "dateline": {
-                "required": false,
-                "type": "dict",
-                "nullable": true
-            },
-            "subject": {
-                "type": "list",
-                "mandatory_in_list": {
-                    "scheme": {
-                        "destinations": null,
-                        "photo_categories": null,
-                        "categories": null,
-                        "subject": null,
-                        "regions": null,
-                        "media_topics": null,
-                        "photo_supplementalcategories": null,
-                        "geographical_restrictions": null,
-                        "languages": null,
-                        "distribution": {
-                            "required": true,
-                            "readonly": false
-                        }
-                    }
-                },
-                "default": [],
-                "required": false,
-                "schema": {
-                    "type": "dict",
-                    "schema": {
-                        "name": {},
-                        "scheme": {
-                            "required": true,
-                            "type": "string",
-                            "allowed": ["subject_custom", "distribution"],
-                            "nullable": true
-                        },
-                        "qcode": {},
-                        "service": {
-                            "nullable": true
-                        },
-                        "parent": {
-                            "nullable": true
-                        }
-                    }
-                },
-                "nullable": true
-            },
-            "place": null,
-            "body_html": {
-                "required": false,
-                "type": "string",
-                "nullable": true
-            },
-            "sms": null,
-            "ednote": {
-                "required": false,
-                "type": "string",
-                "enabled": true,
-                "nullable": true
-            },
-            "company_codes": null,
-            "language": null,
-            "usageterms": null,
-            "Filename": null,
-            "priority": null,
-            "sign_off": null,
-            "abstract": null,
-            "footer": null,
-            "keywords": null,
-            "short_headline": null
+            "default": []
         },
-        "editor": {
-            "geographical_restrictions": null,
-            "byline": null,
-            "anpa_take_key": null,
-            "abstract": null,
-            "media-gallery": null,
-            "subject_custom": {
-                "field_name": "Index",
-                "sdWidth": "full",
-                "required": false,
-                "enabled": true,
-                "readonly": false,
-                "order": 6
-            },
-            "slugline": {
-                "required": true,
-                "enabled": true,
-                "sdWidth": "half",
-                "order": 1
-            },
-            "sign_off": null,
-            "urgency": {
-                "required": true,
-                "enabled": true,
-                "sdWidth": "half",
-                "order": 3
-            },
-            "headline": null,
-            "attachments": null,
-            "dateline": {
-                "required": false,
-                "enabled": true,
-                "sdWidth": "half",
-                "order": 8
-            },
-            "photo_supplementalcategories": null,
-            "sms": null,
-            "authors": null,
-            "usageterms": null,
-            "priority": null,
-            "media_topics": null,
-            "body_html": {
-                "cleanPastedHTML": false,
-                "editor3": true,
-                "required": false,
-                "enabled": true,
-                "formatOptions": ["h2", "bold", "link"],
-                "order": 9
-            },
-            "destinations": null,
-            "languages": null,
-            "footer": null,
-            "short_headline": null,
-            "correction": null,
-            "genre": {
-                "required": false,
-                "enabled": true,
-                "section": "header",
-                "sdWidth": "half",
-                "order": 2
-            },
-            "update": {
-                "required": false,
-                "enabled": true,
-                "section": "content",
-                "field_name": "Update",
-                "order": 10
-            },
-            "anpa_category": {
-                "required": true,
-                "enabled": true,
-                "section": "header",
-                "sdWidth": "half",
-                "order": 5
-            },
-            "media_description": null,
-            "photo_categories": null,
-            "feature_media": null,
-            "headline_extended": null,
-            "language": null,
-            "caption_writer": null,
-            "body_footer": null,
-            "distribution": {
-                "field_name": "Services",
-                "sdWidth": "half",
-                "required": true,
-                "enabled": true,
-                "section": "header",
-                "order": 4
-            },
-            "photographer_code": null,
-            "categories": null,
-            "related-articles": null,
-            "company_codes": null,
-            "Filename": null,
-            "ednote": {
-                "required": false,
-                "enabled": true,
-                "section": "header",
-                "sdWidth": "full",
-                "order": 7
-            },
-            "place": null,
-            "regions": null,
-            "keywords": null
+        "sign_off": null,
+        "media_description": null,
+        "correction": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text",
+            "maxlength": 500
+        },
+        "Filename": null,
+        "headline_extended": {
+            "required": false,
+            "nullable": true,
+            "type": "text",
+            "minlength": 35,
+            "enabled": true,
+            "maxlength": 85
+        },
+        "authors": null,
+        "attachments": null,
+        "dateline": {
+            "required": false,
+            "nullable": true,
+            "type": "dict"
+        },
+        "body_footer": null,
+        "abstract": null,
+        "caption_writer": null,
+        "byline": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "maxlength": 500
+        },
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "required": true,
+            "nullable": false,
+            "type": "list"
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "maxlength": 1000
+        },
+        "media-gallery": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "media"
+        },
+        "genre": {
+            "required": false,
+            "nullable": true,
+            "type": "list"
+        },
+        "sms": null,
+        "priority": null,
+        "feature_media": null,
+        "anpa_take_key": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "string",
+            "readonly": true
+        },
+        "update": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text",
+            "maxlength": 500
+        },
+        "headline": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "minlength": 35,
+            "maxlength": 50
+        },
+        "related-articles": null,
+        "language": null,
+        "footer": null,
+        "body_html": {
+            "required": true,
+            "nullable": false,
+            "type": "string"
+        },
+        "photographer_code": null,
+        "slugline": {
+            "required": true,
+            "nullable": false,
+            "type": "string",
+            "maxlength": 50
+        },
+        "urgency": {
+            "required": true,
+            "nullable": false,
+            "type": "integer"
+        },
+        "company_codes": null
+    },
+    "priority": 0,
+    "enabled": true,
+    "_created": "2020-07-13T13:42:48+0000",
+    "updated_by": "5f27fd0982a61912ebbfb217",
+    "_id": "Story",
+    "is_used": true,
+    "_links": {
+        "related": {
+            "updated_by": {
+                "href": "users/5f27fd0982a61912ebbfb217",
+                "title": "User"
+            }
+        },
+        "self": {
+            "href": "content_types/Story",
+            "title": "Content_type"
         }
-    }
-]
+    },
+    "editor": {
+        "abstract": null,
+        "priority": null,
+        "sign_off": null,
+        "media_description": null,
+        "slugline": {
+            "required": true,
+            "order": 1,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "geographical_restrictions": null,
+        "feature_media": null,
+        "headline_extended": {
+            "required": false,
+            "order": 11,
+            "field_name": "Extended headline",
+            "enabled": true,
+            "section": "content"
+        },
+        "authors": null,
+        "categories": null,
+        "attachments": null,
+        "update": {
+            "required": false,
+            "section": "content",
+            "order": 15,
+            "sdWidth": "full",
+            "enabled": true,
+            "field_name": "Update"
+        },
+        "body_footer": null,
+        "photo_categories": null,
+        "Filename": null,
+        "caption_writer": null,
+        "byline": {
+            "required": false,
+            "order": 12,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "required": true,
+            "order": 5,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "order": 9,
+            "sdWidth": "full",
+            "enabled": true
+        },
+        "media-gallery": {
+            "required": false,
+            "order": 17,
+            "field_name": "Media gallery",
+            "enabled": true,
+            "section": "content"
+        },
+        "photo_supplementalcategories": null,
+        "sms": null,
+        "languages": null,
+        "regions": null,
+        "genre": {
+            "required": false,
+            "order": 3,
+            "sdWidth": "half",
+            "enabled": true,
+            "readonly": false
+        },
+        "anpa_take_key": {
+            "required": false,
+            "section": "header",
+            "order": 2,
+            "sdWidth": "half",
+            "enabled": true,
+            "readonly": true
+        },
+        "subject_custom": {
+            "required": false,
+            "field_name": "Index",
+            "section": "header",
+            "order": 7,
+            "sdWidth": "full",
+            "enabled": true,
+            "readonly": false
+        },
+        "destinations": {
+            "required": true,
+            "field_name": "Destination",
+            "order": 8,
+            "sdWidth": "full",
+            "enabled": true,
+            "section": "header"
+        },
+        "headline": {
+            "required": false,
+            "order": 10,
+            "sdWidth": "full",
+            "enabled": true,
+            "formatOptions": []
+        },
+        "related-articles": null,
+        "dateline": {
+            "required": false,
+            "order": 13,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "language": null,
+        "distribution": {
+            "required": true,
+            "section": "header",
+            "order": 6,
+            "sdWidth": "half",
+            "enabled": true,
+            "field_name": "Services"
+        },
+        "footer": null,
+        "body_html": {
+            "required": true,
+            "editor3": true,
+            "order": 14,
+            "enabled": true,
+            "cleanPastedHTML": false,
+            "formatOptions": ["h2", "bold", "link"]
+        },
+        "photographer_code": null,
+        "correction": {
+            "required": false,
+            "order": 16,
+            "field_name": "Correction",
+            "enabled": true,
+            "section": "content"
+        },
+        "urgency": {
+            "required": true,
+            "order": 4,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "company_codes": null
+    },
+    "_etag": "c3373b693d0889b1d4f4d762a85701589010708a"
+}, {
+    "_updated": "2020-08-03T13:07:20+0000",
+    "label": "Picture",
+    "created_by": null,
+    "priority": 0,
+    "enabled": false,
+    "_created": "2020-08-03T13:07:20+0000",
+    "updated_by": null,
+    "_id": "picture",
+    "is_used": true,
+    "schema": {
+        "subject": {
+            "required": false,
+            "schema": {
+                "schema": {
+                    "parent": {
+                        "nullable": true
+                    },
+                    "name": {},
+                    "scheme": {
+                        "required": true,
+                        "nullable": true,
+                        "allowed": ["photo_categories", "photo_supplementalcategories", "destinations"],
+                        "type": "string"
+                    },
+                    "qcode": {},
+                    "service": {
+                        "nullable": true
+                    }
+                },
+                "type": "dict"
+            },
+            "mandatory_in_list": {
+                "scheme": {}
+            },
+            "type": "list",
+            "default": []
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "nullable": true,
+            "type": "string"
+        },
+        "description_text": {
+            "required": true,
+            "nullable": true,
+            "type": "string"
+        },
+        "slugline": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "string",
+            "maxlength": 50
+        },
+        "dateline": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "dict"
+        },
+        "headline": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "maxlength": 50
+        },
+        "copyrightnotice": {
+            "nullable": true,
+            "required": false,
+            "enabled": true,
+            "type": "string"
+        },
+        "byline": {
+            "required": false,
+            "nullable": true,
+            "type": "string"
+        },
+        "photographer_code": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "caption_writer": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "urgency": {
+            "required": false,
+            "nullable": true,
+            "type": "integer"
+        }
+    },
+    "_links": {
+        "self": {
+            "href": "content_types/picture",
+            "title": "Content_type"
+        }
+    },
+    "editor": {
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "order": 4,
+            "sdWidth": "full"
+        },
+        "photo_categories": {
+            "required": false,
+            "order": 1,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "photo_supplementalcategories": {
+            "required": false,
+            "order": 2,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "photographer_code": {
+            "required": false,
+            "order": 8,
+            "section": "content"
+        },
+        "slugline": {
+            "required": false,
+            "order": 5,
+            "sdWidth": "full",
+            "section": "content"
+        },
+        "dateline": {
+            "required": false,
+            "order": 12,
+            "sdWidth": "half",
+            "section": "content"
+        },
+        "destinations": {
+            "required": false,
+            "order": 3,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "headline": {
+            "required": false,
+            "order": 6,
+            "formatOptions": []
+        },
+        "copyrightnotice": {
+            "order": 11,
+            "sdWidth": "full",
+            "section": "content",
+            "textarea": true
+        },
+        "urgency": {
+            "required": false,
+            "order": 4,
+            "sdWidth": "half",
+            "displayOnMediaEditor": false
+        },
+        "description_text": {
+            "required": true,
+            "order": 10,
+            "section": "content"
+        },
+        "caption_writer": {
+            "required": false,
+            "order": 9,
+            "section": "content"
+        },
+        "byline": {
+            "required": false,
+            "order": 7
+        }
+    },
+    "_etag": "init"
+}, {
+    "_updated": "2020-09-11T18:40:26+0000",
+    "widgets_config": [{
+        "widget_id": "related-item",
+        "is_displayed": true
+    }],
+    "enabled": true,
+    "label": "Autorouting",
+    "_id": "autorouting",
+    "priority": 0,
+    "created_by": null,
+    "_created": "2020-08-14T13:19:04+0000",
+    "updated_by": "5f27fd0982a61912ebbfb217",
+    "schema": {
+        "subject": {
+            "required": false,
+            "nullable": true,
+            "mandatory_in_list": {
+                "scheme": {
+                    "photo_categories": null,
+                    "subject": null,
+                    "categories": null,
+                    "languages": null,
+                    "distribution": {
+                        "required": true,
+                        "readonly": false
+                    },
+                    "regions": null,
+                    "photo_supplementalcategories": null,
+                    "geographical_restrictions": null,
+                    "destinations": null
+                }
+            },
+            "type": "list",
+            "schema": {
+                "schema": {
+                    "parent": {
+                        "nullable": true
+                    },
+                    "name": {},
+                    "service": {
+                        "nullable": true
+                    },
+                    "scheme": {
+                        "required": true,
+                        "nullable": true,
+                        "allowed": ["subject_custom", "distribution", "destinations"],
+                        "type": "string"
+                    },
+                    "qcode": {}
+                },
+                "type": "dict"
+            },
+            "default": []
+        },
+        "sign_off": null,
+        "media_description": null,
+        "correction": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text",
+            "maxlength": 500
+        },
+        "Filename": null,
+        "headline_extended": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "authors": null,
+        "attachments": null,
+        "dateline": {
+            "required": false,
+            "nullable": true,
+            "type": "dict"
+        },
+        "body_footer": null,
+        "abstract": null,
+        "caption_writer": null,
+        "byline": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "maxlength": 500
+        },
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "required": true,
+            "nullable": false,
+            "type": "list"
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "nullable": true,
+            "type": "string",
+            "maxlength": 1000
+        },
+        "media-gallery": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "media"
+        },
+        "genre": {
+            "required": false,
+            "nullable": true,
+            "type": "list"
+        },
+        "sms": null,
+        "priority": null,
+        "feature_media": null,
+        "anpa_take_key": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "string",
+            "readonly": true
+        },
+        "update": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text",
+            "maxlength": 500
+        },
+        "headline": {
+            "required": false,
+            "nullable": true,
+            "type": "string"
+        },
+        "related-articles": null,
+        "language": null,
+        "footer": null,
+        "body_html": {
+            "required": true,
+            "nullable": false,
+            "type": "string"
+        },
+        "photographer_code": null,
+        "slugline": {
+            "required": true,
+            "nullable": false,
+            "type": "string"
+        },
+        "urgency": {
+            "required": true,
+            "nullable": false,
+            "type": "integer"
+        },
+        "company_codes": null
+    },
+    "is_used": true,
+    "_links": {
+        "related": {
+            "updated_by": {
+                "href": "users/5f27fd0982a61912ebbfb217",
+                "title": "User"
+            }
+        },
+        "self": {
+            "href": "content_types/autorouting",
+            "title": "Content_type"
+        }
+    },
+    "editor": {
+        "abstract": null,
+        "priority": null,
+        "sign_off": null,
+        "media_description": null,
+        "slugline": {
+            "required": true,
+            "order": 1,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "geographical_restrictions": null,
+        "feature_media": null,
+        "headline_extended": {
+            "required": false,
+            "order": 11,
+            "field_name": "Extended headline",
+            "enabled": true,
+            "section": "content"
+        },
+        "authors": null,
+        "categories": null,
+        "attachments": null,
+        "update": {
+            "required": false,
+            "section": "content",
+            "order": 15,
+            "sdWidth": "full",
+            "enabled": true,
+            "field_name": "Update"
+        },
+        "body_footer": null,
+        "photo_categories": null,
+        "Filename": null,
+        "caption_writer": null,
+        "byline": {
+            "required": false,
+            "order": 12,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "required": true,
+            "order": 5,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "order": 9,
+            "sdWidth": "full",
+            "enabled": true
+        },
+        "media-gallery": {
+            "required": false,
+            "order": 17,
+            "field_name": "Media gallery",
+            "enabled": true,
+            "section": "content"
+        },
+        "photo_supplementalcategories": null,
+        "sms": null,
+        "languages": null,
+        "regions": null,
+        "genre": {
+            "required": false,
+            "order": 3,
+            "sdWidth": "half",
+            "enabled": true,
+            "readonly": false
+        },
+        "anpa_take_key": {
+            "required": false,
+            "section": "header",
+            "order": 2,
+            "sdWidth": "half",
+            "enabled": true,
+            "readonly": true
+        },
+        "subject_custom": {
+            "required": false,
+            "field_name": "Index",
+            "section": "header",
+            "order": 7,
+            "sdWidth": "full",
+            "enabled": true,
+            "readonly": false
+        },
+        "destinations": {
+            "required": false,
+            "order": 8,
+            "field_name": "Destination",
+            "enabled": true,
+            "section": "header"
+        },
+        "headline": {
+            "required": false,
+            "order": 10,
+            "sdWidth": "full",
+            "enabled": true,
+            "formatOptions": []
+        },
+        "related-articles": null,
+        "dateline": {
+            "required": false,
+            "order": 13,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "language": null,
+        "distribution": {
+            "required": true,
+            "section": "header",
+            "order": 6,
+            "sdWidth": "half",
+            "enabled": true,
+            "field_name": "Services"
+        },
+        "footer": null,
+        "body_html": {
+            "required": true,
+            "editor3": true,
+            "order": 14,
+            "enabled": true,
+            "cleanPastedHTML": false,
+            "formatOptions": ["h2", "bold", "link"]
+        },
+        "photographer_code": null,
+        "correction": {
+            "required": false,
+            "order": 16,
+            "field_name": "Correction",
+            "enabled": true,
+            "section": "content"
+        },
+        "urgency": {
+            "required": true,
+            "order": 4,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "company_codes": null
+    },
+    "_etag": "82a17cb54e5f83949737eaad51bf6638a54769ab"
+}, {
+    "_updated": "2020-09-09T12:29:27+0000",
+    "widgets_config": [{
+        "widget_id": "comments",
+        "is_displayed": false
+    }, {
+        "widget_id": "inline-comments",
+        "is_displayed": false
+    }, {
+        "widget_id": "suggestions",
+        "is_displayed": false
+    }, {
+        "widget_id": "packages",
+        "is_displayed": false
+    }, {
+        "widget_id": "attachments",
+        "is_displayed": false
+    }],
+    "label": "Broadcast Story",
+    "created_by": null,
+    "priority": 0,
+    "_id": "broadcast-story",
+    "enabled": true,
+    "_created": "2020-09-03T17:55:05+0000",
+    "description": "English Broadcast Story.",
+    "updated_by": "5f2448584be6f868d03d9a38",
+    "schema": {
+        "subject": {
+            "required": false,
+            "nullable": true,
+            "mandatory_in_list": {
+                "scheme": {
+                    "photo_categories": null,
+                    "subject": null,
+                    "categories": null,
+                    "languages": null,
+                    "distribution": {
+                        "required": true,
+                        "readonly": false
+                    },
+                    "regions": null,
+                    "photo_supplementalcategories": null,
+                    "geographical_restrictions": null,
+                    "destinations": {
+                        "required": true,
+                        "readonly": false
+                    }
+                }
+            },
+            "type": "list",
+            "schema": {
+                "schema": {
+                    "parent": {
+                        "nullable": true
+                    },
+                    "name": {},
+                    "scheme": {
+                        "nullable": true,
+                        "required": true,
+                        "allowed": ["destinations", "subject_custom", "distribution"],
+                        "type": "string"
+                    },
+                    "qcode": {},
+                    "service": {
+                        "nullable": true
+                    }
+                },
+                "type": "dict"
+            },
+            "default": []
+        },
+        "sign_off": null,
+        "body_html": {
+            "nullable": true,
+            "required": false,
+            "type": "string"
+        },
+        "media_description": null,
+        "slugline": {
+            "nullable": false,
+            "required": true,
+            "type": "string",
+            "maxlength": 50
+        },
+        "media-gallery": null,
+        "headline_extended": null,
+        "authors": null,
+        "related-articles": null,
+        "attachments": null,
+        "dateline": {
+            "nullable": true,
+            "required": false,
+            "type": "dict"
+        },
+        "body_footer": null,
+        "abstract": null,
+        "caption_writer": null,
+        "byline": null,
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "nullable": false,
+            "required": true,
+            "enabled": true,
+            "type": "list"
+        },
+        "usageterms": null,
+        "ednote": {
+            "nullable": true,
+            "required": false,
+            "enabled": true,
+            "type": "string"
+        },
+        "feature_media": null,
+        "photographer_code": null,
+        "priority": null,
+        "anpa_take_key": null,
+        "update": {
+            "nullable": true,
+            "required": false,
+            "enabled": true,
+            "type": "text"
+        },
+        "headline": null,
+        "Filename": null,
+        "urgency": {
+            "nullable": false,
+            "required": true,
+            "type": "integer"
+        },
+        "footer": null,
+        "genre": {
+            "nullable": true,
+            "required": false,
+            "enabled": true,
+            "type": "list"
+        },
+        "sms": null,
+        "correction": null,
+        "language": null,
+        "company_codes": null
+    },
+    "is_used": false,
+    "_links": {
+        "related": {
+            "updated_by": {
+                "href": "users/5f2448584be6f868d03d9a38",
+                "title": "User"
+            }
+        },
+        "self": {
+            "href": "content_types/broadcast-story",
+            "title": "Content_type"
+        }
+    },
+    "editor": {
+        "Filename": null,
+        "sign_off": null,
+        "body_html": {
+            "required": false,
+            "editor3": true,
+            "order": 10,
+            "enabled": true,
+            "cleanPastedHTML": false,
+            "formatOptions": ["h2", "bold", "link"]
+        },
+        "media_description": null,
+        "correction": null,
+        "geographical_restrictions": null,
+        "media-gallery": null,
+        "headline_extended": null,
+        "usageterms": null,
+        "photo_categories": null,
+        "categories": null,
+        "attachments": null,
+        "subject_custom": {
+            "required": false,
+            "field_name": "Index",
+            "order": 6,
+            "sdWidth": "full",
+            "enabled": true,
+            "readonly": false
+        },
+        "body_footer": null,
+        "abstract": null,
+        "destinations": {
+            "required": true,
+            "section": "header",
+            "order": 7,
+            "sdWidth": "full",
+            "enabled": true,
+            "field_name": "Destination"
+        },
+        "byline": null,
+        "keywords": null,
+        "place": null,
+        "anpa_category": {
+            "required": true,
+            "order": 5,
+            "sdWidth": "half",
+            "enabled": true,
+            "section": "header"
+        },
+        "ednote": {
+            "required": false,
+            "order": 8,
+            "sdWidth": "full",
+            "enabled": true,
+            "section": "header"
+        },
+        "languages": null,
+        "feature_media": null,
+        "photo_supplementalcategories": null,
+        "photographer_code": null,
+        "priority": null,
+        "regions": null,
+        "anpa_take_key": null,
+        "update": {
+            "required": false,
+            "order": 11,
+            "field_name": "Update",
+            "enabled": true,
+            "section": "content"
+        },
+        "caption_writer": null,
+        "authors": null,
+        "headline": null,
+        "related-articles": null,
+        "dateline": {
+            "required": false,
+            "order": 9,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "urgency": {
+            "required": true,
+            "order": 3,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "distribution": {
+            "required": true,
+            "section": "header",
+            "order": 4,
+            "sdWidth": "half",
+            "enabled": true,
+            "field_name": "Services"
+        },
+        "footer": null,
+        "genre": {
+            "required": false,
+            "order": 2,
+            "sdWidth": "half",
+            "enabled": true,
+            "section": "header"
+        },
+        "sms": null,
+        "slugline": {
+            "required": true,
+            "order": 1,
+            "sdWidth": "half",
+            "enabled": true
+        },
+        "language": null,
+        "company_codes": null
+    },
+    "_etag": "d4e1c3aafd1e23645b148f4b669dacaf94673641"
+}]
