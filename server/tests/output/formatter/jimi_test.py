@@ -34,7 +34,6 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         'subject': [
             {'name': 'health', 'qcode': '07000000', 'scheme': 'subject_custom'},
             {'name': 'citizens', 'qcode': '20000575', 'scheme': 'subject_custom'},
-            {'name': 'made-up', 'qcode': '12345678901234', 'scheme': 'subject_custom'},
             {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
             {'name': 'Broadcast', 'qcode': 'Broadcast', 'scheme': 'distribution'},
             {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': 'destinations'},
@@ -345,3 +344,21 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
         self.assertEqual('prev-cycle', item.find('FileName').text)
         self.assertEqual('prev-cycle', item.find('SystemSlug').text)
+
+    def test_format_fr_CA(self):
+        updates = {
+            'language': 'fr-CA',
+            'anpa_category': [{'name': 'National', 'qcode': 'g'}],
+            'rewrite_sequence': 2,
+        }
+
+        item = self.format_item(updates)
+
+        self.assertEqual('2', item.find('Language').text)
+        self.assertEqual("Nouvelles Générales", item.find('Category').text)
+        self.assertEqual("Alerte", item.find('VersionType').text)
+        self.assertEqual("Nouvelle - Majeur", item.find('Ranking').text)
+
+        self.assertEqual('2', item.find('WritethruValue').text)
+        self.assertEqual('2ème', item.find('WritethruNum').text)
+        self.assertEqual('Lead', item.find('WriteThruType').text)
