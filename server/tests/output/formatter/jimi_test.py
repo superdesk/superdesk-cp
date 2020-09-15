@@ -362,3 +362,11 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('2', item.find('WritethruValue').text)
         self.assertEqual('2ème', item.find('WritethruNum').text)
         self.assertEqual('Lead', item.find('WriteThruType').text)
+
+    def test_correction_update(self):
+        item = self.format_item({'extra': {
+            cp.UPDATE: 'update text',
+            cp.CORRECTION: 'correction text',
+        }})
+        self.assertEqual('update text', item.find('UpdateNote').text)
+        self.assertEqual('correction text', item.find('Corrections').text)

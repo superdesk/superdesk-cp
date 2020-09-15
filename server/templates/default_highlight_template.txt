@@ -1,0 +1,6 @@
+{% for item in items %}
+{{ item.slugline|e }}<br>
+<h2>{{ item.headline|e }}</h2>
+{{ item.body_html|first_paragraph() }}
+<p></p>
+{% endfor %}
