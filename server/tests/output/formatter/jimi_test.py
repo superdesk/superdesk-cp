@@ -350,6 +350,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             'language': 'fr-CA',
             'anpa_category': [{'name': 'National', 'qcode': 'g'}],
             'rewrite_sequence': 2,
+            'subject': [
+                {'name': 'Broadcast', 'qcode': 'Broadcast', 'scheme': 'distribution'},
+            ],
         }
 
         item = self.format_item(updates)
@@ -358,6 +361,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("Nouvelles Générales", item.find('Category').text)
         self.assertEqual("Alerte", item.find('VersionType').text)
         self.assertEqual("Nouvelle - Majeur", item.find('Ranking').text)
+        self.assertEqual("Radio", item.find('..').find('Services').text)
 
         self.assertEqual('2', item.find('WritethruValue').text)
         self.assertEqual('2ème', item.find('WritethruNum').text)
