@@ -13,7 +13,10 @@ import os
 
 from flask import json
 from pathlib import Path
-from superdesk.default_settings import strtobool, env, SERVER_URL, CORE_APPS as _core_apps
+from superdesk.default_settings import (
+    strtobool, env, SERVER_URL, CORE_APPS as _core_apps,
+    CELERY_BEAT_SCHEDULE, timedelta,
+)
 
 
 ABS_PATH = str(Path(__file__).resolve().parent)
@@ -33,6 +36,7 @@ INSTALLED_APPS = [
     'cp.orangelogic',
     'cp.ingest',
     'cp.output',
+    'cp.ultrad',
 ]
 
 MACROS_MODULE = 'cp.macros'
@@ -225,3 +229,16 @@ ARCHIVED_EXPIRY_MINUTES = int(env('ARCHIVED_EXPIRY_MINUTES', 60 * 24 * 60))  # 6
 
 # disable use of XMP for photo assignments
 PLANNING_USE_XMP_FOR_PIC_ASSIGNMENTS = False
+
+# ultrad auth header
+ULTRAD_AUTH = env('ULTRAD_AUTH', '')
+ULTRAD_DESK = 'French'
+ULTRAD_TODO_STAGE = 'Being translated'
+ULTRAD_DONE_STAGE = 'Working Stage'
+
+CELERY_BEAT_SCHEDULE.update({
+    'ultrad:sync': {
+        'task': 'cp.ultrad.sync',
+        'schedule': timedelta(minutes=1),
+    },
+})
