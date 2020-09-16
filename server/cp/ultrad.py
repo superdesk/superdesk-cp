@@ -29,38 +29,45 @@ def get_headers():
 
 
 def upload_document(item):
+    item_name = item.get('headline') or item.get('slugline')
+    if not item_name or not item.get('body_html'):
+        return
+
     payload = {
         'lang': {
             'fromLang': 'en',
             'toLang': 'fr',
         },
-        'name': item['headline'],
+        'name': item_name,
         'state': 'new',
         'text': {
             'original': get_text(item['body_html']),
         },
     }
 
-    try:
-        resp = requests.post(ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
-        resp.raise_for_status()
-    except requests.HTTPError:
-        logger.exception('got error on post %s', item['guid'])
-        raise UltradException()
-
+    resp = requests.post(ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
+    raise_for_resp_error(resp)
     data = get_json(resp)
     return data['_id']
 
 
 def get_document(ultrad_id):
     url = urljoin(ULTRAD_URL, ultrad_id)
+    resp = requests.get(url, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
+    raise_for_resp_error(resp)
+    return get_json(resp)
+
+
+def raise_for_resp_error(resp):
     try:
-        resp = requests.get(url, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
         resp.raise_for_status()
     except requests.HTTPError:
-        logger.exception('got error on get %s', ultrad_id)
+        logger.error('HTTP error %d: %s when doing %s on %s',
+                     resp.status_code,
+                     resp.text,
+                     resp.request.method,
+                     resp.request.path_url)
         raise UltradException()
-    return get_json(resp)
 
 
 def get_json(resp):
@@ -80,33 +87,35 @@ def sync():
     try:
         desk = get_resource_service('desks').find_one(req=None, name=app.config['ULTRAD_DESK'])
         if not desk:
-            logger.warn('ultrad desk not found name=%s', app.config['ULTRAD_DESK'])
+            logger.warning('ultrad desk not found name=%s', app.config['ULTRAD_DESK'])
             return
         todo_stage = get_resource_service('stages').find_one(req=None, desk=desk['_id'],
                                                              name=app.config['ULTRAD_TODO_STAGE'])
         done_stage = get_resource_service('stages').find_one(req=None, desk=desk['_id'],
                                                              name=app.config['ULTRAD_DONE_STAGE'])
         if not todo_stage:
-            logger.warn('ultrad todo stage is missing name=%s', app.config['ULTRAD_TODO_STAGE'])
+            logger.warning('ultrad todo stage is missing name=%s', app.config['ULTRAD_TODO_STAGE'])
             return
         if not done_stage:
-            logger.warn('ultrad done stage is missing name=%s', app.config['ULTRAD_DONE_STAGE'])
+            logger.warning('ultrad done stage is missing name=%s', app.config['ULTRAD_DONE_STAGE'])
             return
         lookup = {'task.stage': todo_stage['_id']}
         items = list(get_resource_service('archive').get(req=None, lookup=lookup))
         logger.info('checking %d items on ultrad', len(items))
         for item in items:
             if not touch(lock_name, expire=300):
-                logger.warn('lost lock %s', lock_name)
+                logger.warning('lost lock %s', lock_name)
                 break
             if item.get('lock_user') and item.get('lock_session'):
                 logger.info('skipping locked item guid=%s', item['guid'])
                 continue
             try:
                 ultrad_id = item['extra'][ULTRAD_ID]
+            except KeyError:
+                continue
+            try:
                 ultrad_doc = get_document(ultrad_id)
-            except (KeyError, UltradException):
-                logger.exception('wtf')
+            except UltradException:
                 continue
             if ultrad_doc['state'] == 'revised':
                 try:

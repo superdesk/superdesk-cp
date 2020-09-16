@@ -15,9 +15,9 @@ def callback(item, **kwargs):
         app.logger.debug('nothing to translate for item %s', item['guid'])
         return item
 
-    # make it fail
     ultrad_id = upload_document(item)
-    item['extra'][ULTRAD_ID] = ultrad_id
+    if ultrad_id:
+        item['extra'][ULTRAD_ID] = ultrad_id
 
     return item
 
