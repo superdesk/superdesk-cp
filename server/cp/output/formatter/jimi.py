@@ -106,8 +106,8 @@ class JimiFormatter(Formatter):
             etree.SubElement(root, 'Services').text = 'Print'
             etree.SubElement(root, 'PscCodes').text = service
         else:
-            self._format_subject_code(root, item, 'Services', 'distribution')
             self._format_subject_code(root, item, 'PscCodes', 'destinations')
+            self._format_services(root, item)
 
         # content system fields
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
@@ -306,6 +306,15 @@ class JimiFormatter(Formatter):
             names = self._resolve_names(item['genre'], item['language'], 'genre', False)
             if names:
                 version_type.text = names[0]
+
+    def _format_services(self, root, item):
+        try:
+            services = [s for s in item['subject'] if s.get('scheme') == cp.DISTRIBUTION]
+        except KeyError:
+            return
+        names = self._resolve_names(services, item['language'], cp.DISTRIBUTION, False)
+        if names:
+            etree.SubElement(root, 'Services').text = names[0]
 
     def _format_picture_metadata(self, content, item):
         # no idea how to populate these
