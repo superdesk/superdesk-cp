@@ -25,5 +25,5 @@ def callback(item, **kwargs):
 name = 'ultrad-upload'
 label = lazy_gettext('Upload to Ultrad')
 group = lazy_gettext('translate')
-access_type = 'frontend'
+access_type = 'backend'
 action_type = 'direct'
