@@ -323,6 +323,11 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                     'type': 'picture',
                     'guid': 'bar:guid',
                 },
+                'gallery--3': {  # same picture twice
+                    '_id': 'bar',
+                    'type': 'picture',
+                    'guid': 'bar:guid',
+                },
             },
         }
 

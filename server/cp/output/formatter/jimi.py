@@ -422,6 +422,7 @@ class JimiFormatter(Formatter):
         """When association is already published we need to resend it again
         with link to text item.
         """
+        guids = set()
         photos = []
         for assoc in item['associations'].values():
             if assoc:
@@ -438,12 +439,13 @@ class JimiFormatter(Formatter):
                         ])
                     ]
                     publish_service.resend(published, subscribers)
-                if assoc.get('type') == 'picture':
+                if assoc.get('type') == 'picture' and assoc.get('guid') and assoc['guid'] not in guids:
+                    guids.add(assoc['guid'])
                     photos.append(assoc)
         etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos), item['language'])
         if photos:
             etree.SubElement(content, 'PhotoReference').text = ','.join(filter(None, [
-                guid(photo.get('guid'))
+                guid(photo['guid'])
                 for photo
                 in photos
             ]))
