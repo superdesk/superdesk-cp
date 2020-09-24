@@ -7,6 +7,7 @@ import cp.ingest.parser.globenewswire as globenewswire
 
 from num2words import num2words
 from collections import OrderedDict
+from celery.utils.functional import uniq
 from superdesk.utc import utc_to_local
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
@@ -174,8 +175,7 @@ class JimiFormatter(Formatter):
         if item.get('keywords') and item.get('source') == globenewswire.SOURCE:
             etree.SubElement(content, 'Stocks').text = ','.join(item['keywords'])
 
-        self._format_index(content, item)
-        self._format_category(content, item)
+        self._format_category_index(content, item)
         self._format_genre(content, item)
         self._format_urgency(content, item.get('urgency'), item['language'])
         self._format_keyword(content, item.get('keywords'), ', ' if item.get('type') == 'picture' else ',')
@@ -266,18 +266,13 @@ class JimiFormatter(Formatter):
         else:
             etree.SubElement(content, 'Placeline')
 
-    def _format_index(self, content, item):
-        SUBJECTS_ID = 'subject_custom'
-
-        subject = [
-            s for s in item.get('subject', [])
-            if s.get('name') and s.get('scheme') in (None, SUBJECTS_ID)
-        ]
-
-        names = self._resolve_names(subject, item['language'], SUBJECTS_ID)
-
-        if names:
-            etree.SubElement(content, 'IndexCode').text = ','.join(names)
+    def _format_category_index(self, content, item):
+        categories = self._get_categories(item)
+        if categories:
+            etree.SubElement(content, 'Category').text = ','.join(categories)
+        indexes = uniq(categories + self._get_indexes(item))
+        if indexes:
+            etree.SubElement(content, 'IndexCode').text = ','.join(indexes)
         else:
             etree.SubElement(content, 'IndexCode')
 
@@ -293,12 +288,21 @@ class JimiFormatter(Formatter):
                 names.append(name)
         return names
 
-    def _format_category(self, content, item):
+    def _get_categories(self, item):
         if not item.get('anpa_category'):
-            return
+            return []
         names = self._resolve_names(item['anpa_category'], item['language'], 'categories', False)
-        if names:
-            etree.SubElement(content, 'Category').text = ','.join(names)
+        return names
+
+    def _get_indexes(self, item):
+        SUBJECTS_ID = 'subject_custom'
+
+        subject = [
+            s for s in item.get('subject', [])
+            if s.get('name') and s.get('scheme') in (None, SUBJECTS_ID)
+        ]
+
+        return self._resolve_names(subject, item['language'], SUBJECTS_ID)
 
     def _format_genre(self, content, item):
         version_type = etree.SubElement(content, 'VersionType')
