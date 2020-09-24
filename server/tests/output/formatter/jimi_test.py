@@ -113,7 +113,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Foo bar,baz', item.find('Keyword').text)
         self.assertEqual('National', item.find('Category').text)
-        self.assertEqual('Health,Politics', item.find('IndexCode').text)
+        self.assertEqual('National,Health,Politics', item.find('IndexCode').text)
         self.assertEqual(str(self.article['urgency']), item.find('RankingValue').text)
         self.assertEqual('News - Need to Know', item.find('Ranking').text)
         self.assertEqual('1', item.find('Language').text)
@@ -198,7 +198,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('FOO', root.find('PscCodes').text)
 
         self.assertEqual('Press Release', item.find('Category').text)
-        self.assertIsNone(item.find('IndexCode').text)
+        self.assertEqual('Press Release', item.find('IndexCode').text)
         self.assertEqual('FOO,BAR', item.find('Note').text)
         self.assertEqual('TSX VENTURE:AXL,OTC:NTGSF', item.find('Stocks').text)
         self.assertEqual('Foo', item.find('Headline').text)
@@ -364,6 +364,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
         self.assertEqual('2', item.find('Language').text)
         self.assertEqual("Nouvelles Générales", item.find('Category').text)
+        self.assertEqual("Nouvelles Générales", item.find('IndexCode').text)
         self.assertEqual("Alerte", item.find('VersionType').text)
         self.assertEqual("Nouvelle - Majeur", item.find('Ranking').text)
         self.assertEqual("Radio", item.find('..').find('Services').text)
