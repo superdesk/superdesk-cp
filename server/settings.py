@@ -232,9 +232,7 @@ PLANNING_USE_XMP_FOR_PIC_ASSIGNMENTS = False
 
 # ultrad auth header
 ULTRAD_AUTH = env('ULTRAD_AUTH', '')
-ULTRAD_DESK = 'French'
-ULTRAD_TODO_STAGE = 'Being translated'
-ULTRAD_DONE_STAGE = 'Working Stage'
+ULTRAD_TODO_STAGE = env('ULTRAD_TODO_STAGE', 'Traduction')
 
 CELERY_BEAT_SCHEDULE.update({
     'ultrad:sync': {
