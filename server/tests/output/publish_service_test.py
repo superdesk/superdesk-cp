@@ -18,7 +18,7 @@ class CPPublishServiceTestCase(unittest.TestCase):
         now = utcnow()
         with patch.dict(superdesk.resources, resources):
             resources['archive'].service.find_one.side_effect = [
-                {'guid': 'bar', 'firstcreated': now},
+                {'guid': 'bar', 'firstcreated': now, 'unique_id': 1},
             ]
 
             item = {
@@ -28,6 +28,7 @@ class CPPublishServiceTestCase(unittest.TestCase):
                 'rewrite_of': 'bar',
                 'firstcreated': now,
                 'versioncreated': now,
+                'unique_id': 2,
             }
 
             queue_item = {
