@@ -144,6 +144,7 @@ class OrangelogicTestCase(unittest.TestCase):
 
         # populate ids
         fetched['family_id'] = fetched['guid']
+        fetched['unique_id'] = 1
 
         with patch.dict(superdesk.resources, resources):
             formatter = JimiFormatter()
