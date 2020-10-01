@@ -111,19 +111,20 @@ class JimiFormatter(Formatter):
             self._format_services(root, item)
 
         # content system fields
-        seq_id = '{:08d}'.format(pub_seq_num % 100000000)
-        filename = self._format_filename(item)
+        orig = self._get_original_item(item)
+        item_id = '{:08d}'.format(orig['unique_id'] % 100000000)
+        filename = self._format_filename(orig)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = filename
-        etree.SubElement(content, 'NewsCompID').text = seq_id
+        etree.SubElement(content, 'NewsCompID').text = item_id
         etree.SubElement(content, 'SystemSlug').text = filename
-        etree.SubElement(content, 'ContentItemID').text = seq_id
+        etree.SubElement(content, 'ContentItemID').text = item_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
 
         if is_picture(item):
-            etree.SubElement(content, 'PhotoContentItemID').text = seq_id
+            etree.SubElement(content, 'PhotoContentItemID').text = item_id
 
         if extra.get(cp.FILENAME):
             etree.SubElement(content, 'OrigTransRef').text = extra[cp.FILENAME]
@@ -401,7 +402,7 @@ class JimiFormatter(Formatter):
 
     def _format_refs(self, content, item):
         refs = [
-            self._format_filename(ref)
+            self._format_filename(self._get_original_item(ref))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
         ]
 
@@ -454,18 +455,20 @@ class JimiFormatter(Formatter):
                 in photos
             ]))
 
-    def _format_filename(self, item):
-        """Keep original guid for updates."""
+    def _get_original_item(self, item):
         orig = item
         for i in range(100):
             if not orig.get('rewrite_of'):
-                break
+                return orig
             next_orig = superdesk.get_resource_service('archive').find_one(req=None, _id=orig['rewrite_of'])
-            if next_orig is not None and _is_same_news_cycle(next_orig, orig):
+            if next_orig is not None:
                 orig = next_orig
                 continue
             break
-        filename = orig['guid']
+        return orig
+
+    def _format_filename(self, item):
+        filename = item['guid']
         return guid(filename)
 
     def _format_content(self, item):

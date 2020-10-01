@@ -40,6 +40,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         ],
         'urgency': 2,
         'language': 'en-CA',
+        'unique_id': 123,
 
         'firstcreated': datetime(2020, 4, 1, 11, 13, 12, 25, tzinfo=UTC),
         'versioncreated': datetime(2020, 4, 1, 11, 23, 12, 25, tzinfo=UTC),
@@ -88,7 +89,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
         # ids
         self.assertIsNotNone(item.find('ContentItemID').text)
-        self.assertEqual('00000100', item.find('NewsCompID').text)
+        self.assertEqual('00000123', item.find('NewsCompID').text)
         self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
         self.assertEqual(self.article['guid'], item.find('FileName').text)
         self.assertEqual(self.article['extra'][cp.FILENAME], item.find('OrigTransRef').text)
@@ -342,8 +343,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         date_3am_et = date_1am_et + timedelta(hours=2)
 
         resources['archive'].service.find_one.side_effect = [
-            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et},
-            {'guid': 'prev-cycle', 'firstcreated': date_1am_et},
+            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et, 'unique_id': 2},
+            {'guid': 'prev-cycle', 'firstcreated': date_1am_et, 'unique_id': 1},
         ]
 
         item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
@@ -380,3 +381,16 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         }})
         self.assertEqual('update text', item.find('UpdateNote').text)
         self.assertEqual('correction text', item.find('Corrections').text)
+
+    def test_writethru_keeps_newscompid(self):
+        resources['archive'].service.find_one.side_effect = [
+            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'unique_id': 2},
+            {'guid': 'prev-cycle', 'unique_id': 1},
+        ]
+
+        item = self.format_item({
+            'rewrite_of': 'same-cycle',
+            'unique_id': 3,
+        })
+
+        self.assertEqual('00000001', item.find('NewsCompID').text)

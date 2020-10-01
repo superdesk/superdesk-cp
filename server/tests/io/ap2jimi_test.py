@@ -39,6 +39,7 @@ class AP2JimiTestCase(unittest.TestCase):
                             mock.get(data['data']['item']['renditions']['preview']['href'], content=f.read())
                     parsed = parser.parse(data, self.provider)
                 parsed['_id'] = 'generated-id'
+                parsed['unique_id'] = 1
                 parsed['family_id'] = parsed['_id']
                 parsed['renditions'] = {'original': {'media': 'abcd-media', 'mimetype': 'image/jpeg'}}
                 jimi = formatter.format(parsed, self.subscriber)[0][1]
