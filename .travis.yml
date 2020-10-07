@@ -24,7 +24,7 @@ install:
       if [ "$TEST" = "server" ]; then
         cd server && pip install -r dev-requirements.txt && cd ..
       else
-        cd client && npm install && cd ..
+        cd client && npm ci && cd ..
       fi
 
 jobs:
