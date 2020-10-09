@@ -142,7 +142,7 @@ class JimiFormatter(Formatter):
             )
         except KeyError:
             etree.SubElement(content, 'EmbargoTime').text = self._format_datetime(item.get('embargoed'), local=True)
-        etree.SubElement(content, 'CreatedDateTime').text = self._format_datetime(item['firstcreated'])
+        etree.SubElement(content, 'CreatedDateTime').text = self._format_datetime(firstpublished)  # SDCP-380
         etree.SubElement(content, 'UpdatedDateTime').text = self._format_datetime(item['versioncreated'], rel=True)
 
         # obvious

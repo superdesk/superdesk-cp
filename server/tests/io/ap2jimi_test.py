@@ -121,7 +121,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
         self.assertEqual('1', item.find('Language').text)
         self.assertEqual('2020-06-05T13:09:39-04:00', item.find('UpdatedDateTime').text)
-        self.assertEqual('2020-06-05T10:10:01', item.find('CreatedDateTime').text)
+        self.assertEqual('2020-06-05T17:09:39', item.find('CreatedDateTime').text)
         self.assertEqual('0', item.find('HandledByUserID').text)
         self.assertIsNone(item.find('ContentText').text)
         self.assertEqual('Coronavirus, COVID-19', item.find('Keyword').text)
@@ -196,6 +196,6 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual("For proof that Leonardo DiCaprio can't save every film he touches, look no further than "
                          "“And We Go Green,” a languid documentary about the electric car racing circuit. DiCaprio, "
                          "who is a producer of", item.find('DirectoryText').text)
-        self.assertEqual('2020-06-02T19:13:56', item.find('CreatedDateTime').text)  # using api data
+        self.assertEqual('2020-06-02T19:13:57', item.find('CreatedDateTime').text)  # using api data
         self.assertIn("Arts and entertainment,Movies,Entertainment,Automotive technology,Industrial "
                       "technology,Technology,Automobile racing,Sports,Form", item.find('Keyword').text)
