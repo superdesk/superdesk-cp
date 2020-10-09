@@ -121,7 +121,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
         # timestamps
         self.assertEqual('0001-01-01T00:00:00', item.find('EmbargoTime').text)
-        self.assertEqual('2020-04-01T11:13:12', item.find('CreatedDateTime').text)
+        self.assertEqual('2020-04-01T11:33:12', item.find('CreatedDateTime').text)
         self.assertEqual('2020-04-01T07:23:12-04:00', item.find('UpdatedDateTime').text)
 
         # etc
