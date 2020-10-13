@@ -1,14 +1,9 @@
 {% for item in items %}
 <p><b>{{ item.slugline|e }}</b>
 <br>{{ item.headline|e }}
-{% if item.dateline %}<br>{{ item.dateline.text }}{% endif %}
-<br>{{ item.body_html|first_paragraph }}
-<br>{{ item.byline|e }}
-<br>Words: {{ item.word_count }}
-{% for type, refs in item.refs|groupby('type') %}
-{% if type == 'picture' %}
-, Photos: {{ refs|count }}
-{% endif %}
-{% endfor %}
-<br>–</p>
+{% if item.dateline and item.dateline.located %}<br>{{ item.dateline.located.city }}, {{ item.dateline.located.state }}/{{ item.dateline.located.country }}{% endif %}
+<br>{{ item.body_html|first_paragraph|striptags|trim }}
+{% if item.byline %}<br>{{ item.byline|e }}{% endif %}
+<br>Words: {{ item.word_count }}{% for type, refs in item.refs|groupby('type') %}{% if type == 'picture' %}, Photos: {{ refs|count }}{% endif %}{% endfor %}
+{% if not loop.last %}<br>–{% endif %}</p>
 {% endfor %}
