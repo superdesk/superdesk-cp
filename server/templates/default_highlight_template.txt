@@ -1,6 +1,14 @@
 {% for item in items %}
-{{ item.slugline|e }}<br>
-<h2>{{ item.headline|e }}</h2>
-{{ item.body_html|first_paragraph() }}
-<p></p>
+<p><b>{{ item.slugline|e }}</b>
+<br>{{ item.headline|e }}
+{% if item.dateline %}<br>{{ item.dateline.text }}{% endif %}
+<br>{{ item.body_html|first_paragraph }}
+<br>{{ item.byline|e }}
+<br>Words: {{ item.word_count }}
+{% for type, refs in item.refs|groupby('type') %}
+{% if type == 'picture' %}
+, Photos: {{ refs|count }}
+{% endif %}
+{% endfor %}
+<br>–</p>
 {% endfor %}
