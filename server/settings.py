@@ -240,3 +240,15 @@ CELERY_BEAT_SCHEDULE.update({
         'schedule': timedelta(minutes=1),
     },
 })
+
+FIELDS_TO_OVERRIDE = ['urgency']
+FIELDS_TO_EXCLUDE = ['subject',
+                     'headline',
+                     'body_html',
+                     'abstract',
+                     'byline',
+                     'dateline',
+                     'body_footer',
+                     'sign_off',
+                     'usageterms',
+                     'fields_meta']
