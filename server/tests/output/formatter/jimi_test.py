@@ -88,7 +88,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('false', item.find('Cachable').text)
 
         # ids
-        self.assertIsNotNone(item.find('ContentItemID').text)
+        self.assertEqual('00000100', item.find('ContentItemID').text)
         self.assertEqual('00000123', item.find('NewsCompID').text)
         self.assertEqual(self.article['guid'], item.find('SystemSlug').text)
         self.assertEqual(self.article['guid'], item.find('FileName').text)
