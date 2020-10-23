@@ -112,6 +112,7 @@ class JimiFormatter(Formatter):
 
         # content system fields
         orig = self._get_original_item(item)
+        seq_id = '{:08d}'.format(pub_seq_num % 100000000)
         item_id = '{:08d}'.format(orig['unique_id'] % 100000000)
         filename = self._format_filename(orig)
         etree.SubElement(content, 'Name')
@@ -119,7 +120,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'FileName').text = filename
         etree.SubElement(content, 'NewsCompID').text = item_id
         etree.SubElement(content, 'SystemSlug').text = filename
-        etree.SubElement(content, 'ContentItemID').text = item_id
+        etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
 
