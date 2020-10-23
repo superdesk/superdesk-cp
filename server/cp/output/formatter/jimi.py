@@ -1,5 +1,6 @@
 
 import cp
+import lxml
 import arrow
 import superdesk
 import lxml.etree as etree
@@ -473,7 +474,15 @@ class JimiFormatter(Formatter):
         return guid(filename)
 
     def _format_content(self, item):
-        return item.get('body_html') or ''
+        if not item.get('body_html'):
+            return ''
+        tree = lxml.html.fromstring(item['body_html'])
+        for elem in tree.iter():
+            if elem.tag == 'b':
+                elem.tag = 'strong'
+            elif elem.tag == 'i':
+                elem.tag = 'em'
+        return lxml.html.tostring(tree, encoding='unicode')
 
 
 def get_count_label(count, lang):

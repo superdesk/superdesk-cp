@@ -28,7 +28,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         'ednote': 'Ednote',
         'word_count': 123,
         'abstract': '<p>Abstract</p>',
-        'body_html': '<p>Body HTML<br>test</p>',
+        'body_html': '<p>Body HTML<br>test <b>bold</b> and <i>idiom</i></p>',
         'keywords': ['Foo bar', 'baz'],
         'anpa_category': [{'name': 'National', 'qcode': 'n'}],
         'subject': [
@@ -69,7 +69,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
     def test_format(self):
         xml = self.format()
         self.assertIn("<?xml version='1.0' encoding='utf-8'?>", xml)
-        self.assertIn('<ContentText>&lt;p&gt;Body HTML&lt;br /&gt;test&lt;/p&gt;</ContentText>', xml)
+        self.assertIn('<ContentText>&lt;p&gt;Body HTML&lt;br /&gt;test', xml)
 
         root = self.parse(xml)
         self.assertEqual('Publish', root.tag)
@@ -108,8 +108,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual(str(self.article['word_count']), item.find('WordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('BreakWordCount').text)
         self.assertEqual(str(self.article['word_count']), item.find('Length').text)
-        self.assertEqual('Body HTMLtest', item.find('DirectoryText').text)
-        self.assertEqual('<p>Body HTML<br />test</p>', item.find('ContentText').text)
+        self.assertEqual('Body HTMLtest bold and idiom', item.find('DirectoryText').text)
+        self.assertEqual('<p>Body HTML<br />test <strong>bold</strong> and <em>idiom</em></p>',
+                         item.find('ContentText').text)
         self.assertEqual(None, item.find('Placeline').text)
         self.assertEqual('0', item.find('WritethruValue').text)
         self.assertEqual('Foo bar,baz', item.find('Keyword').text)
