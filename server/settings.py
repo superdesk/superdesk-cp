@@ -243,12 +243,12 @@ CELERY_BEAT_SCHEDULE.update({
 
 DEFAULT_TEMPLATE_METADATA_MACRO_OVERRIDE = ['urgency']
 DEFAULT_TEMPLATE_METADATA_MACRO_EXCLUDE = ['subject',
-                     'headline',
-                     'body_html',
-                     'abstract',
-                     'byline',
-                     'dateline',
-                     'body_footer',
-                     'sign_off',
-                     'usageterms',
-                     'fields_meta']
+                                           'headline',
+                                           'body_html',
+                                           'abstract',
+                                           'byline',
+                                           'dateline',
+                                           'body_footer',
+                                           'sign_off',
+                                           'usageterms',
+                                           'fields_meta']
