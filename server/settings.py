@@ -241,8 +241,8 @@ CELERY_BEAT_SCHEDULE.update({
     },
 })
 
-FIELDS_TO_OVERRIDE = ['urgency']
-FIELDS_TO_EXCLUDE = ['subject',
+DEFAULT_TEMPLATE_METADATA_MACRO_OVERRIDE = ['urgency']
+DEFAULT_TEMPLATE_METADATA_MACRO_EXCLUDE = ['subject',
                      'headline',
                      'body_html',
                      'abstract',
