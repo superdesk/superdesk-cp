@@ -5,6 +5,7 @@ import arrow
 import superdesk
 import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
+import superdesk.etree as sd_etree
 
 from num2words import num2words
 from collections import OrderedDict
@@ -482,7 +483,7 @@ class JimiFormatter(Formatter):
                 elem.tag = 'strong'
             elif elem.tag == 'i':
                 elem.tag = 'em'
-        return lxml.html.tostring(tree, encoding='unicode')
+        return sd_etree.to_string(tree, encoding='unicode', method='html')
 
 
 def get_count_label(count, lang):
