@@ -169,6 +169,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             except KeyError:
                 pass
 
+        if ap_item.get('place'):
+            self._parse_place(data['data'], item)
+
         if ap_item.get('description_summary'):
             item['abstract'] = ap_item['description_summary']
 
@@ -220,6 +223,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item.get('pubstatus') == 'embargoed':
             item['pubstatus'] = PUB_STATUS.HOLD
+
+        item['extra']['ap_version'] = ap_item['version']
 
         return item
 
@@ -614,6 +619,38 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item.setdefault('extra', {})[cp.HEADLINE2] = metadata['Headline']
         if metadata.get('Keywords'):
             item.setdefault('extra', {})[cp.XMP_KEYWORDS] = ', '.join(metadata['Keywords'].split(';'))
+
+    def _find_place(self, data, type_name):
+        return next((place for place in data['item']['place'] if place['locationtype']['name'] == type_name), None)
+
+    def _parse_place(self, data, item):
+        city = self._find_place(data, 'City')
+        state = self._find_place(data, 'State')
+        country = self._find_place(data, 'Nation')
+        region = self._find_place(data, 'Continent')
+        if city:
+            place = {
+                'name': city['name'],
+                'qcode': city['name'],
+            }
+
+            if state:
+                place['state'] = state['name']
+
+            if country:
+                place['country'] = country['name']
+
+            if region:
+                place['world_region'] = region['name']
+
+            geo = city.get('geometry_geojson')
+            if geo and geo['type'] == 'Point':
+                place['location'] = {
+                    'lat': geo['coordinates'][1],
+                    'lon': geo['coordinates'][0],
+                }
+
+            item.setdefault('place', []).append(place)
 
 
 def append_matching_subject(item, scheme, qcode):
