@@ -10,6 +10,7 @@ import superdesk.macros.extract_html
 import superdesk.macros.internal_destination_auto_publish
 import superdesk.macros.take_key_validator
 import superdesk.macros.validate_for_publish
+import superdesk.macros.set_default_template_metadata
 
 
 def init_app(_app):
