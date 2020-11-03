@@ -212,6 +212,74 @@
                 "creator": "Machine",
                 "topparent": true
             }],
+            "place": [{
+                "code": "661e09b87d5b1004828bc076b8e3055c",
+                "name": "Egypt",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [30, 27]
+                },
+                "parentids": ["661850e07d5b100481f6c076b8e3055c", "66188f607d5b100481fac076b8e3055c"]
+            }, {
+                "code": "661850e07d5b100481f6c076b8e3055c",
+                "name": "Middle East",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "66188f607d5b100481fac076b8e3055c",
+                "name": "North Africa",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661812607d5b100481f1c076b8e3055c"],
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "661812607d5b100481f1c076b8e3055c",
+                "name": "Africa",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [21.09375, 7.1881]
+                }
+            }, {
+                "code": "312ec4407e3710048821df092526b43e",
+                "name": "Cairo",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661e09b87d5b1004828bc076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [31.24967, 30.06263]
+                }
+            }],
             "audiences": [{
                 "code": "82c6a4c46fa0446090a7acaf93159e4c",
                 "name": "Print",
