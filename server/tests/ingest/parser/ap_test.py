@@ -67,6 +67,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
         self.assertEqual('NYSE:WFC', item['extra']['stocks'])
         self.assertEqual('m0012', item['extra'][cp.FILENAME])
+        self.assertEqual(0, item['extra']['ap_version'])
 
         self.assertIn({
             'name': 'International',
@@ -94,6 +95,19 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn('associations', item)
         self.assertIn('media-gallery--1', item['associations'])
         self.assertIn('media-gallery--2', item['associations'])
+
+        self.assertEqual(1, len(item['place']))
+        self.assertEqual({
+            'name': 'Cheyenne',
+            'qcode': 'Cheyenne',
+            'state': 'Wyoming',
+            'country': 'United States',
+            'world_region': 'North America',
+            'location': {
+                'lat': 41.13998,
+                'lon': -104.82025,
+            },
+        }, item['place'][0])
 
     def test_parse_ignore_associations_based_on_type_config(self):
         _provider = {

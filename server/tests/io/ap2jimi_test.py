@@ -171,7 +171,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('false', root.find('NewCycle').text)
         self.assertEqual('false', root.find('OnlineResend').text)
 
-    def test_ap_text_broadcast(self):
+    def test_ap_text(self):
         """
         ref: tests/io/fixtures/5d846ed8-96b6-4adc-a028-017b0fa5e2c1.xml
         """
