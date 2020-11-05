@@ -17,6 +17,7 @@ from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 
 AP_SOURCE = 'The Associated Press'
 AP_SUBJECT_SCHEME = 'http://cv.ap.org/id/'
+CATEGORY_SCHEME = 'categories'
 
 FR_CATEGORY_MAPPING = [
     ('Culture', 'a'),
@@ -388,12 +389,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         return parsed
 
     def _map_category_codes(self, item):
-        categories = _get_cv_items('categories')
+        categories = _get_cv_items(CATEGORY_SCHEME)
         codes = [cat['qcode'] for cat in item['anpa_category']]
         item['anpa_category'] = [
             {
                 'name': cat['name'],
                 'qcode': cat['qcode'],
+                'scheme': CATEGORY_SCHEME,
             } for cat in categories if cat.get('qcode') in codes
         ]
 
@@ -574,13 +576,15 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 index_names.add(subj['name'])
 
         if index_names:
-            categories = _get_cv_items('categories')
+            categories = _get_cv_items(CATEGORY_SCHEME)
             item['anpa_category'] = []
             for cat in categories:
                 if cat.get('name') in index_names:
-                    item['anpa_category'].append(
-                        {'name': cat['name'], 'qcode': cat['qcode']},
-                    )
+                    item['anpa_category'].append({
+                        'name': cat['name'],
+                        'qcode': cat['qcode'],
+                        'scheme': CATEGORY_SCHEME,
+                    })
                     break
 
     def _parse_picture_category(self, data, item):

@@ -72,6 +72,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn({
             'name': 'International',
             'qcode': 'w',
+            'scheme': 'categories',
         }, item['anpa_category'])
 
         subjects = [s['name'] for s in item['subject']]
