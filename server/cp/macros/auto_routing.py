@@ -43,6 +43,7 @@ def callback(item, **kwargs):
                     'qcode': subject['qcode'],
                     'scheme': cv_id,
                 })
+                item['profile'] = 'autorouting'
             else:
                 logger.error('no item found in vocabulary %s with name %s', cv_id, name.strip())
     return item
