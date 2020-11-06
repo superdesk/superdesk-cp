@@ -4,6 +4,7 @@ import unittest
 import superdesk
 import lxml.etree as etree
 import requests_mock
+import settings
 
 from flask import json
 from unittest.mock import MagicMock, patch
@@ -23,6 +24,7 @@ class AP2JimiTestCase(unittest.TestCase):
 
     app = flask.Flask(__name__)
     app.locators = MagicMock()
+    app.config.update({'AP_TAGS_MAPPING': settings.AP_TAGS_MAPPING})
 
     provider = {}
     subscriber = {}

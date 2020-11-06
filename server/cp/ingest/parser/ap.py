@@ -1,6 +1,8 @@
 
 import io
 import re
+
+from flask.globals import current_app
 import cp
 import json
 import requests
@@ -8,7 +10,6 @@ import superdesk
 
 from typing import List
 from flask import current_app as app
-from datetime import timedelta
 from superdesk.utc import utc_to_local, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
@@ -226,6 +227,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item['pubstatus'] = PUB_STATUS.HOLD
 
         item['extra']['ap_version'] = ap_item['version']
+
+        self._parse_tags(data['data'], item)
 
         return item
 
@@ -655,6 +658,20 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 }
 
             item.setdefault('place', []).append(place)
+
+    def _parse_tags(self, data, item):
+        subject = item.setdefault('subject', [])
+        products = self.get_products(data)
+        mapping = current_app.config['AP_TAGS_MAPPING']
+        for tag, codes in mapping.items():
+            for product in products:
+                if product in codes:
+                    subject.append({
+                        'name': tag,
+                        'qcode': tag,
+                        'scheme': 'tag',
+                    })
+                    break
 
 
 def append_matching_subject(item, scheme, qcode):
