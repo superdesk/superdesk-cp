@@ -8,6 +8,7 @@ import flask
 import unittest
 import superdesk
 import requests_mock
+import settings
 
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
@@ -33,6 +34,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
     app = flask.Flask(__name__)
     app.locators = MagicMock()
+    app.config.update({'AP_TAGS_MAPPING': settings.AP_TAGS_MAPPING})
 
     def test_slugline(self):
         parser = CP_APMediaFeedParser()
@@ -75,11 +77,16 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             'scheme': 'categories',
         }, item['anpa_category'])
 
-        subjects = [s['name'] for s in item['subject']]
+        subjects = [s['name'] for s in item['subject'] if s.get('scheme') == 'subject_custom']
         self.assertIn('science and technology', subjects)
         self.assertIn('health', subjects)
         self.assertIn('mass media', subjects)
         self.assertIn('technology and engineering', subjects)
+
+        tags = [s['name'] for s in item['subject'] if s.get('scheme') == 'tag']
+        self.assertEqual(2, len(tags))
+        self.assertIn('APV', tags)
+        self.assertIn('TSX', tags)
 
         dateline = item['dateline']
         self.assertEqual('Wyoming Tribune Eagle', dateline['source'])

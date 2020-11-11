@@ -21008,5 +21008,27 @@
        "field_options": {
           "single": true
        }
+    },
+   {
+    	"_id": "tag",
+    	"display_name": "Tag",
+    	"type": "manageable",
+    	"selection_type": "multi selection",
+    	"init_version": 1,
+    	"unique_field": "qcode",
+    	"service": {
+    		"all": 1
+    	},
+    	"schema": {
+    		"qcode": {},
+    		"name": {}
+    	},
+    	"items": [
+        {"name": "AP", "qcode": "AP", "is_active": true},
+        {"name": "APV", "qcode": "APV", "is_active": true},
+        {"name": "APR", "qcode": "APR", "is_active": true},
+        {"name": "APS", "qcode": "APS", "is_active": true},
+        {"name": "TSX", "qcode": "TSX", "is_active": true}
+	   ]
     }
 ]
