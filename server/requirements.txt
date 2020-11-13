@@ -5,6 +5,6 @@ python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.10
 elastic-apm[flask]>=5.9,<5.10
 
--e git+git://github.com/superdesk/superdesk-core.git@hotfix/2.0.3#egg=superdesk-core
+-e git+git://github.com/superdesk/superdesk-core.git@v2.0.3#egg=superdesk-core
 -e git+git://github.com/superdesk/superdesk-analytics.git@v2.0.0#egg=superdesk-analytics
 -e git+git://github.com/superdesk/superdesk-planning.git@v2.0.0#egg=superdesk-planning
