@@ -8,6 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
+import re
 import logging
 import superdesk
 from flask_babel import lazy_gettext
@@ -29,10 +30,10 @@ def callback(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
     rule = kwargs.get('rule')
     if rule:
-        service, destination = rule['name'].split(':')
+        service, destination = re.sub(r'\([A-Z]+\)', '', rule['name']).split(':')
         mapping = {
-            'distribution': service,
-            'destinations': destination,
+            'distribution': service.strip(),
+            'destinations': destination.strip(),
         }
 
         for cv_id, name in mapping.items():
