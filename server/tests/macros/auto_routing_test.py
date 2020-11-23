@@ -15,7 +15,7 @@ class AutoRoutingMacroTestCase(unittest.TestCase):
 
     def test_auto_routing_matches_service_destination(self):
         item = {}
-        rule = {'name': 'Broadcast: The Associated Press'}
+        rule = {'name': 'Broadcast: The Associated Press (APR)'}
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
