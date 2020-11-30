@@ -327,3 +327,5 @@ AP_TAGS_MAPPING = {
         30597,
     },
 }
+
+SCHEMA_VERSION = 1
