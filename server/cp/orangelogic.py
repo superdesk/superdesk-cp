@@ -1,5 +1,6 @@
 
 import math
+import logging
 import requests
 import superdesk
 import mimetypes
@@ -36,6 +37,11 @@ IPTC_SOURCE_MAPPING = {
 COUNTRY_MAPPING = {
     'CHN': 'China',
 }
+
+
+tokens = {}
+sess = requests.Session()
+logger = logging.getLogger(__name__)
 
 
 def get_api_sort(sort):
@@ -105,8 +111,6 @@ class OrangelogicSearchProvider(SearchProvider):
 
     def __init__(self, provider):
         super().__init__(provider)
-        self.sess = requests.Session()
-        self.token = None
         self.config = provider.get('config') or {}
         app.config.setdefault('ORANGELOGIC_URL', self.URL)
 
@@ -115,16 +119,20 @@ class OrangelogicSearchProvider(SearchProvider):
 
     def _request(self, api, method='GET', **kwargs):
         url = self._url(api)
-        resp = self.sess.request(method, url, params=kwargs, timeout=TIMEOUT)
+        resp = sess.request(method, url, params=kwargs, timeout=TIMEOUT)
         resp.raise_for_status()
         return resp
 
     def _login(self):
-        resp = self._request(AUTH_API, method='POST',
-                             Login=self.config.get('username'),
-                             Password=self.config.get('password'),
-                             format='json')
-        self.token = resp.json()['APIResponse']['Token']
+        with timer('orange.login'):
+            resp = self._request(
+                AUTH_API,
+                method='POST',
+                Login=self.config.get('username'),
+                Password=self.config.get('password'),
+                format='json',
+            )
+        tokens[self.config['username']] = resp.json()['APIResponse']['Token']
 
     def _auth_request(self, api, **kwargs):
         repeats = 2
@@ -133,12 +141,22 @@ class OrangelogicSearchProvider(SearchProvider):
                 self._login()
             try:
                 kwargs['token'] = self.token
-                return self._request(api, **kwargs)
-            except HTTPError:
-                self.token = None
+                with timer('orange.request'):
+                    return self._request(api, **kwargs)
+            except HTTPError as err:
+                logger.error(err)
+                self._login()  # auth error
                 repeats -= 1
                 if repeats == 0:
                     raise
+
+    @property
+    def token(self):
+        try:
+            key = self.config['username']
+            return tokens[key]
+        except KeyError:
+            return
 
     def find(self, query, params=None):
         if params is None:
@@ -180,9 +198,8 @@ class OrangelogicSearchProvider(SearchProvider):
                 if params.get(param):
                     kwargs['query'] = '{} MediaDate{}{}'.format(kwargs['query'], op, params[param]).strip()
 
-        with timer('orange'):
-            resp = self._auth_request(SEARCH_API, **kwargs)
-            data = resp.json()
+        resp = self._auth_request(SEARCH_API, **kwargs)
+        data = resp.json()
 
         with open('/tmp/resp.json', mode='w') as out:
             out.write(json.dumps(data, indent=2))
