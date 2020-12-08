@@ -1,4 +1,5 @@
 
+import os
 import cp
 import cp.ingest.parser.globenewswire as globenewswire
 
@@ -271,8 +272,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual(updates['description_text'], item.find('EnglishCaption').text)
         self.assertEqual('2020-06-03T17:00:56', item.find('DateTaken').text)
 
-        self.assertEqual('id', item.find('FileName').text)
-
+        self.assertEqual('media_id', item.find('FileName').text)
         self.assertEqual('media_id.jpg', item.find('ViewFile').text)
         self.assertEqual('media_id.jpg', item.find('ContentRef').text)
 
@@ -289,7 +289,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         }
         item = self.format_item(updates)
         filename = updates['renditions']['original']['media'].replace('/', '-')
-        self.assertEqual('id', item.find('FileName').text)
+        self.assertEqual(os.path.splitext(filename)[0], item.find('FileName').text)
         self.assertEqual(filename, item.find('ViewFile').text)
         self.assertEqual(filename, item.find('ContentRef').text)
 
@@ -318,17 +318,35 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                 'gallery--1': {
                     '_id': 'foo',
                     'type': 'picture',
-                    'guid': 'foo:guid'
+                    'guid': 'foo:guid',
+                    'renditions': {
+                        'original': {
+                            'media': 'foo',
+                            'mimetype': 'image/jpeg',
+                        },
+                    },
                 },
                 'gallery--2': {
                     '_id': 'bar',
                     'type': 'picture',
                     'guid': 'bar:guid',
+                    'renditions': {
+                        'original': {
+                            'media': 'bar',
+                            'mimetype': 'image/jpeg',
+                        },
+                    },
                 },
                 'gallery--3': {  # same picture twice
                     '_id': 'bar',
                     'type': 'picture',
                     'guid': 'bar:guid',
+                    'renditions': {
+                        'original': {
+                            'media': 'bar',
+                            'mimetype': 'image/jpeg',
+                        },
+                    },
                 },
             },
         }
@@ -336,7 +354,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         item = self.format_item(updates)
 
         self.assertEqual('Many', item.find('PhotoType').text)
-        self.assertEqual('foo:guid,bar:guid', item.find('PhotoReference').text)
+        self.assertEqual('foo,bar', item.find('PhotoReference').text)
 
     def test_format_filename_rewrite(self):
         date_1am_et = datetime(2020, 8, 12, 5, tzinfo=UTC)
@@ -344,11 +362,13 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         date_3am_et = date_1am_et + timedelta(hours=2)
 
         resources['archive'].service.find_one.side_effect = [
-            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et, 'unique_id': 2},
-            {'guid': 'prev-cycle', 'firstcreated': date_1am_et, 'unique_id': 1},
+            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'firstcreated': date_2am_et, 'unique_id': 2,
+             'type': 'text'},
+            {'guid': 'prev-cycle', 'firstcreated': date_1am_et, 'unique_id': 1, 'type': 'text'},
         ]
 
-        item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et})
+        item = self.format_item({'guid': 'last', 'rewrite_of': 'same-cycle', 'extra': {}, 'firstcreated': date_3am_et,
+                                 'type': 'text'})
         self.assertEqual('prev-cycle', item.find('FileName').text)
         self.assertEqual('prev-cycle', item.find('SystemSlug').text)
 
@@ -385,11 +405,12 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
     def test_writethru_keeps_newscompid(self):
         resources['archive'].service.find_one.side_effect = [
-            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'unique_id': 2},
-            {'guid': 'prev-cycle', 'unique_id': 1},
+            {'guid': 'same-cycle', 'rewrite_of': 'prev-cycle', 'unique_id': 2, 'type': 'text'},
+            {'guid': 'prev-cycle', 'unique_id': 1, 'type': 'text'},
         ]
 
         item = self.format_item({
+            'type': 'text',
             'rewrite_of': 'same-cycle',
             'unique_id': 3,
         })

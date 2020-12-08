@@ -1,4 +1,5 @@
 
+import os
 import cp
 import lxml
 import arrow
@@ -44,6 +45,15 @@ PICTURE_CATEGORY_MAPPING = {
 def guid(_guid):
     """Fix ap guids containing etag."""
     return str(_guid).split('_')[0]
+
+
+def media_ref(item):
+    try:
+        original = item['renditions']['original']
+        filename = get_rendition_file_name(original)
+        return os.path.splitext(filename)[0]
+    except KeyError:
+        return guid(item['guid'])
 
 
 class JimiFormatter(Formatter):
@@ -453,7 +463,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'PhotoType').text = get_count_label(len(photos), item['language'])
         if photos:
             etree.SubElement(content, 'PhotoReference').text = ','.join(filter(None, [
-                guid(photo['guid'])
+                media_ref(photo)
                 for photo
                 in photos
             ]))
@@ -471,6 +481,8 @@ class JimiFormatter(Formatter):
         return orig
 
     def _format_filename(self, item):
+        if item['type'] == 'picture':
+            return media_ref(item)
         filename = item['guid']
         return guid(filename)
 
