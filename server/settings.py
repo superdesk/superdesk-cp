@@ -329,3 +329,5 @@ AP_TAGS_MAPPING = {
 }
 
 SCHEMA_VERSION = 1
+
+ORANGELOGIC_URL = 'https://canadianpress-api.orangelogic.com/'

@@ -16,8 +16,8 @@ class CPPublishService(PublishService):
         name, ext = os.path.splitext(orig)
         try:
             item = etree.fromstring(queue_item['formatted_item'].encode('utf-8'))
-            file_name = item.find('ContentItem').find('FileName').text
-            return '{}{}'.format(file_name, ext)
+            filename = item.find('ContentItem').find('FileName').text
+            return '{}{}'.format(filename, ext)
         except (etree.XMLSyntaxError, AttributeError):
             pass
         return '{}{}'.format('-'.join(name.split('-')[:-2]), ext)

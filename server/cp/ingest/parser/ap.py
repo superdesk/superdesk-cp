@@ -54,6 +54,9 @@ AP_SUBJECT_CODES = set([
 ])
 
 
+sess = requests.Session()
+
+
 def _get_cv_items(_id: str) -> List:
     cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id=_id)
     return cv['items']
@@ -100,8 +103,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if app.config.get('AP_INGEST_DEBUG'):
             transref = ap_item['altids']['itemid']
-            with open('/tmp/ap/{}.json'.format(transref), 'w') as out:
-                json.dump(data['data'], out, indent=2)
+            try:
+                with open('/tmp/ap/{}.json'.format(transref), 'w') as out:
+                    json.dump(data['data'], out, indent=2)
+            except FileNotFoundError:
+                pass
 
         item['guid'] = ap_item['altids']['etag']
         try:
@@ -616,7 +622,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
     def _parse_exif(self, data, item):
         try:
-            res = requests.get(data['item']['renditions']['preview']['href'], timeout=10)
+            res = sess.get(data['item']['renditions']['preview']['href'], timeout=10)
         except KeyError:
             return
         metadata = get_meta_iptc(io.BytesIO(res.content))

@@ -14,6 +14,7 @@ from superdesk.editor_utils import Editor3Content
 from superdesk.metadata.item import CONTENT_STATE
 
 
+sess = requests.Session()
 logger = logging.getLogger(__name__)
 
 ULTRAD_ID = 'ultrad_id'
@@ -53,7 +54,7 @@ def upload_document(item):
         },
     }
 
-    resp = requests.post(ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
+    resp = sess.post(ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
     raise_for_resp_error(resp)
     data = get_json(resp)
     return data['_id']
@@ -61,7 +62,7 @@ def upload_document(item):
 
 def get_document(ultrad_id):
     url = urljoin(ULTRAD_URL, ultrad_id)
-    resp = requests.get(url, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
+    resp = sess.get(url, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
     raise_for_resp_error(resp)
     return get_json(resp)
 

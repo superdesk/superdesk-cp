@@ -2,6 +2,7 @@
   {
     "_id": "event",
     "name": "event",
+    "init_version": 1,
     "schema": {
       "calendars": {
         "type": "list",
@@ -19,6 +20,10 @@
         "type": "list",
         "required": false,
         "nullable": false
+      },
+      "language": {
+        "type": "string",
+        "required": true
       }
     },
     "editor": {
@@ -30,12 +35,16 @@
       },
       "subject": {
         "enabled": false
+      },
+      "language": {
+        "enabled": true
       }
     }
   },
   {
     "_id": "planning",
     "name": "planning",
+    "init_version": 1,
     "schema": {
       "agendas": {
         "required": false,
@@ -80,6 +89,10 @@
       "files": {
         "required": false,
         "type": "list"
+      },
+      "language": {
+        "type": "string",
+        "required": true
       }
     },
     "editor": {
@@ -121,6 +134,9 @@
       },
       "subject": {
         "enabled": false
+      },
+      "language": {
+        "enabled": true
       }
     },
     "list": {
@@ -129,6 +145,22 @@
         "internalnote",
         "name"
       ]
+    }
+  },
+  {
+    "_id": "coverage",
+    "name": "coverage",
+    "init_version": 1,
+    "schema": {
+      "language": {
+        "type": "string",
+        "required": true
+      }
+    },
+    "editor": {
+      "language": {
+        "enabled": true
+      }
     }
   }
 ]

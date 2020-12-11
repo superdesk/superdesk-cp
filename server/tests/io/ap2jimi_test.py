@@ -93,7 +93,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('0', item.find('MediaType').text)
         self.assertEqual('0', item.find('Status').text)
         self.assertIsNotNone(item.find('SystemSlug').text)
-        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('FileName').text)  # using guid
+        self.assertEqual('abcd-media', item.find('FileName').text)  # using guid
         self.assertEqual('Alvaro Barrientos', item.find('Byline').text)
         self.assertEqual('false', item.find('HeadlineService').text)
         self.assertEqual('None', item.find('VideoType').text)
@@ -153,7 +153,7 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('AP', item.find('ArchiveSources').text)
         self.assertEqual('Coronavirus, COVID-19', item.find('XmpKeywords').text)
         self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField1').text)
-        self.assertEqual('de1bb822362146388852c8b7eee93c76', item.find('CustomField2').text)
+        self.assertEqual('abcd-media', item.find('CustomField2').text)
         self.assertEqual('AP', item.find('CustomField6').text)
 
         self.assertIsNone(item.find('Headline2'))

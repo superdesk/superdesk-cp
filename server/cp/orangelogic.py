@@ -27,7 +27,7 @@ AUTH_API = '/API/Authentication/v1.0/Login'
 SEARCH_API = '/API/Search/v3.0/search'
 DOWNLOAD_API = '/htm/GetDocumentAPI.aspx'
 
-TIMEOUT = (5, 25)
+TIMEOUT = (5, 10)
 DATE_FORMAT = 'u'
 
 IPTC_SOURCE_MAPPING = {
