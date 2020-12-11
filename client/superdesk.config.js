@@ -109,7 +109,8 @@ module.exports = function(grunt) {
             {id: 'categories', name:'Wire', field: 'anpa_category', list: 'categories'},
             {id: 'subject_custom', name:'Index', field: 'subject', list: 'subject_custom'},
             {id: 'distribution', name:'Services', field: 'subject', list: 'distribution'},
-            {id: 'language', name:'Language', field: 'language', list: 'languages'}
+            {id: 'language', name:'Language', field: 'language', list: 'languages'},
+            {id: 'tag', name:'Tag', field: 'subject', list: 'tag'}
         ],
         
         search: {
