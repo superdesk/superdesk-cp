@@ -417,11 +417,11 @@ class JimiFormatter(Formatter):
         refs = set([
             self._format_filename(self._get_original_item(ref))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
-            if ref.get('pubstate') == 'usable'
+            if ref.get('pubstatus') == 'usable'
         ])
 
         if refs:
-            etree.SubElement(content, 'ContainerIDs').text = ', '.join(refs)
+            etree.SubElement(content, 'ContainerIDs').text = ', '.join(sorted(refs))
 
     def _format_picture_filename(self, item):
         try:
