@@ -416,3 +416,18 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         })
 
         self.assertEqual('00000001', item.find('NewsCompID').text)
+
+    def test_picture_container_ids(self):
+        resources['news'].service.get.side_effect = [[
+            {'guid': 'canceled', 'pubstatus': 'canceled', 'type': 'text'},
+            {'guid': 'usable', 'pubstatus': 'usable', 'type': 'text'},
+            {'guid': 'usable2', 'pubstatus': 'usable', 'type': 'text'},
+        ]]
+
+        item = self.format_item({
+            'type': 'picture',
+            'unique_id': 3,
+        })
+
+        resources['news'].service.get.side_effect = None
+        self.assertEqual('usable, usable2', item.find('ContainerIDs').text)

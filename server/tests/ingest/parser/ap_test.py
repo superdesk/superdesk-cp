@@ -1,4 +1,5 @@
 
+from cp.ingest.parser.ap import CATEGORY_SCHEME
 from superdesk.utc import utc_to_local
 import cp
 import pytz
@@ -166,3 +167,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 item = parser.parse(source, provider)
                 self.assertEqual(embargoed, item['embargoed'])
                 self.assertNotIn('embargo', item)
+
+    def test_category(self):
+        with open(get_fixture_path('politics.json', 'ap')) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+        self.assertIn({
+            'name': 'International',
+            'qcode': 'w',
+            'scheme': CATEGORY_SCHEME,
+        }, item['anpa_category'])
