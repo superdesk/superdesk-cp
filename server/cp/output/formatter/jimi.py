@@ -282,9 +282,9 @@ class JimiFormatter(Formatter):
 
     def _format_category_index(self, content, item):
         categories = self._get_categories(item)
+        indexes = uniq(categories + self._get_indexes(item))
         if categories:
             etree.SubElement(content, 'Category').text = ','.join(categories)
-        indexes = uniq(categories + self._get_indexes(item))
         if indexes:
             etree.SubElement(content, 'IndexCode').text = ','.join(indexes)
         else:
@@ -414,10 +414,11 @@ class JimiFormatter(Formatter):
             self._format_refs(content, item)
 
     def _format_refs(self, content, item):
-        refs = [
+        refs = set([
             self._format_filename(self._get_original_item(ref))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
-        ]
+            if ref.get('pubstate') == 'usable'
+        ])
 
         if refs:
             etree.SubElement(content, 'ContainerIDs').text = ', '.join(refs)
