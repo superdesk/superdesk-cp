@@ -584,17 +584,27 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if subj.get('code') in AP_SUBJECT_CODES:
                 index_names.add(subj['name'])
 
+        def set_cat(cat):
+            item['anpa_category'].append({
+                'name': cat['name'],
+                'qcode': cat['qcode'],
+                'scheme': CATEGORY_SCHEME,
+            })
+
         if index_names:
             categories = _get_cv_items(CATEGORY_SCHEME)
             item['anpa_category'] = []
+
             for cat in categories:
                 if cat.get('name') in index_names:
-                    item['anpa_category'].append({
-                        'name': cat['name'],
-                        'qcode': cat['qcode'],
-                        'scheme': CATEGORY_SCHEME,
-                    })
-                    break
+                    set_cat(cat)
+                    return
+
+            # fallback rules when there is no category matching
+            for cat in categories:
+                if cat.get('name') == 'International' and 'Politics' in index_names:
+                    set_cat(cat)
+                    return
 
     def _parse_picture_category(self, data, item):
         for subj in data['item'].get('subject', []):

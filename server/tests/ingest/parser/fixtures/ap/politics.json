@@ -1,0 +1,562 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.1",
+    "id": "r4Ktd2uQU1I",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30598,
+                "name": "AP National News Report (A Wire)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 33367,
+                "name": "AP Alerts -  Agriculture"
+            }, {
+                "id": 33373,
+                "name": "AP Alerts -  Defense"
+            }, {
+                "id": 33383,
+                "name": "AP Alerts -  Medical"
+            }, {
+                "id": 35525,
+                "name": "AP Extended Global Headlines"
+            }, {
+                "id": 35527,
+                "name": "AP Extended Global Headlines - Summaries"
+            }, {
+                "id": 46587,
+                "name": "Broadcast - Summaries - National News"
+            }, {
+                "id": 101264,
+                "name": "AP U.S. National News (Datastream A)"
+            }, {
+                "id": 101543,
+                "name": "Broadcast National Summaries"
+            }]
+        },
+        "item": {
+            "uri": "http://api.ap.org/media/v/content/9e2faea3bf168bab198475dc8be1ec3d?qt=r4Ktd2uQU1I&et=3a5aza0c0",
+            "altids": {
+                "itemid": "9e2faea3bf168bab198475dc8be1ec3d",
+                "etag": "9e2faea3bf168bab198475dc8be1ec3d_3a5aza0c0",
+                "friendlykey": "294867375562",
+                "referenceid": "US--Biden-Staff",
+                "transref": "LAC0246"
+            },
+            "version": 3,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Spot Development",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2020-12-10T16:13:39Z",
+            "firstcreated": "2020-12-10T14:56:30Z",
+            "editorialrole": "FullStory",
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: Updates photos",
+            "editorialtypes": ["Lead"],
+            "signals": ["newscontent"],
+            "title": "US--Biden-Staff",
+            "headline": "Biden taps Rice as domestic policy adviser, McDonough for VA",
+            "headline_extended": "President-elect Joe Biden is naming Susan Rice as director of the White House Domestic Policy Council",
+            "slugline": "AP-US--Biden-Staff, 3rd Ld-Writethru",
+            "description_summary": "President-elect Joe Biden is naming Susan Rice as director of the White House Domestic Policy Council. The role will give her broad sway over his administration’s approach to immigration, health care and racial inequality and elevates the prominence of the position in the West Wing. He is also nominating former President Barack Obama’s White House chief of staff Denis McDonough as secretary of the Department of Veterans Affairs. The sprawling agency has presented organizational challenges for both parties over the years. In tapping Rice and McDonough for the roles, Biden is continuing to stockpile his administration with prominent alumni of the Obama administration. ",
+            "bylines": [{
+                "by": "By JULIE PACE and ZEKE MILLER",
+                "title": "Associated Press"
+            }],
+            "located": "WASHINGTON",
+            "datelinelocation": {
+                "city": "Washington",
+                "countryareacode": "DC",
+                "countryareaname": "District of Columbia",
+                "countrycode": "USA",
+                "countryname": "United States",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-77.03637, 38.89511]
+                }
+            },
+            "copyrightnotice": "Copyright 2020 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Biden-Staff"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "person": [{
+                "code": "621be01927ad416eb920aaa328331692",
+                "name": "Osama bin Laden",
+                "rels": ["direct"],
+                "types": ["NEWSMAKER", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "b0cf739893af4834b3f59261552eb440",
+                "name": "Kamala Harris",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "b8449300d0d44476bd222d71edaf9f93",
+                "name": "Tom Vilsack",
+                "rels": ["direct"],
+                "types": ["GOVERNMENT_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "119b68c7f8c246e9bbef993d5e8e5e04",
+                "name": "Marcia Fudge",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "associatedstates": [{
+                    "code": "dcb000c082c610048843df092526b43e",
+                    "name": "Ohio"
+                }],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "7e08a5bb856b45db823512b6ec0f5f60",
+                "name": "Denis McDonough",
+                "rels": ["direct"],
+                "types": ["GOVERNMENT_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "b1d550d087874a0393ebfa85dab5ea0a",
+                "name": "Barack Obama",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "2daa59a718664ac3b409ae24227e60c7",
+                "name": "Susan Rice",
+                "rels": ["direct"],
+                "types": ["GOVERNMENT_FIGURE", "PERSON", "AUTHOR"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "42fcd5108d2610048a34f7ae5e3ffd3e",
+                "name": "Joe Biden",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "a6331b54c46e4ca8b79fa40fada95db5",
+                "name": "Donald Trump",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "p",
+                "name": "p"
+            }, {
+                "code": "86aad5207dac100488ecba7fa5283c3e",
+                "name": "Government and politics",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Government and politics"
+            }, {
+                "code": "34dfe89aea0d48a3810bd50ebd390ef0",
+                "name": "Cabinet appointments and nominations",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["4fcb771888d7100484beba0a2b2ca13e", "a3dae7a888d710048edfded1ce465303"]
+            }, {
+                "code": "4fcb771888d7100484beba0a2b2ca13e",
+                "name": "Cabinets",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "a3dae7a888d710048edfded1ce465303",
+                "name": "Government appointments and nominations",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "36f9833daec54de29abab6394feacafd",
+                "name": "Health disparities",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e", "c4fee418884410048a01ae2ac3a6923e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "c4fee418884410048a01ae2ac3a6923e",
+                "name": "Human welfare",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "08680bf085af10048c4f9a5aeba5fb06",
+                "name": "Social issues",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["75a42fd87df7100483eedf092526b43e"]
+            }, {
+                "code": "75a42fd87df7100483eedf092526b43e",
+                "name": "Social affairs",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "24af9f40872a10048cb7d7c656897a02",
+                "name": "Racial and ethnic discrimination",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["ec28dcdfc4ca4ac9918d3b61427e65c3", "24af9f40872a10048cb6d7c656897a02"]
+            }, {
+                "code": "ec28dcdfc4ca4ac9918d3b61427e65c3",
+                "name": "Race and ethnicity",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "24af9f40872a10048cb6d7c656897a02",
+                "name": "Discrimination",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["008e219885ab10048110ff2260dd383e"]
+            }, {
+                "code": "008e219885ab10048110ff2260dd383e",
+                "name": "Human rights and civil liberties",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "86acbd687dac100488f1ba7fa5283c3e",
+                "name": "Foreign policy",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86c049507dac10048982ba7fa5283c3e", "86ab8cb87dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "86c049507dac10048982ba7fa5283c3e",
+                "name": "International relations",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "86ab8cb87dac100488ecba7fa5283c3e",
+                "name": "Government policy",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "c2c601687e8510048aeb8087fc32d30c",
+                "name": "Military affairs",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["3b7438807d7010048477ba7fa5283c3e"]
+            }, {
+                "code": "3b7438807d7010048477ba7fa5283c3e",
+                "name": "Military and defense",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "62886ddf8d274d3b80c3206f17153281",
+                "name": "Armed forces",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["3b7438807d7010048477ba7fa5283c3e"]
+            }, {
+                "code": "9492a1d888d610048283ba0a2b2ca13e",
+                "name": "National security",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["3b7438807d7010048477ba7fa5283c3e"]
+            }, {
+                "code": "3b7477007d701004847aba7fa5283c3e",
+                "name": "Veterans affairs",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c2c601687e8510048aeb8087fc32d30c"]
+            }, {
+                "code": "2d8f1d5f64414229bfd5c591708af164",
+                "name": "Veterans",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "3b752ab07d701004847eba7fa5283c3e",
+                "name": "Immigration",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["inferred"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }],
+            "organisation": [{
+                "code": "e5cce8588bcc100480a3eb438e258b03",
+                "name": "U.S. National Security Council",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e5d0a5608bcc1004810deb438e258b03"]
+            }, {
+                "code": "e5d0a5608bcc1004810deb438e258b03",
+                "name": "Office of the President of the United States",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["898f52e08921100480efba0a2b2ca13e"]
+            }, {
+                "code": "898f52e08921100480efba0a2b2ca13e",
+                "name": "United States government",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "9988ec60892110048b7adcd60602cf03",
+                "name": "U.S. Department of Agriculture",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["898f52e08921100480efba0a2b2ca13e"]
+            }],
+            "place": [{
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f7c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-98.5, 39.76]
+                }
+            }, {
+                "code": "661850e07d5b100481f7c076b8e3055c",
+                "name": "North America",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-100.54688, 46.07323]
+                }
+            }, {
+                "code": "788b364882f110048df3df092526b43e",
+                "name": "District of Columbia",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661e48387d5b10048291c076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-77.00025, 38.91706]
+                }
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661850e07d5b100481f5c076b8e3055c",
+                "name": "Latin America and Caribbean",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "associations": {
+                "1": {
+                    "uri": "http://api.ap.org/media/v/content/2670f786be094d87a1ceac6d6cdeae51?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "2670f786be094d87a1ceac6d6cdeae51",
+                        "etag": "2670f786be094d87a1ceac6d6cdeae51_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                },
+                "2": {
+                    "uri": "http://api.ap.org/media/v/content/1344af6821964b2eb8e989a2586aef34?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "1344af6821964b2eb8e989a2586aef34",
+                        "etag": "1344af6821964b2eb8e989a2586aef34_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                },
+                "3": {
+                    "uri": "http://api.ap.org/media/v/content/6cb65bf608244740929d6b961b4cc58d?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "6cb65bf608244740929d6b961b4cc58d",
+                        "etag": "6cb65bf608244740929d6b961b4cc58d_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                },
+                "4": {
+                    "uri": "http://api.ap.org/media/v/content/53ff96d98f4d4465beb233595a9e9c6b?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "53ff96d98f4d4465beb233595a9e9c6b",
+                        "etag": "53ff96d98f4d4465beb233595a9e9c6b_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                },
+                "5": {
+                    "uri": "http://api.ap.org/media/v/content/4de26dba3f494633896e47d77794ee0c?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "4de26dba3f494633896e47d77794ee0c",
+                        "etag": "4de26dba3f494633896e47d77794ee0c_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                },
+                "6": {
+                    "uri": "http://api.ap.org/media/v/content/a0d8183c801e41b197db215716c195e6?qt=r4Ktd2uQU1I&et=1a1aza3c0&ai=9e2faea3bf168bab198475dc8be1ec3d",
+                    "altids": {
+                        "itemid": "a0d8183c801e41b197db215716c195e6",
+                        "etag": "a0d8183c801e41b197db215716c195e6_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Biden Staff"
+                }
+            },
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 1028,
+                    "contentid": "b1c0c30dabff412e71a1704dd51633a3",
+                    "href": "http://api.ap.org/media/v/content/9e2faea3bf168bab198475dc8be1ec3d.3/download?type=text&format=NITF&rid=b1c0c30dabff412e71a1704dd51633a3&cid=0&fid=10b061397f9a4b0f822f4c4eeded9867&trf=LAC0246&qt=r4Ktd2uQU1I&dt=Zsoax-Iui2&et=3a5aza0c0",
+                    "mediafilterid": "2"
+                },
+                "anpa": {
+                    "title": "ANPA Story Download",
+                    "rel": "Main",
+                    "format": "ANPA1312",
+                    "type": "text",
+                    "mimetype": "application/octet-stream",
+                    "fileextension": "anpa",
+                    "mediafilterid": "1",
+                    "words": 1028,
+                    "contentid": "b1c0c30dabff412e71a1704dd51633a3",
+                    "href": "http://api.ap.org/media/v/content/9e2faea3bf168bab198475dc8be1ec3d.3/download?type=text&format=ANPA&rid=b1c0c30dabff412e71a1704dd51633a3&cid=0&fid=10b061397f9a4b0f822f4c4eeded9867&trf=LAC0246&qt=r4Ktd2uQU1I&dt=Zsoax-Iui2&et=3a5aza0c0"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/9e2faea3bf168bab198475dc8be1ec3d",
+                "rel": "canonical"
+            }]
+        }
+    }
+}
