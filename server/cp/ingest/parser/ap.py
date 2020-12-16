@@ -236,6 +236,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         self._parse_tags(data['data'], item)
 
+        if item.get('body_html'):
+            item['body_html'] = item['body_html'] \
+                .replace('<block>', '')
+
         return item
 
     def _parse_stocks(self, organisations):
