@@ -47,11 +47,11 @@ def guid(_guid):
     return str(_guid).split('_')[0]
 
 
-def media_ref(item):
+def media_ref(item, split=True):
     try:
         original = item['renditions']['original']
         filename = get_rendition_file_name(original)
-        return os.path.splitext(filename)[0]
+        return os.path.splitext(filename)[0] if split else filename
     except KeyError:
         return guid(item['guid'])
 
@@ -131,7 +131,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = filename
         etree.SubElement(content, 'NewsCompID').text = item_id
-        etree.SubElement(content, 'SystemSlug').text = filename
+        etree.SubElement(content, 'SystemSlug').text = guid(orig['guid'])
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
@@ -425,7 +425,7 @@ class JimiFormatter(Formatter):
 
     def _format_picture_filename(self, item):
         try:
-            return get_rendition_file_name(item['renditions']['original'])
+            return media_ref(item, split=False)
         except KeyError:
             pass
         if item.get('extra') and item['extra'].get(cp.FILENAME):

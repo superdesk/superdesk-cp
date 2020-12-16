@@ -224,6 +224,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
     def test_picture(self):
         updates = {
             'type': 'picture',
+            'guid': 'urn:picture',
             'urgency': 5,
             'byline': 'photographer',
             'headline': 'some headline',
@@ -275,6 +276,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('media_id', item.find('FileName').text)
         self.assertEqual('media_id.jpg', item.find('ViewFile').text)
         self.assertEqual('media_id.jpg', item.find('ContentRef').text)
+        self.assertEqual(updates['guid'], item.find('SystemSlug').text)
 
         self.assertEqual(1, len(item.findall('FileName')))
 
