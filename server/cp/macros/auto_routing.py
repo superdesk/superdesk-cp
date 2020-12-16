@@ -22,14 +22,15 @@ def find_name_item(cv_id, name):
     if not cv or not cv.get('items'):
         return
     for item in cv['items']:
-        if item.get('name') == name.strip():
+        if item.get('name').lower() == name:
             return item
 
 
 def callback(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
     rule = kwargs.get('rule')
-    if rule:
+    item['profile'] = 'autorouting'
+    if rule and ':' in rule['name']:
         service, destination = re.sub(r'\([A-Z]+\)', '', rule['name']).split(':')
         mapping = {
             'distribution': service.strip(),
@@ -37,7 +38,7 @@ def callback(item, **kwargs):
         }
 
         for cv_id, name in mapping.items():
-            subject = find_name_item(cv_id, name)
+            subject = find_name_item(cv_id, name.lower())
             if subject:
                 item.setdefault('subject', []).append({
                     'name': subject['name'],
@@ -46,7 +47,7 @@ def callback(item, **kwargs):
                 })
                 item['profile'] = 'autorouting'
             else:
-                logger.error('no item found in vocabulary %s with name %s', cv_id, name.strip())
+                logger.error('no item found in vocabulary %s with name %s', cv_id, name)
     return item
 
 
