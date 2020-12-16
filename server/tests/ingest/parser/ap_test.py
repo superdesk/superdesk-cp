@@ -118,6 +118,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             },
         }, item['place'][0])
 
+        self.assertRegex(item['body_html'], r'^<p>.*</p>$')
+
     def test_parse_ignore_associations_based_on_type_config(self):
         _provider = {
             'content_types': ['text'],
