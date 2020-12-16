@@ -2,11 +2,14 @@
 import io
 import re
 
-from flask.globals import current_app
 import cp
 import json
 import requests
+import lxml.html
+import lxml.html.clean
+
 import superdesk
+import superdesk.etree as sd_etree
 
 from typing import List
 from flask import current_app as app
@@ -237,8 +240,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         self._parse_tags(data['data'], item)
 
         if item.get('body_html'):
-            item['body_html'] = item['body_html'] \
-                .replace('<block>', '')
+            item['body_html'] = clean_html(item['body_html'])
 
         return item
 
@@ -682,7 +684,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
     def _parse_tags(self, data, item):
         subject = item.setdefault('subject', [])
         products = self.get_products(data)
-        mapping = current_app.config['AP_TAGS_MAPPING']
+        mapping = app.config['AP_TAGS_MAPPING']
         for tag, codes in mapping.items():
             for product in products:
                 if product in codes:
@@ -709,3 +711,10 @@ def append_matching_subject(item, scheme, qcode):
 
 def capitalize(name):
     return ' '.join([n.capitalize() for n in name.split(' ')])
+
+
+def clean_html(html):
+    cleaner = lxml.html.clean.Cleaner()
+    root = lxml.html.fromstring(html)
+    root = cleaner.clean_html(root)
+    return sd_etree.to_string(root, method='html')

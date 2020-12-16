@@ -1,6 +1,4 @@
 
-from cp.ingest.parser.ap import CATEGORY_SCHEME
-from superdesk.utc import utc_to_local
 import cp
 import pytz
 import copy
@@ -19,6 +17,7 @@ from tests.ingest.parser import get_fixture_path
 from tests.mock import resources
 
 from cp.ingest import CP_APMediaFeedParser
+from cp.ingest.parser.ap import CATEGORY_SCHEME
 
 
 with open(get_fixture_path('item.json', 'ap')) as fp:
