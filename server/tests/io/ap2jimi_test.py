@@ -201,3 +201,5 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual('2020-06-02T19:13:57', item.find('CreatedDateTime').text)  # using api data
         self.assertIn("Arts and entertainment,Movies,Entertainment,Automotive technology,Industrial "
                       "technology,Technology,Automobile racing,Sports,Form", item.find('Keyword').text)
+        self.assertEqual('3', item.find('WritethruValue').text)
+        self.assertEqual('3rd', item.find('WritethruNum').text)
