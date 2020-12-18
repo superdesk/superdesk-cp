@@ -1,0 +1,392 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.1",
+    "id": "qOPlAlpctvI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30083,
+                "name": "AP New York City News - No Weather"
+            }, {
+                "id": 30085,
+                "name": "AP New York State News - No Weather"
+            }, {
+                "id": 30598,
+                "name": "AP National News Report (A Wire)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 33371,
+                "name": "AP Alerts -  Crime"
+            }, {
+                "id": 33382,
+                "name": "AP Alerts -  Law Enforcement"
+            }, {
+                "id": 33385,
+                "name": "AP Alerts -  Legal"
+            }, {
+                "id": 35525,
+                "name": "AP Extended Global Headlines"
+            }, {
+                "id": 35527,
+                "name": "AP Extended Global Headlines - Summaries"
+            }, {
+                "id": 42682,
+                "name": "AP 50 State Report - No Member Copy"
+            }, {
+                "id": 46587,
+                "name": "Broadcast - Summaries - National News"
+            }, {
+                "id": 100019,
+                "name": "All State Wires - News Only & Weather Only"
+            }, {
+                "id": 101264,
+                "name": "AP U.S. National News (Datastream A)"
+            }, {
+                "id": 101543,
+                "name": "Broadcast National Summaries"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/41148a074e2caa8190926b25a2a940f8?qt=qOPlAlpctvI&et=8a11aza0c0",
+            "altids": {
+                "itemid": "41148a074e2caa8190926b25a2a940f8",
+                "etag": "41148a074e2caa8190926b25a2a940f8_8a11aza0c0",
+                "friendlykey": "295444792030",
+                "referenceid": "US--America Protests-Buffalo Police",
+                "transref": "a0485"
+            },
+            "version": 8,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Spot Development",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2020-06-06T22:09:45Z",
+            "firstcreated": "2020-06-06T15:25:17Z",
+            "editorialrole": "FullStory",
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: With comment from defense lawyer.; With AP Photos.",
+            "editorialtypes": ["Lead"],
+            "signals": ["newscontent"],
+            "title": "US--America Protests-Buffalo Police",
+            "headline": "Prosecutor: 2 Buffalo police charged with assault in shoving",
+            "headline_extended": "Prosecutors say two Buffalo police officers have been charged with assault after a video showed them shoving a 75-year-old protester",
+            "slugline": "BC-US--America Protests-Buffalo Police, 8th Ld-Writethru",
+            "description_summary": "Prosecutors say two Buffalo police officers have been charged with assault after a video showed them shoving a 75-year-old protester. Both pleaded not guilty to second-degree assault Saturday. The two officers had been suspended without pay Friday after a TV crew captured the confrontation the night before near the end of protests over the death of George Floyd in Minnesota. The footage shows a man approaching a line of helmeted officers holding batons as they clear demonstrators. Two officers push the man backward, and he hits his head on the pavement. Blood spills as officers walk past. The governor praised prosecutors for moving quickly to charge the officers.",
+            "located": "BUFFALO, N.Y.",
+            "datelinelocation": {
+                "city": "Buffalo",
+                "countryareacode": "NY",
+                "countryareaname": "New York",
+                "countrycode": "USA",
+                "countryname": "United States",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-78.87837, 42.88645]
+                }
+            },
+            "copyrightnotice": "Copyright 2020 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["America Protests-Buffalo Police"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "person": [{
+                "code": "861209b8925510048ee3a55c96277d3e",
+                "name": "Andrew Cuomo",
+                "rels": ["direct"],
+                "types": ["POLITICIAN", "PERSON"],
+                "associatedstates": [{
+                    "code": "b58f18a082c6100487fbdf092526b43e",
+                    "name": "New York"
+                }],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "a",
+                "name": "a"
+            }, {
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "n",
+                "name": "n"
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "General news",
+                "rels": ["direct", "ancestor"]
+            }, {
+                "code": "4626a38a1b52454ca5d01755d14f1dc9",
+                "name": "Legal proceedings",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["17956128897810048ce8d56c852d093e"]
+            }, {
+                "code": "17956128897810048ce8d56c852d093e",
+                "name": "Law and order",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "343405863a044ec7a190c5c0d395c536",
+                "name": "Assault and battery",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["13c6a480899b10048b9dd56c852d093e"]
+            }, {
+                "code": "13c6a480899b10048b9dd56c852d093e",
+                "name": "Violent crime",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["48612b807c2b4b93bbbacbf54f547ad5"]
+            }, {
+                "code": "48612b807c2b4b93bbbacbf54f547ad5",
+                "name": "Crime",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "0e8cf338896510048024d56c852d093e",
+                "name": "Protests and demonstrations",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["2bae705e15fc487fba00746f63b682dc"]
+            }, {
+                "code": "2bae705e15fc487fba00746f63b682dc",
+                "name": "Political and civil unrest",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "92f37e658701429ba309bf57247f34c8",
+                "name": "Death of George Floyd",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "b2a50ec08315100485dad5a57deba703",
+                "name": "Police brutality",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["ec526ac088721004821ecb8225d5863e", "008e219885ab10048110ff2260dd383e", "17956128897810048ce8d56c852d093e"]
+            }, {
+                "code": "ec526ac088721004821ecb8225d5863e",
+                "name": "Violence",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "08680bf085af10048c4f9a5aeba5fb06",
+                "name": "Social issues",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["75a42fd87df7100483eedf092526b43e"]
+            }, {
+                "code": "75a42fd87df7100483eedf092526b43e",
+                "name": "Social affairs",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "008e219885ab10048110ff2260dd383e",
+                "name": "Human rights and civil liberties",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }],
+            "place": [{
+                "code": "87326b96c818441d86b6d4829dccafd4",
+                "name": "Buffalo",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["b58f18a082c6100487fbdf092526b43e"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-78.87837, 42.88645]
+                }
+            }, {
+                "code": "b58f18a082c6100487fbdf092526b43e",
+                "name": "New York",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661e48387d5b10048291c076b8e3055c"],
+                "locationtype": {
+                    "code": "0ae5eb8e00e04295a4fc209c94bfe6ef",
+                    "name": "State"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-75.4999, 43.00035]
+                }
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f7c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-98.5, 39.76]
+                }
+            }, {
+                "code": "661850e07d5b100481f7c076b8e3055c",
+                "name": "North America",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-100.54688, 46.07323]
+                }
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f5b16ea8760d10048047e6e7a0f4673e",
+                "name": "State",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "b58f18a082c6100487fbdf092526b43e",
+                "name": "New York",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "b836d07082c610048807df092526b43e",
+                "name": "New York City",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661850e07d5b100481f5c076b8e3055c",
+                "name": "Latin America and Caribbean",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "associations": {
+                "1": {
+                    "uri": "https://api.ap.org/media/v/content/6187f808440c45f5afbf5bbfc91fc9e9?qt=qOPlAlpctvI&et=0a1aza3c0&ai=41148a074e2caa8190926b25a2a940f8",
+                    "altids": {
+                        "itemid": "6187f808440c45f5afbf5bbfc91fc9e9",
+                        "etag": "6187f808440c45f5afbf5bbfc91fc9e9_0a1aza3c0"
+                    },
+                    "version": 0,
+                    "type": "picture",
+                    "headline": "America Protests-Buffalo Police"
+                },
+                "3": {
+                    "uri": "https://api.ap.org/media/v/content/11a6f9d36eb74e7ba1941c447a63ceb3?qt=qOPlAlpctvI&et=0a1aza3c0&ai=41148a074e2caa8190926b25a2a940f8",
+                    "altids": {
+                        "itemid": "11a6f9d36eb74e7ba1941c447a63ceb3",
+                        "etag": "11a6f9d36eb74e7ba1941c447a63ceb3_0a1aza3c0"
+                    },
+                    "version": 0,
+                    "type": "picture",
+                    "headline": "America-Protests-Buffalo-Police"
+                },
+                "4": {
+                    "uri": "https://api.ap.org/media/v/content/b9118687dbee41cb84f2bdf00d9293af?qt=qOPlAlpctvI&et=0a1aza3c0&ai=41148a074e2caa8190926b25a2a940f8",
+                    "altids": {
+                        "itemid": "b9118687dbee41cb84f2bdf00d9293af",
+                        "etag": "b9118687dbee41cb84f2bdf00d9293af_0a1aza3c0"
+                    },
+                    "version": 0,
+                    "type": "picture",
+                    "headline": "America-Protests-Buffalo-Police"
+                }
+            },
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 568,
+                    "contentid": "8325bfb51a7adc599bdb578eef4a9ab6",
+                    "href": "https://api.ap.org/media/v/content/41148a074e2caa8190926b25a2a940f8.8/download?type=text&format=NITF&rid=8325bfb51a7adc599bdb578eef4a9ab6&cid=0&fid=01d224cb87044260835f2c74ad019f90&trf=a0485&qt=qOPlAlpctvI&dt=B6Ok2l4X0p&et=8a11aza0c0",
+                    "mediafilterid": "2"
+                },
+                "anpa": {
+                    "title": "ANPA Story Download",
+                    "rel": "Main",
+                    "format": "ANPA1312",
+                    "type": "text",
+                    "mimetype": "application/octet-stream",
+                    "fileextension": "anpa",
+                    "mediafilterid": "1",
+                    "words": 568,
+                    "contentid": "8325bfb51a7adc599bdb578eef4a9ab6",
+                    "href": "https://api.ap.org/media/v/content/41148a074e2caa8190926b25a2a940f8.8/download?type=text&format=ANPA&rid=8325bfb51a7adc599bdb578eef4a9ab6&cid=0&fid=01d224cb87044260835f2c74ad019f90&trf=a0485&qt=qOPlAlpctvI&dt=B6Ok2l4X0p&et=8a11aza0c0"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/41148a074e2caa8190926b25a2a940f8",
+                "rel": "canonical"
+            }]
+        }
+    },
+    "nitf": {
+        "body_html": "<block>\n<p>BUFFALO, N.Y. (AP) — Two Buffalo police officers were charged with assault Saturday, prosecutors said, after a video showed them shoving a 75-year-old protester in recent demonstrations over the death of George Floyd.</p>\n<p>Robert McCabe and Aaron Torgalski, who surrendered Saturday morning, pleaded not guilty to second-degree assault. They were released without bail.</p></block>"
+    }
+}

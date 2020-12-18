@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Publish>
+    <Reschedule>false</Reschedule>
+    <IsRegional>false</IsRegional>
+    <CanAutoRoute>true</CanAutoRoute>
+    <PublishID>20355168</PublishID>
+    <Services>Broadcast</Services>
+    <Username />
+    <UseLocalsOut>false</UseLocalsOut>
+    <PscCodes>ap---</PscCodes>
+    <ContentItem>
+        <Name />
+        <Cachable>false</Cachable>
+        <NewsCompID>56127639</NewsCompID>
+        <AutoSaveID>0</AutoSaveID>
+        <Type>0</Type>
+        <MediaType>0</MediaType>
+        <Status>0</Status>
+        <SystemSlug>41148a074e2caa8190926b25a2a940f8</SystemSlug>
+        <FileName>a07020</FileName>
+        <Headline>Prosecutor: 2 Buffalo police charged with assault in shoving</Headline>
+        <HeadlineService>false</HeadlineService>
+        <VideoType>None</VideoType>
+        <Category>International</Category>
+        <IndexCode>International</IndexCode>
+        <Ranking>News - Need to know</Ranking>
+        <RankingValue>2</RankingValue>
+        <PhotoType>Many</PhotoType>
+        <GraphicType>None</GraphicType>
+        <ReadOnlyFlag>true</ReadOnlyFlag>
+        <HoldFlag>false</HoldFlag>
+        <OpenFlag>false</OpenFlag>
+        <TransmittedToWire>false</TransmittedToWire>
+        <TrashFlag>false</TrashFlag>
+        <TopStory>false</TopStory>
+        <PhotoReference>NYDB511-65_2020_050017,NYR103-66_2020_164247,NYR104-66_2020_164209,NYR105-66_2020_173138
+        </PhotoReference>
+        <Headline2>Prosecutor: 2 Buffalo police charged with assault in shoving</Headline2>
+        <Credit>THE ASSOCIATED PRESS</Credit>
+        <ContentType>Text</ContentType>
+        <SlugProper>US-America-Protests-Buffalo-Police</SlugProper>
+        <Source>The Associated Press</Source>
+        <AuthorVersion>196</AuthorVersion>
+        <BreakWordCount>108</BreakWordCount>
+        <ContentItemID>73823887</ContentItemID>
+        <ProfileID>204</ProfileID>
+        <SysContentType>0</SysContentType>
+        <WordCount>108</WordCount>
+        <EmbargoTime>0001-01-01T00:00:00</EmbargoTime>
+        <Language>1</Language>
+        <DirectoryText>Prosecutors say two Buffalo police officers have been charged with assault after a video showed
+            them shoving a 75-year-old protester. Both pleaded not guilty to second-degree assault Saturday. The tw
+        </DirectoryText>
+        <UpdatedDateTime>2020-06-06T18:10:48.893-04:00</UpdatedDateTime>
+        <CreatedDateTime>2020-06-06T22:10:48.873</CreatedDateTime>
+        <HandledByUserID>0</HandledByUserID>
+        <ContentText>&lt;p&gt;Prosecutors say two Buffalo police officers have been charged with assault after a video
+            showed them shoving a 75-year-old protester. Both pleaded not guilty to second-degree assault Saturday. The
+            two officers had been suspended without pay Friday after a TV crew captured the confrontation the night
+            before near the end of protests over the death of George Floyd in Minnesota. The footage shows a man
+            approaching a line of helmeted officers holding batons as they clear demonstrators. Two officers push the
+            man backward, and he hits his head on the pavement. Blood spills as officers walk past. The governor praised
+            prosecutors for moving quickly to charge the officers.&lt;/p&gt;
+        </ContentText>
+        <Keyword>General news,Legal proceedings,Law and order,Assault and battery,Violent crime,Crime,Protests and
+            demonstrations,Political and c</Keyword>
+        <Length>108</Length>
+        <WritethruValue>0</WritethruValue>
+        <City>Buffalo</City>
+        <Province>New York</Province>
+        <Country>United States</Country>
+        <Latitude>45.411572</Latitude>
+        <Longitude>-75.698194</Longitude>
+        <Placeline>Buffalo;New York;United States</Placeline>
+        <Published>false</Published>
+        <PhotoLinkCount>0</PhotoLinkCount>
+        <VideoLinkCount>0</VideoLinkCount>
+        <AudioLinkCount>0</AudioLinkCount>
+        <IsPublishedAsTopStory>false</IsPublishedAsTopStory>
+    </ContentItem>
+    <UserProfileID>0</UserProfileID>
+    <PublishOrder>0</PublishOrder>
+    <PublishDateTime>2020-06-06T22:10:48.893</PublishDateTime>
+    <NewCycle>false</NewCycle>
+    <OnlineResend>false</OnlineResend>
+</Publish>

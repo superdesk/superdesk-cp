@@ -1,11 +1,14 @@
 
+import re
+import cp
 import flask
+import os.path
 import unittest
 import superdesk
-import lxml.etree as etree
 import requests_mock
 import settings
 
+from lxml import etree
 from flask import json
 from unittest.mock import MagicMock, patch
 
@@ -20,6 +23,14 @@ parser = CP_APMediaFeedParser()
 formatter = JimiFormatter()
 
 
+def fixture(filename):
+    return os.path.join(
+        os.path.dirname(__file__),
+        'fixtures',
+        filename,
+    )
+
+
 class AP2JimiTestCase(unittest.TestCase):
 
     app = flask.Flask(__name__)
@@ -29,7 +40,9 @@ class AP2JimiTestCase(unittest.TestCase):
     provider = {}
     subscriber = {}
 
-    def parse_format(self, source, binary=None):
+    maxDiff = None
+
+    def parse_format(self, source, binary=None, service=None):
         with open(get_fixture_path(source, 'ap')) as fp:
             data = json.load(fp)
 
@@ -44,6 +57,12 @@ class AP2JimiTestCase(unittest.TestCase):
                 parsed['unique_id'] = 1
                 parsed['family_id'] = parsed['_id']
                 parsed['renditions'] = {'original': {'media': 'abcd-media', 'mimetype': 'image/jpeg'}}
+                if service:
+                    parsed.setdefault('subject', []).append({
+                        'name': service,
+                        'qcode': service,
+                        'scheme': cp.DISTRIBUTION,
+                    })
                 jimi = formatter.format(parsed, self.subscriber)[0][1]
 
         root = etree.fromstring(jimi.encode(formatter.ENCODING))
@@ -203,3 +222,19 @@ class AP2JimiTestCase(unittest.TestCase):
                       "technology,Technology,Automobile racing,Sports,Form", item.find('Keyword').text)
         self.assertEqual('3', item.find('WritethruValue').text)
         self.assertEqual('3rd', item.find('WritethruNum').text)
+
+    def test_ap_broadcast(self):
+        """
+        ref: tests/io/fixtures/0c828d30-d250-4aec-9739-b04961eb36fc.xml
+        """
+        item = self.parse_format('ap-broadcast.json', service='Broadcast')
+        expected = etree.parse(fixture('0c828d30-d250-4aec-9739-b04961eb36fc.xml')).find('ContentItem')
+        self.assertEqual('Broadcast', item.getparent().find('Services').text)
+        self.assertEqual(
+            re.sub(r'[\W]+', ' ', item.find('ContentText').text),
+            re.sub(r'[\W]+', ' ', expected.find('ContentText').text),
+        )
+        self.assertEqual(
+            re.sub(r'[\W]+', ' ', item.find('DirectoryText').text)[:190],
+            re.sub(r'[\W]+', ' ', expected.find('DirectoryText').text)[:190],
+        )
