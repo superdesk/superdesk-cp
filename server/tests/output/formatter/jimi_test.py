@@ -36,7 +36,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             {'name': 'health', 'qcode': '07000000', 'scheme': 'subject_custom'},
             {'name': 'citizens', 'qcode': '20000575', 'scheme': 'subject_custom'},
             {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
-            {'name': 'Broadcast', 'qcode': 'Broadcast', 'scheme': 'distribution'},
+            {'name': 'Print', 'qcode': 'Print', 'scheme': 'distribution'},
             {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': 'destinations'},
         ],
         'urgency': 2,
@@ -78,7 +78,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual('false', root.find('IsRegional').text)
         self.assertEqual('true', root.find('CanAutoRoute').text)
         self.assertEqual(str(SEQUENCE_NUMBER), root.find('PublishID').text)
-        self.assertEqual('Broadcast', root.find('Services').text)
+        self.assertEqual('Print', root.find('Services').text)
         self.assertEqual(None, root.find('Username').text)
         self.assertEqual('false', root.find('UseLocalsOut').text)
         self.assertEqual('ap---', root.find('PscCodes').text)
@@ -106,9 +106,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual(self.article['slugline'], item.find('SlugProper').text)
         self.assertEqual(self.article['source'], item.find('Source').text)
         self.assertEqual(self.article['ednote'], item.find('EditorNote').text)
-        self.assertEqual(str(self.article['word_count']), item.find('WordCount').text)
-        self.assertEqual(str(self.article['word_count']), item.find('BreakWordCount').text)
-        self.assertEqual(str(self.article['word_count']), item.find('Length').text)
+        self.assertEqual('6', item.find('WordCount').text)
+        self.assertEqual('6', item.find('BreakWordCount').text)
+        self.assertEqual('6', item.find('Length').text)
         self.assertEqual('Body HTMLtest bold and idiom', item.find('DirectoryText').text)
         self.assertEqual('<p>Body HTML<br />test <strong>bold</strong> and <em>idiom</em></p>',
                          item.find('ContentText').text)

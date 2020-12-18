@@ -113,6 +113,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 pass
 
         item['guid'] = ap_item['altids']['etag']
+
         try:
             item['extra'][cp.FILENAME] = ap_item['altids']['transref']
         except KeyError:
@@ -224,6 +225,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item.get('associations'):
             for key, assoc in item.get('associations', {}).items():
+                if assoc.get('guid'):
+                    existing = superdesk.get_resource_service('archive').find_one(req=None, ingest_id=assoc['guid'])
+                    if existing:
+                        item['associations'][key] = {'residRef': existing['uri'], 'guid': ''}  # set guid to KeyError
+                        continue
                 if assoc.get('renditions'):
                     for key, value in self.RENDITIONS_MAPPING.items():
                         if value == 'main':

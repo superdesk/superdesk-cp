@@ -42,8 +42,12 @@ PICTURE_CATEGORY_MAPPING = {
 }
 
 
-def guid(_guid):
+def guid(item):
     """Fix ap guids containing etag."""
+    try:
+        _guid = item['extra']['itemid']
+    except KeyError:
+        _guid = item['guid']
     return str(_guid).split('_')[0]
 
 
@@ -53,7 +57,7 @@ def media_ref(item, split=True):
         filename = get_rendition_file_name(original)
         return os.path.splitext(filename)[0] if split else filename
     except KeyError:
-        return guid(item['guid'])
+        return guid(item)
 
 
 class JimiFormatter(Formatter):
@@ -122,6 +126,12 @@ class JimiFormatter(Formatter):
             self._format_subject_code(root, item, 'PscCodes', 'destinations')
             self._format_services(root, item)
 
+        try:
+            is_broadcast = any([s for s in item['subject']
+                                if s.get('scheme') == cp.DISTRIBUTION and s.get('qcode') == 'Broadcast'])
+        except KeyError:
+            is_broadcast = False
+
         # content system fields
         orig = self._get_original_item(item)
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
@@ -131,7 +141,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = filename
         etree.SubElement(content, 'NewsCompID').text = item_id
-        etree.SubElement(content, 'SystemSlug').text = guid(orig['guid'])
+        etree.SubElement(content, 'SystemSlug').text = guid(orig)
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
@@ -171,17 +181,16 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Credit').text = self._format_credit(item)
         etree.SubElement(content, 'Source').text = item.get('source')
 
+        content_html = self._format_content(item, is_broadcast)
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
-        etree.SubElement(content, 'ContentText').text = self._format_html(self._format_content(item))
+        etree.SubElement(content, 'ContentText').text = self._format_html(content_html)
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
 
-        if item['type'] == 'text' and item.get('body_html'):
+        if item['type'] == 'text' and content_html:
             content.find('DirectoryText').text = format_maxlength(
-                get_text(item['body_html'], 'html', lf_on_block=False).replace('\n', ' '),
+                get_text(content_html, 'html', lf_on_block=False).replace('\n', ' '),
                 200)
-            word_count = str(
-                item['word_count'] if item.get('word_count') else get_word_count(item['body_html'])
-            )
+            word_count = str(get_word_count(content_html))
             etree.SubElement(content, 'Length').text = word_count
             etree.SubElement(content, 'WordCount').text = word_count
             etree.SubElement(content, 'BreakWordCount').text = word_count
@@ -194,7 +203,7 @@ class JimiFormatter(Formatter):
         self._format_urgency(content, item.get('urgency'), item['language'])
         self._format_keyword(content, item.get('keywords'), ', ' if item.get('type') == 'picture' else ',')
         self._format_dateline(content, item.get('dateline'))
-        self._format_writethru(content, item.get('rewrite_sequence'), item['language'])
+        self._format_writethru(content, item)
 
         if item.get('byline'):
             etree.SubElement(content, 'Byline').text = item['byline']
@@ -233,14 +242,19 @@ class JimiFormatter(Formatter):
         if keywords:
             etree.SubElement(content, 'Keyword').text = format_maxlength(glue.join(keywords), 150)
 
-    def _format_writethru(self, content, num, language):
+    def _format_writethru(self, content, item):
+        try:
+            num = item['extra']['ap_version']
+        except KeyError:
+            num = 0
+        num += item.get('rewrite_sequence') or 0
         etree.SubElement(content, 'WritethruValue').text = str(num or 0)
         if not num:
             return
         etree.SubElement(content, 'WritethruNum').text = num2words(
-            num, to='ordinal_num', lang=language.replace('-', '_')
+            num, to='ordinal_num', lang=item['language'].replace('-', '_')
         ).replace('me', 'ème')  # stick with jimi
-        etree.SubElement(content, 'WriteThruType').text = 'Lead' if 'fr' in language else 'Writethru'
+        etree.SubElement(content, 'WriteThruType').text = 'Lead' if 'fr' in item['language'] else 'Writethru'
 
     def _format_datetime(self, datetime, rel=False, local=False):
         if not datetime:
@@ -484,13 +498,18 @@ class JimiFormatter(Formatter):
     def _format_filename(self, item):
         if item['type'] == 'picture':
             return media_ref(item)
-        filename = item['guid']
-        return guid(filename)
+        return guid(item)
 
-    def _format_content(self, item):
-        if not item.get('body_html'):
+    def _format_content(self, item, is_broadcast=False):
+        if is_broadcast and item.get('abstract'):
+            content = item['abstract']
+            if '<p>' not in content:
+                content = '<p>{}</p>'.format(content)
+        else:
+            content = item.get('body_html')
+        if not content:
             return ''
-        tree = lxml.html.fromstring(item['body_html'])
+        tree = lxml.html.fromstring(content)
         for elem in tree.iter():
             if elem.tag == 'b':
                 elem.tag = 'strong'
