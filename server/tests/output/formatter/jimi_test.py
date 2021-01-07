@@ -36,8 +36,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             {'name': 'health', 'qcode': '07000000', 'scheme': 'subject_custom'},
             {'name': 'citizens', 'qcode': '20000575', 'scheme': 'subject_custom'},
             {'name': 'Foo', 'qcode': '1231245', 'scheme': 'foo'},
-            {'name': 'Print', 'qcode': 'Print', 'scheme': 'distribution'},
-            {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': 'destinations'},
+            {'name': 'Print', 'qcode': 'Print', 'scheme': cp.DISTRIBUTION},
+            {'name': 'The Associated Press', 'qcode': 'ap---', 'scheme': cp.DESTINATIONS},
         ],
         'urgency': 2,
         'language': 'en-CA',
@@ -380,7 +380,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             'anpa_category': [{'name': 'National', 'qcode': 'g'}],
             'rewrite_sequence': 2,
             'subject': [
-                {'name': 'Broadcast', 'qcode': 'Broadcast', 'scheme': 'distribution'},
+                {'name': 'Broadcast', 'qcode': cp.BROADCAST, 'scheme': cp.DISTRIBUTION},
             ],
         }
 

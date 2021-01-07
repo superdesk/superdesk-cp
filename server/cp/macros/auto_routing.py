@@ -8,6 +8,7 @@
 # AUTHORS and LICENSE files distributed with this source code, or
 # at https://www.sourcefabric.org/superdesk/license
 
+import cp
 import re
 import logging
 import superdesk
@@ -33,8 +34,8 @@ def callback(item, **kwargs):
     if rule and ':' in rule['name']:
         service, destination = re.sub(r'\([A-Z]+\)', '', rule['name']).split(':')
         mapping = {
-            'distribution': service.strip(),
-            'destinations': destination.strip(),
+            cp.DISTRIBUTION: service.strip(),
+            cp.DESTINATIONS: destination.strip(),
         }
 
         for cv_id, name in mapping.items():
@@ -45,9 +46,13 @@ def callback(item, **kwargs):
                     'qcode': subject['qcode'],
                     'scheme': cv_id,
                 })
-                item['profile'] = 'autorouting'
             else:
                 logger.error('no item found in vocabulary %s with name %s', cv_id, name)
+
+        # remove associations for Broadcast content
+        if cp.is_broadcast(item) and item.get('associations'):
+            item['associations'] = {key: None for key in item['associations']}
+
     return item
 
 

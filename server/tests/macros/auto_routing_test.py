@@ -1,4 +1,5 @@
 
+import cp
 import flask
 import unittest
 import superdesk
@@ -24,13 +25,13 @@ class AutoRoutingMacroTestCase(unittest.TestCase):
         self.assertIn('subject', item)
         self.assertIn({
             'name': 'Broadcast',
-            'qcode': 'Broadcast',
-            'scheme': 'distribution',
+            'qcode': cp.BROADCAST,
+            'scheme': cp.DISTRIBUTION,
         }, item['subject'])
         self.assertIn({
             'name': 'The Associated Press',
             'qcode': 'ap---',
-            'scheme': 'destinations',
+            'scheme': cp.DESTINATIONS,
         }, item['subject'])
 
     def test_auto_routing_not_matching_service_or_dest_logs_error(self):
