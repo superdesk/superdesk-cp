@@ -116,21 +116,15 @@ class JimiFormatter(Formatter):
 
         if is_picture(item):
             etree.SubElement(root, 'Services').text = 'Pictures'
-            self._format_subject_code(root, item, 'PscCodes', 'destinations')
+            self._format_subject_code(root, item, 'PscCodes', cp.DESTINATIONS)
             if root.find('PscCodes') is None:
                 etree.SubElement(root, 'PscCodes').text = 'Online'
         elif service:
             etree.SubElement(root, 'Services').text = 'Print'
             etree.SubElement(root, 'PscCodes').text = service
         else:
-            self._format_subject_code(root, item, 'PscCodes', 'destinations')
+            self._format_subject_code(root, item, 'PscCodes', cp.DESTINATIONS)
             self._format_services(root, item)
-
-        try:
-            is_broadcast = any([s for s in item['subject']
-                                if s.get('scheme') == cp.DISTRIBUTION and s.get('qcode') == 'Broadcast'])
-        except KeyError:
-            is_broadcast = False
 
         # content system fields
         orig = self._get_original_item(item)
@@ -181,7 +175,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Credit').text = self._format_credit(item)
         etree.SubElement(content, 'Source').text = item.get('source')
 
-        content_html = self._format_content(item, is_broadcast)
+        content_html = self._format_content(item)
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(content_html)
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
@@ -468,7 +462,7 @@ class JimiFormatter(Formatter):
                         for subs in publish_service.get_subscribers(published, None)[0]
                         if any([
                             dest['format'] == 'jimi'
-                            for dest in subs.get('destinations', [])
+                            for dest in subs.get(cp.DESTINATIONS, [])
                         ])
                     ]
                     publish_service.resend(published, subscribers)
@@ -500,7 +494,8 @@ class JimiFormatter(Formatter):
             return media_ref(item)
         return guid(item)
 
-    def _format_content(self, item, is_broadcast=False):
+    def _format_content(self, item):
+        is_broadcast = cp.is_broadcast(item)
         if is_broadcast and item.get('abstract'):
             content = item['abstract']
             if '<p>' not in content:
