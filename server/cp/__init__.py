@@ -18,6 +18,8 @@ ARCHIVE_SOURCE = 'archive_source'
 UPDATE = 'update'
 CORRECTION = 'correction'
 DISTRIBUTION = 'distribution'
+DESTINATIONS = 'destinations'
+BROADCAST = 'Broadcast'
 
 PHOTO_CATEGORIES = 'photo_categories'
 PHOTO_SUPPCATEGORIES = 'photo_supplementalcategories'
@@ -30,3 +32,11 @@ NEWS_OPTIONAL = 5
 NEWS_FEATURE_REGULAR = 6
 NEWS_FEATURE_PREMIUM = 7
 NEWS_ROUTINE = 8
+
+
+def is_broadcast(item):
+    try:
+        return any([s for s in item['subject']
+                    if s.get('scheme') == DISTRIBUTION and s.get('qcode') == BROADCAST])
+    except KeyError:
+        return False

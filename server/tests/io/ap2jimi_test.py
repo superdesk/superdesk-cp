@@ -227,9 +227,9 @@ class AP2JimiTestCase(unittest.TestCase):
         """
         ref: tests/io/fixtures/0c828d30-d250-4aec-9739-b04961eb36fc.xml
         """
-        item = self.parse_format('ap-broadcast.json', service='Broadcast')
+        item = self.parse_format('ap-broadcast.json', service=cp.BROADCAST)
         expected = etree.parse(fixture('0c828d30-d250-4aec-9739-b04961eb36fc.xml')).find('ContentItem')
-        self.assertEqual('Broadcast', item.getparent().find('Services').text)
+        self.assertEqual(cp.BROADCAST, item.getparent().find('Services').text)
         self.assertEqual(
             re.sub(r'[\W]+', ' ', item.find('ContentText').text),
             re.sub(r'[\W]+', ' ', expected.find('ContentText').text),
