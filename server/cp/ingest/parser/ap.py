@@ -420,22 +420,24 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             } for cat in categories if cat.get('qcode') in codes
         ]
 
-    def _parse_index_code(self, data, item):
+    def _parse_index_code(self, data, item) -> List[str]:
         if not item.get('language') or not item.get('slugline'):
-            return
+            return []
 
         categories = self.get_anpa_categories(data)
 
         def get_index(mapping):
-            for index, *cats in mapping:
-                if any([c in categories for c in cats]):
-                    return index
+            return [
+                index
+                for index, *cats in mapping
+                if any([c in categories for c in cats])
+            ]
 
         if 'fr' in item['language']:
             index = get_index(FR_CATEGORY_MAPPING)
             if index:
                 return index
-            return 'Spare News'
+            return ['Spare News']
 
         slugline = item['slugline']
         products = self.get_products(data)
@@ -590,7 +592,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         index_names = set()
         index = self._parse_index_code(data, item)
         if index:
-            index_names.add(index)
+            index_names.update(index)
 
         for subj in self._get_subject(data):
             if subj.get('code') in AP_SUBJECT_CODES:
@@ -610,7 +612,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             for cat in categories:
                 if cat.get('name') in index_names:
                     set_cat(cat)
-                    return
+
+            if item.get('anpa_category'):
+                return
 
             # fallback rules when there is no category matching
             for cat in categories:

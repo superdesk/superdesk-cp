@@ -238,3 +238,7 @@ class AP2JimiTestCase(unittest.TestCase):
             re.sub(r'[\W]+', ' ', item.find('DirectoryText').text)[:190],
             re.sub(r'[\W]+', ' ', expected.find('DirectoryText').text)[:190],
         )
+
+    def test_ap_category(self):
+        item = self.parse_format('ap-category.json', service=cp.BROADCAST)
+        self.assertEqual('Business,International', item.find('Category').text)

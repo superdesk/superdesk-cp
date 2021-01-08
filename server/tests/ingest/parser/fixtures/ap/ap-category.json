@@ -1,0 +1,352 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.1",
+    "id": "8G7HyQ8Z-I",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30597,
+                "name": "AP Business News (F Wire)"
+            }, {
+                "id": 30598,
+                "name": "AP National News Report (A Wire)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 33383,
+                "name": "AP Alerts -  Medical"
+            }, {
+                "id": 35525,
+                "name": "AP Extended Global Headlines"
+            }, {
+                "id": 35527,
+                "name": "AP Extended Global Headlines - Summaries"
+            }, {
+                "id": 46587,
+                "name": "Broadcast - Summaries - National News"
+            }, {
+                "id": 46589,
+                "name": "Broadcast - Summaries - National Business"
+            }, {
+                "id": 101155,
+                "name": "AP Business News"
+            }, {
+                "id": 101264,
+                "name": "AP U.S. National News (Datastream A)"
+            }, {
+                "id": 101543,
+                "name": "Broadcast National Summaries"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/70789a344b80ed450582be66a6bf54bb?qt=8G7HyQ8Z-I&et=1a16aza0c0",
+            "altids": {
+                "itemid": "70789a344b80ed450582be66a6bf54bb",
+                "etag": "70789a344b80ed450582be66a6bf54bb_1a16aza0c0",
+                "friendlykey": "22824921062",
+                "referenceid": "Economy-Services",
+                "transref": "W0638"
+            },
+            "version": 1,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Spot Development",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2021-01-07T15:42:53Z",
+            "firstcreated": "2021-01-07T15:18:33Z",
+            "editorialrole": "FullStory",
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: adds details, edits. With AP Photos.",
+            "editorialtypes": ["Lead"],
+            "signals": ["newscontent"],
+            "title": "Economy-Services",
+            "headline": "US services sector grows for seventh consecutive month ",
+            "headline_extended": "The U.S. services sector, where most Americans work, grew for the seventh straight month in December even as coronavirus cases surged through the holidays",
+            "slugline": "BC-Economy-Services, 1st Ld-Writethru",
+            "description_summary": "The U.S. services sector, where most Americans work, grew for the seventh straight month in December even as coronavirus cases surged through the holidays. The Institute for Supply Management reported Thursday that its index of services activity grew slightly to a reading of 57.2 last month, from a reading of 55.9 in November. Readings above 50 represent expansion in services industries such as restaurants and bars, retail stores and delivery companies. Respondents to the December ISM survey continued to express anxiety about the current business climate and the continued negative ramifications of COVID-19. ",
+            "bylines": [{
+                "by": "By MATT OTT",
+                "title": "AP Business Writer"
+            }],
+            "located": "SILVER SPRING, Md.",
+            "datelinelocation": {
+                "city": "Silver Spring",
+                "countryareacode": "MD",
+                "countryareaname": "Maryland",
+                "countrycode": "USA",
+                "countryname": "United States",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-77.02609, 38.99067]
+                }
+            },
+            "copyrightnotice": "Copyright 2021 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Economy-Services"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "f",
+                "name": "f"
+            }, {
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "a",
+                "name": "a"
+            }, {
+                "code": "c8e409f8858510048872ff2260dd383e",
+                "name": "Business",
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Business",
+                "rels": ["direct", "ancestor"]
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "General news"
+            }, {
+                "code": "b385ea708bf91004852fa13d9888b73e",
+                "name": "Restaurant operators",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["ad2ff3c88bf91004852ba13d9888b73e"]
+            }, {
+                "code": "ad2ff3c88bf91004852ba13d9888b73e",
+                "name": "Food services",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["5f8283e88bf910048037a13d9888b73e"]
+            }, {
+                "code": "5f8283e88bf910048037a13d9888b73e",
+                "name": "Consumer services",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["31f4c0688adb10048f839a38be1dd83e"]
+            }, {
+                "code": "31f4c0688adb10048f839a38be1dd83e",
+                "name": "Consumer products and services",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c8e409f8858510048872ff2260dd383e"]
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "4f7e0448857510048d0aff2260dd383e",
+                "name": "Economy",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c8e409f8858510048872ff2260dd383e"]
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "ec2f98f888e810048c97f8851349f9bd",
+                "name": "Service sector performance",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["4f7e0448857510048d0aff2260dd383e"]
+            }, {
+                "code": "374ee928898a10048e8f9ab8cee32705",
+                "name": "Seasonal jobs",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e00eb978850a1004895591f43387513e"]
+            }, {
+                "code": "e00eb978850a1004895591f43387513e",
+                "name": "Careers",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c8e409f8858510048872ff2260dd383e"]
+            }, {
+                "code": "86bcf1d87dac10048964ba7fa5283c3e",
+                "name": "Public opinion",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["75a42fd87df7100483eedf092526b43e"]
+            }, {
+                "code": "75a42fd87df7100483eedf092526b43e",
+                "name": "Social affairs",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "b8dae0208bf91004855aa13d9888b73e",
+                "name": "Bar and night club operators",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["ad2ff3c88bf91004852ba13d9888b73e"]
+            }, {
+                "code": "d5547718dcb25e4ba562f2abf979255a",
+                "name": "Retail and wholesale",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["5f8283e88bf910048037a13d9888b73e"]
+            }],
+            "place": [{
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f7c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-98.5, 39.76]
+                }
+            }, {
+                "code": "661850e07d5b100481f7c076b8e3055c",
+                "name": "North America",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-100.54688, 46.07323]
+                }
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661850e07d5b100481f5c076b8e3055c",
+                "name": "Latin America and Caribbean",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "associations": {
+                "1": {
+                    "uri": "https://api.ap.org/media/v/content/09272d61f8624390962e0d08ee0c0349?qt=8G7HyQ8Z-I&et=2a1aza3c0&ai=70789a344b80ed450582be66a6bf54bb",
+                    "altids": {
+                        "itemid": "09272d61f8624390962e0d08ee0c0349",
+                        "etag": "09272d61f8624390962e0d08ee0c0349_2a1aza3c0"
+                    },
+                    "version": 2,
+                    "type": "picture",
+                    "headline": "Economy Services"
+                }
+            },
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 263,
+                    "contentid": "2b3e6ff58c4632697194f594e14002d0",
+                    "href": "https://api.ap.org/media/v/content/70789a344b80ed450582be66a6bf54bb.1/download?type=text&format=NITF&rid=2b3e6ff58c4632697194f594e14002d0&cid=0&fid=200d8556efd54d1ab07784f5ab61f15f&trf=W0638&qt=8G7HyQ8Z-I&dt=pSQM7cV8I8&et=1a16aza0c0",
+                    "mediafilterid": "2"
+                },
+                "anpa": {
+                    "title": "ANPA Story Download",
+                    "rel": "Main",
+                    "format": "ANPA1312",
+                    "type": "text",
+                    "mimetype": "application/octet-stream",
+                    "fileextension": "anpa",
+                    "mediafilterid": "1",
+                    "words": 263,
+                    "contentid": "2b3e6ff58c4632697194f594e14002d0",
+                    "href": "https://api.ap.org/media/v/content/70789a344b80ed450582be66a6bf54bb.1/download?type=text&format=ANPA&rid=2b3e6ff58c4632697194f594e14002d0&cid=0&fid=200d8556efd54d1ab07784f5ab61f15f&trf=W0638&qt=8G7HyQ8Z-I&dt=pSQM7cV8I8&et=1a16aza0c0"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/70789a344b80ed450582be66a6bf54bb",
+                "rel": "canonical"
+            }]
+        }
+    }
+}
