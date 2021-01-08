@@ -330,6 +330,6 @@ AP_TAGS_MAPPING = {
 
 SCHEMA_VERSION = 2
 
-ORANGELOGIC_URL = 'https://canadianpress-api.orangelogic.com/'
+ORANGELOGIC_URL = env('ORANGELOGIC_URL', '')
 WORKFLOW_ALLOW_MULTIPLE_UPDATES = True
 UPDATE_TRANSLATION_METADATA_MACRO = 'Update translation metadata macro'

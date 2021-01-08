@@ -112,10 +112,10 @@ class OrangelogicSearchProvider(SearchProvider):
     def __init__(self, provider):
         super().__init__(provider)
         self.config = provider.get('config') or {}
-        app.config.setdefault('ORANGELOGIC_URL', self.URL)
+        self.url = app.config.get('ORANGELOGIC_URL') or self.URL
 
     def _url(self, path):
-        return urljoin(app.config['ORANGELOGIC_URL'], path)
+        return urljoin(self.url, path)
 
     def _request(self, api, method='GET', **kwargs):
         url = self._url(api)
