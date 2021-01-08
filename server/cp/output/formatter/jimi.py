@@ -44,10 +44,7 @@ PICTURE_CATEGORY_MAPPING = {
 
 def guid(item):
     """Fix ap guids containing etag."""
-    try:
-        _guid = item['extra']['itemid']
-    except KeyError:
-        _guid = item['guid']
+    _guid = item['guid']
     return str(_guid).split('_')[0]
 
 
@@ -377,8 +374,8 @@ class JimiFormatter(Formatter):
 
         pic_filename = self._format_picture_filename(item)
         if pic_filename:
-            etree.SubElement(content, 'ContentRef').text = pic_filename
             etree.SubElement(content, 'ViewFile').text = pic_filename
+            etree.SubElement(content, 'ContentRef').text = pic_filename
 
         if item.get('headline') and not item.get('slugline'):
             content.find('SlugProper').text = item['headline']
