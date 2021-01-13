@@ -17,13 +17,20 @@ logger = logging.getLogger(__name__)
 
 def update_translation_metadata_macro(item, **kwargs):
     if item.get('anpa_take_key'):
-        item['anpa_take_key'] = '0'
+        item['anpa_take_key'] = ''
+
+    if item.get('correction_sequence'):
+        item['correction_sequence'] = 0
 
     cv = get_resource_service('vocabularies').find_one(req=None, _id='destinations')
     if not cv or not cv.get('items'):
         return
+
     for value in cv['items']:
-        if value.get('name') == 'Presse Canadienne staff':
+        subject = item.get('subject', [])
+        is_destination = any(sub for sub in subject if sub.get('name') == 'Presse Canadienne staff')
+
+        if value.get('name') == 'Presse Canadienne staff' and not is_destination:
             item.setdefault('subject', []).append({
                 'name': value['name'],
                 'qcode': value['qcode'],
