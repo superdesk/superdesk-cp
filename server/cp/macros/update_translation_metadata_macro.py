@@ -26,16 +26,17 @@ def update_translation_metadata_macro(item, **kwargs):
     if not cv or not cv.get('items'):
         return
 
-    for value in cv['items']:
-        subject = item.get('subject', [])
-        is_destination = any(sub for sub in subject if sub.get('name') == 'Presse Canadienne staff')
+    subject = item.get('subject', [])
+    is_destination = any(sub for sub in subject if sub.get('name') == 'Presse Canadienne staff')
 
+    for value in cv['items']:
         if value.get('name') == 'Presse Canadienne staff' and not is_destination:
             item.setdefault('subject', []).append({
                 'name': value['name'],
                 'qcode': value['qcode'],
                 'scheme': 'destinations',
             })
+            break
 
     return item
 
