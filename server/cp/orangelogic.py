@@ -17,7 +17,7 @@ from superdesk.timer import timer
 from superdesk.utc import local_to_utc
 from superdesk.search_provider import SearchProvider
 from superdesk.io.commands.update_ingest import update_renditions
-from superdesk.media.image import get_meta_iptc, get_meta
+from superdesk.media.image import get_meta_iptc
 
 from cp.utils import parse_xmp
 from cp.ingest.parser.ap import append_matching_subject
@@ -37,6 +37,10 @@ IPTC_SOURCE_MAPPING = {
 COUNTRY_MAPPING = {
     'CHN': 'China',
 }
+
+# iptc keys
+FIXTURE_ID = 'Fixture Identifier'
+ORIGINAL_TRANSMISSION_REF = 'Original Transmission Reference'
 
 
 tokens = {}
@@ -317,8 +321,14 @@ def _parse_binary(item):
     if iptc.get('Special Instructions'):
         item['ednote'] = iptc['Special Instructions']
 
-    if iptc.get('Original Transmission Reference'):
-        item['extra']['itemid'] = iptc['Original Transmission Reference']
+    if iptc.get(ORIGINAL_TRANSMISSION_REF):
+        if len(iptc[ORIGINAL_TRANSMISSION_REF]) == cp.SLUG_LEN:
+            item['extra'][cp.ORIG_ID] = iptc[ORIGINAL_TRANSMISSION_REF]
+        else:
+            item['extra'][cp.FILENAME] = iptc[ORIGINAL_TRANSMISSION_REF]
+
+    if iptc.get(FIXTURE_ID) and len(iptc[FIXTURE_ID]) == cp.SLUG_LEN:
+        item['extra'][cp.ORIG_ID] = iptc[FIXTURE_ID]
 
     binary.seek(0)
     xmp = parse_xmp(binary)

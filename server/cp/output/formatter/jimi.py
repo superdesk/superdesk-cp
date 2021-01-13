@@ -43,8 +43,20 @@ PICTURE_CATEGORY_MAPPING = {
 
 
 def guid(item):
-    """Fix ap guids containing etag."""
-    _guid = item['guid']
+    """Get guid for item.
+
+    If we have external id we use it, otherwise
+    use internal superdesk id.
+
+    IDs must be 32 characters long, check that for
+    external ids and use internal one if it's too short.
+    """
+    try:
+        _guid = item['extra'][cp.ORIG_ID]
+    except KeyError:
+        _guid = ''
+    if len(_guid) < cp.SLUG_LEN:
+        _guid = item['guid']
     return str(_guid).split('_')[0]
 
 
@@ -123,11 +135,13 @@ class JimiFormatter(Formatter):
             self._format_subject_code(root, item, 'PscCodes', cp.DESTINATIONS)
             self._format_services(root, item)
 
+        is_broadcast = cp.is_broadcast(item)
+
         # content system fields
         orig = self._get_original_item(item)
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
         item_id = '{:08d}'.format(orig['unique_id'] % 100000000)
-        filename = self._format_filename(orig)
+        filename = self._format_filename(orig, is_broadcast)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
         etree.SubElement(content, 'FileName').text = filename
@@ -172,7 +186,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Credit').text = self._format_credit(item)
         etree.SubElement(content, 'Source').text = item.get('source')
 
-        content_html = self._format_content(item)
+        content_html = self._format_content(item, is_broadcast)
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(content_html)
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
@@ -429,10 +443,9 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'ContainerIDs').text = ', '.join(sorted(refs))
 
     def _format_picture_filename(self, item):
-        try:
-            return media_ref(item, split=False)
-        except KeyError:
-            pass
+        ref = media_ref(item, split=False)
+        if ref:
+            return ref
         if item.get('extra') and item['extra'].get(cp.FILENAME):
             created = to_datetime(item['firstcreated'])
             return '{transref}-{date}_{year}_{time}.jpg'.format(
@@ -486,13 +499,24 @@ class JimiFormatter(Formatter):
             break
         return orig
 
-    def _format_filename(self, item):
+    def _format_filename(self, item, is_broadcast=False):
+        """Get filename for item.
+
+        For images is based on original rendition filename
+        to match the binary.
+
+        For other items it's based on external id if provided
+        otherwise on superdesk guid.
+
+        We add `-b` to broadcast stories, there can be extra file
+        generated for an AP item if it's routed to broadcast,
+        otherwise there will be just 1 file in the output.
+        """
         if item['type'] == 'picture':
             return media_ref(item)
-        return guid(item)
+        return '{}{}'.format(guid(item), '-b' if is_broadcast else '')
 
-    def _format_content(self, item):
-        is_broadcast = cp.is_broadcast(item)
+    def _format_content(self, item, is_broadcast):
         if is_broadcast and item.get('abstract'):
             content = item['abstract']
             if '<p>' not in content:
