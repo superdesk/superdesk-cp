@@ -239,7 +239,7 @@ class AP2JimiTestCase(unittest.TestCase):
             re.sub(r'[\W]+', ' ', expected.find('DirectoryText').text)[:190],
         )
         self.assertEqual('41148a074e2caa8190926b25a2a940f8', item.find('SystemSlug').text)
-        self.assertEqual('41148a074e2caa8190926b25a2a940f8-b', item.find('FileName').text)
+        self.assertEqual('41148a074e2caa8190926b25a2a940f8-br', item.find('FileName').text)
 
     def test_ap_category(self):
         item = self.parse_format('ap-category.json', service=cp.BROADCAST)

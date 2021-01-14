@@ -508,13 +508,13 @@ class JimiFormatter(Formatter):
         For other items it's based on external id if provided
         otherwise on superdesk guid.
 
-        We add `-b` to broadcast stories, there can be extra file
+        We add `-br` to broadcast stories, there can be extra file
         generated for an AP item if it's routed to broadcast,
         otherwise there will be just 1 file in the output.
         """
         if item['type'] == 'picture':
             return media_ref(item)
-        return '{}{}'.format(guid(item), '-b' if is_broadcast else '')
+        return '{}{}'.format(guid(item), '-br' if is_broadcast else '')
 
     def _format_content(self, item, is_broadcast):
         if is_broadcast and item.get('abstract'):

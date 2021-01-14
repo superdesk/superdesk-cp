@@ -594,9 +594,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if index:
             index_names.update(index)
 
-        for subj in self._get_subject(data):
-            if subj.get('code') in AP_SUBJECT_CODES:
-                index_names.add(subj['name'])
+        # this rule is not used in webfeed xsl file
+        # for subj in self._get_subject(data):
+        #    if subj.get('code') in AP_SUBJECT_CODES:
+        #        index_names.add(subj['name'])
 
         def set_cat(cat):
             item['anpa_category'].append({
