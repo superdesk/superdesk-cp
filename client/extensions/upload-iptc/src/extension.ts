@@ -28,6 +28,7 @@ const copySubj = (scheme: string) => (subj: ISubject) => ({
     qcode: subj.qcode,
     scheme: scheme,
     translations: subj.translations,
+    source: '',
 });
 
 const extension: IExtension = {
@@ -49,7 +50,7 @@ const extension: IExtension = {
                         creditline: data.Credit,
                         copyrightnotice: data.CopyrightNotice,
                         language: data.LanguageIdentifier || 'en',
-                        keywords: data.SubjectReference ? data.SubjectReference.split('\n').map((keyword) => keyword.trim()) : [],
+                        keywords: data.SubjectReference ? data.SubjectReference.split('\n').map((keyword: string) => keyword.trim()) : [],
                         subject: (item.subject || []).concat(
                             data.Category != null ?
                                 categories.filter((subj) => subj.qcode === data.Category).map(copySubj(PHOTO_CAT_ID)) :
