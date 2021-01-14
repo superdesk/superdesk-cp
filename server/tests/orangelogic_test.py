@@ -178,6 +178,7 @@ class OrangelogicTestCase(unittest.TestCase):
         self.assertEqual('Unknown AP', item.find('ArchiveSources').text)
         self.assertEqual('9e627f74b97841b3b8562b6547ada9c7', item.find('CustomField1').text)
         self.assertEqual('Xinhua', item.find('CustomField6').text)
+        self.assertEqual('9e627f74b97841b3b8562b6547ada9c7', item.find('SystemSlug').text)
 
     def test_parse_datetime(self):
         self.assertEqual(

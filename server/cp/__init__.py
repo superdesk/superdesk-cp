@@ -21,6 +21,8 @@ DISTRIBUTION = 'distribution'
 DESTINATIONS = 'destinations'
 BROADCAST = 'Broadcast'
 
+SLUG_LEN = 32
+
 PHOTO_CATEGORIES = 'photo_categories'
 PHOTO_SUPPCATEGORIES = 'photo_supplementalcategories'
 
