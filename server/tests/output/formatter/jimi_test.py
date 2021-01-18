@@ -454,3 +454,4 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             },
         })
         self.assertEqual('Washington;District of Columbia;United States', item.find('Placeline').text)
+        self.assertEqual('District of Columbia', item.find('Province').text)

@@ -42,7 +42,7 @@ PICTURE_CATEGORY_MAPPING = {
 }
 
 PLACELINE_REPLACE = {
-    'Washington;Washington, D.C.;United States': 'Washington;District of Columbia;United States',
+    'Washington, D.C.': 'District of Columbia',
 }
 
 
@@ -292,10 +292,12 @@ class JimiFormatter(Formatter):
             pieces = []
             located = dateline['located']
             for src, dest in DATELINE_MAPPING.items():
-                etree.SubElement(content, dest).text = located.get(src)
-                pieces.append(located.get(src) or '')
+                text = located.get(src) or ''
+                text = PLACELINE_REPLACE.get(text, text)
+                etree.SubElement(content, dest).text = text
+                pieces.append(text)
             placeline = ';'.join(pieces)
-            etree.SubElement(content, 'Placeline').text = PLACELINE_REPLACE.get(placeline, placeline)
+            etree.SubElement(content, 'Placeline').text = placeline
             try:
                 etree.SubElement(content, 'Latitude').text = str(located['location']['lat'])
                 etree.SubElement(content, 'Longitude').text = str(located['location']['lon'])
