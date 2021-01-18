@@ -433,3 +433,24 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
         resources['news'].service.get.side_effect = None
         self.assertEqual('usable, usable2', item.find('ContainerIDs').text)
+
+    def test_placeline_washington(self):
+        item = self.format_item({
+            'dateline': {
+                'source': 'AAP',
+                'text': 'sample dateline',
+                'located': {
+                    "dateline": "city",
+                    "country_code": "US",
+                    "tz": "America/New_York",
+                    "city_code": "Washington",
+                    "state_code": "DC",
+                    "state": "Washington, D.C.",
+                    "city": "Washington",
+                    "country": "United States",
+                    "code": "4140963",
+                    "scheme": "geonames",
+                },
+            },
+        })
+        self.assertEqual('Washington;District of Columbia;United States', item.find('Placeline').text)
