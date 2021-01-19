@@ -223,8 +223,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if ap_item.get('type') == 'picture':
             self._parse_picture_metadata(data['data'], item)
 
-        if item.get('associations'):
-            for key, assoc in item.get('associations', {}).items():
+        associations = item.get('associations')
+        if associations:
+            item['associations'] = {}
+            for key, assoc in associations.items():
                 if assoc.get('guid'):
                     existing = superdesk.get_resource_service('archive').find_one(req=None, ingest_id=assoc['guid'])
                     if existing:
@@ -234,9 +236,12 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     for key, value in self.RENDITIONS_MAPPING.items():
                         if value == 'main':
                             href = assoc['renditions'].get(key, {}).get('href')
+                            if not href:  # item is set unavailable
+                                continue
                             assoc['renditions'][key]['href'] = href + '&apikey=' + \
                                 provider.get('config', {}).get('apikey') if '?' in href else \
                                 href + '?apikey=' + provider.get('config', {}).get('apikey')
+                            item['associations'][key] = assoc
 
         if item.get('pubstatus') == 'embargoed':
             item['pubstatus'] = PUB_STATUS.HOLD
