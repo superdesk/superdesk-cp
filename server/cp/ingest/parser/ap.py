@@ -611,22 +611,25 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 'scheme': CATEGORY_SCHEME,
             })
 
-        if index_names:
-            categories = _get_cv_items(CATEGORY_SCHEME)
-            item['anpa_category'] = []
+        if not index_names:
+            # set default
+            index_names.add('International')
 
-            for cat in categories:
-                if cat.get('name') in index_names:
-                    set_cat(cat)
+        categories = _get_cv_items(CATEGORY_SCHEME)
+        item['anpa_category'] = []
 
-            if item.get('anpa_category'):
+        for cat in categories:
+            if cat.get('name') in index_names:
+                set_cat(cat)
+
+        if item.get('anpa_category'):
+            return
+
+        # fallback rules when there is no category matching
+        for cat in categories:
+            if cat.get('name') == 'International' and 'Politics' in index_names:
+                set_cat(cat)
                 return
-
-            # fallback rules when there is no category matching
-            for cat in categories:
-                if cat.get('name') == 'International' and 'Politics' in index_names:
-                    set_cat(cat)
-                    return
 
     def _parse_picture_category(self, data, item):
         for subj in data['item'].get('subject', []):
