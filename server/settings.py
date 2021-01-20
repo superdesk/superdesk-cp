@@ -14,7 +14,7 @@ import os
 from flask import json
 from pathlib import Path
 from superdesk.default_settings import (
-    strtobool, env, SERVER_URL, CORE_APPS as _core_apps,
+    DEFAULT_CATEGORY_QCODES_FOR_AUTO_PUBLISHED_ARTICLES, strtobool, env, SERVER_URL, CORE_APPS as _core_apps,
     CELERY_BEAT_SCHEDULE, timedelta,
 )
 
@@ -213,6 +213,7 @@ GEONAMES_FEATURE_CLASSES = ['P']
 GEONAMES_SEARCH_STYLE = 'full'
 
 DEFAULT_GENRE_VALUE_FOR_MANUAL_ARTICLES = None
+DEFAULT_CATEGORY_QCODES_FOR_AUTO_PUBLISHED_ARTICLES = None
 
 OVERRIDE_EDNOTE_TEMPLATE = ''
 
