@@ -192,3 +192,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             'qcode': 'w',
             'scheme': CATEGORY_SCHEME,
         }], item['anpa_category'])
+
+    def test_category_tenis(self):
+        with open(get_fixture_path('ap-sports.json', 'ap')) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+        self.assertEqual([{
+            'name': 'Agate',
+            'qcode': 'r',
+            'scheme': CATEGORY_SCHEME,
+        }], item['anpa_category'])

@@ -449,10 +449,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         textformat = data['item'].get('textformat', '')
 
         if re.search(r'-MED-', slugline):
-            return 'Lifestyle'
+            return ['Lifestyle']
 
         if 't' in textformat or 31385 in products:
-            return 'Agate'
+            return ['Agate']
 
         if re.search(r'''
             (ARC	(?# Match for Archery)
@@ -556,19 +556,19 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             |Glantz-Culver-Line	(?# Match for Glantz-Culver-Line)
             )
         ''', slugline, re.IGNORECASE | re.VERBOSE):
-            return 'Agate'
+            return ['Agate']
 
         index = get_index(EN_CATEGORY_MAPPING)
         if index:
             return index
 
         if re.search(r'Washington-Digest|AP-Newsfeatures-Digest', slugline):
-            return 'Prairies/BC'
+            return ['Prairies/BC']
 
         if re.search(r'AP-Newsfeatures-Digest', slugline):
-            return 'International'
+            return ['International']
 
-        return 'Spare News'
+        return ['Spare News']
 
     def _parse_genre(self, data, item):
         """VersionType in JIMI"""
