@@ -123,6 +123,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         except KeyError:
             pass
 
+        if ap_item.get('title'):
+            item['slugline'] = ap_item['title']
+
         if item.get('slugline'):
             item['slugline'] = self.process_slugline(item['slugline'])
 

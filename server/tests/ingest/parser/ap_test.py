@@ -180,6 +180,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             'qcode': 'w',
             'scheme': CATEGORY_SCHEME,
         }], item['anpa_category'])
+        self.assertEqual('US-Biden-Staff', item['slugline'])
 
     def test_category_apv(self):
         with open(get_fixture_path('apv.json', 'ap')) as fp:
@@ -192,6 +193,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             'qcode': 'w',
             'scheme': CATEGORY_SCHEME,
         }], item['anpa_category'])
+        self.assertEqual('EU-Spain-Storm-Aftermath', item['slugline'])
 
     def test_category_tenis(self):
         with open(get_fixture_path('ap-sports.json', 'ap')) as fp:
