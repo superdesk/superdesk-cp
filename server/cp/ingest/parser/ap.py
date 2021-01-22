@@ -81,7 +81,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
     }
 
     def process_slugline(self, slugline):
-        return re.sub(r'--+', '-', re.sub(r'[ !"#$%&()*+,./:;<=>?@[\]^_`{|}~\\]', '-', slugline))
+        slug = re.sub(r'--+', '-', re.sub(r'[ !"#$%&()*+,./:;<=>?@[\]^_`{|}~\\]', '-', slugline))
+        if slug.startswith('AP-') or slug.startswith('BC-'):
+            slug = slug[3:]
+        return slug
 
     def process_headline(self, headline):
         return headline \
@@ -122,9 +125,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item['extra'][cp.ORIG_ID] = ap_item['altids']['itemid']
         except KeyError:
             pass
-
-        if ap_item.get('title'):
-            item['slugline'] = ap_item['title']
 
         if item.get('slugline'):
             item['slugline'] = self.process_slugline(item['slugline'])
