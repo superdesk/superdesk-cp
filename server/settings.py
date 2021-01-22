@@ -329,7 +329,8 @@ AP_TAGS_MAPPING = {
     },
 }
 
-SCHEMA_VERSION = 2
+# 3 - update schema to fix elastic settings
+SCHEMA_VERSION = 3
 
 ORANGELOGIC_URL = env('ORANGELOGIC_URL', 'https://canadianpress-api.orangelogic.com/')
 WORKFLOW_ALLOW_MULTIPLE_UPDATES = True
