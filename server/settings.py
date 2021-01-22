@@ -71,6 +71,9 @@ ANALYTICS_ENABLE_SCHEDULED_REPORTS = strtobool(
 )
 HIGHCHARTS_SERVER_HOST = env('HIGHCHARTS_SERVER_HOST', 'localhost')
 HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
+ANALYTICS_ENABLE_ARCHIVE_STATS = strtobool(
+    env('ANALYTICS_ENABLE_ARCHIVE_STATS', 'false')
+)
 
 LANGUAGES = [
     {'language': 'en-CA', 'label': 'English', 'source': True, 'destination': True},
