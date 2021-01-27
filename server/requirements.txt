@@ -6,5 +6,5 @@ num2words==0.5.10
 elastic-apm[flask]>=5.9,<5.10
 
 -e git+git://github.com/superdesk/superdesk-core.git@release/2.1#egg=superdesk-core
--e git+git://github.com/superdesk/superdesk-analytics.git@v2.0.0-rc1#egg=superdesk-analytics
+-e git+git://github.com/superdesk/superdesk-analytics.git@release/2.1#egg=superdesk-analytics
 -e git+git://github.com/superdesk/superdesk-planning.git@release/2.1#egg=superdesk-planning
