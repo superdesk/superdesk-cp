@@ -46,13 +46,13 @@ PLACELINE_REPLACE = {
 }
 
 
-def guid(item):
-    """Get guid for item.
+def slug(item) -> str:
+    """Item slugline.
 
-    If we have external id we use it, otherwise
-    use internal superdesk id.
+    This should stay the same for updates/corrections,
+    thus using id from AP if available.
 
-    IDs must be 32 characters long, check that for
+    Slug must be 32-36 characters long, check that for
     external ids and use internal one if it's too short.
     """
     try:
@@ -60,17 +60,36 @@ def guid(item):
     except KeyError:
         _guid = ''
     if len(_guid) < cp.SLUG_LEN:
-        _guid = item['guid']
-    return str(_guid).split('_')[0]
+        _guid = guid(item)
+    return str(_guid)
 
 
-def media_ref(item, split=True):
+def guid(item) -> str:
+    """Get superdesk item guid."""
+    return item['guid'].split('_')[0]
+
+
+def media_ref(item, split=True) -> str:
+    """Media item reference based on original rendition."""
     try:
         original = item['renditions']['original']
         filename = get_rendition_file_name(original)
         return os.path.splitext(filename)[0] if split else filename
     except KeyError:
         return guid(item)
+
+
+def filename(item) -> str:
+    """Get filename for item.
+
+    For images it's is based on original rendition filename
+    to match the binary filename.
+
+    For other items it's superdesk guid.
+    """
+    if item['type'] == 'picture':
+        return media_ref(item)
+    return guid(item)
 
 
 class JimiFormatter(Formatter):
@@ -93,13 +112,13 @@ class JimiFormatter(Formatter):
             output.append((pub_seq_num, xml.decode(self.ENCODING)))
         return output
 
-    def _format_subject_code(self, root, item, elem, scheme):
+    def _format_subject_code(self, root, item, elem, scheme) -> None:
         subject = item.get('subject') or []
         for subj in subject:
             if subj.get('scheme') == scheme and subj.get('qcode'):
                 etree.SubElement(root, elem).text = subj['qcode']
 
-    def _format_item(self, root, item, pub_seq_num, service, services):
+    def _format_item(self, root, item, pub_seq_num, service, services) -> None:
         if is_picture(item):
             D2P1 = 'http://www.w3.org/2001/XMLSchema-instance'
             content = etree.SubElement(root, 'ContentItem', {'{%s}type' % D2P1: 'PhotoContentItem'}, nsmap={
@@ -145,12 +164,11 @@ class JimiFormatter(Formatter):
         orig = self._get_original_item(item)
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
         item_id = '{:08d}'.format(orig['unique_id'] % 100000000)
-        filename = self._format_filename(orig, is_broadcast)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'FileName').text = filename
+        etree.SubElement(content, 'FileName').text = filename(orig)
         etree.SubElement(content, 'NewsCompID').text = item_id
-        etree.SubElement(content, 'SystemSlug').text = guid(orig)
+        etree.SubElement(content, 'SystemSlug').text = slug(orig)
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
@@ -506,22 +524,17 @@ class JimiFormatter(Formatter):
             break
         return orig
 
-    def _format_filename(self, item, is_broadcast=False):
+    def _format_filename(self, item):
         """Get filename for item.
 
-        For images is based on original rendition filename
-        to match the binary.
+        For images it's is based on original rendition filename
+        to match the binary filename.
 
-        For other items it's based on external id if provided
-        otherwise on superdesk guid.
-
-        We add `-br` to broadcast stories, there can be extra file
-        generated for an AP item if it's routed to broadcast,
-        otherwise there will be just 1 file in the output.
+        For other items it's superdesk guid.
         """
         if item['type'] == 'picture':
             return media_ref(item)
-        return '{}{}'.format(guid(item), '-br' if is_broadcast else '')
+        return guid(item)
 
     def _format_content(self, item, is_broadcast):
         if is_broadcast and item.get('abstract'):
