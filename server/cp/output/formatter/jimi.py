@@ -458,8 +458,9 @@ class JimiFormatter(Formatter):
             self._format_refs(content, item)
 
     def _format_refs(self, content, item):
+        """ContainerIDs shoud link to SystemSlug of story."""
         refs = set([
-            self._format_filename(self._get_original_item(ref))
+            slug(self._get_original_item(ref))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
             if ref.get('pubstatus') == 'usable'
         ])

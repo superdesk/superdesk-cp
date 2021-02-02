@@ -423,7 +423,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         resources['news'].service.get.side_effect = [[
             {'guid': 'canceled', 'pubstatus': 'canceled', 'type': 'text'},
             {'guid': 'usable', 'pubstatus': 'usable', 'type': 'text'},
-            {'guid': 'usable2', 'pubstatus': 'usable', 'type': 'text'},
+            {'guid': 'usable2', 'pubstatus': 'usable', 'type': 'text', 'extra': {
+                cp.ORIG_ID: 32 * 'a',  # slug constraints
+            }},
         ]]
 
         item = self.format_item({
@@ -432,7 +434,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         })
 
         resources['news'].service.get.side_effect = None
-        self.assertEqual('usable, usable2', item.find('ContainerIDs').text)
+        self.assertEqual('{}, usable'.format(32 * 'a'), item.find('ContainerIDs').text)
 
     def test_placeline_washington(self):
         item = self.format_item({
