@@ -39,9 +39,12 @@ jobs:
 
     - run: flake8
 
+    - run: mypy .
+
     - run: nosetests tests
 
     - run: python manage.py app:initialize_data
+
 
   client:
 

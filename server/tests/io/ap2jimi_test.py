@@ -53,7 +53,8 @@ class AP2JimiTestCase(unittest.TestCase):
                         with open(get_fixture_path(binary, 'ap'), 'rb') as f:
                             mock.get(data['data']['item']['renditions']['preview']['href'], content=f.read())
                     parsed = parser.parse(data, self.provider)
-                parsed['_id'] = 'generated-id'
+                parsed['_id'] = 'superdesk-id'
+                parsed['guid'] = 'superdesk-guid'
                 parsed['unique_id'] = 1
                 parsed['family_id'] = parsed['_id']
                 parsed['renditions'] = {'original': {'media': 'abcd-media', 'mimetype': 'image/jpeg'}}
@@ -198,7 +199,7 @@ class AP2JimiTestCase(unittest.TestCase):
         """
         item = self.parse_format('ap-text.json')
         self.assertEqual('f14dd246c9b5efeb56de0141aa50c4fd', item.find('SystemSlug').text)
-        self.assertEqual('f14dd246c9b5efeb56de0141aa50c4fd', item.find('FileName').text)
+        self.assertIn('superdesk-guid', item.find('FileName').text)
         self.assertEqual('Mark Kennedy', item.find('Byline').text)
         self.assertEqual('Review: Documentary about electric racing holds little spark', item.find('Headline').text)
         self.assertIn('Entertainment', item.find('Category').text)
@@ -238,6 +239,8 @@ class AP2JimiTestCase(unittest.TestCase):
             re.sub(r'[\W]+', ' ', item.find('DirectoryText').text)[:190],
             re.sub(r'[\W]+', ' ', expected.find('DirectoryText').text)[:190],
         )
+        self.assertEqual('41148a074e2caa8190926b25a2a940f8', item.find('SystemSlug').text)
+        self.assertEqual('superdesk-guid', item.find('FileName').text)
 
     def test_ap_category(self):
         item = self.parse_format('ap-category.json', service=cp.BROADCAST)

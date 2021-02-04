@@ -14,7 +14,7 @@ import os
 from flask import json
 from pathlib import Path
 from superdesk.default_settings import (
-    strtobool, env, SERVER_URL, CORE_APPS as _core_apps,
+    DEFAULT_CATEGORY_QCODES_FOR_AUTO_PUBLISHED_ARTICLES, strtobool, env, SERVER_URL, CORE_APPS as _core_apps,
     CELERY_BEAT_SCHEDULE, timedelta,
 )
 
@@ -71,6 +71,9 @@ ANALYTICS_ENABLE_SCHEDULED_REPORTS = strtobool(
 )
 HIGHCHARTS_SERVER_HOST = env('HIGHCHARTS_SERVER_HOST', 'localhost')
 HIGHCHARTS_SERVER_PORT = env('HIGHCHARTS_SERVER_PORT', '6060')
+ANALYTICS_ENABLE_ARCHIVE_STATS = strtobool(
+    env('ANALYTICS_ENABLE_ARCHIVE_STATS', 'false')
+)
 
 LANGUAGES = [
     {'language': 'en-CA', 'label': 'English', 'source': True, 'destination': True},
@@ -213,6 +216,7 @@ GEONAMES_FEATURE_CLASSES = ['P']
 GEONAMES_SEARCH_STYLE = 'full'
 
 DEFAULT_GENRE_VALUE_FOR_MANUAL_ARTICLES = None
+DEFAULT_CATEGORY_QCODES_FOR_AUTO_PUBLISHED_ARTICLES = None
 
 OVERRIDE_EDNOTE_TEMPLATE = ''
 
@@ -328,9 +332,10 @@ AP_TAGS_MAPPING = {
     },
 }
 
-SCHEMA_VERSION = 2
+# 3 - update schema to fix elastic settings
+SCHEMA_VERSION = 3
 
-ORANGELOGIC_URL = env('ORANGELOGIC_URL', '')
+ORANGELOGIC_URL = env('ORANGELOGIC_URL', 'https://canadianpress-api.orangelogic.com/')
 WORKFLOW_ALLOW_MULTIPLE_UPDATES = True
 UPDATE_TRANSLATION_METADATA_MACRO = 'Update translation metadata macro'
 

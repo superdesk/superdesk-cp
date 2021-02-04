@@ -1,0 +1,343 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.1",
+    "id": "DiNQJ7jKbII",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30599,
+                "name": "AP Sports News (S Wire only)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 33383,
+                "name": "AP Alerts -  Medical"
+            }, {
+                "id": 35525,
+                "name": "AP Extended Global Headlines"
+            }, {
+                "id": 35527,
+                "name": "AP Extended Global Headlines - Summaries"
+            }, {
+                "id": 40815,
+                "name": "AP Texas - Sports only"
+            }, {
+                "id": 42682,
+                "name": "AP 50 State Report - No Member Copy"
+            }, {
+                "id": 46588,
+                "name": "Broadcast - Summaries - National Sports"
+            }, {
+                "id": 100019,
+                "name": "All State Wires - News Only & Weather Only"
+            }, {
+                "id": 100502,
+                "name": "Member Choice Sports Option"
+            }, {
+                "id": 101267,
+                "name": "Sports Wire"
+            }, {
+                "id": 101543,
+                "name": "Broadcast National Summaries"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/fb2f977662129b47b4c2bc1dcf18dadf?qt=DiNQJ7jKbII&et=0a5aza0c0",
+            "altids": {
+                "itemid": "fb2f977662129b47b4c2bc1dcf18dadf",
+                "etag": "fb2f977662129b47b4c2bc1dcf18dadf_0a5aza0c0",
+                "friendlykey": "619635496032",
+                "referenceid": "TEN--Virus Outbreak-ATP Schedule Changes",
+                "transref": "EOL0148"
+            },
+            "version": 0,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Spot Development",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2021-01-20T16:26:48Z",
+            "firstcreated": "2021-01-20T16:26:47Z",
+            "editorialrole": "FullStory",
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: With AP Photos.",
+            "signals": ["newscontent"],
+            "title": "TEN--Virus Outbreak-ATP Schedule Changes",
+            "headline": "Houston event off as men’s tennis tour makes schedule tweaks",
+            "headline_extended": "The U.S. Men’s Clay Court Championship in Houston has been canceled for the second year in a row because of the coronavirus pandemic",
+            "slugline": "AP-TEN--Virus Outbreak-ATP Schedule Changes",
+            "description_summary": "The U.S. Men’s Clay Court Championship in Houston has been canceled for the second year in a row because of the coronavirus pandemic. That is part of a series of changes to the 2021 men’s tennis calendar announced by the ATP. The Houston tournament was supposed to be played in April. It was among dozens of professional tennis events scrapped in 2020. Among the other 2021 updates the men’s tour made was moving the Hungarian Open clay-court tournament to Belgrade, Serbia. The tournament director of the Serbian Open will be Djordje Djokovic, a younger brother of No. 1-ranked Novak Djokovic.",
+            "located": "LONDON",
+            "datelinelocation": {
+                "city": "London",
+                "countrycode": "GBR",
+                "countryname": "United Kingdom",
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-0.12574, 51.50853]
+                }
+            },
+            "copyrightnotice": "Copyright 2021 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Virus Outbreak-ATP Schedule Changes"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "person": [{
+                "code": "0cda7323aa4243a597275f47bd92f6fe",
+                "name": "Novak Djokovic",
+                "rels": ["direct"],
+                "types": ["PROFESSIONAL_ATHLETE", "SPORTS_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }, {
+                "code": "85e1677b961f554b9997103e4bbcd268",
+                "name": "Djordje Djokovic",
+                "rels": ["direct"],
+                "types": ["PROFESSIONAL_ATHLETE", "SPORTS_FIGURE", "PERSON"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "s",
+                "name": "s"
+            }, {
+                "code": "54df6c687df7100483dedf092526b43e",
+                "name": "Sports",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Sports"
+            }, {
+                "code": "20dc74907e4e100488d4d0913b2d075c",
+                "name": "Tennis",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54df6c687df7100483dedf092526b43e"]
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "2019-2020 Coronavirus pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "2ef6a884e303421caa3f988e23857b8e",
+                "name": "Men's tennis",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["039d42210158410db74f393deea38897", "20dc74907e4e100488d4d0913b2d075c"]
+            }, {
+                "code": "039d42210158410db74f393deea38897",
+                "name": "Men's sports",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54df6c687df7100483dedf092526b43e"]
+            }, {
+                "code": "9cce666bb29344b8ba61f3732d971d32",
+                "name": "Disease outbreaks",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e", "e57b6c907e3810048ae4df092526b43e"]
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "e57b6c907e3810048ae4df092526b43e",
+                "name": "Public health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }],
+            "place": [{
+                "code": "661c9a887d5b10048263c076b8e3055c",
+                "name": "Serbia",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6618c9f87d5b10048200c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [20.45998, 44.81892]
+                }
+            }, {
+                "code": "6618c9f87d5b10048200c076b8e3055c",
+                "name": "Eastern Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f4c076b8e3055c"],
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [9.14062, 48.69096]
+                }
+            }, {
+                "code": "c5e4f6887efd10048388df092526b43e",
+                "name": "Belgrade",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661c9a887d5b10048263c076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [20.46513, 44.80401]
+                }
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f5b16ea8760d10048047e6e7a0f4673e",
+                "name": "State",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "6e92d9b882c7100488e5df092526b43e",
+                "name": "Texas",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "associations": {
+                "1": {
+                    "uri": "https://api.ap.org/media/v/content/81d52325803248cfba6a11b0029a0776?qt=DiNQJ7jKbII&et=0a1aza3c0&ai=fb2f977662129b47b4c2bc1dcf18dadf",
+                    "altids": {
+                        "itemid": "81d52325803248cfba6a11b0029a0776",
+                        "etag": "81d52325803248cfba6a11b0029a0776_0a1aza3c0"
+                    },
+                    "version": 0,
+                    "type": "picture",
+                    "headline": "Australian Open Tennis"
+                }
+            },
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 235,
+                    "contentid": "62dfa71f38824e6ca3db9c3f30629028",
+                    "href": "https://api.ap.org/media/v/content/fb2f977662129b47b4c2bc1dcf18dadf.0/download?type=text&format=NITF&rid=62dfa71f38824e6ca3db9c3f30629028&cid=0&fid=de3ecce5851d451c8c38dd5be0274d05&trf=EOL0148&qt=DiNQJ7jKbII&dt=pDbEjG1JnT&et=0a5aza0c0",
+                    "mediafilterid": "2"
+                },
+                "anpa": {
+                    "title": "ANPA Story Download",
+                    "rel": "Main",
+                    "format": "ANPA1312",
+                    "type": "text",
+                    "mimetype": "application/octet-stream",
+                    "fileextension": "anpa",
+                    "mediafilterid": "1",
+                    "words": 235,
+                    "contentid": "62dfa71f38824e6ca3db9c3f30629028",
+                    "href": "https://api.ap.org/media/v/content/fb2f977662129b47b4c2bc1dcf18dadf.0/download?type=text&format=ANPA&rid=62dfa71f38824e6ca3db9c3f30629028&cid=0&fid=de3ecce5851d451c8c38dd5be0274d05&trf=EOL0148&qt=DiNQJ7jKbII&dt=pDbEjG1JnT&et=0a5aza0c0"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/fb2f977662129b47b4c2bc1dcf18dadf",
+                "rel": "canonical"
+            }]
+        }
+    }
+}

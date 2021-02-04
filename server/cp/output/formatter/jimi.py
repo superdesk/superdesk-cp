@@ -41,20 +41,55 @@ PICTURE_CATEGORY_MAPPING = {
     cp.PHOTO_SUPPCATEGORIES: 'SupplementalCategories',
 }
 
-
-def guid(item):
-    """Fix ap guids containing etag."""
-    _guid = item['guid']
-    return str(_guid).split('_')[0]
+PLACELINE_REPLACE = {
+    'Washington, D.C.': 'District of Columbia',
+}
 
 
-def media_ref(item, split=True):
+def slug(item) -> str:
+    """Item slugline.
+
+    This should stay the same for updates/corrections,
+    thus using id from AP if available.
+
+    Slug must be 32-36 characters long, check that for
+    external ids and use internal one if it's too short.
+    """
+    try:
+        _guid = item['extra'][cp.ORIG_ID]
+    except KeyError:
+        _guid = ''
+    if len(_guid) < cp.SLUG_LEN:
+        _guid = guid(item)
+    return str(_guid)
+
+
+def guid(item) -> str:
+    """Get superdesk item guid."""
+    return item['guid'].split('_')[0]
+
+
+def media_ref(item, split=True) -> str:
+    """Media item reference based on original rendition."""
     try:
         original = item['renditions']['original']
         filename = get_rendition_file_name(original)
         return os.path.splitext(filename)[0] if split else filename
     except KeyError:
         return guid(item)
+
+
+def filename(item) -> str:
+    """Get filename for item.
+
+    For images it's is based on original rendition filename
+    to match the binary filename.
+
+    For other items it's superdesk guid.
+    """
+    if item['type'] == 'picture':
+        return media_ref(item)
+    return guid(item)
 
 
 class JimiFormatter(Formatter):
@@ -77,13 +112,13 @@ class JimiFormatter(Formatter):
             output.append((pub_seq_num, xml.decode(self.ENCODING)))
         return output
 
-    def _format_subject_code(self, root, item, elem, scheme):
+    def _format_subject_code(self, root, item, elem, scheme) -> None:
         subject = item.get('subject') or []
         for subj in subject:
             if subj.get('scheme') == scheme and subj.get('qcode'):
                 etree.SubElement(root, elem).text = subj['qcode']
 
-    def _format_item(self, root, item, pub_seq_num, service, services):
+    def _format_item(self, root, item, pub_seq_num, service, services) -> None:
         if is_picture(item):
             D2P1 = 'http://www.w3.org/2001/XMLSchema-instance'
             content = etree.SubElement(root, 'ContentItem', {'{%s}type' % D2P1: 'PhotoContentItem'}, nsmap={
@@ -123,16 +158,17 @@ class JimiFormatter(Formatter):
             self._format_subject_code(root, item, 'PscCodes', cp.DESTINATIONS)
             self._format_services(root, item)
 
+        is_broadcast = cp.is_broadcast(item)
+
         # content system fields
         orig = self._get_original_item(item)
         seq_id = '{:08d}'.format(pub_seq_num % 100000000)
         item_id = '{:08d}'.format(orig['unique_id'] % 100000000)
-        filename = self._format_filename(orig)
         etree.SubElement(content, 'Name')
         etree.SubElement(content, 'Cachable').text = 'false'
-        etree.SubElement(content, 'FileName').text = filename
+        etree.SubElement(content, 'FileName').text = filename(orig)
         etree.SubElement(content, 'NewsCompID').text = item_id
-        etree.SubElement(content, 'SystemSlug').text = guid(orig)
+        etree.SubElement(content, 'SystemSlug').text = slug(orig)
         etree.SubElement(content, 'ContentItemID').text = seq_id
         etree.SubElement(content, 'ProfileID').text = '204'
         etree.SubElement(content, 'SysContentType').text = '0'
@@ -172,7 +208,7 @@ class JimiFormatter(Formatter):
         etree.SubElement(content, 'Credit').text = self._format_credit(item)
         etree.SubElement(content, 'Source').text = item.get('source')
 
-        content_html = self._format_content(item)
+        content_html = self._format_content(item, is_broadcast)
         etree.SubElement(content, 'DirectoryText').text = self._format_text(item.get('abstract'))
         etree.SubElement(content, 'ContentText').text = self._format_html(content_html)
         etree.SubElement(content, 'Language').text = '2' if 'fr' in item.get('language', '') else '1'
@@ -274,9 +310,12 @@ class JimiFormatter(Formatter):
             pieces = []
             located = dateline['located']
             for src, dest in DATELINE_MAPPING.items():
-                etree.SubElement(content, dest).text = located.get(src)
-                pieces.append(located.get(src) or '')
-            etree.SubElement(content, 'Placeline').text = ';'.join(pieces)
+                text = located.get(src) or ''
+                text = PLACELINE_REPLACE.get(text, text)
+                etree.SubElement(content, dest).text = text
+                pieces.append(text)
+            placeline = ';'.join(pieces)
+            etree.SubElement(content, 'Placeline').text = placeline
             try:
                 etree.SubElement(content, 'Latitude').text = str(located['location']['lat'])
                 etree.SubElement(content, 'Longitude').text = str(located['location']['lon'])
@@ -419,8 +458,9 @@ class JimiFormatter(Formatter):
             self._format_refs(content, item)
 
     def _format_refs(self, content, item):
+        """ContainerIDs shoud link to SystemSlug of story."""
         refs = set([
-            self._format_filename(self._get_original_item(ref))
+            slug(self._get_original_item(ref))
             for ref in superdesk.get_resource_service('news').get(req=None, lookup={'refs.guid': item['guid']})
             if ref.get('pubstatus') == 'usable'
         ])
@@ -429,10 +469,9 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, 'ContainerIDs').text = ', '.join(sorted(refs))
 
     def _format_picture_filename(self, item):
-        try:
-            return media_ref(item, split=False)
-        except KeyError:
-            pass
+        ref = media_ref(item, split=False)
+        if ref:
+            return ref
         if item.get('extra') and item['extra'].get(cp.FILENAME):
             created = to_datetime(item['firstcreated'])
             return '{transref}-{date}_{year}_{time}.jpg'.format(
@@ -487,12 +526,18 @@ class JimiFormatter(Formatter):
         return orig
 
     def _format_filename(self, item):
+        """Get filename for item.
+
+        For images it's is based on original rendition filename
+        to match the binary filename.
+
+        For other items it's superdesk guid.
+        """
         if item['type'] == 'picture':
             return media_ref(item)
         return guid(item)
 
-    def _format_content(self, item):
-        is_broadcast = cp.is_broadcast(item)
+    def _format_content(self, item, is_broadcast):
         if is_broadcast and item.get('abstract'):
             content = item['abstract']
             if '<p>' not in content:

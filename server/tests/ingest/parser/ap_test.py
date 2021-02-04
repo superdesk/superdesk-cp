@@ -169,14 +169,40 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 self.assertEqual(embargoed, item['embargoed'])
                 self.assertNotIn('embargo', item)
 
-    def test_category(self):
+    def test_category_politics_international(self):
         with open(get_fixture_path('politics.json', 'ap')) as fp:
             _data = json.load(fp)
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = parser.parse(_data, {})
-        self.assertIn({
+        self.assertEqual([{
             'name': 'International',
             'qcode': 'w',
             'scheme': CATEGORY_SCHEME,
-        }, item['anpa_category'])
+        }], item['anpa_category'])
+        self.assertEqual('US-Biden-Staff', item['slugline'])
+
+    def test_category_apv(self):
+        with open(get_fixture_path('apv.json', 'ap')) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+        self.assertEqual([{
+            'name': 'International',
+            'qcode': 'w',
+            'scheme': CATEGORY_SCHEME,
+        }], item['anpa_category'])
+        self.assertEqual('EU-Spain-Storm-Aftermath', item['slugline'])
+
+    def test_category_tenis(self):
+        with open(get_fixture_path('ap-sports.json', 'ap')) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+        self.assertEqual([{
+            'name': 'Agate',
+            'qcode': 'r',
+            'scheme': CATEGORY_SCHEME,
+        }], item['anpa_category'])

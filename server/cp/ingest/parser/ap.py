@@ -73,15 +73,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
     PROFILE_ID = 'Story'
     RELATED_ID = 'media-gallery'
 
-    RENDITIONS_MAPPING = {
-        'original': 'main',
-        'baseImage': 'main',
-        'viewImage': 'preview',
-        'thumbnail': 'thumbnail',
-    }
-
     def process_slugline(self, slugline):
-        return re.sub(r'--+', '-', re.sub(r'[ !"#$%&()*+,./:;<=>?@[\]^_`{|}~\\]', '-', slugline))
+        slug = re.sub(r'--+', '-', re.sub(r'[ !"#$%&()*+,./:;<=>?@[\]^_`{|}~\\]', '-', slugline))
+        if slug.startswith('AP-') or slug.startswith('BC-'):
+            slug = slug[3:]
+        return slug
 
     def process_headline(self, headline):
         return headline \
@@ -223,20 +219,21 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if ap_item.get('type') == 'picture':
             self._parse_picture_metadata(data['data'], item)
 
-        if item.get('associations'):
-            for key, assoc in item.get('associations', {}).items():
+        associations = item.get('associations')
+        if associations:
+            item['associations'] = {}
+            for key, assoc in associations.items():
                 if assoc.get('guid'):
                     existing = superdesk.get_resource_service('archive').find_one(req=None, ingest_id=assoc['guid'])
                     if existing:
                         item['associations'][key] = {'residRef': existing['uri'], 'guid': ''}  # set guid to KeyError
                         continue
                 if assoc.get('renditions'):
-                    for key, value in self.RENDITIONS_MAPPING.items():
-                        if value == 'main':
-                            href = assoc['renditions'].get(key, {}).get('href')
-                            assoc['renditions'][key]['href'] = href + '&apikey=' + \
-                                provider.get('config', {}).get('apikey') if '?' in href else \
-                                href + '?apikey=' + provider.get('config', {}).get('apikey')
+                    for rend in assoc['renditions'].values():
+                        if not rend.get('href'):
+                            break  # binary is not available
+                    else:
+                        item['associations'][key] = assoc
 
         if item.get('pubstatus') == 'embargoed':
             item['pubstatus'] = PUB_STATUS.HOLD
@@ -444,10 +441,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         textformat = data['item'].get('textformat', '')
 
         if re.search(r'-MED-', slugline):
-            return 'Lifestyle'
+            return ['Lifestyle']
 
         if 't' in textformat or 31385 in products:
-            return 'Agate'
+            return ['Agate']
 
         if re.search(r'''
             (ARC	(?# Match for Archery)
@@ -551,19 +548,19 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             |Glantz-Culver-Line	(?# Match for Glantz-Culver-Line)
             )
         ''', slugline, re.IGNORECASE | re.VERBOSE):
-            return 'Agate'
+            return ['Agate']
 
         index = get_index(EN_CATEGORY_MAPPING)
         if index:
             return index
 
         if re.search(r'Washington-Digest|AP-Newsfeatures-Digest', slugline):
-            return 'Prairies/BC'
+            return ['Prairies/BC']
 
         if re.search(r'AP-Newsfeatures-Digest', slugline):
-            return 'International'
+            return ['International']
 
-        return 'Spare News'
+        return ['Spare News']
 
     def _parse_genre(self, data, item):
         """VersionType in JIMI"""
@@ -594,9 +591,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if index:
             index_names.update(index)
 
-        for subj in self._get_subject(data):
-            if subj.get('code') in AP_SUBJECT_CODES:
-                index_names.add(subj['name'])
+        # this rule is not used in webfeed xsl file
+        # for subj in self._get_subject(data):
+        #    if subj.get('code') in AP_SUBJECT_CODES:
+        #        index_names.add(subj['name'])
 
         def set_cat(cat):
             item['anpa_category'].append({
@@ -605,22 +603,25 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 'scheme': CATEGORY_SCHEME,
             })
 
-        if index_names:
-            categories = _get_cv_items(CATEGORY_SCHEME)
-            item['anpa_category'] = []
+        if not index_names:
+            # set default
+            index_names.add('International')
 
-            for cat in categories:
-                if cat.get('name') in index_names:
-                    set_cat(cat)
+        categories = _get_cv_items(CATEGORY_SCHEME)
+        item['anpa_category'] = []
 
-            if item.get('anpa_category'):
+        for cat in categories:
+            if cat.get('name') in index_names:
+                set_cat(cat)
+
+        if item.get('anpa_category'):
+            return
+
+        # fallback rules when there is no category matching
+        for cat in categories:
+            if cat.get('name') == 'International' and 'Politics' in index_names:
+                set_cat(cat)
                 return
-
-            # fallback rules when there is no category matching
-            for cat in categories:
-                if cat.get('name') == 'International' and 'Politics' in index_names:
-                    set_cat(cat)
-                    return
 
     def _parse_picture_category(self, data, item):
         for subj in data['item'].get('subject', []):
