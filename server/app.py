@@ -14,6 +14,7 @@ import settings
 
 from superdesk.factory import get_app as superdesk_app
 from elasticapm.contrib.flask import ElasticAPM
+from cp.news_event_list import group_items_by_state
 
 SUPERDESK_PATH = os.path.abspath(os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
 
@@ -48,6 +49,8 @@ def get_app(config=None):
         }
 
         ElasticAPM(app)
+
+    app.jinja_env.globals.update(group_items_by_state=group_items_by_state)
 
     return app
 
