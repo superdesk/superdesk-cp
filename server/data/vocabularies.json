@@ -21030,5 +21030,21 @@
         {"name": "APS", "qcode": "APS", "is_active": true},
         {"name": "TSX", "qcode": "TSX", "is_active": true}
 	   ]
-    }
+    },
+    {
+      "_id": "organisation",
+      "display_name": "Organisation",
+      "type": "manageable",
+      "selection_type": "multi selection",
+      "init_version": 1,
+      "unique_field": "qcode",
+      "service": {
+         "all": 1
+      },
+      "schema": {
+         "qcode": {},
+         "name": {}
+      },
+      "items": []
+   }
 ]

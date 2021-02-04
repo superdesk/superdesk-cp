@@ -20,6 +20,7 @@ CORRECTION = 'correction'
 DISTRIBUTION = 'distribution'
 DESTINATIONS = 'destinations'
 BROADCAST = 'Broadcast'
+ORGANISATION = 'organisation'
 
 SLUG_LEN = 32
 

@@ -1,25 +1,14 @@
 import cp
-import flask
-import unittest
-import lxml.etree as etree
 
-from ..parser import get_fixture_path
+from . import ParserTestCase
 
 from cp.ingest.parser.globenewswire import GlobeNewswireParser
 
 
-class GlobeNewswireParserTestCase(unittest.TestCase):
-    app = flask.Flask(__name__)
+class GlobeNewswireParserTestCase(ParserTestCase):
 
-    def get_xml(self, filename):
-        return etree.parse(get_fixture_path(filename, 'globenewswire')).getroot()
-
-    def parse(self, filename):
-        xml = self.get_xml(filename)
-        parser = GlobeNewswireParser()
-        self.assertTrue(parser.can_parse(xml))
-        with self.app.app_context():
-            return parser.parse(xml)[0]
+    parser = GlobeNewswireParser()
+    provider = 'globenewswire'
 
     def test_parser(self):
         item = self.parse('0b78.xml')
@@ -40,6 +29,11 @@ class GlobeNewswireParserTestCase(unittest.TestCase):
         self.assertEqual('Press Release', item['description_text'])
 
         self.assertIn({'name': 'TSXVO', 'qcode': 'TSXVO', 'scheme': cp.SERVICE}, item['subject'])
+        self.assertIn({
+            'name': 'Arrow Exploration Corp.',
+            'qcode': 'Arrow Exploration Corp.',
+            'scheme': cp.ORGANISATION,
+        }, item['subject'])
 
         self.assertGreaterEqual(item['word_count'], 1)
         self.assertRegex(item['body_html'], r'^<p>CALGARY')
