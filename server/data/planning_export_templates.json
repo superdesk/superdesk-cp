@@ -1,0 +1,9 @@
+[{
+    "_id": "news_events_list",
+    "name": "news_events_list",
+    "type": "event",
+    "data": {
+        "body_html_template": "news_events_list_export.html"
+    },
+    "label": "News Events List"
+}]

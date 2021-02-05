@@ -1,0 +1,10 @@
+{% for key, group in group_items_by_state(items).items() %}
+    {% if group._items %}
+        <h2>{{ group.name.capitalize() }}</h2>
+        {% for item in group._items %}
+            {% if item['location'] %}
+                <p>{{ item['location'][0]['address']['locality'] }} _ {{ item['definition_short'] }} ({{ item['dates']['start'].strftime('%I:%M %P') }})</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endfor %}
