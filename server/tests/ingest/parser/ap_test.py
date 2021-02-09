@@ -47,7 +47,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             with patch.dict(superdesk.resources, resources):
                 item = parser.parse(data, provider)
 
-        self.assertEqual('ba7d03f0cd24a17faa81bebc724bcf3f_0a8aza0c0', item['guid'])
+        self.assertEqual('ba7d03f0cd24a17faa81bebc724bcf3f', item['guid'])
         self.assertEqual('Story', item['profile'])
         self.assertEqual('WY-Exchange-Coronavirus-Tech', item['slugline'])
         self.assertEqual('headline1', item['headline'])
@@ -206,3 +206,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             'qcode': 'r',
             'scheme': CATEGORY_SCHEME,
         }], item['anpa_category'])
+
+    def test_slugline_prev_version(self):
+        with open(get_fixture_path('ap-sports.json', 'ap')) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                resources['ingest'].service.find_one.return_value = {
+                    'slugline': 'prev-slugline',
+                }
+                item = parser.parse(_data, {})
+                resources['ingest'].service.find_one.return_value = None
+        self.assertEqual('prev-slugline', item['slugline'])

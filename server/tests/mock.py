@@ -10,6 +10,7 @@ from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
 from apps.archive.news import NewsService
 from apps.archive.archive import ArchiveService
 from apps.publish.published_item import PublishedItemService
+from superdesk.io import IngestService
 
 SEQUENCE_NUMBER = 100
 
@@ -46,14 +47,17 @@ vocabularies_service.find_one.side_effect = get_cv
 vocabularies_service.get_rightsinfo.side_effect = get_rightsinfo
 
 news_service = create_autospec(NewsService)
+ingest_service = create_autospec(IngestService)
 archive_service = create_autospec(ArchiveService)
 published_service = create_autospec(PublishedItemService)
 
 media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
+ingest_service.find_one.return_value = None
 
 resources = {
     'news': Resource(news_service),
+    'ingest': Resource(ingest_service),
     'archive': Resource(archive_service),
     'published': Resource(published_service),
     'subscribers': Resource(subscriber_service),

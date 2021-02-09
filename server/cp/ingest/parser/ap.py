@@ -108,7 +108,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             except FileNotFoundError:
                 pass
 
-        item['guid'] = ap_item['altids']['etag']
+        item['guid'] = ap_item['altids']['itemid']
 
         try:
             item['extra'][cp.FILENAME] = ap_item['altids']['transref']
@@ -119,7 +119,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         except KeyError:
             pass
 
-        if item.get('slugline'):
+        prev = superdesk.get_resource_service('ingest').find_one(req=None, guid=item['guid'])
+        if prev and prev.get('slugline'):
+            item['slugline'] = prev['slugline']
+        elif item.get('slugline'):
             item['slugline'] = self.process_slugline(item['slugline'])
 
         if item.get('type') == 'text':
