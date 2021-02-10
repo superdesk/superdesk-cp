@@ -1,4 +1,3 @@
-
 import flask
 import unittest
 import superdesk
@@ -16,10 +15,12 @@ class BaseXmlFormatterTestCase(unittest.TestCase):
 
     def setUp(self):
         self.app = flask.Flask(__name__)
-        self.app.config.update({
-            'VERSION': 'version',
-            'DEFAULT_LANGUAGE': 'en',
-        })
+        self.app.config.update(
+            {
+                "VERSION": "version",
+                "DEFAULT_LANGUAGE": "en",
+            }
+        )
         self.app.app_context().push()
 
     def format(self, updates=None, _all=False):

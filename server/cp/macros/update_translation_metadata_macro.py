@@ -16,33 +16,37 @@ logger = logging.getLogger(__name__)
 
 
 def update_translation_metadata_macro(item, **kwargs):
-    if item.get('anpa_take_key'):
-        item['anpa_take_key'] = ''
+    if item.get("anpa_take_key"):
+        item["anpa_take_key"] = ""
 
-    if item.get('correction_sequence'):
-        item['correction_sequence'] = 0
+    if item.get("correction_sequence"):
+        item["correction_sequence"] = 0
 
-    cv = get_resource_service('vocabularies').find_one(req=None, _id='destinations')
-    if not cv or not cv.get('items'):
+    cv = get_resource_service("vocabularies").find_one(req=None, _id="destinations")
+    if not cv or not cv.get("items"):
         return
 
-    subject = item.get('subject', [])
-    is_destination = any(sub for sub in subject if sub.get('name') == 'Presse Canadienne staff')
+    subject = item.get("subject", [])
+    is_destination = any(
+        sub for sub in subject if sub.get("name") == "Presse Canadienne staff"
+    )
 
-    for value in cv['items']:
-        if value.get('name') == 'Presse Canadienne staff' and not is_destination:
-            item.setdefault('subject', []).append({
-                'name': value['name'],
-                'qcode': value['qcode'],
-                'scheme': 'destinations',
-            })
+    for value in cv["items"]:
+        if value.get("name") == "Presse Canadienne staff" and not is_destination:
+            item.setdefault("subject", []).append(
+                {
+                    "name": value["name"],
+                    "qcode": value["qcode"],
+                    "scheme": "destinations",
+                }
+            )
             break
 
     return item
 
 
-name = 'Update translation metadata macro'
-label = lazy_gettext('Update translation metadata macro')
+name = "Update translation metadata macro"
+label = lazy_gettext("Update translation metadata macro")
 callback = update_translation_metadata_macro
-access_type = 'backend'
-action_type = 'interactive'
+access_type = "backend"
+action_type = "interactive"

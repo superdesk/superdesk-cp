@@ -1,4 +1,3 @@
-
 from superdesk.io.registry import registered_feed_parsers, register_feed_parser
 
 from .parser.ap import CP_APMediaFeedParser

@@ -19,21 +19,21 @@ logger = logging.getLogger(__name__)
 def translate_to_desk_language(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
 
-    dest_desk = kwargs.get('dest_desk_id')
+    dest_desk = kwargs.get("dest_desk_id")
 
     if dest_desk:
-        desk = get_resource_service('desks').find_one(req=None, _id=dest_desk)
+        desk = get_resource_service("desks").find_one(req=None, _id=dest_desk)
     else:
-        desk = kwargs.get('desk')
+        desk = kwargs.get("desk")
 
-    if desk and desk.get('desk_language'):
-        item['language'] = desk.get('desk_language')
+    if desk and desk.get("desk_language"):
+        item["language"] = desk.get("desk_language")
 
     return item
 
 
-name = 'Translate To Desk Language'
-label = lazy_gettext('Translate To Desk Language')
+name = "Translate To Desk Language"
+label = lazy_gettext("Translate To Desk Language")
 callback = translate_to_desk_language
-access_type = 'backend'
-action_type = 'direct'
+access_type = "backend"
+action_type = "direct"

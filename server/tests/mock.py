@@ -1,4 +1,3 @@
-
 import os
 import json
 
@@ -14,11 +13,13 @@ from superdesk.io import IngestService
 
 SEQUENCE_NUMBER = 100
 
-with open(os.path.join(os.path.dirname(__file__), '..', 'data', 'vocabularies.json')) as f:
+with open(
+    os.path.join(os.path.dirname(__file__), "..", "data", "vocabularies.json")
+) as f:
     cv_lists = json.load(f)
     cvs = {}
     for cv in cv_lists:
-        cvs[cv['_id']] = cv
+        cvs[cv["_id"]] = cv
 
 
 def get_cv(req, _id):
@@ -27,14 +28,13 @@ def get_cv(req, _id):
 
 def get_rightsinfo(article):
     return {
-        'copyrightholder': 'copyrightholder',
-        'copyrightnotice': 'copyrightnotice',
-        'usageterms': 'usageterms',
+        "copyrightholder": "copyrightholder",
+        "copyrightnotice": "copyrightnotice",
+        "usageterms": "usageterms",
     }
 
 
-class Resource():
-
+class Resource:
     def __init__(self, service):
         self.service = service
 
@@ -56,10 +56,10 @@ media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 ingest_service.find_one.return_value = None
 
 resources = {
-    'news': Resource(news_service),
-    'ingest': Resource(ingest_service),
-    'archive': Resource(archive_service),
-    'published': Resource(published_service),
-    'subscribers': Resource(subscriber_service),
-    'vocabularies': Resource(vocabularies_service),
+    "news": Resource(news_service),
+    "ingest": Resource(ingest_service),
+    "archive": Resource(archive_service),
+    "published": Resource(published_service),
+    "subscribers": Resource(subscriber_service),
+    "vocabularies": Resource(vocabularies_service),
 }
