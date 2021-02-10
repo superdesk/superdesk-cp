@@ -1,4 +1,3 @@
-
 import os
 import flask
 import unittest
@@ -10,7 +9,7 @@ from superdesk.io.feed_parsers import FeedParser
 def get_fixture_path(filename, provider):
     return os.path.join(
         os.path.dirname(__file__),
-        'fixtures',
+        "fixtures",
         provider,
         filename,
     )

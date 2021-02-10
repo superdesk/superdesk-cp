@@ -19,20 +19,20 @@ logger = logging.getLogger(__name__)
 
 
 def find_name_item(cv_id, name):
-    cv = superdesk.get_resource_service('vocabularies').find_one(req=None, _id=cv_id)
-    if not cv or not cv.get('items'):
+    cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id=cv_id)
+    if not cv or not cv.get("items"):
         return
-    for item in cv['items']:
-        if item.get('name').lower() == name:
+    for item in cv["items"]:
+        if item.get("name").lower() == name:
             return item
 
 
 def callback(item, **kwargs):
     """ This macro will set the language of the articles to the Desk language. """
-    rule = kwargs.get('rule')
-    item['profile'] = 'autorouting'
-    if rule and ':' in rule['name']:
-        service, destination = re.sub(r'\([A-Z]+\)', '', rule['name']).split(':')
+    rule = kwargs.get("rule")
+    item["profile"] = "autorouting"
+    if rule and ":" in rule["name"]:
+        service, destination = re.sub(r"\([A-Z]+\)", "", rule["name"]).split(":")
         mapping = {
             cp.DISTRIBUTION: service.strip(),
             cp.DESTINATIONS: destination.strip(),
@@ -41,22 +41,24 @@ def callback(item, **kwargs):
         for cv_id, name in mapping.items():
             subject = find_name_item(cv_id, name.lower())
             if subject:
-                item.setdefault('subject', []).append({
-                    'name': subject['name'],
-                    'qcode': subject['qcode'],
-                    'scheme': cv_id,
-                })
+                item.setdefault("subject", []).append(
+                    {
+                        "name": subject["name"],
+                        "qcode": subject["qcode"],
+                        "scheme": cv_id,
+                    }
+                )
             else:
-                logger.error('no item found in vocabulary %s with name %s', cv_id, name)
+                logger.error("no item found in vocabulary %s with name %s", cv_id, name)
 
         # remove associations for Broadcast content
-        if cp.is_broadcast(item) and item.get('associations'):
-            item['associations'] = {key: None for key in item['associations']}
+        if cp.is_broadcast(item) and item.get("associations"):
+            item["associations"] = {key: None for key in item["associations"]}
 
     return item
 
 
-name = 'auto-routing'
-label = lazy_gettext('AutoRouting macro')
-access_type = 'backend'
-action_type = 'direct'
+name = "auto-routing"
+label = lazy_gettext("AutoRouting macro")
+access_type = "backend"
+action_type = "direct"

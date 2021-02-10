@@ -27,8 +27,7 @@ def get_group_items(items, state_group):
                 group_items.append(item)
             elif country == "canada" and locality in STATE_GROUPS[state_group]:
                 group_items.append(item)
-    return sorted(group_items,
-                  key=lambda group_item: group_item["dates"]["start"])
+    return sorted(group_items, key=lambda group_item: group_item["dates"]["start"])
 
 
 def group_items_by_state(items):
