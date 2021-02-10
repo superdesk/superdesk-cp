@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NewsML Version="1.2">
+  <Catalog Href="https://www.businesswire.com/schema/newsml/BusinesswireNewsMLCatalog.xml" />
+  <NewsEnvelope>
+    <SentFrom>
+      <Party FormalName="Business Wire">
+        <Property FormalName="ProviderProfile" Value="BusinessWireProfile" />
+        <Property FormalName="ProviderProfileVersion" Value="1.18" />
+      </Party>
+    </SentFrom>
+    <DateAndTime>20210131T024100+0000</DateAndTime>
+    <NewsService FormalName="Business Wire" />
+    <NewsProduct FormalName="BUSINESS WIRE" />
+  </NewsEnvelope>
+  <NewsItem>
+    <Identification>
+      <NewsIdentifier>
+        <ProviderId>businesswire.com</ProviderId>
+        <DateId>20010714</DateId>
+        <NewsItemId>20210130005024</NewsItemId>
+        <RevisionId PreviousRevision="0" Update="N">1</RevisionId>
+        <PublicIdentifier>urn:newsml:businesswire.com:20010714:20210130005024:1</PublicIdentifier>
+      </NewsIdentifier>
+    </Identification>
+    <NewsManagement>
+      <NewsItemType FormalName="News" />
+      <FirstCreated>20210131T024100+0000</FirstCreated>
+      <ThisRevisionCreated>20210131T024100+0000</ThisRevisionCreated>
+      <Status FormalName="Usable" />
+      <AssociatedWith NewsItem="businesswire.com:20010714:4904349" />
+    </NewsManagement>
+    <NewsComponent>
+      <BasisForChoice Rank="1">./NewsComponent/DescriptiveMetadata/Language</BasisForChoice>
+      <NewsLines>
+        <CopyrightLine>Copyright Business Wire 2021</CopyrightLine>
+      </NewsLines>
+      <AdministrativeMetadata>
+        <Source>
+        <Party FormalName="Interactive Brokers Group">
+          <Property FormalName="PrimaryTwitterHandle" Value="@IBKR" />
+        </Party>
+        </Source>
+        <Contributor>
+          <Comment FormalName="BWoffices">SF</Comment>
+          <Party FormalName="JA" Scheme="BWEditor" />
+        </Contributor>
+      </AdministrativeMetadata>
+      <DescriptiveMetadata>
+        <Language FormalName="en" />
+        <Genre FormalName="Release" />
+      </DescriptiveMetadata>
+      <Metadata>
+        <MetadataType FormalName="BWKeywords" />
+        <Property FormalName="BWIndustryKeywords" Value="Professional Services" />
+        <Property FormalName="BWIndustryKeywords" Value="Finance" />
+        <Property FormalName="BWStateKeywords" Value="Connecticut" />
+        <Property FormalName="BWCountryKeywords" Value="United States" />
+        <Property FormalName="BWRegionKeywords" Value="North America" />
+        <Property FormalName="BWCategoryKeywords" Value="Product/Service" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="Securities Identifier" />
+        <Property FormalName="Ticker Symbol" Value="IBKR" />
+        <Property FormalName="Exchange" Value="NASDAQ" />
+        <Property FormalName="ISIN" Value="US45841N1072" />
+        <Property FormalName="SlugLine Display Order" Value="1" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWTags" />
+        <Property FormalName="BWCashTag" Value="$IBKR" />
+        <Property FormalName="BWHashTag" Value="#IBKR" />
+        <Property FormalName="BWTag" Value="IBKR" />
+        <Property FormalName="BWTag" Value="Interactive Brokers" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWSocialMediaProfile" />
+        <Property Scheme="BWSocialMediaProfileType" FormalName="Organization" Value="Interactive Brokers YouTube" />
+        <Property Scheme="BWSocialMediaProfile" FormalName="Profile" Value="YouTube"
+          ValueRef="https://www.youtube.com/interactivebrokers" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWSocialMediaProfile" />
+        <Property Scheme="BWSocialMediaProfileType" FormalName="Organization" Value="IBKR Twitter" />
+        <Property Scheme="BWSocialMediaProfile" FormalName="Profile" Value="Twitter"
+          ValueRef="https://www.twitter.com/IBKR" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWSocialMediaProfile" />
+        <Property Scheme="BWSocialMediaProfileType" FormalName="Organization" Value="IB LinkedIn" />
+        <Property Scheme="BWSocialMediaProfile" FormalName="Profile" Value="LinkedIn"
+          ValueRef="https://www.linkedin.com/ibkr.com/ln" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWSocialMediaProfile" />
+        <Property Scheme="BWSocialMediaProfileType" FormalName="Organization"
+          Value="https://www.facebook.com/InteractiveBrokers/" />
+        <Property Scheme="BWSocialMediaProfile" FormalName="Profile" Value="Facebook"
+          ValueRef="https://www.facebook.com/InteractiveBrokers/" />
+      </Metadata>
+      <Metadata>
+        <MetadataType FormalName="BWSocialMediaProfile" />
+        <Property Scheme="BWSocialMediaProfileType" FormalName="Organization" Value="Interactive Brokers" />
+        <Property Scheme="BWSocialMediaProfile" FormalName="Profile" Value="Facebook"
+          ValueRef="https://www.facebook.com/InteractiveBrokers" />
+      </Metadata>
+      <NewsComponent>
+        <BasisForChoice Rank="1">./NewsComponent/Role</BasisForChoice>
+        <NewsLines>
+          <HeadLine>Interactive Brokers Lifts All Trading Restrictions on Options</HeadLine>
+          <DateLine>GREENWICH, Conn.</DateLine>
+          <SlugLine>CT-INTERACTIVE-BROKERS</SlugLine>
+        </NewsLines>
+        <DescriptiveMetadata>
+          <Language FormalName="en" />
+        </DescriptiveMetadata>
+        <NewsComponent>
+          <Role FormalName="Abstract" />
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw126">
+            <Format FormalName="BW-Text" />
+            <MimeType FormalName="text/plain" />
+            <DataContent>Interactive Brokers lifts all trading restrictions on options</DataContent>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="StyleSheet" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw167">
+            <Format FormalName="CSS" />
+            <MimeType FormalName="text/css" />
+            <DataContent>.bwalignc { text-align: center; list-style-position: inside }</DataContent>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="HeadLine" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw208">
+            <Format FormalName="XHTML" />
+            <MimeType FormalName="text/xhtml" />
+            <DataContent>
+              <html xmlns="http://www.w3.org/1999/xhtml">
+
+              <head>
+                <title />
+              </head>
+
+              <body>
+                <p class="bwalignc">
+                  <b>Interactive Brokers Lifts All Trading Restrictions on Options</b>
+                </p>
+              </body>
+
+              </html>
+            </DataContent>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="Logo" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <BasisForChoice Rank="2">./ContentItem/MimeType</BasisForChoice>
+          <BasisForChoice Rank="3">./ContentItem/Characteristics/Property</BasisForChoice>
+          <NewsLines>
+            <NewsLine>
+              <NewsLineType FormalName="ClickThru URL" />
+              <NewsLineText>http://www.ibkr.com</NewsLineText>
+            </NewsLine>
+          </NewsLines>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+            <Property FormalName="Rank" Value="1" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw249"
+            Href="https://mms.businesswire.com/media/20210130005024/en/694824/2/IB_logo_stacked_-_Copy.jpg">
+            <Format FormalName="JPEG Baseline" />
+            <MimeType FormalName="image/jpeg" />
+            <Characteristics>
+              <SizeInBytes>45196</SizeInBytes>
+              <Property FormalName="ImageUse" Value="Thumbnail" />
+              <Property FormalName="PixelWidth" Value="120" />
+              <Property FormalName="PixelHeight" Value="45" />
+            </Characteristics>
+          </ContentItem>
+          <ContentItem Duid="bw290"
+            Href="https://mms.businesswire.com/media/20210130005024/en/694824/3/IB_logo_stacked_-_Copy.jpg">
+            <Format FormalName="JPEG Baseline" />
+            <MimeType FormalName="image/jpeg" />
+            <Characteristics>
+              <SizeInBytes>46395</SizeInBytes>
+              <Property FormalName="ImageUse" Value="Viewimage" />
+              <Property FormalName="PixelWidth" Value="144" />
+              <Property FormalName="PixelHeight" Value="54" />
+            </Characteristics>
+          </ContentItem>
+          <ContentItem Duid="bw331"
+            Href="https://mms.businesswire.com/media/20210130005024/en/694824/4/IB_logo_stacked_-_Copy.jpg">
+            <Format FormalName="JPEG Baseline" />
+            <MimeType FormalName="image/jpeg" />
+            <Characteristics>
+              <SizeInBytes>71032</SizeInBytes>
+              <Property FormalName="ImageUse" Value="Lowres" />
+              <Property FormalName="PixelWidth" Value="480" />
+              <Property FormalName="PixelHeight" Value="180" />
+            </Characteristics>
+          </ContentItem>
+          <ContentItem Duid="bw372"
+            Href="https://mms.businesswire.com/media/20210130005024/en/694824/5/IB_logo_stacked_-_Copy.jpg">
+            <Format FormalName="JPEG Baseline" />
+            <MimeType FormalName="image/jpeg" />
+            <Characteristics>
+              <SizeInBytes>71079</SizeInBytes>
+              <Property FormalName="ImageUse" Value="Highres" />
+              <Property FormalName="PixelWidth" Value="481" />
+              <Property FormalName="PixelHeight" Value="180" />
+            </Characteristics>
+          </ContentItem>
+          <ContentItem Duid="bw413"
+            Href="https://mms.businesswire.com/media/20210130005024/en/694824/21/IB_logo_stacked_-_Copy.jpg">
+            <Format FormalName="JPEG Baseline" />
+            <MimeType FormalName="image/jpeg" />
+            <Characteristics>
+              <SizeInBytes>46353</SizeInBytes>
+              <Property FormalName="ImageUse" Value="Square" />
+              <Property FormalName="PixelWidth" Value="150" />
+              <Property FormalName="PixelHeight" Value="150" />
+            </Characteristics>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="Contact" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw454">
+            <Format FormalName="XHTML" />
+            <MimeType FormalName="text/xhtml" />
+            <DataContent>
+              <html xmlns="http://www.w3.org/1999/xhtml">
+
+              <head>
+                <title />
+              </head>
+
+              <body>
+                <p>
+                  Interactive Brokers Group, Inc.
+                  <br /><a rel="nofollow" href="mailto:media@ibkr.com" shape="rect">media@ibkr.com</a>
+                </p>
+              </body>
+
+              </html>
+            </DataContent>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="Body" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="bw495">
+            <Format FormalName="XHTML" />
+            <MimeType FormalName="text/xhtml" />
+            <DataContent>
+              <html xmlns="http://www.w3.org/1999/xhtml">
+
+              <head>
+                <title />
+              </head>
+
+              <body>
+                <p>
+                  <a rel="nofollow"
+                    href="https://cts.businesswire.com/ct/CT?id=smartlink&amp;url=http%3A%2F%2Fwww.interactivebrokers.com%2F&amp;esheet=52370739&amp;newsitemid=20210130005024&amp;lan=en-US&amp;anchor=Interactive+Brokers+Group&amp;index=1&amp;md5=0bd8ce0d18ae9ca753d10d6c648e542d"
+                    shape="rect">Interactive Brokers Group</a> (Nasdaq: IBKR), a global brokerage firm, announced today
+                  that on Friday it lifted all trading restrictions on options in AMC, BB, EXPR, GME, KOSS and other
+                  options that experienced recent market volatility. The options, as well as the underlying stocks, are
+                  currently subject to increased margin requirements, which are subject to change depending on market
+                  conditions. The firm continues to monitor these volatile markets.
+                </p>
+                <p>
+                  <b>About Interactive Brokers Group, Inc.:</b>
+                </p>
+                <p>
+                  Interactive Brokers Group affiliates provide automated trade execution and custody of securities,
+                  commodities, foreign exchange and their derivative products around-the-clock on over 135 markets in
+                  numerous countries and currencies, from a single IBKR Integrated Investment Account to clients
+                  worldwide. We service individual investors, hedge funds, proprietary trading groups, financial
+                  advisors and introducing brokers. Our four decades of focus on technology and automation has enabled
+                  us to equip our clients with a uniquely sophisticated platform to manage their investment portfolios.
+                  We strive to provide our clients with advantageous execution prices and trading, risk and portfolio
+                  management tools, research facilities and investment products, all at low or no cost, positioning them
+                  to achieve superior returns on investments. Barron’s ranked Interactive Brokers #1 with 5 out of 5
+                  stars in its February 24, 2020, Best Online Broker Review.
+                </p>
+                <p><img alt=""
+                    src="https://cts.businesswire.com/ct/CT?id=bwnews&amp;sty=20210130005024r1&amp;sid=cntcp&amp;distro=ftp" /><span
+                    class="bwct31415" /></p>
+                <p id="mmgallerylink"><span id="mmgallerylink-phrase">View source version on businesswire.com:
+                  </span><span id="mmgallerylink-link"><a
+                      href="https://www.businesswire.com/news/home/20210130005024/en/"
+                      rel="nofollow">https://www.businesswire.com/news/home/20210130005024/en/</a></span></p>
+              </body>
+
+              </html>
+            </DataContent>
+          </ContentItem>
+        </NewsComponent>
+        <NewsComponent>
+          <Role FormalName="TweetText" />
+          <BasisForChoice Rank="1">./ContentItem/Format</BasisForChoice>
+          <DescriptiveMetadata>
+            <Language FormalName="en" />
+          </DescriptiveMetadata>
+          <ContentItem Duid="c89591508">
+            <Format FormalName="XHTML" />
+            <MimeType FormalName="text/xhtml" />
+            <DataContent>
+              <html xmlns="http://www.w3.org/1999/xhtml">
+
+              <head>
+                <title />
+              </head>
+
+              <body>
+                <p>
+                  Interactive Brokers lifts all trading restrictions on options
+                </p>
+              </body>
+
+              </html>
+            </DataContent>
+          </ContentItem>
+        </NewsComponent>
+      </NewsComponent>
+    </NewsComponent>
+  </NewsItem>
+</NewsML>
