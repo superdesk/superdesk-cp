@@ -1,4 +1,3 @@
-
 import os
 
 from superdesk.macros import load_macros
@@ -14,4 +13,4 @@ import superdesk.macros.set_default_template_metadata
 
 
 def init_app(_app):
-    load_macros(os.path.realpath(os.path.dirname(__file__)), 'cp.macros')  # noqa
+    load_macros(os.path.realpath(os.path.dirname(__file__)), "cp.macros")  # noqa

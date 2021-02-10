@@ -12,12 +12,12 @@ from superdesk.commands.data_updates import DataUpdate
 
 class DataUpdate(DataUpdate):
 
-    resource = 'vocabularies'
+    resource = "vocabularies"
 
     def forwards(self, mongodb_collection, mongodb_database):
         return mongodb_collection.update_one(
-            {'_id': 'genre'},
-            {'$unset': {'service': 1}},
+            {"_id": "genre"},
+            {"$unset": {"service": 1}},
         )
 
     def backwards(self, mongodb_collection, mongodb_database):

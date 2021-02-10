@@ -123,7 +123,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         except KeyError:
             pass
 
-        prev = superdesk.get_resource_service('ingest').find_one(req=None, guid=item["guid"])
+        prev = superdesk.get_resource_service("ingest").find_one(
+            req=None, guid=item["guid"]
+        )
         if prev and prev.get("slugline"):
             item["slugline"] = prev["slugline"]
         elif item.get("slugline"):

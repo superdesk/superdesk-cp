@@ -53,11 +53,13 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
                 ),
                 200,
             )
-            item.setdefault("subject", []).append({
-                "name": org_name,
-                "qcode": org_name,
-                "scheme": cp.ORGANISATION,
-            })
+            item.setdefault("subject", []).append(
+                {
+                    "name": org_name,
+                    "qcode": org_name,
+                    "scheme": cp.ORGANISATION,
+                }
+            )
 
         return item
 
