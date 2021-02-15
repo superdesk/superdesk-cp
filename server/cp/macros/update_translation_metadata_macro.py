@@ -16,6 +16,7 @@ logger = logging.getLogger(__name__)
 
 override_fields = ["Presse Canadienne staff", "L'Associated Press"]
 
+
 def get_destination(items, name):
     for item in items:
         if item.get('name').lower() == name.lower():
