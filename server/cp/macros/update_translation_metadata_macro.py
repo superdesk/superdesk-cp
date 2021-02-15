@@ -44,22 +44,17 @@ def update_translation_metadata_macro(item, **kwargs):
     # If subjects are present override them else add a new subject
     if subjects:
         for subject in subjects:
+            destination = {}
             if subject.get("name") == "Canadian Press Staff":
                 destination = get_destination(destinations, "Presse Canadienne staff")
-
-                subject.update({
-                    "name": destination.get("name"),
-                    "qcode": destination.get("qcode"),
-                    "scheme": "destinations",
-                })
             elif subject.get("name") == "The Associated Press":
                 destination = get_destination(destinations, "L'Associated Press")
 
-                subject.update({
-                    "name": destination.get("name"),
-                    "qcode": destination.get("qcode"),
-                    "scheme": "destinations",
-                })
+            subject.update({
+                "name": destination.get("name"),
+                "qcode": destination.get("qcode"),
+                "scheme": "destinations",
+            }) if destination else None
     else:
         destination = get_destination(destinations, "Presse Canadienne staff")
 
