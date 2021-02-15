@@ -14,6 +14,13 @@ from superdesk import get_resource_service
 
 logger = logging.getLogger(__name__)
 
+override_fields = ["Presse Canadienne staff", "L'Associated Press"]
+
+def get_destination(items, name):
+    for item in items:
+        if item.get('name').lower() == name.lower():
+            return item
+
 
 def update_translation_metadata_macro(item, **kwargs):
     if item.get("anpa_take_key"):
@@ -26,21 +33,36 @@ def update_translation_metadata_macro(item, **kwargs):
     if not cv or not cv.get("items"):
         return
 
-    subject = item.get("subject", [])
-    is_destination = any(
-        sub for sub in subject if sub.get("name") == "Presse Canadienne staff"
-    )
+    subjects = item.get("subject", [])
+    is_destination_present = any(sub for sub in subjects if sub.get("name") in override_fields)
 
-    for value in cv["items"]:
-        if value.get("name") == "Presse Canadienne staff" and not is_destination:
-            item.setdefault("subject", []).append(
-                {
-                    "name": value["name"],
-                    "qcode": value["qcode"],
-                    "scheme": "destinations",
-                }
-            )
-            break
+    destinations = [cv for cv in cv["items"] if cv.get("name") in override_fields]
+
+    for subject in subjects:
+        if subject.get("name") == "Canadian Press Staff" and not is_destination_present:
+            destination = get_destination(destinations, "Presse Canadienne staff")
+
+            subject.update({
+                "name": destination.get("name"),
+                "qcode": destination.get("qcode"),
+                "scheme": "destinations",
+            })
+        elif subject.get("name") == "The Associated Press" and not is_destination_present:
+            destination = get_destination(destinations, "L'Associated Press")
+
+            subject.update({
+                "name": destination.get("name"),
+                "qcode": destination.get("qcode"),
+                "scheme": "destinations",
+            })
+        elif not is_destination_present:
+            destination = get_destination(destinations, "Presse Canadienne staff")
+
+            subject.update({
+                "name": destination.get("name"),
+                "qcode": destination.get("qcode"),
+                "scheme": "destinations",
+            })
 
     return item
 
