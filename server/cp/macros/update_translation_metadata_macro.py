@@ -49,12 +49,15 @@ def update_translation_metadata_macro(item, **kwargs):
         )
     ]
 
+    # Check if destination is present.
+    destination_present = any(subject for subject in subjects if subject.get("scheme") == "destinations")
+
     destinations = [
         cv_item for cv_item in cv["items"] if cv_item.get("qcode") in destination_qcodes
     ]
 
     # If subjects are present override them else add a new subject
-    if subjects:
+    if subjects and destination_present:
         for subject in subjects:
             destination = {}
             if subject.get("qcode") == "cpstf":
@@ -74,13 +77,11 @@ def update_translation_metadata_macro(item, **kwargs):
     else:
         destination = get_destination(destinations, "sfstf")
 
-        subjects = [
-            {
-                "name": destination["name"],
-                "qcode": destination["qcode"],
-                "scheme": "destinations",
-            }
-        ]
+        subjects.append({
+            "name": destination["name"],
+            "qcode": destination["qcode"],
+            "scheme": "destinations",
+        })
 
     item["subject"] = subjects
 
