@@ -40,8 +40,13 @@ def update_translation_metadata_macro(item, **kwargs):
     subjects = [
         sub
         for sub in subjects
-        if sub.get("qcode") in destination_qcodes
-        and sub.get("scheme") == "destinations"
+        if (
+            (
+                sub.get("qcode") in destination_qcodes
+                and sub.get("scheme") == "destinations"
+            )
+            or sub.get("scheme") != "destinations"
+        )
     ]
 
     destinations = [
