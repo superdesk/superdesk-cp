@@ -21,6 +21,8 @@ DISTRIBUTION = "distribution"
 DESTINATIONS = "destinations"
 BROADCAST = "Broadcast"
 ORGANISATION = "organisation"
+TAG = "tag"
+AP_PRODUCT = "ap_product"
 
 SLUG_LEN = 32
 

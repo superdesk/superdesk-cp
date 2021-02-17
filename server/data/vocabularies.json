@@ -21046,5 +21046,21 @@
          "name": {}
       },
       "items": []
+   },
+   {
+      "_id": "ap_product",
+      "display_name": "AP Product",
+      "type": "manageable",
+      "selection_type": "multi selection",
+      "init_version": 1,
+      "unique_field": "qcode",
+      "service": {
+         "all": 1
+      },
+      "schema": {
+         "qcode": {},
+         "name": {}
+      },
+      "items": []
    }
 ]

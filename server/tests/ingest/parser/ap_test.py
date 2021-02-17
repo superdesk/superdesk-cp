@@ -90,10 +90,14 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("mass media", subjects)
         self.assertIn("technology and engineering", subjects)
 
-        tags = [s["name"] for s in item["subject"] if s.get("scheme") == "tag"]
+        tags = [s["name"] for s in item["subject"] if s.get("scheme") == cp.TAG]
         self.assertEqual(2, len(tags))
         self.assertIn("APV", tags)
         self.assertIn("TSX", tags)
+
+        products = [s["qcode"] for s in item["subject"] if s.get("scheme") == cp.AP_PRODUCT]
+        self.assertEqual(6, len(products))
+        self.assertIn("33381", products)
 
         dateline = item["dateline"]
         self.assertEqual("Wyoming Tribune Eagle", dateline["source"])
