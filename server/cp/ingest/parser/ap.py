@@ -267,6 +267,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         item["extra"]["ap_version"] = ap_item["version"]
 
         self._parse_tags(data["data"], item)
+        self._parse_ap_products(data["data"], item)
 
         if item.get("body_html"):
             item["body_html"] = clean_html(item["body_html"])
@@ -814,6 +815,20 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                         }
                     )
                     break
+
+    def _parse_ap_products(self, data, item):
+        try:
+            products = data["meta"]["products"]
+        except KeyError:
+            return
+        item.setdefault("subject", []).extend([
+            {
+                "name": p["name"],
+                "qcode": str(p["id"]),
+                "scheme": cp.AP_PRODUCT,
+            }
+            for p in products
+        ])
 
 
 def append_matching_subject(item, scheme, qcode):
