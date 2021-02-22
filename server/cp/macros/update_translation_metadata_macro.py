@@ -11,10 +11,38 @@
 import logging
 from flask_babel import lazy_gettext
 from superdesk import get_resource_service
+from eve.utils import ParsedRequest
+from apps.archive.common import format_dateline_to_locmmmddsrc
+
 
 logger = logging.getLogger(__name__)
 
 destination_qcodes = ["sfstf", "apfra", "cpstf", "ap---"]
+
+
+def set_dateline(item, dateline):
+    located = item.get("dateline", {}).get("located")
+
+    if located:
+        if located.get("place") and dateline:
+            located["place"] = dateline
+
+        if located.get("city") and dateline.get("name"):
+            located["city"] = dateline["name"]
+
+        if located.get("city_code") and dateline.get("name"):
+            located["city_code"] = dateline["name"]
+
+        if located.get("country") and dateline.get("country"):
+            located["country"] = dateline["country"]
+
+        if located.get("state") and dateline.get("state"):
+            located["state"] = dateline["state"]
+
+        if item.get("dateline", {}).get("text"):
+            item["dateline"]["text"] = format_dateline_to_locmmmddsrc(located, item["dateline"]["date"])
+
+    return item
 
 
 def get_destination(items, qcode):
@@ -24,6 +52,17 @@ def get_destination(items, qcode):
 
 
 def update_translation_metadata_macro(item, **kwargs):
+    req = ParsedRequest()
+    req.args = {}
+
+    located = item.get("dateline", {}).get("located")
+
+    if located.get("place"):
+        req.args["geonameId"] = located["place"].get("code")
+        req.args["lang"] = "fr"
+        dateline = get_resource_service("places_autocomplete").get_detail(req=req, lookup=None)
+        item = set_dateline(item, dateline)
+
     if item.get("anpa_take_key"):
         item["anpa_take_key"] = ""
 
