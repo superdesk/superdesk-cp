@@ -58,9 +58,7 @@ def update_translation_metadata_macro(item, **kwargs):
     located = item.get("dateline", {}).get("located")
 
     if located and located.get("place"):
-        req.args["geonameId"] = located["place"].get("code")
-        req.args["lang"] = "fr"
-        dateline = get_resource_service("places_autocomplete").get_detail(req=req, lookup=None)
+        dateline = get_resource_service("places_autocomplete").get_place(located["place"]["code"], "fr")
         item = set_dateline(item, dateline)
 
     if item.get("anpa_take_key"):
