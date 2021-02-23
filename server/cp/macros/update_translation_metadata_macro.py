@@ -57,7 +57,7 @@ def update_translation_metadata_macro(item, **kwargs):
 
     located = item.get("dateline", {}).get("located")
 
-    if located.get("place"):
+    if located and located.get("place"):
         req.args["geonameId"] = located["place"].get("code")
         req.args["lang"] = "fr"
         dateline = get_resource_service("places_autocomplete").get_detail(req=req, lookup=None)
