@@ -30,6 +30,7 @@ def set_dateline(item, dateline):
         if located.get("city") and dateline.get("name"):
             located["city"] = dateline["name"]
 
+        # We use the name here because we don't have the city code in the Geonames API.
         if located.get("city_code") and dateline.get("name"):
             located["city_code"] = dateline["name"]
 
