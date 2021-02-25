@@ -201,6 +201,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if ap_item.get("description_summary"):
             item["abstract"] = ap_item["description_summary"]
+        else:  # avoid using extended headline as a fallback
+            item.pop("abstract", None)
 
         if ap_item.get("ednote") and item["type"] == "text":
             ednote = self._parse_ednote(ap_item["ednote"])
