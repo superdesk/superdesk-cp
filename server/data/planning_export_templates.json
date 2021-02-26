@@ -6,4 +6,20 @@
         "body_html_template": "news_events_list_export.html"
     },
     "label": "News Events List"
+}, {
+    "_id": "news_planning_list",
+    "name": "news_planning_list",
+    "type": "planning",
+    "data": {
+        "body_html_template": "news_events_list_export.html"
+    },
+    "label": "News Events List"
+}, {
+    "_id": "news_combined_list",
+    "name": "news_combined_list",
+    "type": "combined",
+    "data": {
+        "body_html_template": "news_events_list_export.html"
+    },
+    "label": "News Events List"
 }]
