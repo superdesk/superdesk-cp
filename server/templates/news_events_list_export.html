@@ -1,18 +1,14 @@
-{% for key, group in group_items_by_state(items).items() %}
+{% for key, group in group_items_by_state(items) %}
     {% if group._items %}
         <h2>{{ group.name.capitalize() }}</h2>
         {% for item in group._items %}
-            {% if item['location'] %}
-                <p>{{ item['location'][0]['address']['locality'] }}
-                <br>{{ item['name'] }}
-            {% else %}
-                <p>{{ item['name'] }}
+            <p>{{ item.title }}
+            {% if item.locality %}
+                <br>{{ item.locality.capitalize() }}
             {% endif %}
-            <br>{{ item.dates.start_local.strftime('%I:%M %P') }} - {{ item.dates.end_local.strftime('%I:%M %P') }} ({{ item.dates.tz_name }})
-            {% if item.definition_long %}
-                <br>{{ item['definition_long'] }}
-            {% elif item.definition_short %}
-                <br>{{ item['definition_short'] }}
+            <br>{{ item.local_date }}
+            {% if item.description %}
+                <br>{{ item.description }}
             {% endif %}
             {% if item.links %}
                 {% for link in item.links %}
