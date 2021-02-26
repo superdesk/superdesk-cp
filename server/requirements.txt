@@ -7,4 +7,4 @@ elastic-apm[flask]>=5.9,<5.10
 
 superdesk-core==2.1.2
 superdesk-planning==2.1.2
-superdesk-analytics==2.1.0
+superdesk-analytics==2.1.1
