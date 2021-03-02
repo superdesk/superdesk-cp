@@ -10,5 +10,3 @@ application = get_app(dict(
 ))
 
 superdesk.register_resource("usage_metrics", UsageResource, UsageService, _app=application)
-
-
