@@ -263,3 +263,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 item = parser.parse(_data, {})
                 resources["ingest"].service.find_one.return_value = None
         self.assertEqual("prev-slugline", item["slugline"])
+
+    def test_aps_category(self):
+        with open(get_fixture_path("ap-aps.json", "ap")) as fp:
+            _data = json.load(fp)
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+        self.assertEqual("Advisory", item["anpa_category"][0]["name"])
