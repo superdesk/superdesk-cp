@@ -15,6 +15,10 @@ setTimeout(() => {
                 id: 'upload-iptc',
                 load: () => import('./extensions/upload-iptc').then((res) => res.default),
             },
+            {
+                id: 'usage-metrics',
+                load: () => import('superdesk-core/scripts/extensions/usageMetrics').then((res) => res.default),
+            },
         ],
         {},
     );
