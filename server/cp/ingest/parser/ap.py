@@ -37,7 +37,7 @@ EN_CATEGORY_MAPPING = [
     ("Politics", "p"),
     ("Sports", "q", "s", "z"),
     ("Travel", "t"),
-    ("Advisories", "v"),
+    ("Advisory", "v"),
 ]
 
 AP_SUBJECT_CODES = set(
