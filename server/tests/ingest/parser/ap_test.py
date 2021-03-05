@@ -16,7 +16,8 @@ from tests.ingest.parser import get_fixture_path
 from tests.mock import resources
 
 from cp.ingest import CP_APMediaFeedParser
-from cp.ingest.parser.ap import CATEGORY_SCHEME
+from cp.ingest.parser.ap import AP_SUBJECT_CV, CATEGORY_SCHEME
+from cp.output.formatter.jimi import JimiFormatter
 
 
 with open(get_fixture_path("item.json", "ap")) as fp:
@@ -34,6 +35,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
     app = flask.Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
+    subscriber = {}
+    formatter = JimiFormatter()
 
     def test_slugline(self):
         parser = CP_APMediaFeedParser()
@@ -251,6 +254,10 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             ],
             item["anpa_category"],
         )
+        self.assertEqual([], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV])
+        output = self.format(item)
+        self.assertIn("<Category>Agate</Category>", output)
+        self.assertIn("<IndexCode>Agate</IndexCode>", output)
 
     def test_slugline_prev_version(self):
         with open(get_fixture_path("ap-sports.json", "ap")) as fp:
@@ -271,3 +278,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             with patch.dict(superdesk.resources, resources):
                 item = parser.parse(_data, {})
         self.assertEqual("Advisory", item["anpa_category"][0]["name"])
+
+    def format(self, item):
+        with patch.dict(superdesk.resources, resources):
+            item["unique_id"] = 1
+            return self.formatter.format(item, self.subscriber)[0][1]

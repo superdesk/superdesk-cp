@@ -20,6 +20,7 @@ from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 
 AP_SOURCE = "The Associated Press"
 AP_SUBJECT_SCHEME = "http://cv.ap.org/id/"
+AP_SUBJECT_CV = "subject_custom"
 CATEGORY_SCHEME = "categories"
 
 FR_CATEGORY_MAPPING = [
@@ -140,9 +141,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if subj.get("scheme") == AP_SUBJECT_SCHEME
         ]
 
-        if ap_item.get("subject"):
-            item["subject"] = self._parse_subject(ap_item["subject"])
-
         if item.get("headline"):
             item["headline"] = self.process_headline(item["headline"])
             item["extra"][cp.HEADLINE2] = item["headline"]
@@ -217,6 +215,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             self._parse_category(data["data"], item)
         elif item["type"] == "picture":
             self._parse_picture_category(data["data"], item)
+
+        if ap_item.get("subject"):
+            self._parse_subject(ap_item["subject"], item)
 
         if ap_item.get("organisation"):
             item["extra"]["stocks"] = self._parse_stocks(ap_item["organisation"])
@@ -474,10 +475,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             re.sub(r"\s*Moving on.*\.", "", ednote),
         )
 
-    def _parse_subject(self, subject):
-        CV_ID = "subject_custom"
+    def _parse_subject(self, subject, item):
+        item.setdefault("subject", [])
+        is_agate = "Agate" in [c["name"] for c in item.get("anpa_category") or []]
+        if is_agate:
+            return
         parsed = []
-        available = _get_cv_items(CV_ID)
+        available = _get_cv_items(AP_SUBJECT_CV)
         for subj in available:
             if subj.get("ap_subject"):
                 codes = [code.strip() for code in subj["ap_subject"].split(",")]
@@ -489,11 +493,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                             {
                                 "name": subj["name"],
                                 "qcode": subj["qcode"],
-                                "scheme": CV_ID,
+                                "scheme": AP_SUBJECT_CV,
                                 "translations": subj["translations"],
                             }
                         )
-        return parsed
+        item["subject"].extend(parsed)
 
     def _map_category_codes(self, item):
         categories = _get_cv_items(CATEGORY_SCHEME)
