@@ -475,6 +475,11 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             re.sub(r"\s*Moving on.*\.", "", ednote),
         )
 
+    def _map_sluglines_to_subjects(self, item):
+        # We'll skip mapping slugline to subjects
+        # as we'll process subjects in `_parse_subject` function
+        pass
+
     def _parse_subject(self, subject, item):
         item.setdefault("subject", [])
         is_agate = "Agate" in [c["name"] for c in item.get("anpa_category") or []]
