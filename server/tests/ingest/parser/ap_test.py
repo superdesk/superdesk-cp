@@ -238,7 +238,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         )
         self.assertEqual("EU-Spain-Storm-Aftermath", item["slugline"])
 
-    def test_category_tenis(self):
+    def test_category_tennis(self):
         with open(get_fixture_path("ap-sports.json", "ap")) as fp:
             _data = json.load(fp)
         with self.app.app_context():
@@ -257,6 +257,34 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual([], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV])
         output = self.format(item)
         self.assertIn("<Category>Agate</Category>", output)
+        self.assertIn("<IndexCode>Agate</IndexCode>", output)
+
+    def test_ignore_slugline_to_subject_map(self):
+        with open(get_fixture_path("ap-sports.json", "ap")) as fp:
+            _data = json.load(fp)
+            # Prefix slugline with `BC` so slugline -> subject mapping works
+            # in this case, slugline -> "BC-TEN-" -> "15065000"
+            _data["data"]["item"]["slugline"] = "BC" + _data["data"]["item"]["slugline"][2:]
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        self.assertEqual(
+            [
+                {
+                    "name": "Agate",
+                    "qcode": "r",
+                    "scheme": CATEGORY_SCHEME,
+                }
+            ],
+            item["anpa_category"],
+        )
+        self.assertEqual([], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV])
+        output = self.format(item)
+        self.assertIn("<Category>Agate</Category>", output)
+
+        # Make sure `IndexCode` only contains `Agate` and not `Sport` or `Tennis`
         self.assertIn("<IndexCode>Agate</IndexCode>", output)
 
     def test_slugline_prev_version(self):
