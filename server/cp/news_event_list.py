@@ -47,11 +47,18 @@ def set_item_details(items):
                     "tz": app.config["DEFAULT_TIMEZONE"]
                 }
 
+        item.setdefault("address", {})
         if len(item.get("location") or []):
             # Set the items Location details if available
             try:
-                item["country"] = item["location"][0]["address"]["country"].lower()
-                item["locality"] = item["location"][0]["address"]["locality"].lower()
+                address = item["location"][0].get("address") or {}
+
+                item["address"] = {
+                    "country": address["country"].lower() if address.get("country") else None,
+                    "locality": address["locality"].lower() if address.get("locality") else None,
+                    "city": address["city"].lower() if address.get("city") else None,
+                    "state": address["state"].lower() if address.get("state") else None,
+                }
             except (IndexError, KeyError):
                 pass
 
@@ -80,13 +87,17 @@ def get_group_items(items, state_group):
             continue
 
         add_to_group = False
-        if item.get("country") and item.get("locality"):
-            country = item["country"]
-            locality = item["locality"]
+        country = item["address"].get("country")
+        state = item["address"].get("state")
+        city = item["address"].get("city")
 
-            if country != "canada" and state_group == "undated":
-                add_to_group = True
-            elif country == "canada" and locality in STATE_GROUPS[state_group]:
+        if country == "canada":
+            if state == "ontario":
+                if city == "ottawa" and state_group == "ottawa":
+                    add_to_group = True
+                elif city != "ottawa" and state_group == "ontario":
+                    add_to_group = True
+            elif state in STATE_GROUPS[state_group]:
                 add_to_group = True
             elif state_group == "undated":
                 add_to_group = True

@@ -3,8 +3,8 @@
         <h2>{{ group.name.capitalize() }}</h2>
         {% for item in group._items %}
             <p>{{ item.title }}
-            {% if item.locality %}
-                <br>{{ item.locality.capitalize() }}
+            {% if item.address.city %}
+                <br>{{ item.address.city.capitalize() }}
             {% endif %}
             <br>{{ item.local_date }}
             {% if item.description %}
