@@ -156,6 +156,7 @@ module.exports = function(grunt) {
                 'desk',
                 'fetchedDesk',
                 'translations',
+                'assignment',
                 'associatedItems',
                 'used'
             ]
