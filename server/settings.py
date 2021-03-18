@@ -275,6 +275,9 @@ ARCHIVED_EXPIRY_MINUTES = int(env("ARCHIVED_EXPIRY_MINUTES", 60 * 24 * 60))  # 6
 # disable use of XMP for photo assignments
 PLANNING_USE_XMP_FOR_PIC_ASSIGNMENTS = False
 
+# check for unfulfilled assignments when publishing a story
+PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
+
 # ultrad auth header
 ULTRAD_AUTH = env("ULTRAD_AUTH", "")
 ULTRAD_TODO_STAGE = env("ULTRAD_TODO_STAGE", "Traduction")
