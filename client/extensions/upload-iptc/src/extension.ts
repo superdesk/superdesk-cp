@@ -32,6 +32,7 @@ const copySubj = (scheme: string) => (subj: ISubject) => ({
 });
 
 const extension: IExtension = {
+    id: 'upload-iptc',
     activate: (superdesk: ISuperdesk) => {
         const result: IExtensionActivationResult = {
             contributions: {
