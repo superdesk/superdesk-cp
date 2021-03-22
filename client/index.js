@@ -1,20 +1,16 @@
 import {startApp} from 'superdesk-core/scripts/index';
+import planningExtension from 'superdesk-planning/client/planning-extension/dist/extension';
+import orangelogicExtension from './extensions/orangelogic-extension/dist/extension';
+import uploadIptc from './extensions/upload-iptc';
+import markForUserExtension from 'superdesk-core/scripts/extensions/markForUser';
 
 setTimeout(() => {
     startApp(
         [
-            {
-                id: 'planning-extension',
-                load: () => import('superdesk-planning/client/planning-extension/dist/extension').then((res) => res.default),
-            },
-            {
-                id: 'orangelogic-extension',
-                load: () => import('./extensions/orangelogic-extension/dist/extension').then((res) => res.default),
-            },
-            {
-                id: 'upload-iptc',
-                load: () => import('./extensions/upload-iptc').then((res) => res.default),
-            },
+            planningExtension,
+            orangelogicExtension,
+            uploadIptc,
+            //markForUserExtension,
         ],
         {},
     );
