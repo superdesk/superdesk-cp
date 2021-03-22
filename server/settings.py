@@ -285,6 +285,9 @@ PLANNING_EVENT_TEMPLATES_ENABLED = True
 # remove "Add to workflow" step for assignments
 PLANNING_AUTO_ASSIGN_TO_WORKFLOW = True
 
+# check for unfulfilled assignments when publishing a story
+PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
+
 # ultrad auth header
 ULTRAD_AUTH = env("ULTRAD_AUTH", "")
 ULTRAD_TODO_STAGE = env("ULTRAD_TODO_STAGE", "Traduction")
