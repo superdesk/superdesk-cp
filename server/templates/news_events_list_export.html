@@ -1,10 +1,10 @@
 {% for key, group in group_items_by_state(items) %}
     {% if group._items %}
-        <h2>{{ group.name.capitalize() }}</h2>
+        <h2>{{ group.name }}</h2>
         {% for item in group._items %}
             <p>{{ item.title }}
             {% if item.address.city %}
-                <br>{{ item.address.city.capitalize() }}
+                <br>{{ item.address.city }}
             {% endif %}
             <br>{{ item.local_date }}
             {% if item.description %}
