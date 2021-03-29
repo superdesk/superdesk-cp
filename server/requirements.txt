@@ -8,4 +8,4 @@ elastic-apm[flask]>=5.9,<5.10
 superdesk-analytics==2.1.2
 superdesk-planning==2.1.3
 
--e git+git://github.com/superdesk/superdesk-core@hotfix/2.1.3#egg=superdesk-core
+-e git+git://github.com/superdesk/superdesk-core@aaf3ec4#egg=superdesk-core
