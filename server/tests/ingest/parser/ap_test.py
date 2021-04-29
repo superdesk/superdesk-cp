@@ -79,11 +79,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 "qcode": "w",
                 "scheme": "categories",
                 "translations": {
-                        "name": {
-                            "en-CA": "International",
-                            "fr-CA": "International"
-                        }
+                    "name": {
+                        "en-CA": "International",
+                        "fr-CA": "International"
                     }
+                }
             },
             item["anpa_category"],
         )
