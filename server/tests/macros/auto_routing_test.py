@@ -26,7 +26,7 @@ class AutoRoutingMacroTestCase(unittest.TestCase):
                 "name": "Broadcast",
                 "qcode": cp.BROADCAST,
                 "scheme": cp.DISTRIBUTION,
-                "translations":{
+                "translations": {
                     "name": {
                         "en-CA": "Broadcast",
                         "fr-CA": "Radio"
