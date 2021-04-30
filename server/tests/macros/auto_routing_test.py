@@ -26,6 +26,12 @@ class AutoRoutingMacroTestCase(unittest.TestCase):
                 "name": "Broadcast",
                 "qcode": cp.BROADCAST,
                 "scheme": cp.DISTRIBUTION,
+                "translations":{
+                    "name": {
+                        "en-CA": "Broadcast",
+                        "fr-CA": "Radio"
+                    }
+                }
             },
             item["subject"],
         )
@@ -34,6 +40,7 @@ class AutoRoutingMacroTestCase(unittest.TestCase):
                 "name": "The Associated Press",
                 "qcode": "ap---",
                 "scheme": cp.DESTINATIONS,
+                "translations": None
             },
             item["subject"],
         )
