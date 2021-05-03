@@ -51,9 +51,12 @@ def callback(item, **kwargs):
             else:
                 logger.error("no item found in vocabulary %s with name %s", cv_id, name)
 
-        # remove associations for Broadcast content
-        if cp.is_broadcast(item) and item.get("associations"):
-            item["associations"] = {key: None for key in item["associations"]}
+        # handle APR specific output
+        if cp.is_broadcast(item):
+            if item.get("associations"):
+                item["associations"] = {key: None for key in item["associations"]}
+            if item.get("abstract"):
+                item["body_html"] = item.pop("abstract")
 
     return item
 
