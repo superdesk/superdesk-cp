@@ -1,24 +1,11 @@
-{% for key, group in group_items_by_state(items) %}
-    {% if group._items %}
-        <h2>{{ group.name }}</h2>
-        {% for item in group._items %}
-            <p>{{ item.title }}
-            {% if item.address.city %}
-                <br>{{ item.address.city }}
-            {% endif %}
-            <br>{{ item.local_date }}
-            {% if item.description %}
-                <br>{{ item.description }}
-            {% endif %}
-            {% if item.links %}
-                {% for link in item.links %}
-                    <br><a href="{{ link }}">{{ link }}</a>
-                {% endfor %}
-            {% endif %}
-            {% if item.coverages %}
-                <br>Coverage: {{ item.coverages | join(', ') }}
-            {% endif %}
-            </p>
-        {% endfor %}
-    {% endif %}
+{% for date, date_group in group_items_by_state(items) %}
+<h2>{{ date_group.name }}</h2>
+{% for group, items in date_group.groups.items() %}
+{% if items %}
+<p><b>{{ group }}</b></p>
+{% for item in items %}
+<p>{{ item.title }}<br>{{ item.address.name }} _ {{ item.description }}{{ item.local_time }}{{ item.address.full }}{{ item.coverage_types }}</p>
+{% endfor %}
+{% endif %}
+{% endfor %}
 {% endfor %}
