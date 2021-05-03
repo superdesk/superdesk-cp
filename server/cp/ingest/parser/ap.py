@@ -697,6 +697,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     "name": cat["name"],
                     "qcode": cat["qcode"],
                     "scheme": CATEGORY_SCHEME,
+                    "translations": cat.get("translations")
                 }
             )
 
