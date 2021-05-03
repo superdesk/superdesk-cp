@@ -191,7 +191,7 @@
           "filter_enabled": true
         },
         "language": {
-          "enabled": false,
+          "enabled": true,
           "index": 4,
           "group": "common",
           "search_enabled": true,
@@ -333,7 +333,7 @@
           "filter_enabled": true
         },
         "language": {
-          "enabled": false,
+          "enabled": true,
           "index": 4,
           "group": "common",
           "search_enabled": true,
@@ -503,7 +503,7 @@
           "filter_enabled": true
         },
         "language": {
-          "enabled": false,
+          "enabled": true,
           "index": 4,
           "group": "common",
           "search_enabled": true,

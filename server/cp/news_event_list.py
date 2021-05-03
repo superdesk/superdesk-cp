@@ -2,19 +2,19 @@ from flask import current_app as app
 from superdesk.utc import utc_to_local
 
 STATE_GROUPS = {
-    "atlantic": [
+    "Atlantic": [
         "newfoundland and labrador",
         "nova scotia",
         "new brunswick",
         "prince edward island",
     ],
-    "quebec": ["quebec"],
-    "ottawa": ["ottawa"],
-    "ontario": ["ontario"],
-    "prairies": ["manitoba", "saskatchewan", "alberta"],
-    "british columbia": ["british columbia"],
-    "north": ["nunavut", "northwest territories", "yukon"],
-    "undated": [],
+    "Quebec": ["quebec"],
+    "Ottawa": ["ottawa"],
+    "Ontario": ["ontario"],
+    "Prairies": ["manitoba", "saskatchewan", "alberta"],
+    "British Columbia": ["british columbia"],
+    "North": ["nunavut", "northwest territories", "yukon"],
+    "Undated": [],
 }
 
 
@@ -47,11 +47,18 @@ def set_item_details(items):
                     "tz": app.config["DEFAULT_TIMEZONE"]
                 }
 
+        item.setdefault("address", {})
         if len(item.get("location") or []):
             # Set the items Location details if available
             try:
-                item["country"] = item["location"][0]["address"]["country"].lower()
-                item["locality"] = item["location"][0]["address"]["locality"].lower()
+                address = item["location"][0].get("address") or {}
+
+                item["address"] = {
+                    "country": address["country"] if address.get("country") else None,
+                    "locality": address["locality"] if address.get("locality") else None,
+                    "city": address["city"] if address.get("city") else None,
+                    "state": address["state"] if address.get("state") else None,
+                }
             except (IndexError, KeyError):
                 pass
 
@@ -80,17 +87,21 @@ def get_group_items(items, state_group):
             continue
 
         add_to_group = False
-        if item.get("country") and item.get("locality"):
-            country = item["country"]
-            locality = item["locality"]
+        country = (item["address"].get("country") or "").lower()
+        state = (item["address"].get("state") or "").lower()
+        city = (item["address"].get("city") or "").lower()
 
-            if country != "canada" and state_group == "undated":
+        if country == "canada":
+            if state == "ontario":
+                if city == "ottawa" and state_group == "Ottawa":
+                    add_to_group = True
+                elif city != "ottawa" and state_group == "Ontario":
+                    add_to_group = True
+            elif state in STATE_GROUPS[state_group]:
                 add_to_group = True
-            elif country == "canada" and locality in STATE_GROUPS[state_group]:
+            elif state_group == "Undated":
                 add_to_group = True
-            elif state_group == "undated":
-                add_to_group = True
-        elif state_group == "undated":
+        elif state_group == "Undated":
             add_to_group = True
 
         if add_to_group:

@@ -278,6 +278,9 @@ PLANNING_USE_XMP_FOR_PIC_ASSIGNMENTS = False
 # check for unfulfilled assignments when publishing a story
 PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
 
+# url used when clicking on a location of an Event
+STREET_MAP_URL = "https://www.google.ca/maps/?q="
+
 # ultrad auth header
 ULTRAD_AUTH = env("ULTRAD_AUTH", "")
 ULTRAD_TODO_STAGE = env("ULTRAD_TODO_STAGE", "Traduction")
