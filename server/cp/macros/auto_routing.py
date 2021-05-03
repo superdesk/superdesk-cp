@@ -46,6 +46,7 @@ def callback(item, **kwargs):
                         "name": subject["name"],
                         "qcode": subject["qcode"],
                         "scheme": cv_id,
+                        "translations": subject.get("translations")
                     }
                 )
             else:
