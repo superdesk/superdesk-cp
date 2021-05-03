@@ -300,6 +300,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     "name": "Agate",
                     "qcode": "r",
                     "scheme": CATEGORY_SCHEME,
+                    "translations": {"name": {"en-CA": "Agate", "fr-CA": "Statistiques"}},
                 }
             ],
             item["anpa_category"],
