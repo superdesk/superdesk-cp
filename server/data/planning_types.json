@@ -166,7 +166,7 @@
   {
     "_id" : "advanced_search",
     "name": "advanced_search",
-    "init_version": 1,
+    "init_version": 2,
     "editor": {
       "event": {
         "full_text": {
