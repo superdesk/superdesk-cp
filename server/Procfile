@@ -2,4 +2,6 @@ rest: gunicorn -c gunicorn_config.py wsgi
 wamp: python3 -u ws.py
 work: celery -A worker -X "${SUPERDESK_CELERY_PREFIX}expiry" worker
 beat: celery -A worker beat --pid=
-work_expiry: celery -A worker -Q "${SUPERDESK_CELERY_PREFIX}expiry" -c 2 worker
+capi: gunicorn -c gunicorn_config.py content_api.wsgi
+papi: gunicorn -c gunicorn_config.py prod_api_app
+work_expiry: celery -A worker -Q "${SUPERDESK_CELERY_PREFIX}expiry" worker

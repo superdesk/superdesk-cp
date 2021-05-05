@@ -1,4 +1,4 @@
-gunicorn==19.7.1
+gunicorn==20.0.4
 honcho==1.0.1
 python3-saml>=1.9,<1.10
 python-xmp-toolkit>=2.0.1,<2.1
