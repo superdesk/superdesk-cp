@@ -5,19 +5,19 @@ setTimeout(() => {
         [
             {
                 id: 'planning-extension',
-                load: () => import('superdesk-planning/client/planning-extension/dist/extension').then((res) => res.default),
+                load: () => import('superdesk-planning/client/planning-extension'),
             },
             {
                 id: 'orangelogic-extension',
-                load: () => import('./extensions/orangelogic-extension/dist/extension').then((res) => res.default),
+                load: () => import('./extensions/orangelogic-extension'),
             },
             {
                 id: 'upload-iptc',
-                load: () => import('./extensions/upload-iptc').then((res) => res.default),
+                load: () => import('./extensions/upload-iptc'),
             },
             {
                 id: 'usage-metrics',
-                load: () => import('superdesk-core/scripts/extensions/usageMetrics').then((res) => res.default),
+                load: () => import('superdesk-core/scripts/extensions/usageMetrics'),
             },
         ],
         {},
