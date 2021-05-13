@@ -864,5 +864,12 @@ def capitalize(name):
 def clean_html(html):
     cleaner = lxml.html.clean.Cleaner()
     root = lxml.html.fromstring(html)
+
+    for elem in root.iter():
+        elem.attrib.pop("id", None)
+        elem.attrib.pop("class", None)
+        if elem.tag in ('hl2', 'pre', 'note'):
+            elem.tag = 'p'
+
     root = cleaner.clean_html(root)
     return sd_etree.to_string(root, method="html")

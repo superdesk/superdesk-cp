@@ -1,0 +1,127 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.2",
+    "id": "ebo2dKTT5LI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30599,
+                "name": "AP Sports News (S Wire only)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 31385,
+                "name": "S Level Sports - Agate Only"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 32610,
+                "name": "Latam News Service"
+            }, {
+                "id": 36880,
+                "name": "Broadcast National Sports Logs"
+            }, {
+                "id": 100216,
+                "name": "Broadcast - National Newspower"
+            }, {
+                "id": 100502,
+                "name": "Member Choice Sports Option"
+            }, {
+                "id": 101267,
+                "name": "Sports Wire"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/39b60d8408a78fe7f4c67953c38e7818?qt=ebo2dKTT5LI&et=5a3aza0c0",
+            "altids": {
+                "itemid": "39b60d8408a78fe7f4c67953c38e7818",
+                "etag": "39b60d8408a78fe7f4c67953c38e7818_5a3aza0c0",
+                "friendlykey": "9720390447712379",
+                "referenceid": "NBA Expanded Glance",
+                "transref": "s0093"
+            },
+            "foreignkeys": [{
+                "memberentryid": "urn:publicid:sportradar.us:BC-BKN--NBA_Expanded_Glance:2021-05-12:5"
+            }, {
+                "membermanagementid": "urn:publicid:sportradar.us:BC-BKN--NBA_Expanded_Glance:2021-05-12"
+            }],
+            "version": 5,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Agate",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2021-05-13T05:04:44Z",
+            "firstcreated": "2021-05-12T14:00:07Z",
+            "pubstatus": "usable",
+            "signals": ["newscontent"],
+            "title": "NBA Expanded Glance",
+            "headline": "NBA Expanded Glance",
+            "slugline": "BC-BKN--NBA Expanded Glance",
+            "copyrightnotice": "Copyright 2021 Associated Press. All rights reserved.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["95", "Glance", "Men", "National Basketball Association", "Professional", "Basketball", "iATOMAgate", "Sportradar"],
+            "provider": "Sportradar",
+            "infosource": [{
+                "name": "Sportradar",
+                "type": "ThirdParty",
+                "url": "http://sportradar.us/data/"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "s",
+                "name": "s"
+            }, {
+                "code": "54df6c687df7100483dedf092526b43e",
+                "name": "Sports",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Sports",
+                "topparent": true
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "4b0ce2c82f2f41fdb1b0df183a5f0e43",
+                "name": "Broadcast",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }],
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "contentid": "003338cfa62185c78569e263cef9fe2c",
+                    "href": "https://api.ap.org/media/v/content/39b60d8408a78fe7f4c67953c38e7818.5/download?type=text&format=NITF&rid=003338cfa62185c78569e263cef9fe2c&cid=0&fid=bcb3f9b8634c4a05b4fe611de27a35cc&trf=s0093&qt=ebo2dKTT5LI&dt=YuUPJP4efS&et=5a3aza0c0",
+                    "mediafilterid": "2"
+                }
+            },
+            "textformat": "at"
+        }
+    }
+}
