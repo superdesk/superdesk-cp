@@ -485,7 +485,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         is_agate = "Agate" in [c["name"] for c in item.get("anpa_category") or []]
         if is_agate:
             return
-        parsed = []
+        added = set()
         available = _get_cv_items(AP_SUBJECT_CV)
         for subj in available:
             if subj.get("ap_subject"):
@@ -493,8 +493,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 for ap_subj in subject:
                     if any(
                         [code for code in codes if ap_subj["code"].startswith(code)]
-                    ):
-                        parsed.append(
+                    ) and subj["qcode"] not in added:
+                        added.add(subj["qcode"])
+                        item["subject"].append(
                             {
                                 "name": subj["name"],
                                 "qcode": subj["qcode"],
@@ -502,7 +503,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                                 "translations": subj["translations"],
                             }
                         )
-        item["subject"].extend(parsed)
 
     def _map_category_codes(self, item):
         categories = _get_cv_items(CATEGORY_SCHEME)

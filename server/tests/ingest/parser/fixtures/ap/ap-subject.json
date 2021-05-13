@@ -1,0 +1,603 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.2",
+    "id": "uYIAxHwqsNI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 30598,
+                "name": "AP National News Report (A Wire)"
+            }, {
+                "id": 31244,
+                "name": "Asian Wire"
+            }, {
+                "id": 32607,
+                "name": "European News Service"
+            }, {
+                "id": 33371,
+                "name": "AP Alerts -  Crime"
+            }, {
+                "id": 33381,
+                "name": "AP Alerts -  Labor"
+            }, {
+                "id": 33383,
+                "name": "AP Alerts -  Medical"
+            }, {
+                "id": 35525,
+                "name": "AP Extended Global Headlines"
+            }, {
+                "id": 35527,
+                "name": "AP Extended Global Headlines - Summaries"
+            }, {
+                "id": 46587,
+                "name": "Broadcast - Summaries - National News"
+            }, {
+                "id": 101264,
+                "name": "AP U.S. National News (Datastream A)"
+            }, {
+                "id": 101543,
+                "name": "Broadcast National Summaries"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/d14715ba3653753d7c1f122f8aea79de?qt=uYIAxHwqsNI&et=3a9aza0c0",
+            "altids": {
+                "itemid": "d14715ba3653753d7c1f122f8aea79de",
+                "etag": "d14715ba3653753d7c1f122f8aea79de_3a9aza0c0",
+                "friendlykey": "644231534970",
+                "referenceid": "AF-MED--Congo-WHO-Sex Abuse",
+                "transref": "APL0276"
+            },
+            "version": 3,
+            "type": "text",
+            "urgency": 4,
+            "profile": "InvestigativeEnterprise",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2021-05-12T17:26:10Z",
+            "firstcreated": "2021-05-11T18:51:43Z",
+            "editorialrole": "FullStory",
+            "pubstatus": "usable",
+            "ednote": "Eds: UPDATES: This story has been updated to add a missing word, and context from WHO meeting chat. ",
+            "editorialtypes": ["Lead"],
+            "signals": ["newscontent"],
+            "title": "AF-MED--Congo-WHO-Sex Abuse",
+            "headline": "Internal emails reveal WHO knew of sex abuse claims in Congo",
+            "headline_extended": "When Shekinah was working as a nurse’s aide in northeastern Congo in January 2019, she said, a World Health Organization doctor offered her a job investigating Ebola cases at double her previous salary _ in exchange for sex",
+            "slugline": "BC-AF-MED-Congo-WHO-Sex-Abuse, 3rd Ld-Writethru",
+            "description_summary": "When Shekinah was working as a nurse’s aide in northeastern Congo in January 2019, she said, a World Health Organization doctor offered her a job investigating Ebola cases at double her previous salary _ in exchange for sex. Shekinah said the WHO doctor who gave her the job made the same offer to several of her friends. After facing allegations that some of its unnamed staffers were involved in sexual abuse in Congo, WHO leaders said they had no further details. But an AP investigation has found that senior WHO management was not only informed of alleged sexual misconduct in 2019, but was asked how to handle it.  ",
+            "bylines": [{
+                "by": "By MARIA CHENG and AL-HADJI KUDRA MALIRO",
+                "title": "Associated Press"
+            }],
+            "located": "BENI, Congo",
+            "datelinelocation": {
+                "city": "Beni",
+                "countrycode": "COD",
+                "countryname": "Congo"
+            },
+            "copyrightnotice": "Copyright 2021 The Associated Press. All rights reserved. This material may not be published, broadcast, rewritten or redistributed without permission.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["Congo-WHO-Sex Abuse"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "i",
+                "name": "i"
+            }, {
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "p",
+                "name": "p"
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "General news",
+                "rels": ["direct", "ancestor"]
+            }, {
+                "code": "86aad5207dac100488ecba7fa5283c3e",
+                "name": "Government and politics",
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Government and politics",
+                "rels": ["direct", "ancestor"]
+            }, {
+                "code": "cc7a76087e4e10048482df092526b43e",
+                "name": "Health",
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "Health",
+                "rels": ["direct", "ancestor"]
+            }, {
+                "code": "ae2f807206ab4501a3b2e38baf83da7b",
+                "name": "Coronavirus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e", "e228bab07de410048fa8df092526b43e"]
+            }, {
+                "code": "eaf596107eff10048521df092526b43e",
+                "name": "Infectious diseases",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "e22284d87de410048f8ddf092526b43e",
+                "name": "Diseases and conditions",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "e228bab07de410048fa8df092526b43e",
+                "name": "Lung disease",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e22284d87de410048f8ddf092526b43e"]
+            }, {
+                "code": "4b19fac87e8710048c388087fc32d30c",
+                "name": "Emergency management",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "972de57889ef10048f77d56c852d093e",
+                "name": "Celebrity causes",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["b4ed19d87e5c10048565df092526b43e"]
+            }, {
+                "code": "b4ed19d87e5c10048565df092526b43e",
+                "name": "Celebrity",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["5b4319707dd310048b23df092526b43e"]
+            }, {
+                "code": "5b4319707dd310048b23df092526b43e",
+                "name": "Entertainment",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["16cb0ba3e6d24d97ace39f5a1924669a"]
+            }, {
+                "code": "16cb0ba3e6d24d97ace39f5a1924669a",
+                "name": "Arts and entertainment",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "523a6a6088e910048f99f8851349f9bd",
+                "name": "Sexual misconduct",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["326bd288872b10048ce4dd689ee7093e"]
+            }, {
+                "code": "326bd288872b10048ce4dd689ee7093e",
+                "name": "Sex in society",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "08680bf085af10048c4f9a5aeba5fb06",
+                "name": "Social issues",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["75a42fd87df7100483eedf092526b43e"]
+            }, {
+                "code": "75a42fd87df7100483eedf092526b43e",
+                "name": "Social affairs",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "5238090088e910048f5ef8851349f9bd",
+                "name": "Wages and salaries",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["52352e8888e910048f1ff8851349f9bd"]
+            }, {
+                "code": "52352e8888e910048f1ff8851349f9bd",
+                "name": "Personnel",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c8e409f8858510048872ff2260dd383e"]
+            }, {
+                "code": "c8e409f8858510048872ff2260dd383e",
+                "name": "Business",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "569ea848872a10048a58dd689ee7093e",
+                "name": "Abuse of women",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["d4ecb1e085ae10048bf09a5aeba5fb06", "c4fee418884410048a01ae2ac3a6923e"]
+            }, {
+                "code": "d4ecb1e085ae10048bf09a5aeba5fb06",
+                "name": "Women's rights",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["008e219885ab10048110ff2260dd383e"]
+            }, {
+                "code": "008e219885ab10048110ff2260dd383e",
+                "name": "Human rights and civil liberties",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "c4fee418884410048a01ae2ac3a6923e",
+                "name": "Human welfare",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "d1720f70883210048576ae2ac3a6923e",
+                "name": "Criminal investigations",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["48612b807c2b4b93bbbacbf54f547ad5", "17956128897810048ce8d56c852d093e"]
+            }, {
+                "code": "48612b807c2b4b93bbbacbf54f547ad5",
+                "name": "Crime",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "17956128897810048ce8d56c852d093e",
+                "name": "Law and order",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e"]
+            }, {
+                "code": "b17e2751b26d4523a2c99d79e04747ee",
+                "name": "COVID-19 pandemic",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }, {
+                "code": "523699d088e910048f47f8851349f9bd",
+                "name": "Government pay",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["56b2aea8857510048d19ff2260dd383e"]
+            }, {
+                "code": "56b2aea8857510048d19ff2260dd383e",
+                "name": "Government business and finance",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["c8e409f8858510048872ff2260dd383e", "86aad5207dac100488ecba7fa5283c3e"]
+            }, {
+                "code": "4b19fac87e8710048c398087fc32d30c",
+                "name": "Epidemics",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["e57b6c907e3810048ae4df092526b43e"]
+            }, {
+                "code": "e57b6c907e3810048ae4df092526b43e",
+                "name": "Public health",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["cc7a76087e4e10048482df092526b43e"]
+            }, {
+                "code": "9cce666bb29344b8ba61f3732d971d32",
+                "name": "Disease outbreaks",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["f25af2d07e4e100484f5df092526b43e", "e57b6c907e3810048ae4df092526b43e"]
+            }, {
+                "code": "f0f455a92dcb4990aee081f6aae3a184",
+                "name": "Sexual abuse",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["13c6a480899b10048b9dd56c852d093e"]
+            }, {
+                "code": "13c6a480899b10048b9dd56c852d093e",
+                "name": "Violent crime",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["48612b807c2b4b93bbbacbf54f547ad5"]
+            }, {
+                "code": "63518a808872100489c8eb2e0e616f0b",
+                "name": "Professional organizations",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6487e220887010048c6fcb8225d5863e"]
+            }, {
+                "code": "6487e220887010048c6fcb8225d5863e",
+                "name": "Social groups and organizations",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["75a42fd87df7100483eedf092526b43e"]
+            }, {
+                "code": "3f0008439d3c4d4bbe0a7f949a804f7a",
+                "name": "Ebola virus",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["a787de36ca7048d2a8f9b70d1725a74b"]
+            }, {
+                "code": "a787de36ca7048d2a8f9b70d1725a74b",
+                "name": "Hemorrhagic fever",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["eaf596107eff10048521df092526b43e"]
+            }, {
+                "code": "5238090088e910048f5ff8851349f9bd",
+                "name": "Workplace discrimination",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["0e41749885ab10048127ff2260dd383e", "52352e8888e910048f1ff8851349f9bd", "24af9f40872a10048cb6d7c656897a02"]
+            }, {
+                "code": "0e41749885ab10048127ff2260dd383e",
+                "name": "Labor issues",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["08680bf085af10048c4f9a5aeba5fb06"]
+            }, {
+                "code": "24af9f40872a10048cb6d7c656897a02",
+                "name": "Discrimination",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["008e219885ab10048110ff2260dd383e"]
+            }],
+            "organisation": [{
+                "code": "8997c0688d7410048d178a3c53cbc603",
+                "name": "World Health Organization",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["54fa9358892310048056fb7860a2fc03"]
+            }, {
+                "code": "54fa9358892310048056fb7860a2fc03",
+                "name": "United Nations",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true
+            }],
+            "place": [{
+                "code": "edf0ebff3cff4a7cbf093a452f498111",
+                "name": "Geneva",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["662161307d5b100482e1c076b8e3055c"],
+                "locationtype": {
+                    "code": "9d26a20b35f0484a891740f8189d4c7b",
+                    "name": "City"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [6.14569, 46.20222]
+                }
+            }, {
+                "code": "662161307d5b100482e1c076b8e3055c",
+                "name": "Switzerland",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["6618c9f87d5b10048202c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [8.01427, 47.00016]
+                }
+            }, {
+                "code": "6618c9f87d5b10048202c076b8e3055c",
+                "name": "Western Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "parentids": ["661850e07d5b100481f4c076b8e3055c"],
+                "locationtype": {
+                    "code": "424cdfcd69d64fa6869055f7ebf10be4",
+                    "name": "World region"
+                }
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Machine",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [9.14062, 48.69096]
+                }
+            }],
+            "audiences": [{
+                "code": "82c6a4c46fa0446090a7acaf93159e4c",
+                "name": "Print",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f43adc08760d10048040e6e7a0f4673e",
+                "name": "National",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "f4ecf9b0760d10048044e6e7a0f4673e",
+                "name": "International",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "661850e07d5b100481f4c076b8e3055c",
+                "name": "Europe",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661812607d5b100481f1c076b8e3055c",
+                "name": "Africa",
+                "type": "AUDGEOGRAPHY"
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "associations": {
+                "1": {
+                    "uri": "https://api.ap.org/media/v/content/b2646bf12b3f45d9b771c5904b1ebed5?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "b2646bf12b3f45d9b771c5904b1ebed5",
+                        "etag": "b2646bf12b3f45d9b771c5904b1ebed5_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "2": {
+                    "uri": "https://api.ap.org/media/v/content/212db763277340e58927f1b8ba85e90d?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "212db763277340e58927f1b8ba85e90d",
+                        "etag": "212db763277340e58927f1b8ba85e90d_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "3": {
+                    "uri": "https://api.ap.org/media/v/content/e17e62f81165461daf544dd9118d3546?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "e17e62f81165461daf544dd9118d3546",
+                        "etag": "e17e62f81165461daf544dd9118d3546_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "4": {
+                    "uri": "https://api.ap.org/media/v/content/aa255197dfa04330b80e8de53180859c?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "aa255197dfa04330b80e8de53180859c",
+                        "etag": "aa255197dfa04330b80e8de53180859c_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "5": {
+                    "uri": "https://api.ap.org/media/v/content/97199b0af16b4bb2906dc713bfa1f374?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "97199b0af16b4bb2906dc713bfa1f374",
+                        "etag": "97199b0af16b4bb2906dc713bfa1f374_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "6": {
+                    "uri": "https://api.ap.org/media/v/content/28c401d88262479c9ab072110b3718d2?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "28c401d88262479c9ab072110b3718d2",
+                        "etag": "28c401d88262479c9ab072110b3718d2_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "7": {
+                    "uri": "https://api.ap.org/media/v/content/c6ca22b33a4746e397893224f1f2e996?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "c6ca22b33a4746e397893224f1f2e996",
+                        "etag": "c6ca22b33a4746e397893224f1f2e996_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "8": {
+                    "uri": "https://api.ap.org/media/v/content/464038805e0c474b8801d0c881fddf21?qt=uYIAxHwqsNI&et=1a1aza3c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "464038805e0c474b8801d0c881fddf21",
+                        "etag": "464038805e0c474b8801d0c881fddf21_1a1aza3c0"
+                    },
+                    "version": 1,
+                    "type": "picture",
+                    "headline": "Congo WHO Sex Abuse"
+                },
+                "9": {
+                    "uri": "https://api.ap.org/media/v/content/30a2506cb998488ea4f17df65e180192?qt=uYIAxHwqsNI&et=0a3aza9c0&ai=d14715ba3653753d7c1f122f8aea79de",
+                    "altids": {
+                        "itemid": "30a2506cb998488ea4f17df65e180192",
+                        "etag": "30a2506cb998488ea4f17df65e180192_0a3aza9c0"
+                    },
+                    "version": 0,
+                    "type": "video",
+                    "headline": "Probe shows WHO knew of sex claims in Congo"
+                }
+            },
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 3028,
+                    "contentid": "16adbcc9643777038211dab79057ed07",
+                    "href": "https://api.ap.org/media/v/content/d14715ba3653753d7c1f122f8aea79de.3/download?type=text&format=NITF&rid=16adbcc9643777038211dab79057ed07&cid=0&fid=7a962e64d2c249949ceeeda06200168c&trf=APL0276&qt=uYIAxHwqsNI&dt=nEzrIHJE2A&et=3a9aza0c0",
+                    "mediafilterid": "2"
+                }
+            },
+            "textformat": "bx",
+            "links": [{
+                "href": "https://apnews.com/d14715ba3653753d7c1f122f8aea79de",
+                "rel": "canonical"
+            }]
+        }
+    }
+}
