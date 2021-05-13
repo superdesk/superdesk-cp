@@ -327,3 +327,14 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 item = parser.parse(_data, {})
 
         self.assertIn("<p>Atlantic Division</p>", item["body_html"])
+
+    def test_parse_subject_duplicates(self):
+        with open(get_fixture_path("ap-subject.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        qcodes = [subj["qcode"] for subj in item["subject"]]
+        self.assertEqual(len(qcodes), len(set(qcodes)))
