@@ -338,3 +338,13 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
         qcodes = [subj["qcode"] for subj in item["subject"]]
         self.assertEqual(len(qcodes), len(set(qcodes)))
+
+    def test_parse_aps_right_now(self):
+        with open(get_fixture_path("ap-aps-mi-right-now.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        self.assertEqual("International", item["anpa_category"][0]["name"])

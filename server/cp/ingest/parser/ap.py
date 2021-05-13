@@ -31,7 +31,7 @@ FR_CATEGORY_MAPPING = [
 ]
 
 EN_CATEGORY_MAPPING = [
-    ("International", "a", "b", "i", "k", "n", "w"),
+    ("International", "a", "b", "i", "k", "n", "w", "g"),
     ("Lifestyle", "d", "l"),
     ("Entertainment", "e", "c"),
     ("Business", "f"),
