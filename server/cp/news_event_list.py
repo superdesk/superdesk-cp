@@ -120,6 +120,11 @@ def set_item_dates(item, event):
     end_local_str = end_local.strftime("%I:%M %P") if end_local else None
     tz_name = start_local.tzname()
 
+    # If the `tz_name` doesn't include a timezone code,
+    # then prefix with GMT
+    if tz_name.startswith("+"):
+        tz_name = f"GMT{tz_name}"
+
     item["local_date"] = start_local
     if end_local:
         item["local_time"] = f"{start_local_str} - {end_local_str} ({tz_name})"
