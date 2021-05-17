@@ -403,6 +403,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                 "type": "text",
             }
         )
+
+        resources["archive"].service.find_one.side_effect = None
+
         self.assertEqual("prev-cycle", item.find("FileName").text)
         self.assertEqual("prev-cycle", item.find("SystemSlug").text)
 
@@ -460,6 +463,24 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             }
         )
 
+        resources["archive"].service.find_one.side_effect = None
+
+        self.assertEqual("00000001", item.find("NewsCompID").text)
+
+    def test_ap_update_keeps_newscomip(self):
+        resources["ingest"].service.find_one.side_effect = [{
+            "unique_id": 1,
+        }]
+
+        item = self.format_item(
+            {
+                "type": "text",
+                "unique_id": 5,
+            }
+        )
+
+        resources["ingest"].service.find_one.side_effect = None
+
         self.assertEqual("00000001", item.find("NewsCompID").text)
 
     def test_picture_container_ids(self):
@@ -486,6 +507,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         )
 
         resources["news"].service.get.side_effect = None
+
         self.assertEqual("{}, usable".format(32 * "a"), item.find("ContainerIDs").text)
 
     def test_placeline_washington(self):
