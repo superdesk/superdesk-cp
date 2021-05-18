@@ -1,0 +1,144 @@
+{
+    "api_version": "2.1",
+    "api_mode": "live",
+    "api_build": "2.1.2",
+    "id": "H7MW-XMdG7I",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [{
+                "id": 32903,
+                "name": "Broadcast State Right Now - Michigan"
+            }, {
+                "id": 100289,
+                "name": "Broadcast - All 50 State NewsPower"
+            }]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v/content/f353c9470916bc4628eb5a7f70530905?qt=H7MW-XMdG7I&et=1a1aza0c0",
+            "altids": {
+                "itemid": "f353c9470916bc4628eb5a7f70530905",
+                "etag": "f353c9470916bc4628eb5a7f70530905_1a1aza0c0",
+                "friendlykey": "676643690703",
+                "referenceid": "MI--2nd Right Now",
+                "transref": "v3724"
+            },
+            "version": 1,
+            "type": "text",
+            "urgency": 4,
+            "profile": "NewsBrief",
+            "editorialpriority": "r",
+            "language": "en",
+            "versioncreated": "2021-05-13T10:20:02Z",
+            "firstcreated": "2021-05-13T04:00:00Z",
+            "fixture": {
+                "code": "a60ac5a7ac024994b9102a73efab934a",
+                "name": "Right Now"
+            },
+            "pubstatus": "usable",
+            "signals": ["newscontent"],
+            "title": "MI--2nd Right Now",
+            "headline": "Latest Michigan news, sports, business and entertainment at 6:20 a.m. EDT",
+            "headline_extended": "Latest Michigan news, sports, business and entertainment at 6:20 a.m. EDT",
+            "slugline": "AP-MI--2nd Right Now",
+            "copyrightnotice": "Copyright 2021 The Associated Press.  All rights reserved. This material may not be published, broadcast, rewritten or redistributed.",
+            "usageterms": ["This content is intended for editorial use only. For other uses, additional clearances may be required."],
+            "keywords": ["MI--2nd Right Now"],
+            "provider": "AP",
+            "infosource": [{
+                "name": "AP",
+                "type": "AP"
+            }],
+            "subject": [{
+                "rels": ["category"],
+                "creator": "Editorial",
+                "code": "g",
+                "name": "g"
+            }, {
+                "code": "f25af2d07e4e100484f5df092526b43e",
+                "name": "General news",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "editorial_subject": "General news",
+                "topparent": true
+            }],
+            "place": [{
+                "code": "6bf49b4082c410048696df092526b43e",
+                "name": "Michigan",
+                "rels": ["direct"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["661e48387d5b10048291c076b8e3055c"],
+                "locationtype": {
+                    "code": "0ae5eb8e00e04295a4fc209c94bfe6ef",
+                    "name": "State"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-85.50033, 44.25029]
+                }
+            }, {
+                "code": "661e48387d5b10048291c076b8e3055c",
+                "name": "United States",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "parentids": ["661850e07d5b100481f7c076b8e3055c"],
+                "locationtype": {
+                    "code": "01f56e0e654841eca2e69bf2cbcc0526",
+                    "name": "Nation"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-98.5, 39.76]
+                }
+            }, {
+                "code": "661850e07d5b100481f7c076b8e3055c",
+                "name": "North America",
+                "rels": ["ancestor"],
+                "scheme": "http://cv.ap.org/id/",
+                "creator": "Editorial",
+                "topparent": true,
+                "locationtype": {
+                    "code": "976d112cd5c3497ea180aeecab922c6b",
+                    "name": "Continent"
+                },
+                "geometry_geojson": {
+                    "type": "Point",
+                    "coordinates": [-100.54688, 46.07323]
+                }
+            }],
+            "audiences": [{
+                "code": "9add4649b53b4702ba7d9de5d4fa607a",
+                "name": "Online",
+                "type": "AUDPLATFORM"
+            }, {
+                "code": "f5b16ea8760d10048047e6e7a0f4673e",
+                "name": "State",
+                "type": "AUDSCOPE"
+            }, {
+                "code": "6bf49b4082c410048696df092526b43e",
+                "name": "Michigan",
+                "type": "AUDGEOGRAPHY"
+            }],
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 1179,
+                    "contentid": "84dbea131872468d9bdfcbae736d88e0",
+                    "href": "https://api.ap.org/media/v/content/f353c9470916bc4628eb5a7f70530905.1/download?type=text&format=NITF&rid=84dbea131872468d9bdfcbae736d88e0&cid=0&fid=9026aaaa52764b81b0fdb3ee97581346&trf=v3724&qt=H7MW-XMdG7I&dt=q02A9AcYzX&et=1a1aza0c0",
+                    "mediafilterid": "2"
+                }
+            },
+            "textformat": "bx"
+        }
+    }
+}

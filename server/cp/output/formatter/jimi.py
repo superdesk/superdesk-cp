@@ -177,7 +177,7 @@ class JimiFormatter(Formatter):
         # content system fields
         orig = self._get_original_item(item)
         seq_id = "{:08d}".format(pub_seq_num % 100000000)
-        item_id = "{:08d}".format(orig["unique_id"] % 100000000)
+        item_id = "{:08d}".format(self.get_item_id(orig) % 100000000)
         etree.SubElement(content, "Name")
         etree.SubElement(content, "Cachable").text = "false"
         etree.SubElement(content, "FileName").text = filename(orig)
@@ -282,6 +282,13 @@ class JimiFormatter(Formatter):
 
         if item.get("associations"):
             self._format_associations(content, item)
+
+    def get_item_id(self, item):
+        if item.get("family_id"):
+            ingest_item = superdesk.get_resource_service("ingest").find_one(req=None, _id=item["family_id"])
+            if ingest_item and ingest_item.get("unique_id"):
+                return ingest_item["unique_id"]
+        return item["unique_id"]
 
     def _format_credit(self, item):
         credit = item.get("creditline")

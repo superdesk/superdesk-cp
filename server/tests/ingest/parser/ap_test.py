@@ -7,11 +7,13 @@ import unittest
 import superdesk
 import requests_mock
 import settings
+import lxml.etree as etree
 
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
 from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 from tests.ingest.parser import get_fixture_path
+from superdesk.io.feed_parsers import nitf
 
 from tests.mock import resources
 
@@ -336,3 +338,38 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         with patch.dict(superdesk.resources, resources):
             item["unique_id"] = 1
             return self.formatter.format(item, self.subscriber)[0][1]
+
+    def test_parse_agate_headings(self):
+        with open(get_fixture_path("ap-agate.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            xml = etree.parse(get_fixture_path("ap-agate-nitf.xml", "ap"))
+            parsed = nitf.NITFFeedParser().parse(xml)
+            _data["nitf"] = parsed
+
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        self.assertIn("<p>Atlantic Division</p>", item["body_html"])
+
+    def test_parse_subject_duplicates(self):
+        with open(get_fixture_path("ap-subject.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        qcodes = [subj["qcode"] for subj in item["subject"]]
+        self.assertEqual(len(qcodes), len(set(qcodes)))
+
+    def test_parse_aps_right_now(self):
+        with open(get_fixture_path("ap-aps-mi-right-now.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        self.assertEqual("International", item["anpa_category"][0]["name"])

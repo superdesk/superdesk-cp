@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?><nitf version="-//IPTC//DTD NITF 3.4//EN" change.date="October 18, 2006" change.time="19:30"><head><docdata><doc-id regsrc="AP"/><date.issue norm="20210512T140007Z"/><doc.copyright holder="AP" year="2021"/></docdata></head><body><body.head><hedline><hl1 id="headline">NBA Expanded Glance</hl1></hedline><distributor>The Associated Press</distributor></body.head><body.content>
+                    <block class="block-lead">
+                      <p class="lead" lede="true">All Times EDT</p>
+                    </block>
+                    <block id="easternconference" class="block-conference">
+                      <hl2 class="block-headline">EASTERN CONFERENCE</hl2>
+                    </block>
+                    <block id="atlantic-division" class="block-easternconference">
+                      <hl2 class="block-headline">Atlantic Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">x-Philadelphia</td>
+                            <td class="col-wins">47</td>
+                            <td class="col-loss">22</td>
+                            <td class="col-points">.681</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">8-2</td>
+                            <td class="col-streak">L-1</td>
+                            <td class="col-home">27-7</td>
+                            <td class="col-away">20-15</td>
+                            <td class="col-conference">29-10</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">x-Brooklyn</td>
+                            <td class="col-wins">46</td>
+                            <td class="col-loss">24</td>
+                            <td class="col-points">.657</td>
+                            <td class="col-games-behind">1½</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">W-3</td>
+                            <td class="col-home">26-8</td>
+                            <td class="col-away">20-16</td>
+                            <td class="col-conference">24-16</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">x-New York</td>
+                            <td class="col-wins">38</td>
+                            <td class="col-loss">31</td>
+                            <td class="col-points">.551</td>
+                            <td class="col-games-behind">9</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">L-1</td>
+                            <td class="col-home">22-11</td>
+                            <td class="col-away">16-20</td>
+                            <td class="col-conference">23-17</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Boston</td>
+                            <td class="col-wins">35</td>
+                            <td class="col-loss">35</td>
+                            <td class="col-points">.500</td>
+                            <td class="col-games-behind">12½</td>
+                            <td class="col-last-ten">3-7</td>
+                            <td class="col-streak">L-4</td>
+                            <td class="col-home">21-15</td>
+                            <td class="col-away">14-20</td>
+                            <td class="col-conference">20-21</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Toronto</td>
+                            <td class="col-wins">27</td>
+                            <td class="col-loss">42</td>
+                            <td class="col-points">.391</td>
+                            <td class="col-games-behind">20</td>
+                            <td class="col-last-ten">2-8</td>
+                            <td class="col-streak">L-4</td>
+                            <td class="col-home">16-19</td>
+                            <td class="col-away">11-23</td>
+                            <td class="col-conference">17-23</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="southeast-division" class="block-easternconference">
+                      <hl2 class="block-headline">Southeast Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">x-Atlanta</td>
+                            <td class="col-wins">39</td>
+                            <td class="col-loss">31</td>
+                            <td class="col-points">.557</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">W-2</td>
+                            <td class="col-home">23-11</td>
+                            <td class="col-away">16-20</td>
+                            <td class="col-conference">23-18</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">x-Miami</td>
+                            <td class="col-wins">38</td>
+                            <td class="col-loss">31</td>
+                            <td class="col-points">.551</td>
+                            <td class="col-games-behind">½</td>
+                            <td class="col-last-ten">7-3</td>
+                            <td class="col-streak">W-3</td>
+                            <td class="col-home">20-15</td>
+                            <td class="col-away">18-16</td>
+                            <td class="col-conference">22-17</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Charlotte</td>
+                            <td class="col-wins">33</td>
+                            <td class="col-loss">36</td>
+                            <td class="col-points">.478</td>
+                            <td class="col-games-behind">5½</td>
+                            <td class="col-last-ten">4-6</td>
+                            <td class="col-streak">L-2</td>
+                            <td class="col-home">18-17</td>
+                            <td class="col-away">15-19</td>
+                            <td class="col-conference">20-20</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Washington</td>
+                            <td class="col-wins">32</td>
+                            <td class="col-loss">38</td>
+                            <td class="col-points">.457</td>
+                            <td class="col-games-behind">7</td>
+                            <td class="col-last-ten">5-5</td>
+                            <td class="col-streak">L-2</td>
+                            <td class="col-home">17-17</td>
+                            <td class="col-away">15-21</td>
+                            <td class="col-conference">14-26</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Orlando</td>
+                            <td class="col-wins">21</td>
+                            <td class="col-loss">48</td>
+                            <td class="col-points">.304</td>
+                            <td class="col-games-behind">17½</td>
+                            <td class="col-last-ten">3-7</td>
+                            <td class="col-streak">L-4</td>
+                            <td class="col-home">11-25</td>
+                            <td class="col-away">10-23</td>
+                            <td class="col-conference">13-26</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="central-division" class="block-easternconference">
+                      <hl2 class="block-headline">Central Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">y-Milwaukee</td>
+                            <td class="col-wins">44</td>
+                            <td class="col-loss">25</td>
+                            <td class="col-points">.638</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">7-3</td>
+                            <td class="col-streak">W-1</td>
+                            <td class="col-home">25-10</td>
+                            <td class="col-away">19-15</td>
+                            <td class="col-conference">28-11</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Indiana</td>
+                            <td class="col-wins">33</td>
+                            <td class="col-loss">36</td>
+                            <td class="col-points">.478</td>
+                            <td class="col-games-behind">11</td>
+                            <td class="col-last-ten">5-5</td>
+                            <td class="col-streak">W-2</td>
+                            <td class="col-home">13-21</td>
+                            <td class="col-away">20-15</td>
+                            <td class="col-conference">19-21</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Chicago</td>
+                            <td class="col-wins">29</td>
+                            <td class="col-loss">40</td>
+                            <td class="col-points">.420</td>
+                            <td class="col-games-behind">15</td>
+                            <td class="col-last-ten">4-6</td>
+                            <td class="col-streak">L-1</td>
+                            <td class="col-home">13-21</td>
+                            <td class="col-away">16-19</td>
+                            <td class="col-conference">19-20</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Cleveland</td>
+                            <td class="col-wins">22</td>
+                            <td class="col-loss">48</td>
+                            <td class="col-points">.314</td>
+                            <td class="col-games-behind">22½</td>
+                            <td class="col-last-ten">1-9</td>
+                            <td class="col-streak">W-1</td>
+                            <td class="col-home">13-23</td>
+                            <td class="col-away">9-25</td>
+                            <td class="col-conference">16-24</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Detroit</td>
+                            <td class="col-wins">20</td>
+                            <td class="col-loss">50</td>
+                            <td class="col-points">.286</td>
+                            <td class="col-games-behind">24½</td>
+                            <td class="col-last-ten">2-8</td>
+                            <td class="col-streak">L-3</td>
+                            <td class="col-home">13-21</td>
+                            <td class="col-away">7-29</td>
+                            <td class="col-conference">12-29</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="westernconference" class="block-conference">
+                      <hl2 class="block-headline">WESTERN CONFERENCE</hl2>
+                    </block>
+                    <block id="southwest-division" class="block-westernconference">
+                      <hl2 class="block-headline">Southwest Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">Dallas</td>
+                            <td class="col-wins">41</td>
+                            <td class="col-loss">29</td>
+                            <td class="col-points">.586</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">8-2</td>
+                            <td class="col-streak">W-1</td>
+                            <td class="col-home">20-15</td>
+                            <td class="col-away">21-14</td>
+                            <td class="col-conference">21-20</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Memphis</td>
+                            <td class="col-wins">36</td>
+                            <td class="col-loss">33</td>
+                            <td class="col-points">.522</td>
+                            <td class="col-games-behind">4½</td>
+                            <td class="col-last-ten">5-5</td>
+                            <td class="col-streak">W-3</td>
+                            <td class="col-home">16-18</td>
+                            <td class="col-away">20-15</td>
+                            <td class="col-conference">17-22</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">San Antonio</td>
+                            <td class="col-wins">33</td>
+                            <td class="col-loss">36</td>
+                            <td class="col-points">.478</td>
+                            <td class="col-games-behind">7½</td>
+                            <td class="col-last-ten">3-7</td>
+                            <td class="col-streak">L-1</td>
+                            <td class="col-home">14-20</td>
+                            <td class="col-away">19-16</td>
+                            <td class="col-conference">17-23</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">New Orleans</td>
+                            <td class="col-wins">31</td>
+                            <td class="col-loss">39</td>
+                            <td class="col-points">.443</td>
+                            <td class="col-games-behind">10</td>
+                            <td class="col-last-ten">5-5</td>
+                            <td class="col-streak">L-2</td>
+                            <td class="col-home">18-17</td>
+                            <td class="col-away">13-22</td>
+                            <td class="col-conference">18-22</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Houston</td>
+                            <td class="col-wins">16</td>
+                            <td class="col-loss">54</td>
+                            <td class="col-points">.229</td>
+                            <td class="col-games-behind">25</td>
+                            <td class="col-last-ten">1-9</td>
+                            <td class="col-streak">L-7</td>
+                            <td class="col-home">8-27</td>
+                            <td class="col-away">8-27</td>
+                            <td class="col-conference">10-31</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="northwest-division" class="block-westernconference">
+                      <hl2 class="block-headline">Northwest Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">y-Utah</td>
+                            <td class="col-wins">50</td>
+                            <td class="col-loss">20</td>
+                            <td class="col-points">.714</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">L-2</td>
+                            <td class="col-home">31-5</td>
+                            <td class="col-away">19-15</td>
+                            <td class="col-conference">26-14</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">x-Denver</td>
+                            <td class="col-wins">45</td>
+                            <td class="col-loss">24</td>
+                            <td class="col-points">.652</td>
+                            <td class="col-games-behind">4½</td>
+                            <td class="col-last-ten">7-3</td>
+                            <td class="col-streak">W-1</td>
+                            <td class="col-home">25-11</td>
+                            <td class="col-away">20-13</td>
+                            <td class="col-conference">25-15</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Portland</td>
+                            <td class="col-wins">41</td>
+                            <td class="col-loss">29</td>
+                            <td class="col-points">.586</td>
+                            <td class="col-games-behind">9</td>
+                            <td class="col-last-ten">9-1</td>
+                            <td class="col-streak">W-5</td>
+                            <td class="col-home">19-16</td>
+                            <td class="col-away">22-13</td>
+                            <td class="col-conference">22-18</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Minnesota</td>
+                            <td class="col-wins">22</td>
+                            <td class="col-loss">47</td>
+                            <td class="col-points">.319</td>
+                            <td class="col-games-behind">27½</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">W-2</td>
+                            <td class="col-home">12-21</td>
+                            <td class="col-away">10-26</td>
+                            <td class="col-conference">14-26</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Oklahoma City</td>
+                            <td class="col-wins">21</td>
+                            <td class="col-loss">49</td>
+                            <td class="col-points">.300</td>
+                            <td class="col-games-behind">29</td>
+                            <td class="col-last-ten">1-9</td>
+                            <td class="col-streak">L-8</td>
+                            <td class="col-home">9-25</td>
+                            <td class="col-away">12-24</td>
+                            <td class="col-conference">11-29</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="pacific-division" class="block-westernconference">
+                      <hl2 class="block-headline">Pacific Division</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name"/>
+                            <th class="headline-col-wins">W</th>
+                            <th class="headline-col-loss">L</th>
+                            <th class="headline-col-points">Pct</th>
+                            <th class="headline-col-games-behind">GB</th>
+                            <th class="headline-col-last-ten">L10</th>
+                            <th class="headline-col-streak">Str</th>
+                            <th class="headline-col-home">Home</th>
+                            <th class="headline-col-away">Away</th>
+                            <th class="headline-col-conference">Conf</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name">x-Phoenix</td>
+                            <td class="col-wins">48</td>
+                            <td class="col-loss">21</td>
+                            <td class="col-points">.696</td>
+                            <td class="col-games-behind">—</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">L-2</td>
+                            <td class="col-home">26-9</td>
+                            <td class="col-away">22-12</td>
+                            <td class="col-conference">27-12</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">x-L.A. Clippers</td>
+                            <td class="col-wins">46</td>
+                            <td class="col-loss">23</td>
+                            <td class="col-points">.667</td>
+                            <td class="col-games-behind">2</td>
+                            <td class="col-last-ten">6-4</td>
+                            <td class="col-streak">W-1</td>
+                            <td class="col-home">26-10</td>
+                            <td class="col-away">20-13</td>
+                            <td class="col-conference">27-13</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">L.A. Lakers</td>
+                            <td class="col-wins">40</td>
+                            <td class="col-loss">30</td>
+                            <td class="col-points">.571</td>
+                            <td class="col-games-behind">8½</td>
+                            <td class="col-last-ten">5-5</td>
+                            <td class="col-streak">W-3</td>
+                            <td class="col-home">21-15</td>
+                            <td class="col-away">19-15</td>
+                            <td class="col-conference">24-17</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Golden State</td>
+                            <td class="col-wins">37</td>
+                            <td class="col-loss">33</td>
+                            <td class="col-points">.529</td>
+                            <td class="col-games-behind">11½</td>
+                            <td class="col-last-ten">7-3</td>
+                            <td class="col-streak">W-4</td>
+                            <td class="col-home">23-11</td>
+                            <td class="col-away">14-22</td>
+                            <td class="col-conference">23-17</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name">Sacramento</td>
+                            <td class="col-wins">31</td>
+                            <td class="col-loss">38</td>
+                            <td class="col-points">.449</td>
+                            <td class="col-games-behind">17</td>
+                            <td class="col-last-ten">7-3</td>
+                            <td class="col-streak">W-2</td>
+                            <td class="col-home">16-19</td>
+                            <td class="col-away">15-19</td>
+                            <td class="col-conference">18-21</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                      <p class="text-table-notes">x-clinched playoff spot</p>
+                      <p class="text-table-notes">y-clinched division</p>
+                      <p class="text-divider">___</p>
+                    </block>
+                    <block class="block-games">
+                      <hl2 class="block-headline">Tuesday's Games</hl2>
+                      <p class="text-ind">Minnesota 119, Detroit 100</p>
+                      <p class="text-ind">Denver 117, Charlotte 112</p>
+                      <p class="text-ind">L.A. Clippers 115, Toronto 96</p>
+                      <p class="text-ind">Miami 129, Boston 121</p>
+                      <p class="text-ind">Memphis 133, Dallas 104</p>
+                      <p class="text-ind">Indiana 103, Philadelphia 94</p>
+                      <p class="text-ind">Brooklyn 115, Chicago 107</p>
+                      <p class="text-ind">Milwaukee 114, Orlando 102</p>
+                      <p class="text-ind">Sacramento 122, Oklahoma City 106</p>
+                      <p class="text-ind">Golden State 122, Phoenix 116</p>
+                      <p class="text-ind">L.A. Lakers 101, New York 99, OT</p>
+                    </block>
+                    <block class="block-games">
+                      <hl2 class="block-headline">Wednesday's Games</hl2>
+                      <p class="text-ind">Atlanta 120, Washington 116</p>
+                      <p class="text-ind">Cleveland 102, Boston 94</p>
+                      <p class="text-ind">Brooklyn 128, San Antonio 116</p>
+                      <p class="text-ind">Dallas 125, New Orleans 107</p>
+                      <p class="text-ind">Portland 105, Utah 98</p>
+                      <p class="text-ind">L.A. Lakers 124, Houston 122</p>
+                    </block>
+                    <block class="block-games">
+                      <hl2 class="block-headline">Thursday's Games</hl2>
+                      <p class="text-ind">L.A. Clippers at Charlotte, 7 p.m.</p>
+                      <p class="text-ind">Milwaukee at Indiana, 7 p.m.</p>
+                      <p class="text-ind">Orlando at Atlanta, 7:30 p.m.</p>
+                      <p class="text-ind">Philadelphia at Miami, 7:30 p.m.</p>
+                      <p class="text-ind">San Antonio at New York, 7:30 p.m.</p>
+                      <p class="text-ind">Denver at Minnesota, 8 p.m.</p>
+                      <p class="text-ind">Sacramento at Memphis, 8 p.m.</p>
+                      <p class="text-ind">Toronto at Chicago, 8 p.m.</p>
+                      <p class="text-ind">Portland at Phoenix, 10 p.m.</p>
+                    </block>
+                    <block class="block-games">
+                      <hl2 class="block-headline">Friday's Games</hl2>
+                      <p class="text-ind">Cleveland at Washington, 7 p.m.</p>
+                      <p class="text-ind">Denver at Detroit, 8 p.m.</p>
+                      <p class="text-ind">Orlando at Philadelphia, 8 p.m.</p>
+                      <p class="text-ind">Utah at Oklahoma City, 8 p.m.</p>
+                      <p class="text-ind">L.A. Clippers at Houston, 9 p.m.</p>
+                      <p class="text-ind">Sacramento at Memphis, 9 p.m.</p>
+                      <p class="text-ind">Toronto at Dallas, 9 p.m.</p>
+                      <p class="text-ind">New Orleans at Golden State, 9:30 p.m.</p>
+                    </block>
+                    <block class="block-games">
+                      <hl2 class="block-headline">Saturday's Games</hl2>
+                      <p class="text-ind">Boston at Minnesota, 1 p.m.</p>
+                      <p class="text-ind">Charlotte at New York, 1 p.m.</p>
+                      <p class="text-ind">Chicago at Brooklyn, 1 p.m.</p>
+                      <p class="text-ind">L.A. Lakers at Indiana, 1 p.m.</p>
+                      <p class="text-ind">Miami at Milwaukee, 1 p.m.</p>
+                      <p class="text-ind">Phoenix at San Antonio, 1 p.m.</p>
+                    </block>
+                  </body.content></body></nitf>
