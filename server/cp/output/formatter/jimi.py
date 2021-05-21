@@ -642,6 +642,12 @@ class JimiFormatter(Formatter):
                 elem.tag = "strong"
             elif elem.tag == "i":
                 elem.tag = "em"
+
+            # Remove whitespace and empty tags
+            if elem.text is not None and not elem.text.strip():
+                elem.text = None
+                etree.strip_tags(tree, elem.tag)
+
         return sd_etree.to_string(tree, encoding="unicode", method="html")
 
 
