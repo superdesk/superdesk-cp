@@ -13,7 +13,7 @@
         "schema" : {
             "name" : {},
             "qcode" : {},
-            "contact_type" : {}		
+            "contact_type" : {}
         }
     },
     {
@@ -196,7 +196,7 @@
         },
         "service": {"all": 1},
         "init_version": 2,
-        "items": 
+        "items":
         [
 	{"name": "Advance", "qcode": "ADV", "is_active": true, "translations": {"name": {"en-CA": "Advance", "fr-CA": "Pré-papier"} } },
 	{"name": "Advisory", "qcode": "V", "is_active": true, "translations": {"name": {"en-CA": "Advisory", "fr-CA": "Avis"} } },
@@ -301,7 +301,7 @@
 	{"name": "Yachting", "qcode": "YAT", "is_active": true, "translations": {"name": {"en-CA": "Yachting", "fr-CA": "Voile"} } },
 	{"name": "Youth Baseball (Little League)", "qcode": "BBY", "is_active": true, "translations": {"name": {"en-CA": "Youth Baseball (Little League)", "fr-CA": "Baseball mineur (Petite ligue)"} } }
         ]
-    },	
+    },
     {
         "_id": "type",
         "display_name": "Article Type",
@@ -320,7 +320,7 @@
         ],
         "init_version": 1
     },
-	
+
     {
         "_id": "distribution",
         "display_name": "Services",
@@ -335,7 +335,7 @@
         "service": {"all": 1},
         "init_version": 5,
 
-        "items": 
+        "items":
         	[
              {
                 "name": "QuickHit",
@@ -347,7 +347,7 @@
                         "fr-CA": "Abrégé"
                     }
                 }
-            },			
+            },
              {
                 "name": "Print",
                 "qcode": "Print",
@@ -509,7 +509,7 @@
                 "is_active": true,
                 "name": "Feature - Premium",
                 "translations": {
-                    "name": { 
+                    "name": {
                         "en-CA": "Feature - Premium",
                         "fr-CA": "Documentaire - Spécial"
                     }
@@ -545,7 +545,7 @@
             "translations": {}
         },
         "init_version": 10,
-        "items": 
+        "items":
         	[
             {
                 "name": "NewsAlert",
@@ -762,7 +762,7 @@
             "all": 1
         },
         "init_version": 10,
-        "items": 
+        "items":
         [
 		{"name": "Advisory","qcode": "m","is_active": true,"translations": {"name": {"en-CA": "Advisory","fr-CA": "Avis"}}},
 		{"name": "Agate","qcode": "r","is_active": true,"translations": {"name": {"en-CA": "Agate","fr-CA": "Statistiques"}}},
@@ -782,7 +782,7 @@
 		{"name": "Sports","qcode": "s","is_active": true,"translations": {"name": {"en-CA": "Sports","fr-CA": "Sports"}}},
 		{"name": "Travel","qcode": "j","is_active": true,"translations": {"name": {"en-CA": "Travel","fr-CA": "Voyage"}}}
         ]
-    }, 
+    },
     {
         "_id": "subject_custom",
         "display_name": "Index",
@@ -20096,7 +20096,7 @@
       }
    ]
 },
-	
+
     {
         "_id": "desk_types",
         "display_name": "Desk Types",
@@ -20185,48 +20185,91 @@
         "display_name": "Coverage content types",
         "type": "manageable",
         "unique_field": "qcode",
+        "init_version": 2,
         "items": [
             {
                 "is_active": true,
                 "name": "Text",
                 "qcode": "text",
-                "content item type": "text"
+                "content item type": "text",
+                "translations": {
+                    "name": {
+                        "en-CA": "Text",
+                        "fr-CA": "Texte"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Picture",
                 "qcode": "picture",
-                "content item type": "picture"
+                "content item type": "picture",
+                "translations": {
+                    "name": {
+                        "en-CA": "Picture",
+                        "fr-CA": "Photo"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Video",
                 "qcode": "video",
-                "content item type": "video"
+                "content item type": "video",
+                "translations": {
+                    "name": {
+                        "en-CA": "Video",
+                        "fr-CA": "Vidéo"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Audio",
                 "qcode": "audio",
-                "content item type": "audio"
+                "content item type": "audio",
+                "translations": {
+                    "name": {
+                        "en-CA": "Audio",
+                        "fr-CA": "Audio"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Infographics",
                 "qcode": "infographics",
-                "content item type": ""
+                "content item type": "",
+                "translations": {
+                    "name": {
+                        "en-CA": "Infographics",
+                        "fr-CA": "Infographie"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Live video",
                 "qcode": "live_video",
-                "content item type": ""
+                "content item type": "",
+                "translations": {
+                    "name": {
+                        "en-CA": "Live video",
+                        "fr-CA": "Vidéo en direct"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "name": "Live blog",
                 "qcode": "live_blog",
-                "content item type": ""
+                "content item type": "",
+                "translations": {
+                    "name": {
+                        "en-CA": "Live blog",
+                        "fr-CA": "Blogue en direct"
+                    }
+                }
             }
         ]
     },
@@ -20268,48 +20311,91 @@
         "display_name": "Event occurrence status",
         "type": "manageable",
         "unique_field": "qcode",
+        "init_version": 2,
         "items": [
             {
                 "is_active": true,
                 "qcode": "eocstat:eos0",
                 "name": "Unplanned event",
-                "label": "Unplanned event"
+                "label": "Unplanned event",
+                "translations": {
+                    "name": {
+                        "en-CA": "Unplanned event",
+                        "fr-CA": "Événement non planifié"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "eocstat:eos1",
                 "name": "Planned, occurrence planned only",
-                "label": "Planned, occurrence planned only"
+                "label": "Planned, occurrence planned only",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, occurrence planned only",
+                        "fr-CA": "Planifié, déroulement planifié seulement"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "eocstat:eos2",
                 "name": "Planned, occurrence highly uncertain",
-                "label": "Planned, occurrence highly uncertain"
+                "label": "Planned, occurrence highly uncertain",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, occurrence highly uncertain",
+                        "fr-CA": "Planifié, n’aura probablement pas lieu"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "eocstat:eos3",
                 "name": "Planned, May occur",
-                "label": "Planned, May occur"
+                "label": "Planned, May occur",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, May occur",
+                        "fr-CA": "Planifié, pourrait avoir lieu"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "eocstat:eos4",
                 "name": "Planned, occurrence highly likely",
-                "label": "Planned, occurrence highly likely"
+                "label": "Planned, occurrence highly likely",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, occurrence highly likely",
+                        "fr-CA": "Planifié, aura probablement lieu"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "eocstat:eos5",
                 "name": "Planned, occurs certainly",
-                "label": "Planned, occurs certainly"
+                "label": "Planned, occurs certainly",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, occurs certainly",
+                        "fr-CA": "Planifié, aura certainement lieu"
+                    }
+                }
             },
             {
                 "is_active": false,
                 "qcode": "eocstat:eos6",
                 "name": "Planned, then cancelled",
-                "label": "Planned, then cancelled"
+                "label": "Planned, then cancelled",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned, then cancelled",
+                        "fr-CA": "Événement non planifié"
+                    }
+                }
             }
         ]
     },
@@ -20318,30 +20404,55 @@
         "display_name": "News coverage status",
         "type": "manageable",
         "unique_field": "qcode",
+        "init_version": 2,
         "items": [
             {
                 "is_active": true,
                 "qcode": "ncostat:int",
                 "name": "coverage intended",
-                "label": "Planned"
+                "label": "Planned",
+                "translations": {
+                    "name": {
+                        "en-CA": "Planned",
+                        "fr-CA": "Planifié"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "ncostat:notdec",
                 "name": "coverage not decided yet",
-                "label": "On merit"
+                "label": "On merit",
+                "translations": {
+                    "name": {
+                        "en-CA": "On merit",
+                        "fr-CA": "Planifié"
+                    }
+                }
             },
             {
                 "is_active": false,
                 "qcode": "ncostat:notint",
                 "name": "coverage not intended",
-                "label": "Not planned"
+                "label": "Not planned",
+                "translations": {
+                    "name": {
+                        "en-CA": "Not planned",
+                        "fr-CA": "Pas prévu"
+                    }
+                }
             },
             {
                 "is_active": true,
                 "qcode": "ncostat:onreq",
                 "name": "coverage upon request",
-                "label": "On request"
+                "label": "On request",
+                "translations": {
+                    "name": {
+                        "en-CA": "On request",
+                        "fr-CA": "Sur demande"
+                    }
+                }
             }
         ]
     },
@@ -20506,9 +20617,9 @@
             }
         ]
     },
-    
-    
-    
+
+
+
         {
         "_id": "geographical_restrictions",
         "display_name": "Geographical Restrictions",
