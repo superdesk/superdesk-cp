@@ -513,3 +513,11 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             "Washington;District of Columbia;United States", item.find("Placeline").text
         )
         self.assertEqual("District of Columbia", item.find("Province").text)
+
+    def test_format_content(self):
+        item = self.format_item(
+            {
+                "body_html": "<p>Body HTML<br>test remove bold<b> </b> and <i>idiom</i></p>"
+            }
+        )
+        self.assertEqual("<p>Body HTML<br />test remove bold and <em>idiom</em></p>", item.find("ContentText").text)
