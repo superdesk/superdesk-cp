@@ -645,8 +645,7 @@ class JimiFormatter(Formatter):
 
             # Remove whitespace and empty tags
             if elem.text is not None and not elem.text.strip():
-                elem.text = None
-                etree.strip_tags(tree, elem.tag)
+                elem.drop_tree()
 
         return sd_etree.to_string(tree, encoding="unicode", method="html")
 
