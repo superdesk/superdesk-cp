@@ -517,7 +517,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
     def test_format_content(self):
         item = self.format_item(
             {
-                "body_html": "<p>Body HTML<br>test remove bold <b>  </b>and <b>bold1</b>and <i>idiom</i>and removed empty bold <b> </b></p>"
+                "body_html": "<p>Body HTML<br>test remove bold <b>  </b> and <b>bold1</b> and <i>idiom</i> and removed empty bold <b> </b></p>"
             }
         )
-        self.assertEqual("<p>Body HTML<br />test remove bold and <strong>bold1</strong>and <em>idiom</em>and removed empty bold </p>", item.find("ContentText").text)
+        self.assertEqual("<p>Body HTML<br />test remove bold  and <strong>bold1</strong> and <em>idiom</em> and removed empty bold </p>", item.find("ContentText").text)
