@@ -535,3 +535,13 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             "Washington;District of Columbia;United States", item.find("Placeline").text
         )
         self.assertEqual("District of Columbia", item.find("Province").text)
+
+    def test_ap_translated(self):
+        item = self.format_item(
+            {
+                "language": "fr-CA",
+                "extra": {cp.ORIG_ID: 'a' * 32},
+            }
+        )
+
+        self.assertEqual('a' * 32 + '-fr', item.find('SystemSlug').text)
