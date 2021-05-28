@@ -93,6 +93,10 @@ def filename(item) -> str:
     return guid(item)
 
 
+def is_french(item) -> bool:
+    return "fr" in item.get("language", "en")
+
+
 class JimiFormatter(Formatter):
 
     ENCODING = "utf-8"
@@ -166,7 +170,7 @@ class JimiFormatter(Formatter):
             if root.find("PscCodes") is None:
                 etree.SubElement(root, "PscCodes").text = "Online"
         elif service:
-            etree.SubElement(root, "Services").text = "Print"
+            etree.SubElement(root, "Services").text = "Écrit" if is_french(item) else "Print"
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
@@ -241,7 +245,7 @@ class JimiFormatter(Formatter):
         )
         etree.SubElement(content, "ContentText").text = self._format_html(content_html)
         etree.SubElement(content, "Language").text = (
-            "2" if "fr" in item.get("language", "") else "1"
+            "2" if is_french(item) else "1"
         )
 
         if item["type"] == "text" and content_html:
