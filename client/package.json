@@ -4,6 +4,12 @@
     "dependencies": {
         "superdesk-analytics": "github:superdesk/superdesk-analytics#develop",
         "superdesk-core": "github:superdesk/superdesk-client-core#develop",
-        "superdesk-planning": "github:superdesk/superdesk-planning#develop"
+        "superdesk-planning": "github:tomaskikutis/superdesk-planning#enable-installing-planning-extension-without-npm"
+    },
+    "devDependencies": {
+        "@superdesk/build-tools": "^1.0.13"
+    },
+    "scripts": {
+        "build": "npx @superdesk/build-tools build-root-repo ./"
     }
 }
