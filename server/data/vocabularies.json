@@ -802,7 +802,7 @@
    	"service": {
       		"all": 1
    	},
-   	"init_version": 6,
+   	"init_version": 7,
    "items": [
       {
          "name": "arts, culture, entertainment and media",
@@ -2232,7 +2232,7 @@
       {
          "name": "mass media",
          "qcode": "20000045",
-         "parent": "01000000",
+         "parent": "20000304",
          "iptc_subject": "01026000",
          "ap_subject": "c188eb1088be10048dceb097165a0203 ",
          "in_jimi": false,
