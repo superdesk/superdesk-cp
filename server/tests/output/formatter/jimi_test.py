@@ -544,4 +544,4 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             }
         )
 
-        self.assertEqual('a' * 32 + '-f', item.find('SystemSlug').text)
+        self.assertEqual('a' * 30 + 'fa', item.find('SystemSlug').text)

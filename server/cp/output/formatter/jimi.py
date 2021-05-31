@@ -59,7 +59,7 @@ def slug(item) -> str:
     try:
         _guid = item["extra"][cp.ORIG_ID]
         if is_french(item) and item.get("type") == "text":
-            _guid += "-f"
+            _guid = _guid[:30] + "fa"
     except KeyError:
         _guid = ""
     if len(_guid) < cp.SLUG_LEN:
