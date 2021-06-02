@@ -1,10 +1,8 @@
 [{
-    "_updated": "2020-09-11T18:38:25+0000",
     "widgets_config": [{
         "widget_id": "related-item",
         "is_displayed": true
     }],
-    "created_by": null,
     "label": "Story",
     "schema": {
         "subject": {
@@ -147,7 +145,7 @@
             "required": true,
             "nullable": false,
             "type": "string",
-            "maxlength": 50
+            "maxlength": 80
         },
         "urgency": {
             "required": true,
@@ -158,22 +156,9 @@
     },
     "priority": 0,
     "enabled": true,
-    "_created": "2020-07-13T13:42:48+0000",
     "updated_by": "5f27fd0982a61912ebbfb217",
     "_id": "Story",
     "is_used": true,
-    "_links": {
-        "related": {
-            "updated_by": {
-                "href": "users/5f27fd0982a61912ebbfb217",
-                "title": "User"
-            }
-        },
-        "self": {
-            "href": "content_types/Story",
-            "title": "Content_type"
-        }
-    },
     "editor": {
         "abstract": null,
         "priority": null,
@@ -320,18 +305,14 @@
             "enabled": true
         },
         "company_codes": null
-    },
-    "_etag": "c3373b693d0889b1d4f4d762a85701589010708a"
+    }
 }, {
-    "_updated": "2020-08-03T13:07:20+0000",
+    "_id": "picture",
     "label": "Picture",
-    "created_by": null,
     "priority": 0,
     "enabled": false,
-    "_created": "2020-08-03T13:07:20+0000",
-    "updated_by": null,
-    "_id": "picture",
     "is_used": true,
+    "init_version": 1,
     "schema": {
         "subject": {
             "required": false,
@@ -376,7 +357,7 @@
             "nullable": true,
             "enabled": true,
             "type": "string",
-            "maxlength": 50
+            "maxlength": 80
         },
         "dateline": {
             "required": false,
@@ -417,12 +398,6 @@
             "required": false,
             "nullable": true,
             "type": "integer"
-        }
-    },
-    "_links": {
-        "self": {
-            "href": "content_types/picture",
-            "title": "Content_type"
         }
     },
     "editor": {
@@ -498,10 +473,8 @@
             "required": false,
             "order": 7
         }
-    },
-    "_etag": "init"
+    }
 }, {
-    "_updated": "2020-09-11T18:40:26+0000",
     "widgets_config": [{
         "widget_id": "related-item",
         "is_displayed": true
@@ -510,9 +483,6 @@
     "label": "Autorouting",
     "_id": "autorouting",
     "priority": 0,
-    "created_by": null,
-    "_created": "2020-08-14T13:19:04+0000",
-    "updated_by": "5f27fd0982a61912ebbfb217",
     "schema": {
         "subject": {
             "required": false,
@@ -656,18 +626,6 @@
         "company_codes": null
     },
     "is_used": true,
-    "_links": {
-        "related": {
-            "updated_by": {
-                "href": "users/5f27fd0982a61912ebbfb217",
-                "title": "User"
-            }
-        },
-        "self": {
-            "href": "content_types/autorouting",
-            "title": "Content_type"
-        }
-    },
     "editor": {
         "abstract": null,
         "priority": null,
@@ -813,10 +771,8 @@
             "enabled": true
         },
         "company_codes": null
-    },
-    "_etag": "82a17cb54e5f83949737eaad51bf6638a54769ab"
+    }
 }, {
-    "_updated": "2020-09-09T12:29:27+0000",
     "widgets_config": [{
         "widget_id": "comments",
         "is_displayed": false
@@ -834,13 +790,12 @@
         "is_displayed": false
     }],
     "label": "Broadcast Story",
-    "created_by": null,
     "priority": 0,
     "_id": "broadcast-story",
     "enabled": true,
-    "_created": "2020-09-03T17:55:05+0000",
     "description": "English Broadcast Story.",
     "updated_by": "5f2448584be6f868d03d9a38",
+    "init_version": 1,
     "schema": {
         "subject": {
             "required": false,
@@ -897,7 +852,7 @@
             "nullable": false,
             "required": true,
             "type": "string",
-            "maxlength": 50
+            "maxlength": 80
         },
         "media-gallery": null,
         "headline_extended": null,
@@ -958,18 +913,6 @@
         "company_codes": null
     },
     "is_used": false,
-    "_links": {
-        "related": {
-            "updated_by": {
-                "href": "users/5f2448584be6f868d03d9a38",
-                "title": "User"
-            }
-        },
-        "self": {
-            "href": "content_types/broadcast-story",
-            "title": "Content_type"
-        }
-    },
     "editor": {
         "Filename": null,
         "sign_off": null,
@@ -1080,6 +1023,5 @@
         },
         "language": null,
         "company_codes": null
-    },
-    "_etag": "d4e1c3aafd1e23645b148f4b669dacaf94673641"
+    }
 }]
