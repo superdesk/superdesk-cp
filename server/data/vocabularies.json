@@ -20404,7 +20404,7 @@
         "display_name": "News coverage status",
         "type": "manageable",
         "unique_field": "qcode",
-        "init_version": 2,
+        "init_version": 3,
         "items": [
             {
                 "is_active": true,
@@ -20426,7 +20426,7 @@
                 "translations": {
                     "name": {
                         "en-CA": "On merit",
-                        "fr-CA": "Planifié"
+                        "fr-CA": "Au mérite’"
                     }
                 }
             },
