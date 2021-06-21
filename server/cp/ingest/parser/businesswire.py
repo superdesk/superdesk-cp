@@ -10,6 +10,10 @@ NS = {
 
 class BusinessWireParser(NewsMLOneFeedParser):
 
+    label = "BusinessWire"
+
+    NAME = label.lower()
+
     COMPONENT_ROLE_MAPPING = {
         "Body": "body_html",
         "HeadLine": "headline",

@@ -1,8 +1,13 @@
 import cp
+import superdesk
+
+from unittest.mock import patch
+from tests.mock import resources
 
 from . import ParserTestCase
 
 from cp.ingest.parser.globenewswire import GlobeNewswireParser
+from cp.output.formatter.jimi import JimiFormatter
 
 
 class GlobeNewswireParserTestCase(ParserTestCase):
@@ -61,6 +66,12 @@ class GlobeNewswireParserTestCase(ParserTestCase):
         self.assertIsNotNone(item)
         self.assertEqual("fr", item["language"])
         self.assertEqual("Communiqué", item["description_text"])
+
+        item["unique_id"] = 1
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                _, output = JimiFormatter().format(item, {}, None)[0]
+        self.assertIn("<Services>Écrit</Services>", output)
 
     def test_abstract(self):
         self.maxDiff = None
