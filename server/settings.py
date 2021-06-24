@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "cp.ingest",
     "cp.output",
     "cp.ultrad",
+    "cp.planning_exports",
 ]
 
 MACROS_MODULE = "cp.macros"
