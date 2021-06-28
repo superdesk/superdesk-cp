@@ -22,4 +22,28 @@
         "body_html_template": "news_events_list_export.html"
     },
     "label": "News Events List"
+}, {
+    "_id": "french_news_events_list",
+    "name": "french_news_events_list",
+    "type": "event",
+    "data": {
+        "body_html_template": "french_news_events_list_export.html"
+    },
+    "label": "Liste des Événements"
+}, {
+    "_id": "french_news_planning_list",
+    "name": "french_news_planning_list",
+    "type": "planning",
+    "data": {
+        "body_html_template": "french_news_events_list_export.html"
+    },
+    "label": "Liste des Événements"
+}, {
+    "_id": "french_news_combined_list",
+    "name": "french_news_combined_list",
+    "type": "combined",
+    "data": {
+        "body_html_template": "french_news_events_list_export.html"
+    },
+    "label": "Liste des Événements"
 }]
