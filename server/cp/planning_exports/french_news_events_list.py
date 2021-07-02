@@ -1,6 +1,8 @@
+from flask_babel import _
 from babel.dates import format_date
 
 from superdesk import get_resource_service
+from superdesk.errors import SuperdeskApiError
 
 from .common import get_sort_date, set_item_metadata
 
@@ -135,5 +137,8 @@ def group_items_by_french_topics(items):
             }
 
         date_groups[local_date_str]["groups"][item["group"]].append(item)
+
+    if not date_groups:
+        raise SuperdeskApiError.badRequestError(_("No items matched the required calendar/agenda"))
 
     return date_groups.items()
