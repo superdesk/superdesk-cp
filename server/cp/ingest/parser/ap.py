@@ -16,6 +16,7 @@ from superdesk.utc import utc_to_local, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
 from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
+from superdesk.geonames import geonames_request, format_geoname_item
 
 
 AP_SOURCE = "The Associated Press"
@@ -176,6 +177,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             except (KeyError, IndexError):
                 source = item.get("source")
             item["dateline"] = {
+                "date": ap_item.get("firstcreated", ""),
                 "text": ap_item.get("located", ""),
                 "source": source,
                 "located": {
@@ -193,7 +195,17 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             try:
                 lon, lat = dateline["geometry_geojson"]["coordinates"]
                 item["dateline"]["located"]["location"] = {"lat": lat, "lon": lon}
-            except KeyError:
+
+                # get geo data from geoname_request
+                params = [("name", dateline.get("city", "")), ("lang", ap_item.get("language", "en"))]
+                json_data = geonames_request("search", params)
+                for item_ in json_data.get("geonames", []):
+                    if float(item_["lat"]) == lat and float(item_["lng"]) == lon:
+                        # set place required while translation
+                        item["dateline"]["located"]["place"] = format_geoname_item(item_)
+                        break
+
+            except Exception:
                 pass
 
         if ap_item.get("place"):
@@ -319,7 +331,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             else ""
         )
 
-        if "fr" in item["language"]:
+        if item.get("language") and "fr" in item["language"]:
             if re.search(r"^(insolite)", slugline, re.IGNORECASE):
                 return cp.NEWS_BUZZ
             elif priority in ["f", "b"]:
@@ -656,7 +668,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         return ["Spare News"]
 
     def _parse_genre(self, data, item):
-        """VersionType in JIMI"""
+        """Versiontype in JIMI"""
         slugline = item.get("slugline") or ""
         if re.search(r"NewsAlert", slugline, re.IGNORECASE):
             genre = "NewsAlert"
