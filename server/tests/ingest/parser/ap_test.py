@@ -8,6 +8,7 @@ import superdesk
 import requests_mock
 import settings
 
+from superdesk import default_settings
 from datetime import datetime, timedelta
 from unittest.mock import MagicMock, patch
 from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
@@ -34,6 +35,14 @@ class CP_AP_ParseTestCase(unittest.TestCase):
     app = flask.Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
+    # config required to test dateline
+    app.config.update({
+        "GEONAMES_SEARCH_STYLE": settings.GEONAMES_SEARCH_STYLE,
+        "GEONAMES_FEATURE_CLASSES": settings.GEONAMES_FEATURE_CLASSES,
+        "GEONAMES_USERNAME": settings.GEONAMES_USERNAME,
+        "GEONAMES_URL": default_settings.GEONAMES_URL,
+        "GEONAMES_TOKEN": default_settings.GEONAMES_TOKEN,
+    })
 
     def test_slugline(self):
         parser = CP_APMediaFeedParser()
@@ -110,10 +119,13 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual("CHEYENNE, Wyo.", dateline["text"])
         self.assertIn("located", dateline)
         self.assertEqual("Cheyenne", dateline["located"]["city"])
+        self.assertEqual("5821086", dateline["located"]["code"])
+        self.assertEqual("America/Denver", dateline["located"]["tz"])
         self.assertEqual("Wyoming", dateline["located"]["state"])
         self.assertEqual("WY", dateline["located"]["state_code"])
         self.assertEqual("United States", dateline["located"]["country"])
-        self.assertEqual("USA", dateline["located"]["country_code"])
+        self.assertEqual("US", dateline["located"]["country_code"])
+        self.assertIn("place", dateline["located"])
         self.assertEqual(41.13998, dateline["located"]["location"]["lat"])
         self.assertEqual(-104.82025, dateline["located"]["location"]["lon"])
 

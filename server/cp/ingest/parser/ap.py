@@ -3,6 +3,7 @@ import re
 
 import cp
 import json
+import pytz
 import requests
 import lxml.html
 import lxml.html.clean
@@ -12,9 +13,9 @@ import superdesk.etree as sd_etree
 
 from typing import List
 from flask import current_app as app
-from superdesk.utc import utc_to_local, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
+from superdesk.utc import utc_to_local, get_date, utcnow
 from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
 from superdesk.geonames import geonames_request, format_geoname_item
 
@@ -89,6 +90,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             .replace("—", " - ")
             .replace("_", " - ")
         )
+
+    def get_dateline_date(self, ap_item):
+        if ap_item.get("firstcreated"):
+            dateline_date = get_date(ap_item["firstcreated"]).replace(tzinfo=pytz.UTC)
+        else:
+            dateline_date = utcnow()
+        return dateline_date
 
     def parse(self, data, provider=None):
         """
@@ -176,8 +184,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 source = ap_item["infosource"][0]["name"]
             except (KeyError, IndexError):
                 source = item.get("source")
+
             item["dateline"] = {
-                "date": ap_item.get("firstcreated", ""),
+                "date": self.get_dateline_date(ap_item),
                 "text": ap_item.get("located", ""),
                 "source": source,
                 "located": {
@@ -196,14 +205,28 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 lon, lat = dateline["geometry_geojson"]["coordinates"]
                 item["dateline"]["located"]["location"] = {"lat": lat, "lon": lon}
 
+                # required params for geoname API
+                params = [
+                    ("name", dateline.get("city", "")),
+                    ("lang", ap_item.get("language", "en")),
+                    ("style", app.config["GEONAMES_SEARCH_STYLE"]),
+                ]
+                for feature_class in app.config["GEONAMES_FEATURE_CLASSES"]:
+                    params.append(("featureClass", feature_class.upper()))
+
                 # get geo data from geoname_request
-                params = [("name", dateline.get("city", "")), ("lang", ap_item.get("language", "en"))]
                 json_data = geonames_request("search", params)
+
+                formatted_item = None
                 for item_ in json_data.get("geonames", []):
                     if float(item_["lat"]) == lat and float(item_["lng"]) == lon:
-                        # set place required while translation
-                        item["dateline"]["located"]["place"] = format_geoname_item(item_)
+                        formatted_item = format_geoname_item(item_)
                         break
+
+                if formatted_item:
+                    item["dateline"]["located"].update(formatted_item)
+                    # set place key required while translation
+                    item["dateline"]["located"]["place"] = formatted_item
 
             except Exception:
                 pass
