@@ -58,6 +58,8 @@ def slug(item) -> str:
     """
     try:
         _guid = item["extra"][cp.ORIG_ID]
+        if is_french(item) and item.get("type") == "text":
+            _guid = _guid[:30] + "fa"
     except KeyError:
         _guid = ""
     if len(_guid) < cp.SLUG_LEN:
@@ -91,6 +93,10 @@ def filename(item) -> str:
     if item["type"] == "picture":
         return media_ref(item)
     return guid(item)
+
+
+def is_french(item) -> bool:
+    return "fr" in item.get("language", "en")
 
 
 class JimiFormatter(Formatter):
@@ -166,7 +172,7 @@ class JimiFormatter(Formatter):
             if root.find("PscCodes") is None:
                 etree.SubElement(root, "PscCodes").text = "Online"
         elif service:
-            etree.SubElement(root, "Services").text = "Print"
+            etree.SubElement(root, "Services").text = "Écrit" if is_french(item) else "Print"
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
@@ -177,7 +183,7 @@ class JimiFormatter(Formatter):
         # content system fields
         orig = self._get_original_item(item)
         seq_id = "{:08d}".format(pub_seq_num % 100000000)
-        item_id = "{:08d}".format(orig["unique_id"] % 100000000)
+        item_id = "{:08d}".format(self.get_item_id(orig) % 100000000)
         etree.SubElement(content, "Name")
         etree.SubElement(content, "Cachable").text = "false"
         etree.SubElement(content, "FileName").text = filename(orig)
@@ -241,7 +247,7 @@ class JimiFormatter(Formatter):
         )
         etree.SubElement(content, "ContentText").text = self._format_html(content_html)
         etree.SubElement(content, "Language").text = (
-            "2" if "fr" in item.get("language", "") else "1"
+            "2" if is_french(item) else "1"
         )
 
         if item["type"] == "text" and content_html:
@@ -282,6 +288,13 @@ class JimiFormatter(Formatter):
 
         if item.get("associations"):
             self._format_associations(content, item)
+
+    def get_item_id(self, item):
+        if item.get("family_id"):
+            ingest_item = superdesk.get_resource_service("ingest").find_one(req=None, _id=item["family_id"])
+            if ingest_item and ingest_item.get("unique_id"):
+                return ingest_item["unique_id"]
+        return item["unique_id"]
 
     def _format_credit(self, item):
         credit = item.get("creditline")

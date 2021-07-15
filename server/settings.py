@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "cp.ingest",
     "cp.output",
     "cp.ultrad",
+    "cp.planning_exports",
 ]
 
 MACROS_MODULE = "cp.macros"
@@ -225,10 +226,14 @@ SAML_LABEL = env("SAML_LABEL", "SSO")
 SAML_BASE_PATH = env("SAML_PATH", os.path.join(ABS_PATH, "saml"))
 if SERVER_URL == "http://localhost:5000/api":
     SAML_PATH = os.path.join(SAML_BASE_PATH, "localhost")
-elif SERVER_URL == "https://scp-master.test.superdesk.org/api":
+elif 'scp-master' in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "test")
-elif SERVER_URL == "https://cp-uat-api.superdesk.pro/api":
+elif 'cp-uat-api' in SERVER_URL:
+    SAML_PATH = os.path.join(SAML_BASE_PATH, "uat-old")
+elif 'cp-uat' in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "uat")
+elif 'cms-api' in SERVER_URL:
+    SAML_PATH = os.path.join(SAML_BASE_PATH, "prod-old")
 else:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "prod")
 
@@ -274,6 +279,12 @@ ARCHIVED_EXPIRY_MINUTES = int(env("ARCHIVED_EXPIRY_MINUTES", 60 * 24 * 60))  # 6
 
 # disable use of XMP for photo assignments
 PLANNING_USE_XMP_FOR_PIC_ASSIGNMENTS = False
+
+# enable event templates
+PLANNING_EVENT_TEMPLATES_ENABLED = True
+
+# remove "Add to workflow" step for assignments
+PLANNING_AUTO_ASSIGN_TO_WORKFLOW = True
 
 # check for unfulfilled assignments when publishing a story
 PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
@@ -391,3 +402,7 @@ WORKFLOW_ALLOW_MULTIPLE_UPDATES = True
 UPDATE_TRANSLATION_METADATA_MACRO = "Update translation metadata macro"
 
 CORRECTIONS_WORKFLOW = True
+
+DEFAULT_TIMEZONE = "America/Toronto"
+
+PUBLISH_ASSOCIATIONS_RESEND = "corrections"

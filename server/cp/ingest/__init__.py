@@ -7,6 +7,7 @@ from .parser.globenewswire import GlobeNewswireParser
 
 def init_app(app):
     # register new parsers
+    register_feed_parser(BusinessWireParser.NAME, BusinessWireParser())
     register_feed_parser(GlobeNewswireParser.NAME, GlobeNewswireParser())
 
     # override core parsers

@@ -4,6 +4,7 @@
 {% if item.dateline and item.dateline.located %}<br>{{ item.dateline.located.city }}, {{ item.dateline.located.state }}/{{ item.dateline.located.country }}{% endif %}
 <br>{{ item.body_html|first_paragraph|striptags|trim }}
 {% if item.byline %}<br>{{ item.byline|e }}{% endif %}
+{% if item.anpa_category %}<br>Wire: {{ item.anpa_category|join(', ', attribute='name') }}{% endif %}
 <br>Words: {{ item.word_count }}{% for type, refs in item.refs|groupby('type') %}{% if type == 'picture' %}, Photos: {{ refs|count }}{% endif %}{% endfor %}
 {% if not loop.last %}<br>–{% endif %}</p>
 {% endfor %}

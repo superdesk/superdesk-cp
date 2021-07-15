@@ -17,6 +17,8 @@ module.exports = function(grunt) {
         ],
         defaultRoute: '/workspace/monitoring',
 
+        defaultTimezone: 'America/Toronto',
+
         view: {
             timeformat: 'HH:mm',
             dateformat: 'DD.MM.YYYY',

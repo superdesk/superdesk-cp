@@ -22,6 +22,7 @@ from superdesk.geonames import geonames_request, format_geoname_item
 
 AP_SOURCE = "The Associated Press"
 AP_SUBJECT_SCHEME = "http://cv.ap.org/id/"
+AP_SUBJECT_CV = "subject_custom"
 CATEGORY_SCHEME = "categories"
 
 FR_CATEGORY_MAPPING = [
@@ -32,14 +33,14 @@ FR_CATEGORY_MAPPING = [
 ]
 
 EN_CATEGORY_MAPPING = [
-    ("International", "a", "b", "i", "k", "n", "w"),
+    ("International", "a", "b", "i", "k", "n", "w", "g"),
     ("Lifestyle", "d", "l"),
     ("Entertainment", "e", "c"),
     ("Business", "f"),
     ("Politics", "p"),
     ("Sports", "q", "s", "z"),
     ("Travel", "t"),
-    ("Advisories", "v"),
+    ("Advisory", "v"),
 ]
 
 AP_SUBJECT_CODES = set(
@@ -149,9 +150,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if subj.get("scheme") == AP_SUBJECT_SCHEME
         ]
 
-        if ap_item.get("subject"):
-            item["subject"] = self._parse_subject(ap_item["subject"])
-
         if item.get("headline"):
             item["headline"] = self.process_headline(item["headline"])
             item["extra"][cp.HEADLINE2] = item["headline"]
@@ -236,6 +234,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if ap_item.get("description_summary"):
             item["abstract"] = ap_item["description_summary"]
+        else:  # avoid using extended headline as a fallback
+            item.pop("abstract", None)
 
         if ap_item.get("ednote") and item["type"] == "text":
             ednote = self._parse_ednote(ap_item["ednote"])
@@ -250,6 +250,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             self._parse_category(data["data"], item)
         elif item["type"] == "picture":
             self._parse_picture_category(data["data"], item)
+
+        if ap_item.get("subject"):
+            self._parse_subject(ap_item["subject"], item)
 
         if ap_item.get("organisation"):
             item["extra"]["stocks"] = self._parse_stocks(ap_item["organisation"])
@@ -507,26 +510,34 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             re.sub(r"\s*Moving on.*\.", "", ednote),
         )
 
-    def _parse_subject(self, subject):
-        CV_ID = "subject_custom"
-        parsed = []
-        available = _get_cv_items(CV_ID)
+    def _map_sluglines_to_subjects(self, item):
+        # We'll skip mapping slugline to subjects
+        # as we'll process subjects in `_parse_subject` function
+        pass
+
+    def _parse_subject(self, subject, item):
+        item.setdefault("subject", [])
+        is_agate = "Agate" in [c["name"] for c in item.get("anpa_category") or []]
+        if is_agate:
+            return
+        added = set()
+        available = _get_cv_items(AP_SUBJECT_CV)
         for subj in available:
             if subj.get("ap_subject"):
                 codes = [code.strip() for code in subj["ap_subject"].split(",")]
                 for ap_subj in subject:
                     if any(
                         [code for code in codes if ap_subj["code"].startswith(code)]
-                    ):
-                        parsed.append(
+                    ) and subj["qcode"] not in added:
+                        added.add(subj["qcode"])
+                        item["subject"].append(
                             {
                                 "name": subj["name"],
                                 "qcode": subj["qcode"],
-                                "scheme": CV_ID,
+                                "scheme": AP_SUBJECT_CV,
                                 "translations": subj["translations"],
                             }
                         )
-        return parsed
 
     def _map_category_codes(self, item):
         categories = _get_cv_items(CATEGORY_SCHEME)
@@ -889,5 +900,12 @@ def capitalize(name):
 def clean_html(html):
     cleaner = lxml.html.clean.Cleaner()
     root = lxml.html.fromstring(html)
+
+    for elem in root.iter():
+        elem.attrib.pop("id", None)
+        elem.attrib.pop("class", None)
+        if elem.tag in ('hl2', 'pre', 'note'):
+            elem.tag = 'p'
+
     root = cleaner.clean_html(root)
     return sd_etree.to_string(root, method="html")

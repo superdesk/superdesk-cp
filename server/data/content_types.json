@@ -312,7 +312,7 @@
     "priority": 0,
     "enabled": false,
     "is_used": true,
-    "init_version": 1,
+    "init_version": 2,
     "schema": {
         "subject": {
             "required": false,
@@ -368,8 +368,7 @@
         "headline": {
             "required": false,
             "nullable": true,
-            "type": "string",
-            "maxlength": 50
+            "type": "string"
         },
         "copyrightnotice": {
             "nullable": true,
@@ -421,7 +420,7 @@
         },
         "photographer_code": {
             "required": false,
-            "order": 8,
+            "order": 9,
             "section": "content"
         },
         "slugline": {
@@ -432,7 +431,7 @@
         },
         "dateline": {
             "required": false,
-            "order": 12,
+            "order": 13,
             "sdWidth": "half",
             "section": "content"
         },
@@ -445,10 +444,11 @@
         "headline": {
             "required": false,
             "order": 6,
-            "formatOptions": []
+            "formatOptions": [],
+            "section": "content"
         },
         "copyrightnotice": {
-            "order": 11,
+            "order": 12,
             "sdWidth": "full",
             "section": "content",
             "textarea": true
@@ -461,17 +461,18 @@
         },
         "description_text": {
             "required": true,
-            "order": 10,
+            "order": 7,
             "section": "content"
         },
         "caption_writer": {
             "required": false,
-            "order": 9,
+            "order": 10,
             "section": "content"
         },
         "byline": {
             "required": false,
-            "order": 7
+            "order": 8,
+            "section": "content"
         }
     }
 }, {
