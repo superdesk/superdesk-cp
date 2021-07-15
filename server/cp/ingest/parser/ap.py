@@ -215,18 +215,18 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 # get geo data from geoname_request
                 json_data = geonames_request("search", params)
 
-                formatted_item = None
+                formatted_geoname_item = None
                 for item_ in json_data.get("geonames", []):
                     if float(item_["lat"]) == lat and float(item_["lng"]) == lon:
-                        formatted_item = format_geoname_item(item_)
+                        formatted_geoname_item = format_geoname_item(item_)
                         break
 
-                if formatted_item:
-                    item["dateline"]["located"].update(formatted_item)
+                if formatted_geoname_item:
+                    item["dateline"]["located"].update(formatted_geoname_item)
                     # set place key required while translation
-                    item["dateline"]["located"]["place"] = formatted_item
+                    item["dateline"]["located"]["place"] = formatted_geoname_item
 
-            except Exception:
+            except (KeyError, AttributeError):
                 pass
 
         if ap_item.get("place"):

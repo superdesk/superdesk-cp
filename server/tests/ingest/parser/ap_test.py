@@ -131,6 +131,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual("United States", dateline["located"]["country"])
         self.assertEqual("US", dateline["located"]["country_code"])
         self.assertIn("place", dateline["located"])
+        self.assertEqual("Cheyenne", dateline["located"]["place"]["name"])
+        self.assertEqual("Wyoming", dateline["located"]["place"]["state"])
+        self.assertEqual("WY", dateline["located"]["place"]["state_code"])
+        self.assertEqual("United States", dateline["located"]["place"]["country"])
+        self.assertEqual("US", dateline["located"]["place"]["country_code"])
         self.assertEqual(41.13998, dateline["located"]["location"]["lat"])
         self.assertEqual(-104.82025, dateline["located"]["location"]["lon"])
 
