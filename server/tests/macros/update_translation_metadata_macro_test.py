@@ -7,6 +7,11 @@ from unittest.mock import patch
 from tests.mock import resources
 from cp.macros.update_translation_metadata_macro import update_translation_metadata_macro as macro
 
+import pytz
+import settings
+from superdesk import default_settings
+from datetime import datetime, timedelta
+
 
 class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
     def setUp(self):
@@ -143,3 +148,54 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             },
             item['subject'],
         )
+
+    def test_dateline(self):
+
+        self.app.config.update({
+            "GEONAMES_SEARCH_STYLE": settings.GEONAMES_SEARCH_STYLE,
+            "GEONAMES_FEATURE_CLASSES": settings.GEONAMES_FEATURE_CLASSES,
+            "GEONAMES_USERNAME": settings.GEONAMES_USERNAME,
+            "GEONAMES_URL": default_settings.GEONAMES_URL,
+            "GEONAMES_TOKEN": default_settings.GEONAMES_TOKEN,
+        })
+
+        item = {
+            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
+            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
+            'headline': 'test headline',
+            'slugine': 'test slugline',
+            'state': 'in_progress',
+            'type': 'text',
+            'dateline': {
+                "date": datetime(2021, 7, 12, 00, 00, tzinfo=pytz.UTC),
+                "text": "TORONTO, July 12 The Associated Press -",
+                "source": "The Associated Press",
+                "located": {
+                    "alt_name": "",
+                    "city": "Toronto",
+                    "city_code": "Toronto",
+                    "state": "Ontario",
+                    "state_code": "08",
+                    "country": "Canada",
+                    "country_code": "CA",
+                    "dateline": "city",
+                    "location": {
+                        "lat": 43.70011,
+                        "lon": -79.4163
+                    }
+                }
+            }
+        }
+
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                macro(item)
+
+        dateline = item.get("dateline")
+        self.assertEqual("The Associated Press", dateline["source"])
+        self.assertIn("located", dateline)
+        self.assertEqual("Torontoq", dateline["located"]["city"])
+        self.assertEqual("Ontario", dateline["located"]["state"])
+        self.assertEqual("Canada", dateline["located"]["country"])
+        self.assertEqual(43.70011, dateline["located"]["location"]["lat"])
+        self.assertEqual(-79.4163, dateline["located"]["location"]["lon"])

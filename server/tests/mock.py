@@ -10,6 +10,7 @@ from apps.archive.news import NewsService
 from apps.archive.archive import ArchiveService
 from apps.publish.published_item import PublishedItemService
 from superdesk.io import IngestService
+from superdesk.places.places_autocomplete import PlacesAutocompleteService
 
 SEQUENCE_NUMBER = 100
 
@@ -33,6 +34,25 @@ def get_rightsinfo(article):
         "usageterms": "usageterms",
     }
 
+def get_place(geoname_id, language="en"):
+    assert geoname_id
+    return {
+        'scheme': 'geonames',
+        'code': '6167865',
+        'name': 'Toronto',
+        'state': 'Ontario',
+        'country': 'Canada',
+        'state_code': '08',
+        'region_code': '',
+        'country_code': 'CA',
+        'continent_code': 'NA',
+        'feature_class': 'P',
+        'location': {
+            'lat': 43.70011,
+            'lon': -79.4163
+        },
+        'tz': 'America/Toronto'
+    }
 
 class Resource:
     def __init__(self, service):
@@ -55,6 +75,9 @@ media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
 ingest_service.find_one.return_value = None
 
+places_autocomplete_service = create_autospec(PlacesAutocompleteService)
+places_autocomplete_service.get_place.side_effect = get_place
+
 resources = {
     "news": Resource(news_service),
     "ingest": Resource(ingest_service),
@@ -62,4 +85,5 @@ resources = {
     "published": Resource(published_service),
     "subscribers": Resource(subscriber_service),
     "vocabularies": Resource(vocabularies_service),
+    "places_autocomplete": Resource(places_autocomplete_service)
 }

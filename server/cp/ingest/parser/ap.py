@@ -3,6 +3,7 @@ import re
 
 import cp
 import json
+import pytz
 import requests
 import lxml.html
 import lxml.html.clean
@@ -12,7 +13,7 @@ import superdesk.etree as sd_etree
 
 from typing import List
 from flask import current_app as app
-from superdesk.utc import utc_to_local, utcnow
+from superdesk.utc import utc_to_local, get_date, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser
 from superdesk.metadata.item import SCHEDULE_SETTINGS, PUB_STATUS
@@ -89,6 +90,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             .replace("—", " - ")
             .replace("_", " - ")
         )
+
+    def set_dateline_date(self, ap_item):
+        if ap_item.get("firstcreated"):
+            dateline_date = get_date(ap_item["firstcreated"]).replace(tzinfo=pytz.UTC)
+        else:
+            dateline_date = utcnow()
+        return dateline_date
 
     def parse(self, data, provider=None):
         """
@@ -174,6 +182,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             except (KeyError, IndexError):
                 source = item.get("source")
             item["dateline"] = {
+                "date": self.set_dateline_date(ap_item),
                 "text": ap_item.get("located", ""),
                 "source": source,
                 "located": {

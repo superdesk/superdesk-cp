@@ -9,10 +9,13 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import logging
+
+from flask import current_app as app
 from flask_babel import lazy_gettext
 from superdesk import get_resource_service
 from eve.utils import ParsedRequest
 from apps.archive.common import format_dateline_to_locmmmddsrc
+from superdesk.geonames import geonames_request, format_geoname_item
 
 
 logger = logging.getLogger(__name__)
@@ -52,12 +55,51 @@ def get_destination(items, qcode):
             return item
 
 
+def set_dateline_for_translation(item):
+    """Set dateline fields required while translation using geoname API
+    """
+    located = item.get("dateline", {}).get("located")
+    if located and not located.get("place"):
+        try:
+            # required params for geoname API
+            params = [
+                ("name", located.get("city", "")),
+                ("lang", item.get("language", "en")),
+                ("style", app.config.get("GEONAMES_SEARCH_STYLE", "full")),
+            ]
+            for feature_class in app.config.get("GEONAMES_FEATURE_CLASSES", ["P"]):
+                params.append(("featureClass", feature_class.upper()))
+
+            # get geo data from geoname_request
+            json_data = geonames_request("search", params)
+
+            formatted_geoname_item = None
+            for item_ in json_data.get("geonames", []):
+                if(
+                    float(item_["lat"]) == located["location"]["lat"]
+                    and float(item_["lng"]) == located["location"]["lon"]
+                ):
+                    formatted_geoname_item = format_geoname_item(item_)
+                    break
+
+            if formatted_geoname_item:
+                item["dateline"]["located"].update(formatted_geoname_item)
+                # set place key required while translation
+                item["dateline"]["located"]["place"] = formatted_geoname_item
+
+        except Exception as e:
+            logger.exception("Unable to translate dateline for {} item: {}".format(item["guid"], str(e)))
+            pass
+    return item
+
+
 def update_translation_metadata_macro(item, **kwargs):
     req = ParsedRequest()
     req.args = {}
 
-    located = item.get("dateline", {}).get("located")
+    item = set_dateline_for_translation(item)
 
+    located = item.get("dateline", {}).get("located")
     if located and located.get("place"):
         dateline = get_resource_service("places_autocomplete").get_place(located["place"]["code"], "fr")
         item = set_dateline(item, dateline)
