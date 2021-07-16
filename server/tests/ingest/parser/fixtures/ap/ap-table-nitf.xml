@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?><nitf version="-//IPTC//DTD NITF 3.4//EN" change.date="October 18, 2006" change.time="19:30"><head><docdata><doc-id regsrc="AP"/><date.issue norm="20210706T053542Z"/><doc.copyright holder="AP" year="2021"/></docdata></head><body><body.head><hedline><hl1 id="headline">Top Ten</hl1></hedline><distributor>The Associated Press</distributor></body.head><body.content>
+                    <p class="lead" lede="true">THROUGH JULY 5</p>
+                    <block id="block-topten-table" class="block-table-stats">
+                      <hl2 class="block-headline">AMERICAN LEAGUE</hl2>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th class="headline-col-name-extended"/>
+                            <th class="headline-col-games-played">G</th>
+                            <th class="headline-col-at-bat">AB</th>
+                            <th class="headline-col-hits">H</th>
+                            <th class="headline-col-runs">R</th>
+                            <th class="headline-col-points">Pct.</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td class="col-name-extended">Brantley Hou</td>
+                            <td class="col-games-played">64</td>
+                            <td class="col-at-bat">263</td>
+                            <td class="col-hits">89</td>
+                            <td class="col-runs">42</td>
+                            <td class="col-points">.338</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Guerrero Jr. Tor</td>
+                            <td class="col-games-played">83</td>
+                            <td class="col-at-bat">301</td>
+                            <td class="col-hits">101</td>
+                            <td class="col-runs">67</td>
+                            <td class="col-points">.336</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Bogaerts Bos</td>
+                            <td class="col-games-played">80</td>
+                            <td class="col-at-bat">302</td>
+                            <td class="col-hits">97</td>
+                            <td class="col-runs">53</td>
+                            <td class="col-points">.321</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Gurriel Hou</td>
+                            <td class="col-games-played">79</td>
+                            <td class="col-at-bat">288</td>
+                            <td class="col-hits">92</td>
+                            <td class="col-runs">43</td>
+                            <td class="col-points">.319</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Mullins Bal</td>
+                            <td class="col-games-played">84</td>
+                            <td class="col-at-bat">322</td>
+                            <td class="col-hits">102</td>
+                            <td class="col-runs">48</td>
+                            <td class="col-points">.317</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Alvarez Hou</td>
+                            <td class="col-games-played">70</td>
+                            <td class="col-at-bat">263</td>
+                            <td class="col-hits">81</td>
+                            <td class="col-runs">53</td>
+                            <td class="col-points">.308</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Cruz Min</td>
+                            <td class="col-games-played">73</td>
+                            <td class="col-at-bat">256</td>
+                            <td class="col-hits">78</td>
+                            <td class="col-runs">37</td>
+                            <td class="col-points">.305</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Martinez Bos</td>
+                            <td class="col-games-played">79</td>
+                            <td class="col-at-bat">308</td>
+                            <td class="col-hits">92</td>
+                            <td class="col-runs">58</td>
+                            <td class="col-points">.299</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">T.Anderson ChW</td>
+                            <td class="col-games-played">70</td>
+                            <td class="col-at-bat">292</td>
+                            <td class="col-hits">87</td>
+                            <td class="col-runs">49</td>
+                            <td class="col-points">.298</td>
+                          </tr>
+                          <tr>
+                            <td class="col-name-extended">Correa Hou</td>
+                            <td class="col-games-played">80</td>
+                            <td class="col-at-bat">299</td>
+                            <td class="col-hits">88</td>
+                            <td class="col-runs">61</td>
+                            <td class="col-points">.294</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </block>
+                    <block id="block-homeruns" class="block-text-stats">
+                      <hl2 class="block-headline">Home Runs</hl2>
+                      <p class="text-ind">Ohtani, Los Angeles, 31; Guerrero Jr., Toronto, 28; Gallo, Texas, 21; A.García, Texas, 21; Devers, Boston, 21; Semien, Toronto, 21; Olson, Oakland, 20; Walsh, Los Angeles, 20; Perez, Kansas City, 20; Judge, New York, 19.</p>
+                    </block>
+                    <block id="block-runs-batted-in" class="block-text-stats">
+                      <hl2 class="block-headline">Runs Batted In</hl2>
+                      <p class="text-ind">Guerrero Jr., Toronto, 71; Devers, Boston, 71; Ohtani, Los Angeles, 67; J.Abreu, Chicago, 63; Walsh, Los Angeles, 61; A.García, Texas, 59; Alvarez, Houston, 56; Meadows, Tampa Bay, 56; Martinez, Boston, 56; Grichuk, Toronto, 56.</p>
+                    </block>
+                    <block id="block-pitching" class="block-text-stats">
+                      <hl2 class="block-headline">Pitching</hl2>
+                      <p class="text-ind">Civale, Cleveland, 10-2; Bassitt, Oakland, 9-2; Eovaldi, Boston, 9-4; Greinke, Houston, 8-2; Lynn, Chicago, 8-3; G.Cole, New York, 8-4; Petit, Oakland, 7-1; 5 tied at 7-3.</p>
+                    </block>
+                  </body.content></body></nitf>

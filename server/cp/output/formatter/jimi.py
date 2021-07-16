@@ -46,6 +46,12 @@ PLACELINE_REPLACE = {
     "Washington, D.C.": "District of Columbia",
 }
 
+INLINE_ELEMENTS = {
+    "strong",
+    "em",
+    "a",
+}
+
 
 def slug(item) -> str:
     """Item slugline.
@@ -657,7 +663,7 @@ class JimiFormatter(Formatter):
                 elem.tag = "em"
 
             # Remove whitespace and empty tags
-            if elem.text is not None and not elem.text.strip():
+            if elem.tag in INLINE_ELEMENTS and elem.text is not None and not elem.text.strip():
                 elem.drop_tree()
 
         return sd_etree.to_string(tree, encoding="unicode", method="html")
