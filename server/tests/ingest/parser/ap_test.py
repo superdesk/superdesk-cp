@@ -358,6 +358,25 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
         self.assertIn("<p>Atlantic Division</p>", item["body_html"])
 
+    def test_parse_table(self):
+        with open(get_fixture_path("ap-table.json", "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            xml = etree.parse(get_fixture_path("ap-table-nitf.xml", "ap"))
+            parsed = nitf.NITFFeedParser().parse(xml)
+            _data["nitf"] = parsed
+
+            with patch.dict(superdesk.resources, resources):
+                item = parser.parse(_data, {})
+
+        self.assertIn("<table>", item["body_html"])
+        output = self.format(item)
+        jimi = etree.fromstring(output.encode("utf-8"))
+        print("jimi", jimi)
+        content = jimi.find("ContentItem").find("ContentText").text
+        self.assertIn("table", content)
+
     def test_parse_subject_duplicates(self):
         with open(get_fixture_path("ap-subject.json", "ap")) as fp:
             _data = json.load(fp)
