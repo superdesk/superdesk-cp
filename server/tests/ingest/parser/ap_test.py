@@ -97,7 +97,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             s["name"] for s in item["subject"] if s.get("scheme") == "subject_custom"
         ]
 
-        self.assertEqual([], subjects)
+        self.assertEqual(["health"], subjects)
 
         tags = [s["name"] for s in item["subject"] if s.get("scheme") == cp.TAG]
         self.assertEqual(2, len(tags))
