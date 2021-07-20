@@ -167,21 +167,21 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             'state': 'in_progress',
             'type': 'text',
             'dateline': {
-                "date": datetime(2021, 7, 12, 00, 00, tzinfo=pytz.UTC),
-                "text": "TORONTO, July 12 The Associated Press -",
+                "date": datetime(2021, 7, 22, 00, 00, tzinfo=pytz.UTC),
+                "text": "LONDON, Jun 22 testing source -",
                 "source": "The Associated Press",
                 "located": {
                     "alt_name": "",
-                    "city": "Toronto",
-                    "city_code": "Toronto",
-                    "state": "Ontario",
-                    "state_code": "08",
-                    "country": "Canada",
-                    "country_code": "CA",
+                    "city": "London",
+                    "city_code": "London",
+                    "state": "England",
+                    "state_code": "ENG",
+                    "country": "United Kingdom",
+                    "country_code": "GB",
                     "dateline": "city",
                     "location": {
-                        "lat": 43.70011,
-                        "lon": -79.4163
+                        "lat": 51.50853,
+                        "lon": -0.12574
                     }
                 }
             }
@@ -194,8 +194,8 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         dateline = item.get("dateline")
         self.assertEqual("The Associated Press", dateline["source"])
         self.assertIn("located", dateline)
-        self.assertEqual("Torontoq", dateline["located"]["city"])
-        self.assertEqual("Ontario", dateline["located"]["state"])
-        self.assertEqual("Canada", dateline["located"]["country"])
-        self.assertEqual(43.70011, dateline["located"]["location"]["lat"])
-        self.assertEqual(-79.4163, dateline["located"]["location"]["lon"])
+        self.assertEqual("Londres", dateline["located"]["city"])
+        self.assertEqual("Angleterre", dateline["located"]["state"])
+        self.assertEqual("Royaume-Uni", dateline["located"]["country"])
+        self.assertEqual(51.50853, dateline["located"]["location"]["lat"])
+        self.assertEqual(-0.12574, dateline["located"]["location"]["lon"])

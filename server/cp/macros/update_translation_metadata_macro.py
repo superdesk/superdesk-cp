@@ -55,7 +55,7 @@ def get_destination(items, qcode):
             return item
 
 
-def set_dateline_for_translation(item):
+def get_dateline_for_translation(item):
     """Set dateline fields required while translation using geoname API
     """
     located = item.get("dateline", {}).get("located")
@@ -97,7 +97,7 @@ def update_translation_metadata_macro(item, **kwargs):
     req = ParsedRequest()
     req.args = {}
 
-    item = set_dateline_for_translation(item)
+    item = get_dateline_for_translation(item)
 
     located = item.get("dateline", {}).get("located")
     if located and located.get("place"):

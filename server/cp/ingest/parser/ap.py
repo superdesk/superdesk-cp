@@ -91,7 +91,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             .replace("_", " - ")
         )
 
-    def set_dateline_date(self, ap_item):
+    def get_dateline_date(self, ap_item):
         if ap_item.get("firstcreated"):
             dateline_date = get_date(ap_item["firstcreated"]).replace(tzinfo=pytz.UTC)
         else:
@@ -182,7 +182,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             except (KeyError, IndexError):
                 source = item.get("source")
             item["dateline"] = {
-                "date": self.set_dateline_date(ap_item),
+                "date": self.get_dateline_date(ap_item),
                 "text": ap_item.get("located", ""),
                 "source": source,
                 "located": {
@@ -676,7 +676,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         return ["Spare News"]
 
     def _parse_genre(self, data, item):
-        """VersionType in JIMI"""
+        """Versiontype in JIMI"""
         slugline = item.get("slugline") or ""
         if re.search(r"NewsAlert", slugline, re.IGNORECASE):
             genre = "NewsAlert"

@@ -11,6 +11,8 @@ from apps.archive.archive import ArchiveService
 from apps.publish.published_item import PublishedItemService
 from superdesk.io import IngestService
 from superdesk.places.places_autocomplete import PlacesAutocompleteService
+from superdesk.geonames import geonames_request, format_geoname_item
+from flask import current_app as app
 
 SEQUENCE_NUMBER = 100
 
@@ -34,25 +36,17 @@ def get_rightsinfo(article):
         "usageterms": "usageterms",
     }
 
+
 def get_place(geoname_id, language="en"):
     assert geoname_id
-    return {
-        'scheme': 'geonames',
-        'code': '6167865',
-        'name': 'Toronto',
-        'state': 'Ontario',
-        'country': 'Canada',
-        'state_code': '08',
-        'region_code': '',
-        'country_code': 'CA',
-        'continent_code': 'NA',
-        'feature_class': 'P',
-        'location': {
-            'lat': 43.70011,
-            'lon': -79.4163
-        },
-        'tz': 'America/Toronto'
-    }
+    params = [
+        ("geonameId", geoname_id),
+        ("lang", language),
+        ("style", app.config.get("GEONAMES_SEARCH_STYLE", "full")),
+    ]
+    json_data = geonames_request("getJSON", params)
+    return format_geoname_item(json_data)
+
 
 class Resource:
     def __init__(self, service):
