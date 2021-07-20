@@ -10,6 +10,9 @@ from apps.archive.news import NewsService
 from apps.archive.archive import ArchiveService
 from apps.publish.published_item import PublishedItemService
 from superdesk.io import IngestService
+from superdesk.places.places_autocomplete import PlacesAutocompleteService
+from superdesk.geonames import geonames_request, format_geoname_item
+from flask import current_app as app
 
 SEQUENCE_NUMBER = 100
 
@@ -34,6 +37,17 @@ def get_rightsinfo(article):
     }
 
 
+def get_place(geoname_id, language="en"):
+    assert geoname_id
+    params = [
+        ("geonameId", geoname_id),
+        ("lang", language),
+        ("style", app.config.get("GEONAMES_SEARCH_STYLE", "full")),
+    ]
+    json_data = geonames_request("getJSON", params)
+    return format_geoname_item(json_data)
+
+
 class Resource:
     def __init__(self, service):
         self.service = service
@@ -55,6 +69,9 @@ media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
 ingest_service.find_one.return_value = None
 
+places_autocomplete_service = create_autospec(PlacesAutocompleteService)
+places_autocomplete_service.get_place.side_effect = get_place
+
 resources = {
     "news": Resource(news_service),
     "ingest": Resource(ingest_service),
@@ -62,4 +79,5 @@ resources = {
     "published": Resource(published_service),
     "subscribers": Resource(subscriber_service),
     "vocabularies": Resource(vocabularies_service),
+    "places_autocomplete": Resource(places_autocomplete_service)
 }
