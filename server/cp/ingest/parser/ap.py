@@ -500,7 +500,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if subj.get("ap_subject"):
                 codes = [code.strip() for code in subj["ap_subject"].split(",")]
                 for ap_subj in subject:
-                    if ap_subj.get('Creator') == 'Editorial' and any(
+                    if ap_subj.get('creator') == 'Editorial' and any(
                         [code for code in codes if ap_subj["code"].startswith(code)]
                     ) and subj["qcode"] not in added:
                         added.add(subj["qcode"])
