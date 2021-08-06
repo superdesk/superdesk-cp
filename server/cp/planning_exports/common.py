@@ -45,6 +45,12 @@ def set_item_description(item, event):
         item.get("description_text") or
         ""
     ).rstrip()
+    short_description = (
+        event.get("definition_short") or
+        item.get("definition_short") or
+        item.get("description_text") or
+        ""
+    ).rstrip()
 
     if description:
         if not description.endswith("."):
@@ -53,6 +59,7 @@ def set_item_description(item, event):
             description += " "
 
     item["description"] = description
+    item["description_short"] = short_description
 
 
 def set_item_dates(item, event):
@@ -103,6 +110,8 @@ def set_item_location(item, event):
     item.setdefault("address", {})
     item["address"].setdefault("name", "")
     item["address"].setdefault("full", "")
+    item["address"].setdefault("title", "")
+    item["address"].setdefault("address", "")
     if len(item.get("location") or []):
         # Set the items Location details if available
         try:
@@ -111,6 +120,11 @@ def set_item_location(item, event):
                 address_item = get_resource_service("locations").find_one(req=None, guid=address_qcode)
                 address = address_item.get("address") or {}
 
+                try:
+                    address_line = (address.get("line") or [])[0]
+                except IndexError:
+                    address_line = ""
+
                 item["address"] = {
                     "country": address["country"] if address.get("country") else None,
                     "locality": address["locality"] if address.get("locality") else None,
@@ -118,6 +132,8 @@ def set_item_location(item, event):
                     "state": address["state"] if address.get("state") else None,
                     "name": address.get("city") or address_item.get("name") or "",
                     "full": address_item.get("unique_name") or address_item.get("formatted_address") or "",
+                    "title": address_item.get("name") or "",
+                    "address": address_line
                 }
         except (IndexError, KeyError):
             pass
@@ -128,6 +144,9 @@ def set_item_location(item, event):
 
     if item["address"]["full"]:
         item["address"]["full"] = ". " + item["address"]["full"]
+
+    if item["address"]["title"] and item["address"]["address"]:
+        item["address"]["short"] = item["address"]["title"] + ", " + item["address"]["address"]
 
 
 def set_item_coverages(item):
