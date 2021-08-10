@@ -14,7 +14,7 @@
                     COUVERTURE: {{ item.coverage_types }}.<br>
                 {%- endif -%}
                 {%- if item.address.city -%}
-                    {{ item.address.city }} - {{ item.local_time }}.{{ item.address.short }}.
+                    {{ item.address.city }} - {{ item.local_time }}. {{ item.address.short }}.
                 {%- else -%}
                     {{ item.local_time }}.
                 {%- endif -%}
