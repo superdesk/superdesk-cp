@@ -142,11 +142,13 @@ def set_item_location(item, event):
     if item["address"]["name"]:
         item["address"]["name"] = item["address"]["name"].upper()
 
-    if item["address"]["full"]:
-        item["address"]["full"] = ". " + item["address"]["full"]
-
     if item["address"]["title"] and item["address"]["address"]:
         item["address"]["short"] = item["address"]["title"] + ", " + item["address"]["address"]
+    else:
+        item["address"]["short"] = item["address"]["full"]
+
+    if item["address"]["full"]:
+        item["address"]["full"] = ". " + item["address"]["full"]
 
 
 def set_item_coverages(item):
