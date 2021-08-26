@@ -404,5 +404,3 @@ UPDATE_TRANSLATION_METADATA_MACRO = "Update translation metadata macro"
 CORRECTIONS_WORKFLOW = True
 
 DEFAULT_TIMEZONE = "America/Toronto"
-
-PUBLISH_ASSOCIATIONS_RESEND = "updates"
