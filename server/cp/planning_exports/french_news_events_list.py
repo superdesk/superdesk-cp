@@ -140,7 +140,7 @@ def group_items_by_french_topics(items):
             date_groups[local_date_str] = {
                 # Format name for heading, in Canadian French i.e.
                 # jeudi 24 juin
-                "name": format_date(item["local_date"], "EEEE d MMM", locale="fr_CA").capitalize(),
+                "name": format_date(item["local_date"], "EEEE d MMMM", locale="fr_CA").capitalize(),
                 "groups": {
                     item_translations["calendars"].get(qcode): []
                     for qcode in GROUP_QCODE_ORDER

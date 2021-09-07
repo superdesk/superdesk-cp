@@ -1,10 +1,8 @@
 {% for date, date_group in group_items_by_french_topics(items) -%}
     {%- if loop.first -%}
-        <p>&mdash;&mdash;<br></p>
-    {%- else -%}
-        <p>&nbsp;</p>
+        <p>&mdash;&mdash;</p>
     {%- endif -%}
-    <h2>{{ date_group.name }}</h2><p>&nbsp;</p>
+    <p><b>{{ date_group.name }}</b></p>
     {%- for group, items in date_group.groups.items() -%}
         {%- if items -%}
             <p><b>{{ group }}</b></p>
