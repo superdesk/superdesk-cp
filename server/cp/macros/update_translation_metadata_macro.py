@@ -83,7 +83,16 @@ def set_dateline_for_translation(item):
                     break
 
             if formatted_geoname_item:
-                item["dateline"]["located"].update(formatted_geoname_item)
+                item["dateline"]["located"].update({
+                    "state_code": formatted_geoname_item["state_code"],
+                    "tz": formatted_geoname_item["tz"],
+                    "country_code": formatted_geoname_item["country_code"],
+                    "state": formatted_geoname_item["state"],
+                    "country": formatted_geoname_item["country"],
+                    "code": formatted_geoname_item["code"],
+                    "scheme": formatted_geoname_item["scheme"],
+                    "location": formatted_geoname_item["location"]
+                })
                 # set place key required while translation
                 item["dateline"]["located"]["place"] = formatted_geoname_item
 
