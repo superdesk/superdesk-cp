@@ -347,7 +347,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
     def format(self, item):
         with patch.dict(superdesk.resources, resources):
             item["unique_id"] = 1
-            print("item", item)
             return self.formatter.format(item, self.subscriber)[0][1]
 
     def test_parse_agate_headings(self):
@@ -379,7 +378,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("<table>", item["body_html"])
         output = self.format(item)
         jimi = etree.fromstring(output.encode("utf-8"))
-        print("jimi", jimi)
         content = jimi.find("ContentItem").find("ContentText").text
         self.assertIn("table", content)
 
