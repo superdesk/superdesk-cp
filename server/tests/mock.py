@@ -68,6 +68,7 @@ published_service = create_autospec(PublishedItemService)
 media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
 ingest_service.find_one.return_value = None
+archive_service.find_one.return_value = None
 
 places_autocomplete_service = create_autospec(PlacesAutocompleteService)
 places_autocomplete_service.get_place.side_effect = get_place

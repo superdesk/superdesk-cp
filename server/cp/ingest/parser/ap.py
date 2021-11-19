@@ -278,6 +278,14 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         item["extra"]["ap_version"] = ap_item["version"]
 
+        if item["type"] == "text":
+            try:
+                prev_item = superdesk.get_resource_service("archive").find_one(req=None, ingest_id=item["guid"])
+                if prev_item is not None and prev_item["extra"]["ap_version"] != ap_item["version"]:
+                    item["rewrite_of"] = prev_item["guid"]
+            except KeyError:
+                pass
+
         self._parse_tags(data["data"], item)
         self._parse_ap_products(data["data"], item)
 
@@ -850,6 +858,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             }
             for p in products
         ])
+
+    def categorisation_mapping(self, in_item, item):
+        """Avoid extra mapping."""
+        pass
 
 
 def append_matching_subject(item, scheme, qcode):

@@ -49,7 +49,13 @@ class CP_AP_ParseTestCase(unittest.TestCase):
     def test_parse(self):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
+                superdesk.resources["archive"].service.find_one.side_effect = [
+                    {"uri": "foo"},
+                    None,
+                    {"guid": "bar", "extra": {"ap_version": 999}},
+                ]
                 item = parser.parse(data, provider)
+                superdesk.resources["archive"].service.find_one.side_effect = None
 
         self.assertEqual("ba7d03f0cd24a17faa81bebc724bcf3f", item["guid"])
         self.assertEqual("Story", item["profile"])
@@ -62,6 +68,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual(5, item["urgency"])
         self.assertEqual("Margaret Austin", item["byline"])
         self.assertIn("General news", item["keywords"])
+        self.assertEqual("bar", item["rewrite_of"])
 
         self.assertIn(
             {
@@ -122,7 +129,7 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
         self.assertIn("associations", item)
         self.assertIn("media-gallery--1", item["associations"])
-        self.assertIn("media-gallery--2", item["associations"])
+        self.assertNotIn("media-gallery--2", item["associations"])
 
         self.assertEqual(1, len(item["place"]))
         self.assertEqual(
@@ -371,7 +378,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("<table>", item["body_html"])
         output = self.format(item)
         jimi = etree.fromstring(output.encode("utf-8"))
-        print("jimi", jimi)
         content = jimi.find("ContentItem").find("ContentText").text
         self.assertIn("table", content)
 
