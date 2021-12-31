@@ -851,6 +851,10 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             for p in products
         ])
 
+    def categorisation_mapping(self, in_item, item):
+        """Avoid extra mapping."""
+        pass
+
 
 def append_matching_subject(item, scheme, qcode):
     cv_items = _get_cv_items(scheme)
