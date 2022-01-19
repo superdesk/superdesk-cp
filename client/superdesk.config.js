@@ -94,7 +94,7 @@ module.exports = function(grunt) {
             useTansaProofing: true,
             planning: true,
             noPublishOnAuthoringDesk: true,
-            autorefreshContent: false,
+            autorefreshContent: true,
         },
         
         item_profile: {
