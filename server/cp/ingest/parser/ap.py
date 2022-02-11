@@ -73,7 +73,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
     Metadata: https://developer.ap.org/ap-media-api/agent/AP_Classification_Metadata.htm
     """
 
-    PROFILE_ID = "Story"
     RELATED_ID = "media-gallery"
 
     def process_slugline(self, slugline):
@@ -139,9 +138,6 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item["slugline"] = prev["slugline"]
         elif item.get("slugline"):
             item["slugline"] = self.process_slugline(item["slugline"])
-
-        if item.get("type") == "text":
-            item["profile"] = self.PROFILE_ID
 
         item["keywords"] = [
             subj["name"]

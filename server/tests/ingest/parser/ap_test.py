@@ -58,7 +58,6 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 superdesk.resources["archive"].service.find_one.side_effect = None
 
         self.assertEqual("ba7d03f0cd24a17faa81bebc724bcf3f", item["guid"])
-        self.assertEqual("Story", item["profile"])
         self.assertEqual("WY-Exchange-Coronavirus-Tech", item["slugline"])
         self.assertEqual("headline1", item["headline"])
         self.assertEqual("headline1", item["extra"][cp.HEADLINE2])
