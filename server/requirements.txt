@@ -4,6 +4,8 @@ python3-saml>=1.9,<1.10
 python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.10
 elastic-apm[flask]>=5.9,<5.10
+MarkupSafe<2.1
+
 
 -e git+https://github.com/superdesk/superdesk-core.git@v2.3.7#egg=superdesk-core
 superdesk-planning==2.3.1
