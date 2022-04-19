@@ -88,6 +88,7 @@ DEFAULT_LANGUAGE = "en-CA"
 
 ARCHIVE_AUTOCOMPLETE = True
 ARCHIVE_AUTOCOMPLETE_DAYS = 2
+ARCHIVE_AUTOCOMPLETE_LIMIT = 5000
 
 # special characters that are disallowed
 DISALLOWED_CHARACTERS = [
@@ -325,6 +326,7 @@ AP_TAGS_MAPPING = {
         30594,
         30597,
         30598,
+        30599,
         31385,
         31388,
         44686,
@@ -367,14 +369,17 @@ AP_TAGS_MAPPING = {
         43467,
         43468,
         43474,
+        100502,
     },
     "APR": {
         100216,
         101543,
     },
     "APV": {
+        30599,
         32607,
         101267,
+        100502,
     },
     "APS": {
         30025,
