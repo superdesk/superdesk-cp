@@ -23,6 +23,7 @@ BROADCAST = "Broadcast"
 ORGANISATION = "organisation"
 TAG = "tag"
 AP_PRODUCT = "ap_product"
+AP_INGEST_CONTROL = "ap_ingest_control"
 
 SLUG_LEN = 32
 
