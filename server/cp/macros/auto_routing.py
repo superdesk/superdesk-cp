@@ -66,7 +66,7 @@ def callback(item, **kwargs):
         .find(
             where={
                 "uri": item["uri"],
-                "version_creator": {"$ne": None},
+                "version_creator": {"$nin": [None, ""]},  # only consider updated by user
                 "state": {"$ne": CONTENT_STATE.SPIKED},
             },
             max_results=1,
