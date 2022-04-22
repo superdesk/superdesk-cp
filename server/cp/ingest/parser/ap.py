@@ -122,6 +122,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 pass
 
         item["guid"] = ap_item["altids"]["itemid"]
+        item["uri"] = ap_item["uri"].split("?")[0]
 
         try:
             item["extra"][cp.FILENAME] = ap_item["altids"]["transref"]

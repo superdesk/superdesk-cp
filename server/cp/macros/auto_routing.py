@@ -12,7 +12,9 @@ import cp
 import re
 import logging
 import superdesk
+
 from flask_babel import lazy_gettext
+from superdesk.metadata.item import CONTENT_STATE
 
 
 logger = logging.getLogger(__name__)
@@ -46,7 +48,7 @@ def callback(item, **kwargs):
                         "name": subject["name"],
                         "qcode": subject["qcode"],
                         "scheme": cv_id,
-                        "translations": subject.get("translations")
+                        "translations": subject.get("translations"),
                     }
                 )
             else:
@@ -58,6 +60,36 @@ def callback(item, **kwargs):
                 item["associations"] = {key: None for key in item["associations"]}
             if item.get("abstract"):
                 item["body_html"] = item.pop("abstract")
+
+    manually_edited = (
+        superdesk.get_resource_service("archive")
+        .find(
+            where={
+                "uri": item["uri"],
+                "version_creator": {"$nin": [None, ""]},  # only consider updated by user
+                "state": {"$ne": CONTENT_STATE.SPIKED},
+            },
+            max_results=1,
+        )
+        .sort("versioncreated", -1)
+    )
+
+    if manually_edited.count():
+        logger.info("Manually updated before %s", item["slugline"])
+        prev = manually_edited[0]
+        subj = [
+            subject
+            for subject in prev["subject"]
+            if subject.get("scheme") == cp.AP_INGEST_CONTROL
+        ]
+        if subj and subj[0]["qcode"] == "stop":
+            logger.info("Stop auto publish %s", item["slugline"])
+            item["auto_publish"] = False  # stop auto publishing
+        elif subj and subj[0]["qcode"] == "ranking" and prev.get("urgency"):
+            logger.info("Update ranking %s", item["slugline"])
+            item["urgency"] = prev["urgency"]
+        else:
+            logger.info("Auto publish previously edited %s", item["slugline"])
 
     return item
 

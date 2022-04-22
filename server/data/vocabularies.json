@@ -22442,5 +22442,32 @@
                 "name": "Zimbabwe"
             }
         ]
+    },
+    {
+        "_id": "ap_ingest_control",
+        "display_name": "AP Ingest",
+        "type": "manageable",
+    	"selection_type": "single selection",
+        "init_version": 1,
+        "unique_field": "qcode",
+        "service": {
+           "all": 1
+        },
+        "schema": {
+           "qcode": {},
+           "name": {}
+        },
+        "items": [
+            {
+                "is_active": true,
+                "qcode": "stop",
+                "name": "STOP"
+            },
+            {
+                "is_active": true,
+                "qcode": "ranking",
+                "name": "Keep Ranking"
+            }
+        ]
     }
 ]
