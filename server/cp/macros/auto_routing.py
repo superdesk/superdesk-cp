@@ -65,10 +65,15 @@ def callback(item, **kwargs):
         superdesk.get_resource_service("archive")
         .find(
             where={
-                "uri": item["uri"],
-                "version_creator": {"$nin": [None, ""]},  # only consider updated by user
-                "state": {"$ne": CONTENT_STATE.SPIKED},
-            },
+                "$and": [
+                    {"uri": item["uri"]},
+                    # can't use $nin, looks like bug in eve
+                    # converting [None, ""] to [ObjectId(), ""]
+                    {"version_creator": {"$ne": None}},
+                    {"version_creator": {"$ne": ""}},
+                    {"state": {"$ne": CONTENT_STATE.SPIKED}},
+                ],
+            },  # type: ignore
             max_results=1,
         )
         .sort("versioncreated", -1)
