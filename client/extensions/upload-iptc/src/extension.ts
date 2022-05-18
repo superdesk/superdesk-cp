@@ -31,6 +31,10 @@ const copySubj = (scheme: string) => (subj: ISubject) => ({
     source: '',
 });
 
+const toString = (value: string | Array<string> | undefined) : string => (
+    Array.isArray(value) ? value[0] : (value || '')
+);
+
 const extension: IExtension = {
     activate: (superdesk: ISuperdesk) => {
         const result: IExtensionActivationResult = {
@@ -60,15 +64,15 @@ const extension: IExtension = {
                         ),
                         dateline: {
                             text: [
-                                data.City,
-                                data['Province-State'],
-                                data['Country-PrimaryLocationName'],
+                                toString(data.City),
+                                toString(data['Province-State']),
+                                toString(data['Country-PrimaryLocationName']),
                             ].filter((x) => !!x).join(', '),
                             located: {
-                                city: data.City,
-                                state: data['Province-State'],
-                                country: data['Country-PrimaryLocationName'],
-                                country_code: data['Country-PrimaryLocationCode'],
+                                city: toString(data.City),
+                                state: toString(data['Province-State']),
+                                country: toString(data['Country-PrimaryLocationName']),
+                                country_code: toString(data['Country-PrimaryLocationCode']),
                             },
                         },
                         extra: {
