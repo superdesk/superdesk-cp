@@ -180,7 +180,9 @@ class OrangelogicSearchProvider(SearchProvider):
             "DateFormat": "u",
         }
 
-        query_components = {}
+        query_components = {
+            "MediaType": "(Image OR Video)",
+        }
 
         try:
             query_components["Text"] = query["query"]["filtered"]["query"][
