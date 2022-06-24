@@ -6,4 +6,4 @@ num2words==0.5.10
 
 -e git+https://github.com/superdesk/superdesk-core.git@develop#egg=superdesk-core
 git+https://github.com/superdesk/superdesk-planning.git@develop#egg=superdesk-planning
-superdesk-analytics==2.1.2
+-e git+https://github.com/superdesk/superdesk-analytics.git@develop#egg=superdesk-analytics
