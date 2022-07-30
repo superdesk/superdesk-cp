@@ -22469,5 +22469,848 @@
                 "name": "Keep Ranking"
             }
         ]
+    },
+    {
+        "_id": "onclusive_ingest_categories",
+        "display_name": " Onclusive Categories",
+        "type": "manageable",
+        "selection_type": "multi selection",
+        "unique_field": "qcode",
+        "items": [
+            {
+                "name": "Corporate Social Responsibility / Business Sustainability",
+                "cp_category": "b",
+                "qcode": "154",
+                "is_active": true
+            },
+            {
+                "name": "Investments / Savings",
+                "cp_category": "f",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Mortgages",
+                "cp_category": "f",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Personal Finance",
+                "cp_category": "f",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Consumer Conferences",
+                "cp_category": "b",
+                "qcode": "96",
+                "is_active": true
+            },
+            {
+                "name": "Consumer Exhibitions & Fairs",
+                "cp_category": "b",
+                "qcode": "64",
+                "is_active": true
+            },
+            {
+                "name": "Trade Conferences",
+                "cp_category": "b",
+                "qcode": "97",
+                "is_active": true
+            },
+            {
+                "name": "Trade Exhibitions",
+                "cp_category": "b",
+                "qcode": "95",
+                "is_active": true
+            },
+            {
+                "name": "Animals / Pets",
+                "cp_category": "l",
+                "qcode": "137",
+                "is_active": true
+            },
+            {
+                "name": "Children (0-12 years)",
+                "cp_category": "l",
+                "qcode": "104",
+                "is_active": true
+            },
+            {
+                "name": "Family & Parenting",
+                "cp_category": "l",
+                "qcode": "146",
+                "is_active": true
+            },
+            {
+                "name": "Fashion & Beauty",
+                "cp_category": "l",
+                "qcode": "79",
+                "is_active": true
+            },
+            {
+                "name": "Health & Wellbeing",
+                "cp_category": "l",
+                "qcode": "101",
+                "is_active": true
+            },
+            {
+                "name": "LGBTQ",
+                "cp_category": "l",
+                "qcode": "147",
+                "is_active": true
+            },
+            {
+                "name": "Multi-cultural",
+                "cp_category": "l",
+                "qcode": "109",
+                "is_active": true
+            },
+            {
+                "name": "Over 50s",
+                "cp_category": "l",
+                "qcode": "237",
+                "is_active": true
+            },
+            {
+                "name": "Religion & Ethics",
+                "cp_category": "l",
+                "qcode": "116",
+                "is_active": true
+            },
+            {
+                "name": "Seasonal Events & Celebrations",
+                "cp_category": "l",
+                "qcode": "125",
+                "is_active": true
+            },
+            {
+                "name": "Sex & Relationships",
+                "cp_category": "l",
+                "qcode": "102",
+                "is_active": true
+            },
+            {
+                "name": "Technology / Gadgets",
+                "cp_category": "l",
+                "qcode": "105",
+                "is_active": true
+            },
+            {
+                "name": "Travel & Tourism",
+                "cp_category": "j",
+                "qcode": "108",
+                "is_active": true
+            },
+            {
+                "name": "Youth (13-25 years)",
+                "cp_category": "l",
+                "qcode": "151",
+                "is_active": true
+            },
+            {
+                "name": "Executive Board Changes",
+                "cp_category": "b",
+                "qcode": "208",
+                "is_active": true
+            },
+            {
+                "name": "IPO",
+                "cp_category": "b",
+                "qcode": "224",
+                "is_active": true
+            },
+            {
+                "name": "Leading Canadian Stocks 500 Tracker  + Top Global 1200 ",
+                "cp_category": "b",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "M&A",
+                "cp_category": "b",
+                "qcode": "227",
+                "is_active": true
+            },
+            {
+                "name": "Economic Events",
+                "cp_category": "b",
+                "qcode": "4",
+                "is_active": true
+            },
+            {
+                "name": "Economic Indicators",
+                "cp_category": "b",
+                "qcode": "3",
+                "is_active": true
+            },
+            {
+                "name": "Market & Public Holidays",
+                "cp_category": "b",
+                "qcode": "23",
+                "is_active": true
+            },
+            {
+                "name": "Arts & Culture",
+                "cp_category": "e",
+                "qcode": "100",
+                "is_active": true
+            },
+            {
+                "name": "Books",
+                "cp_category": "e",
+                "qcode": "80",
+                "is_active": true
+            },
+            {
+                "name": "Celebrity",
+                "cp_category": "e",
+                "qcode": "66",
+                "is_active": true
+            },
+            {
+                "name": "Film - General",
+                "cp_category": "e",
+                "qcode": "67",
+                "is_active": true
+            },
+            {
+                "name": "Film - Releases",
+                "cp_category": "e",
+                "qcode": "68",
+                "is_active": true
+            },
+            {
+                "name": "Music - Album Releases",
+                "cp_category": "e",
+                "qcode": "73",
+                "is_active": true
+            },
+            {
+                "name": "Music - General",
+                "cp_category": "e",
+                "qcode": "70",
+                "is_active": true
+            },
+            {
+                "name": "Music - Gigs & Festivals",
+                "cp_category": "e",
+                "qcode": "71",
+                "is_active": true
+            },
+            {
+                "name": "TV / Radio / Online",
+                "cp_category": "e",
+                "qcode": "77",
+                "is_active": true
+            },
+            {
+                "name": "Advertising, Marketing & Design",
+                "cp_category": "b",
+                "qcode": "24",
+                "is_active": true
+            },
+            {
+                "name": "Aerospace & Defence",
+                "cp_category": "b",
+                "qcode": "25",
+                "is_active": true
+            },
+            {
+                "name": "Banking",
+                "cp_category": "b",
+                "qcode": "159",
+                "is_active": true
+            },
+            {
+                "name": "Business Services",
+                "cp_category": "b",
+                "qcode": "51",
+                "is_active": true
+            },
+            {
+                "name": "Chemicals",
+                "cp_category": "b",
+                "qcode": "26",
+                "is_active": true
+            },
+            {
+                "name": "Construction Materials",
+                "cp_category": "b",
+                "qcode": "27",
+                "is_active": true
+            },
+            {
+                "name": "Construction, Engineering & Machinery",
+                "cp_category": "b",
+                "qcode": "28",
+                "is_active": true
+            },
+            {
+                "name": "Distributors",
+                "cp_category": "b",
+                "qcode": "30",
+                "is_active": true
+            },
+            {
+                "name": "Diversified Industries",
+                "cp_category": "b",
+                "qcode": "31",
+                "is_active": true
+            },
+            {
+                "name": "Electrical & Electronic Equipment",
+                "cp_category": "b",
+                "qcode": "32",
+                "is_active": true
+            },
+            {
+                "name": "Energy",
+                "cp_category": "b",
+                "qcode": "56",
+                "is_active": true
+            },
+            {
+                "name": "Finance General",
+                "cp_category": "b",
+                "qcode": "35",
+                "is_active": true
+            },
+            {
+                "name": "Food & Drug Retailers",
+                "cp_category": "b",
+                "qcode": "36",
+                "is_active": true
+            },
+            {
+                "name": "Food, Drink & Tobacco",
+                "cp_category": "b",
+                "qcode": "37",
+                "is_active": true
+            },
+            {
+                "name": "Forestry & Paper",
+                "cp_category": "b",
+                "qcode": "38",
+                "is_active": true
+            },
+            {
+                "name": "General Retailers",
+                "cp_category": "b",
+                "qcode": "49",
+                "is_active": true
+            },
+            {
+                "name": "Health Business",
+                "cp_category": "b",
+                "qcode": "39",
+                "is_active": true
+            },
+            {
+                "name": "Household & Personal Goods",
+                "cp_category": "b",
+                "qcode": "40",
+                "is_active": true
+            },
+            {
+                "name": "Insurance",
+                "cp_category": "b",
+                "qcode": "160",
+                "is_active": true
+            },
+            {
+                "name": "Leisure & Hospitality",
+                "cp_category": "b",
+                "qcode": "42",
+                "is_active": true
+            },
+            {
+                "name": "Media, Printing & Photography",
+                "cp_category": "b",
+                "qcode": "44",
+                "is_active": true
+            },
+            {
+                "name": "Mining & Metals",
+                "cp_category": "b",
+                "qcode": "45",
+                "is_active": true
+            },
+            {
+                "name": "Packaging",
+                "cp_category": "b",
+                "qcode": "46",
+                "is_active": true
+            },
+            {
+                "name": "Pharmaceuticals & Bio-tech",
+                "cp_category": "b",
+                "qcode": "47",
+                "is_active": true
+            },
+            {
+                "name": "Real Estate",
+                "cp_category": "b",
+                "qcode": "48",
+                "is_active": true
+            },
+            {
+                "name": "Tech - Hardware",
+                "cp_category": "b",
+                "qcode": "41",
+                "is_active": true
+            },
+            {
+                "name": "Tech - Internet, software & new media",
+                "cp_category": "b",
+                "qcode": "50",
+                "is_active": true
+            },
+            {
+                "name": "Telecommunication Services",
+                "cp_category": "b",
+                "qcode": "52",
+                "is_active": true
+            },
+            {
+                "name": "Transportation & Shipping",
+                "cp_category": "b",
+                "qcode": "53",
+                "is_active": true
+            },
+            {
+                "name": "Utilities",
+                "cp_category": "b",
+                "qcode": "54",
+                "is_active": true
+            },
+            {
+                "name": "Vehicles & Components",
+                "cp_category": "b",
+                "qcode": "55",
+                "is_active": true
+            },
+            {
+                "name": "Conflict / Terrorism / Security",
+                "cp_category": "w",
+                "qcode": "133",
+                "is_active": true
+            },
+            {
+                "name": "International News",
+                "cp_category": "w",
+                "qcode": "18",
+                "is_active": true
+            },
+            {
+                "name": "Politics Global",
+                "cp_category": "w",
+                "qcode": "233",
+                "is_active": true
+            },
+            {
+                "name": "Agriculture / Farming",
+                "cp_category": "g",
+                "qcode": "136",
+                "is_active": true
+            },
+            {
+                "name": "Disability",
+                "cp_category": "g",
+                "qcode": "216",
+                "is_active": true
+            },
+            {
+                "name": "Diversity and Discrimination",
+                "cp_category": "g",
+                "qcode": "192",
+                "is_active": true
+            },
+            {
+                "name": "Environment & Conservation",
+                "cp_category": "g",
+                "qcode": "20",
+                "is_active": true
+            },
+            {
+                "name": "Housing",
+                "cp_category": "g",
+                "qcode": "208",
+                "is_active": true
+            },
+            {
+                "name": "Indigeneous Peoples",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "NGOs, Charities & Pressure Groups",
+                "cp_category": "g",
+                "qcode": "140",
+                "is_active": true
+            },
+            {
+                "name": "Rural & Countryside",
+                "cp_category": "g",
+                "qcode": "143",
+                "is_active": true
+            },
+            {
+                "name": "Social Issues",
+                "cp_category": "g",
+                "qcode": "144",
+                "is_active": true
+            },
+            {
+                "name": "Key Events for the Month",
+                "cp_category": "w",
+                "qcode": "235",
+                "is_active": true
+            },
+            {
+                "name": "Canadian National Statistics",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Courts",
+                "cp_category": "g",
+                "qcode": "60",
+                "is_active": true
+            },
+            {
+                "name": "Education",
+                "cp_category": "g",
+                "qcode": "87",
+                "is_active": true
+            },
+            {
+                "name": "Health News",
+                "cp_category": "g",
+                "qcode": "62",
+                "is_active": true
+            },
+            {
+                "name": "Reports & Surveys",
+                "cp_category": "g",
+                "qcode": "134",
+                "is_active": true
+            },
+            {
+                "name": "Royals & Society",
+                "cp_category": "g",
+                "qcode": "114",
+                "is_active": true
+            },
+            {
+                "name": "Science",
+                "cp_category": "g",
+                "qcode": "135",
+                "is_active": true
+            },
+            {
+                "name": "Transport News",
+                "cp_category": "g",
+                "qcode": "210",
+                "is_active": true
+            },
+            {
+                "name": "Unions & Employment",
+                "cp_category": "g",
+                "qcode": "131",
+                "is_active": true
+            },
+            {
+                "name": "Business Headlines",
+                "cp_category": "b",
+                "qcode": "163",
+                "is_active": true
+            },
+            {
+                "name": "Business Top Stories",
+                "cp_category": "b",
+                "qcode": "58",
+                "is_active": true
+            },
+            {
+                "name": "Entertainment Headlines",
+                "cp_category": "e",
+                "qcode": "164",
+                "is_active": true
+            },
+            {
+                "name": "Entertainment Top Stories",
+                "cp_category": "e",
+                "qcode": "205",
+                "is_active": true
+            },
+            {
+                "name": "International Business News",
+                "cp_category": "b",
+                "qcode": "185",
+                "is_active": true
+            },
+            {
+                "name": "Lifestyle Headlines",
+                "cp_category": "l",
+                "qcode": "165",
+                "is_active": true
+            },
+            {
+                "name": "Lifestyle Top Stories",
+                "cp_category": "l",
+                "qcode": "206",
+                "is_active": true
+            },
+            {
+                "name": "News Headlines",
+                "cp_category": "w",
+                "qcode": "162",
+                "is_active": true
+            },
+            {
+                "name": "News Top Stories",
+                "cp_category": "w",
+                "qcode": "138",
+                "is_active": true
+            },
+            {
+                "name": "Anniversaries",
+                "cp_category": "w",
+                "qcode": "61",
+                "is_active": true
+            },
+            {
+                "name": "Awards",
+                "cp_category": "w",
+                "qcode": "99",
+                "is_active": true
+            },
+            {
+                "name": "Awareness Days & Campaigns",
+                "cp_category": "w",
+                "qcode": "98",
+                "is_active": true
+            },
+            {
+                "name": "Birthdays",
+                "cp_category": "w",
+                "qcode": "81",
+                "is_active": true
+            },
+            {
+                "name": "Media News & PR",
+                "cp_category": "w",
+                "qcode": "82",
+                "is_active": true
+            },
+            {
+                "name": "Offbeat",
+                "cp_category": "w",
+                "qcode": "59",
+                "is_active": true
+            },
+            {
+                "name": "Canadian Elections",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Canadian National Politics",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Canadian Provincial Politics",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Legislation, Regulations & Directives",
+                "cp_category": "g",
+                "qcode": "155",
+                "is_active": true
+            },
+            {
+                "name": "Parliamentary Committees",
+                "cp_category": "g",
+                "qcode": "[New for CP]",
+                "is_active": true
+            },
+            {
+                "name": "Think Tanks",
+                "cp_category": "g",
+                "qcode": "145",
+                "is_active": true
+            },
+            {
+                "name": "Olympics",
+                "cp_category": "s",
+                "qcode": "183",
+                "is_active": true
+            },
+            {
+                "name": "Sport Fixtures",
+                "cp_category": "s",
+                "qcode": "22",
+                "is_active": true
+            },
+            {
+                "name": "Sport News / Business",
+                "cp_category": "s",
+                "qcode": "229",
+                "is_active": true
+            },
+            {
+                "name": "Art",
+                "cp_category": "e",
+                "qcode": "75",
+                "is_active": true
+            },
+            {
+                "name": "Auctions",
+                "cp_category": "e",
+                "qcode": "193",
+                "is_active": true
+            },
+            {
+                "name": "Comedy",
+                "cp_category": "e",
+                "qcode": "132",
+                "is_active": true
+            },
+            {
+                "name": "Dance",
+                "cp_category": "e",
+                "qcode": "76",
+                "is_active": true
+            },
+            {
+                "name": "Home & Garden",
+                "cp_category": "l",
+                "qcode": "107",
+                "is_active": true
+            },
+            {
+                "name": "Index revisions & financial market events",
+                "cp_category": "b",
+                "qcode": "200",
+                "is_active": true
+            },
+            {
+                "name": "Law & Order",
+                "cp_category": "g",
+                "qcode": "88",
+                "is_active": true
+            },
+            {
+                "name": "Luxury Goods / Brands",
+                "cp_category": "l",
+                "qcode": "111",
+                "is_active": true
+            },
+            {
+                "name": "Motoring",
+                "cp_category": "l",
+                "qcode": "103",
+                "is_active": true
+            },
+            {
+                "name": "Music - Classical",
+                "cp_category": "e",
+                "qcode": "74",
+                "is_active": true
+            },
+            {
+                "name": "Nightlife",
+                "cp_category": "l",
+                "qcode": "148",
+                "is_active": true
+            },
+            {
+                "name": "Parliamentary Committees UK",
+                "cp_category": "w",
+                "qcode": "84",
+                "is_active": true
+            },
+            {
+                "name": "Politics Devolved",
+                "cp_category": "w",
+                "qcode": "85",
+                "is_active": true
+            },
+            {
+                "name": "Politics EU",
+                "cp_category": "w",
+                "qcode": "86",
+                "is_active": true
+            },
+            {
+                "name": "Politics Westminster",
+                "cp_category": "w",
+                "qcode": "83",
+                "is_active": true
+            },
+            {
+                "name": "Press Previews",
+                "cp_category": "g",
+                "qcode": "161",
+                "is_active": true
+            },
+            {
+                "name": "Product Launches",
+                "cp_category": "b",
+                "qcode": "110",
+                "is_active": true
+            },
+            {
+                "name": "Retail Therapy",
+                "cp_category": "l",
+                "qcode": "149",
+                "is_active": true
+            },
+            {
+                "name": "Theatre",
+                "cp_category": "e",
+                "qcode": "78",
+                "is_active": true
+            },
+            {
+                "name": "Toys & Games",
+                "cp_category": "l",
+                "qcode": "150",
+                "is_active": true
+            },
+            {
+                "name": "UK Economy",
+                "cp_category": "b",
+                "qcode": "209",
+                "is_active": true
+            },
+            {
+                "name": "UK National Statistics",
+                "cp_category": "w",
+                "qcode": "113",
+                "is_active": true
+            },
+            {
+                "name": "Video Games",
+                "cp_category": "l",
+                "qcode": "69",
+                "is_active": true
+            },
+            {
+                "name": "Wining & Dining",
+                "cp_category": "l",
+                "qcode": "106",
+                "is_active": true
+            }
+        ]
     }
 ]
