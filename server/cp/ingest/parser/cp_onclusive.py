@@ -27,15 +27,22 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
             category = []
             if item.get("subject"):
                 for subject in item.get("subject"):
-                    onclusive_category = self.is_exist(
-                        onclusive_cv_items, subject["qcode"]
-                    )
-                    if onclusive_category:
-                        anpa_category = self.is_exist(
-                            anpa_categories, onclusive_category["cp_category"]
+                    if subject["scheme"] == "onclusive_categories":
+                        onclusive_category = self.is_exist(
+                            onclusive_cv_items, subject["qcode"]
                         )
-                        if anpa_category:
-                            category.append(anpa_category)
+                        if onclusive_category:
+                            anpa_category = self.is_exist(
+                                anpa_categories, onclusive_category["cp_category"]
+                            )
+                            if anpa_category:
+                                category.append(
+                                    {
+                                        "name": anpa_category["name"],
+                                        "qcode": anpa_category["qcode"],
+                                        "translations": anpa_category["translations"],
+                                    }
+                                )
 
             # remove duplicates
             item["anpa_category"] = [

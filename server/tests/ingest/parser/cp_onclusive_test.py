@@ -74,13 +74,11 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 ]
                 expected_subjects.sort(key=lambda i: i["name"])
                 self.assertEqual(item["subject"], expected_subjects)
-
                 item["anpa_category"].sort(key=lambda i: i["name"])
                 expected_categories = [
                     {
                         "name": "National",
                         "qcode": "g",
-                        "is_active": True,
                         "translations": {
                             "name": {
                                 "en-CA": "National",
@@ -91,7 +89,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     {
                         "name": "International",
                         "qcode": "w",
-                        "is_active": True,
                         "translations": {
                             "name": {"en-CA": "International", "fr-CA": "International"}
                         },
@@ -99,17 +96,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     {
                         "name": "Business",
                         "qcode": "b",
-                        "is_active": True,
                         "translations": {
                             "name": {"en-CA": "Business", "fr-CA": "Affaires"}
-                        },
-                    },
-                    {
-                        "name": "Lifestyle",
-                        "qcode": "l",
-                        "is_active": True,
-                        "translations": {
-                            "name": {"en-CA": "Lifestyle", "fr-CA": "Documentaires"}
                         },
                     },
                 ]
