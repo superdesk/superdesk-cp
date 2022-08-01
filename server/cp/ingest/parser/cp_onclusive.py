@@ -1,3 +1,4 @@
+import itertools
 from planning.feed_parsers.onclusive import OnclusiveFeedParser
 from typing import List
 from superdesk import get_resource_service
@@ -36,7 +37,13 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                         if anpa_category:
                             category.append(anpa_category)
 
-            item["anpa_category"] = category
+            # remove duplicates
+            item["anpa_category"] = [
+                dict(i)
+                for i, _ in itertools.groupby(
+                    sorted(category, key=lambda k: k["qcode"])
+                )
+            ]
             self.event.append(item)
         return self.event
 
