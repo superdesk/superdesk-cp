@@ -28,11 +28,11 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
             if item.get("subject"):
                 for subject in item.get("subject"):
                     if subject["scheme"] == "onclusive_categories":
-                        onclusive_category = self.is_exist(
+                        onclusive_category = self.find_cv_item(
                             onclusive_cv_items, subject["qcode"]
                         )
                         if onclusive_category:
-                            anpa_category = self.is_exist(
+                            anpa_category = self.find_cv_item(
                                 anpa_categories, onclusive_category["cp_category"]
                             )
                             if anpa_category:
@@ -54,9 +54,9 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
             self.event.append(item)
         return self.event
 
-    def is_exist(self, cv_items, qcode):
+    def find_cv_item(self, cv_items, qcode):
         """
-        Check the item is exist in the cv.
+        Find item in the cv.
         """
         for item in cv_items:
             if item["qcode"] == qcode:
