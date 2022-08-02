@@ -22,7 +22,7 @@ with open(get_fixture_path("cp_onclusive.json", "cp_onclusive")) as fp:
 
 class OnclusiveFeedParserTestCase(ParserTestCase):
     parser = CPOnclusiveFeedParser()
-    provider = {}
+    provider = "Test_CP_Onclusive"
     app = flask.Flask(__name__)
 
     def test_content(self):
