@@ -24979,483 +24979,483 @@
       ]
    },
    {
-      "_id": "event_types",
-      "display_name": "Onclusive Events Types",
+      "_id": "CP_event_types",
+      "display_name": "CP Events Types",
       "type": "manageable",
       "selection_type": "multi selection",
       "unique_field": "event_name",
       "items": [
          {
-            "event_name": "1H (Interims)",
-            "defination": "Half year ended financial results "
+            "name": "1H (Interims)",
+            "qcode": "1h (interims)"
          },
          {
-            "event_name": "AGM/EGM/Shareholder meeting",
-            "defination": "Shareholder meetings held for approving annual, extrodinary or special resolutions"
+            "name": "AGM/EGM/Shareholder meeting",
+            "qcode": "agm/egm/shareholder meeting"
          },
          {
-            "event_name": "AGM/EGM/Shareholder meeting conference call",
-            "defination": "Conference calls re shareholder meetings held for approving annual, extrodinary or special resolutions"
+            "name": "AGM/EGM/Shareholder meeting conference call",
+            "qcode": "agm/egm/shareholder meeting conference call"
          },
          {
-            "event_name": "Analyst/Investor meeting conference call",
-            "defination": "Conference calls held for analysts and investors"
+            "name": "Analyst/Investor meeting conference call",
+            "qcode": "analyst/investor meeting conference call"
          },
          {
-            "event_name": "Analyst/Investor meeting/Webcast",
-            "defination": "Meetings/webcast held for analysts and investors"
+            "name": "Analyst/Investor meeting/Webcast",
+            "qcode": "analyst/investor meeting/webcast"
          },
          {
-            "event_name": "Anniversaries",
-            "defination": "An actual anniversary or events relating to an anniversary, plus events celebrating a significant year, eg. 10th annual festival"
+            "name": "Anniversaries",
+            "qcode": "anniversaries"
          },
          {
-            "event_name": "Artificial Intelligence",
-            "defination": "Event and issues relating to machine learning and advanced autonomy. Relevant to robotics, driverless cars, military AI including drones and weapons systems, and where applicable in health/biotech"
+            "name": "Artificial Intelligence",
+            "qcode": "artificial intelligence"
          },
          {
-            "event_name": "Awards",
-            "defination": "Items with awards presentation, in the nomination process, and referencing awards"
+            "name": "Awards",
+            "qcode": "awards"
          },
          {
-            "event_name": "Awareness Days",
-            "defination": "Events related to a specific awareness campaign"
+            "name": "Awareness Days",
+            "qcode": "awareness days"
          },
          {
-            "event_name": "Bond Auctions",
-            "defination": "CDS Credit Event Auctions to settle credit derivative trades"
+            "name": "Bond Auctions",
+            "qcode": "bond auctions"
          },
          {
-            "event_name": "Brexit",
-            "defination": "Brexit news and events related to the UK's exit from the EU following the June 2016 referendum"
+            "name": "Brexit",
+            "qcode": "brexit"
          },
          {
-            "event_name": "Broadcast",
-            "defination": "Used to signify a TV/radio broadcast on the day in question"
+            "name": "Broadcast",
+            "qcode": "broadcast"
          },
          {
-            "event_name": "Broker Conferences",
-            "defination": "Invitation-only investor conferences and events organised by leading investment banks"
+            "name": "Broker Conferences",
+            "qcode": "broker conferences"
          },
          {
-            "event_name": "Capital Markets Day",
-            "defination": "Events hosted to update company equity and debt"
+            "name": "Capital Markets Day",
+            "qcode": "capital markets day"
          },
          {
-            "event_name": "Celebrity",
-            "defination": "Celebrity appearances and events with a focus on celebrity"
+            "name": "Celebrity",
+            "qcode": "celebrity"
          },
          {
-            "event_name": "Children (0-12 years)",
-            "defination": "Events and issues of specific interest or relevance to children aged 0-12"
+            "name": "Children (0-12 years)",
+            "qcode": "children (0-12 years)"
          },
          {
-            "event_name": "Consultations",
-            "defination": "Regulatory process seeking input from the public or interested parties on specific matters affecting them"
+            "name": "Consultations",
+            "qcode": "consultations"
          },
          {
-            "event_name": "Consumer Exhibitions",
-            "defination": "Exhibitions and fairs that are open to the public"
+            "name": "Consumer Exhibitions",
+            "qcode": "consumer exhibitions"
          },
          {
-            "event_name": "Consumer/General Conferences",
-            "defination": "Conferences that are open to the public"
+            "name": "Consumer/General Conferences",
+            "qcode": "consumer/general conferences"
          },
          {
-            "event_name": "Courts - Appeals",
-            "defination": "Hearings at appeals courts and supreme courts"
+            "name": "Courts - Appeals",
+            "qcode": "courts - appeals"
          },
          {
-            "event_name": "Courts - Civil",
-            "defination": "Court hearings that do not involve criminal matters"
+            "name": "Courts - Civil",
+            "qcode": "courts - civil"
          },
          {
-            "event_name": "Courts - Corporate",
-            "defination": "Court hearings involving or affecting businesses"
+            "name": "Courts - Corporate",
+            "qcode": "courts - corporate"
          },
          {
-            "event_name": "Courts - Crime",
-            "defination": "Court hearings on matters of criminal law"
+            "name": "Courts - Crime",
+            "qcode": "courts - crime"
          },
          {
-            "event_name": "C-suite Events",
-            "defination": "Events for high profile executives such as CEOs and CFOs"
+            "name": "C-suite Events",
+            "qcode": "c-suite events"
          },
          {
-            "event_name": "Cyber Security and Fraud",
-            "defination": "Events or issues relating to cyber security and fraud"
+            "name": "Cyber Security and Fraud",
+            "qcode": "cyber security and fraud"
          },
          {
-            "event_name": "Davos",
-            "defination": "News and events related to the World Economic Forum in Davos, Swizerland"
+            "name": "Davos",
+            "qcode": "davos"
          },
          {
-            "event_name": "Devolved Politics",
-            "defination": "Devolved politics covering the Scottish Parliament and the Welsh, Northern Ireland and London Assemblies"
+            "name": "Devolved Politics",
+            "qcode": "devolved politics"
          },
          {
-            "event_name": "Disability",
-            "defination": "Events and issues relating to or of interest to disabled people"
+            "name": "Disability",
+            "qcode": "disability"
          },
          {
-            "event_name": "Diversity and Discrimination",
-            "defination": "News and events related to diversity and discrimination, covering race, religion, gender, sexuality, disability, and age"
+            "name": "Diversity and Discrimination",
+            "qcode": "diversity and discrimination"
          },
          {
-            "event_name": "Drug Use",
-            "defination": "News and events ralating to narcotic and recreataional drug use and abuse, both legal and illegal"
+            "name": "Drug Use",
+            "qcode": "drug use"
          },
          {
-            "event_name": "Earnings conference call/Webcast-investor/Analyst",
-            "defination": "Conference call for analysts and investors, hosted to update financial results "
+            "name": "Earnings conference call/Webcast-investor/Analyst",
+            "qcode": "earnings conference call/webcast-investor/analyst"
          },
          {
-            "event_name": "Earnings conference call/Webcast-press",
-            "defination": "Conference call for press, hosted to update financial results "
+            "name": "Earnings conference call/Webcast-press",
+            "qcode": "earnings conference call/webcast-press"
          },
          {
-            "event_name": "Election",
-            "defination": "Actual elections, rather than discussion about elections"
+            "name": "Election",
+            "qcode": "election"
          },
          {
-            "event_name": "Embargoed Content",
-            "defination": "Any event or press release with an embargo"
+            "name": "Embargoed Content",
+            "qcode": "embargoed content"
          },
          {
-            "event_name": "European State bank interest rates",
-            "defination": "European Central banks interest rates announcements"
+            "name": "European State bank interest rates",
+            "qcode": "european state bank interest rates"
          },
          {
-            "event_name": "Executive Board Changes",
-            "defination": "Directorate changes at publicly listed companies, covering senior positions such as Chairman, CEO, and CFO"
+            "name": "Executive Board Changes",
+            "qcode": "executive board changes"
          },
          {
-            "event_name": "FIFA World Cup",
-            "defination": "Events or issues relating to the FIFA World Cup"
+            "name": "FIFA World Cup",
+            "qcode": "fifa world cup"
          },
          {
-            "event_name": "Final Dividend Payment Date",
-            "defination": "Dividend payment date for declared full year dividend"
+            "name": "Final Dividend Payment Date",
+            "qcode": "final dividend payment date"
          },
          {
-            "event_name": "Final ex-dividend date",
-            "defination": "The last date on dividend to be entitled to receive for full year dividend payment"
+            "name": "Final ex-dividend date",
+            "qcode": "final ex-dividend date"
          },
          {
-            "event_name": "Financial Outlook/Forecast",
-            "defination": "Financial releases outlining forecasts and outlook"
+            "name": "Financial Outlook/Forecast",
+            "qcode": "financial outlook/forecast"
          },
          {
-            "event_name": "First Show",
-            "defination": "The first performance of a music tour or theatre production"
+            "name": "First Show",
+            "qcode": "first show"
          },
          {
-            "event_name": "Foreign Dignitary Visit",
-            "defination": "Events involving international trips by national leaders/heads of state and govt/finance ministers, foreign ministers, senior royals, and some significant economic figures (used with Politics Global cat) * SEE SEPARATE SHEET"
+            "name": "Foreign Dignitary Visit",
+            "qcode": "foreign dignitary visit"
          },
          {
-            "event_name": "Full Year Earnings",
-            "defination": "Full year ended financial results"
+            "name": "Full Year Earnings",
+            "qcode": "full year earnings"
          },
          {
-            "event_name": "Full year prelims",
-            "defination": "Preliminary full year results released before annual/final audited results"
+            "name": "Full year prelims",
+            "qcode": "full year prelims"
          },
          {
-            "event_name": "Gigs",
-            "defination": "All gigs and tours, but not music festivals"
+            "name": "Gigs",
+            "qcode": "gigs"
          },
          {
-            "event_name": "Green",
-            "defination": "Events or issues relating to the environment, climate change, sustainability, and energy"
+            "name": "Green",
+            "qcode": "green"
          },
          {
-            "event_name": "Highlights & Top Events",
-            "defination": "The top events of the day within a given category"
+            "name": "Highlights & Top Events",
+            "qcode": "highlights & top events"
          },
          {
-            "event_name": "Historical",
-            "defination": "Events with a specific historical focus, and anniversaries of 10 years or more (the 10 year rule only applies to anniversaries. Other historical content is based on context rather than age) "
+            "name": "Historical",
+            "qcode": "historical"
          },
          {
-            "event_name": "Holidays & Festivals",
-            "defination": "Religious and seasonal celebrations. To be used for the specific holiday itself (eg Christmas Day, Halloween) not events related to them (eg pantos, parties)"
+            "name": "Holidays & Festivals",
+            "qcode": "holidays & festivals"
          },
          {
-            "event_name": "Human Resources",
-            "defination": "HR-related news and events"
+            "name": "Human Resources",
+            "qcode": "human resources"
          },
          {
-            "event_name": "Humanitarian Issues",
-            "defination": "Events or issues relating to human suffering as a result of conflict, crisis, poverty, displacement, global health threats etc"
+            "name": "Humanitarian Issues",
+            "qcode": "humanitarian issues"
          },
          {
-            "event_name": "Interim Dividend Payment Date",
-            "defination": "Half year or periodical dividend payment date"
+            "name": "Interim Dividend Payment Date",
+            "qcode": "interim dividend payment date"
          },
          {
-            "event_name": "Interim ex-dividend date",
-            "defination": "The last date on dividend to be entitled to receive for Half year or periodical dividend"
+            "name": "Interim ex-dividend date",
+            "qcode": "interim ex-dividend date"
          },
          {
-            "event_name": "International Development",
-            "defination": "Relating to conditions in developing countries, including poverty, foreign aid and the role of donor countries"
+            "name": "International Development",
+            "qcode": "international development"
          },
          {
-            "event_name": "IPO - Admission of dealing",
-            "defination": "First day of dealings in shares on the stock exchange following a company’s Initial Public Offering"
+            "name": "IPO - Admission of dealing",
+            "qcode": "ipo - admission of dealing"
          },
          {
-            "event_name": "IPO - Final pricing",
-            "defination": "A company announces the final pricing of its Initial Public Offering"
+            "name": "IPO - Final pricing",
+            "qcode": "ipo - final pricing"
          },
          {
-            "event_name": "IPO - Initial pricing",
-            "defination": "A company announces the initial price range of its Initial Public Offering"
+            "name": "IPO - Initial pricing",
+            "qcode": "ipo - initial pricing"
          },
          {
-            "event_name": "Legislation",
-            "defination": "Events or issues relating to official legislation (used with Legislation, Regulations, Executive Orders Cat)"
+            "name": "Legislation",
+            "qcode": "legislation"
          },
          {
-            "event_name": "Local Government",
-            "defination": "Events or issues relating to the actions of local councils"
+            "name": "Local Government",
+            "qcode": "local government"
          },
          {
-            "event_name": "M&A - Date of last day of listing",
-            "defination": "The last day that a company is listed following a merger or acquisition"
+            "name": "M&A - Date of last day of listing",
+            "qcode": "m&a - date of last day of listing"
          },
          {
-            "event_name": "M&A - Date of merger completion",
-            "defination": "Date in which the merger or acquisition transaction is completed"
+            "name": "M&A - Date of merger completion",
+            "qcode": "m&a - date of merger completion"
          },
          {
-            "event_name": "M&A - Date of Tender offer shares expiration",
-            "defination": "The last day shareholders can accept a merger or acquisition offer"
+            "name": "M&A - Date of Tender offer shares expiration",
+            "qcode": "m&a - date of tender offer shares expiration"
          },
          {
-            "event_name": "Men's Interest",
-            "defination": "Issues and events of specific interest or relevance to men e.g. fashion shows with a major focus on men's fashions/men's awards/male diseases/beards"
+            "name": "Men's Interest",
+            "qcode": "men's interest"
          },
          {
-            "event_name": "Mid-quarter guidance & update calls",
-            "defination": "Conference calls for financial guidance or updates released in between their periodical reporting"
+            "name": "Mid-quarter guidance & update calls",
+            "qcode": "mid-quarter guidance & update calls"
          },
          {
-            "event_name": "Mid-quarter update/guidance",
-            "defination": "Any  financial guidance or updates released in between their periodical reporting"
+            "name": "Mid-quarter update/guidance",
+            "qcode": "mid-quarter update/guidance"
          },
          {
-            "event_name": "Monthly statistics",
-            "defination": "Statements released by companies on a monthly basis which can be on their trading, sales, traffic figure, production volumes or activity reports"
+            "name": "Monthly statistics",
+            "qcode": "monthly statistics"
          },
          {
-            "event_name": "Music Festivals",
-            "defination": "Multi-artist music festivals, but not one-off gigs/tours"
+            "name": "Music Festivals",
+            "qcode": "music festivals"
          },
          {
-            "event_name": "NGO's, Charities & Pressure Groups",
-            "defination": "Events or issues relating to a charity, non-governmental organisation, or single-issue group (used with cat of same name)"
+            "name": "NGO's, Charities & Pressure Groups",
+            "qcode": "ngo's, charities & pressure groups"
          },
          {
-            "event_name": "Olympics",
-            "defination": "Events or issues relating to the Olympics"
+            "name": "Olympics",
+            "qcode": "olympics"
          },
          {
-            "event_name": "Over 50s",
-            "defination": "Issues and events of specific interest or relevance to those over the age of 50"
+            "name": "Over 50s",
+            "qcode": "over 50s"
          },
          {
-            "event_name": "Parties & Balls",
-            "defination": "Used for award launch parties, annual balls, a celebrity booze up"
+            "name": "Parties & Balls",
+            "qcode": "parties & balls"
          },
          {
-            "event_name": "Party Conference",
-            "defination": "Political party conference listings"
+            "name": "Party Conference",
+            "qcode": "party conference"
          },
          {
-            "event_name": "Political Conventions",
-            "defination": "Events or press releases relating to a Political Party Convention"
+            "name": "Political Conventions",
+            "qcode": "political conventions"
          },
          {
-            "event_name": "Political Fringe Event",
-            "defination": "Events held on the fringes of political party conferences"
+            "name": "Political Fringe Event",
+            "qcode": "political fringe event"
          },
          {
-            "event_name": "Politics",
-            "defination": "Political events or issues"
+            "name": "Politics",
+            "qcode": "politics"
          },
          {
-            "event_name": "Premieres",
-            "defination": "Used to indicate film premieres, both individual and at festivals, but can also be applied to theatre / classical music / dance premieres"
+            "name": "Premieres",
+            "qcode": "premieres"
          },
          {
-            "event_name": "Press conference",
-            "defination": "Events with a press conference"
+            "name": "Press conference",
+            "qcode": "press conference"
          },
          {
-            "event_name": "Press Preview",
-            "defination": "Press performances or previews of art exhibitions, museum displays and theatre productions"
+            "name": "Press Preview",
+            "qcode": "press preview"
          },
          {
-            "event_name": "Product Launches",
-            "defination": "Events that include the launch of a new retail product"
+            "name": "Product Launches",
+            "qcode": "product launches"
          },
          {
-            "event_name": "Public Sector Conferences",
-            "defination": "Conferences targeted at a government audience"
+            "name": "Public Sector Conferences",
+            "qcode": "public sector conferences"
          },
          {
-            "event_name": "Public Sector Exhibitions",
-            "defination": "Exhibtions targeted at a government audience"
+            "name": "Public Sector Exhibitions",
+            "qcode": "public sector exhibitions"
          },
          {
-            "event_name": "Protests/Rallies",
-            "defination": "Events protesting or rallying for/against an issue"
+            "name": "Protests/Rallies",
+            "qcode": "protests/rallies"
          },
          {
-            "event_name": "Q1",
-            "defination": "1st quarterly results (first three months)"
+            "name": "Q1",
+            "qcode": "q1"
          },
          {
-            "event_name": "Q2",
-            "defination": "2nd quarterly results (first six months)"
+            "name": "Q2",
+            "qcode": "q2"
          },
          {
-            "event_name": "Q3",
-            "defination": "3rd quarterly results (first nine months)"
+            "name": "Q3",
+            "qcode": "q3"
          },
          {
-            "event_name": "Q4",
-            "defination": "4th quarterly results (twelve months)"
+            "name": "Q4",
+            "qcode": "q4"
          },
          {
-            "event_name": "Quarterly dividend payment date",
-            "defination": "Dividend payment date for declared quarterly dividend"
+            "name": "Quarterly dividend payment date",
+            "qcode": "quarterly dividend payment date"
          },
          {
-            "event_name": "Quarterly ex-dividend date",
-            "defination": "The last date on dividend to be entitled to receive for quarterly dividend payment"
+            "name": "Quarterly ex-dividend date",
+            "qcode": "quarterly ex-dividend date"
          },
          {
-            "event_name": "Reports & Surveys",
-            "defination": "The release of a report/results/survey/findings"
+            "name": "Reports & Surveys",
+            "qcode": "reports & surveys"
          },
          {
-            "event_name": "Rights issue - End of subscription date",
-            "defination": "End date for Placing of new shares"
+            "name": "Rights issue - End of subscription date",
+            "qcode": "rights issue - end of subscription date"
          },
          {
-            "event_name": "Rights issue - Ratio & Price",
-            "defination": "Ratio and price of new shares to be issued"
+            "name": "Rights issue - Ratio & Price",
+            "qcode": "rights issue - ratio & price"
          },
          {
-            "event_name": "Rights issue - Record date",
-            "defination": "Entitlement date to receive new shares"
+            "name": "Rights issue - Record date",
+            "qcode": "rights issue - record date"
          },
          {
-            "event_name": "Rights issue - Start of subscription date",
-            "defination": "Start date for placing of new shares"
+            "name": "Rights issue - Start of subscription date",
+            "qcode": "rights issue - start of subscription date"
          },
          {
-            "event_name": "Sales/Trading statement conference call/Webcast",
-            "defination": "Conference calls relating to sales or trading releases"
+            "name": "Sales/Trading statement conference call/Webcast",
+            "qcode": "sales/trading statement conference call/webcast"
          },
          {
-            "event_name": "Scottish Interest",
-            "defination": "News, issues, and events in or of interest to Scotland"
+            "name": "Scottish Interest",
+            "qcode": "scottish interest"
          },
          {
-            "event_name": "Seasonal Events & Celebrations",
-            "defination": "Events related to a specific season or seasonal holiday"
+            "name": "Seasonal Events & Celebrations",
+            "qcode": "seasonal events & celebrations"
          },
          {
-            "event_name": "Signing Session",
-            "defination": "Artists signing their work, usually part of a festival or book signing if they are of particular interest"
+            "name": "Signing Session",
+            "qcode": "signing session"
          },
          {
-            "event_name": "SMEs",
-            "defination": "Events or issues relating/of interest to small and medium sized businesses"
+            "name": "SMEs",
+            "qcode": "smes"
          },
          {
-            "event_name": "Social Media",
-            "defination": "Events or issues relating to social media or social media personalities"
+            "name": "Social Media",
+            "qcode": "social media"
          },
          {
-            "event_name": "Society Events",
-            "defination": "Event hosted by Royals or high society, often high profile polo or equestrian events, royal/aristocratic parties"
+            "name": "Society Events",
+            "qcode": "society events"
          },
          {
-            "event_name": "Special Dividend Payment Date",
-            "defination": "Dividend payement date for extrodinary or special dividend declared"
+            "name": "Special Dividend Payment Date",
+            "qcode": "special dividend payment date"
          },
          {
-            "event_name": "Special ex-dividend date",
-            "defination": "The last date on dividend to be entitled to receive for extrodinary or special dividend declared"
+            "name": "Special ex-dividend date",
+            "qcode": "special ex-dividend date"
          },
          {
-            "event_name": "Sponsored Events",
-            "defination": "All events sponsored by a company"
+            "name": "Sponsored Events",
+            "qcode": "sponsored events"
          },
          {
-            "event_name": "Statistics & Economic Indicators",
-            "defination": "Used for Economic Indicators (Key country-by-country weekly, monthly, and quarterly economic data) and UK National Statistics (Data released by the Office for National Statistics, UK Government Departments, and other public bodies)"
+            "name": "Statistics & Economic Indicators",
+            "qcode": "statistics & economic indicators"
          },
          {
-            "event_name": "Stock Split - New Shares Start Trading Date",
-            "defination": "Date of new shares starts trading on exchange"
+            "name": "Stock Split - New Shares Start Trading Date",
+            "qcode": "stock split - new shares start trading date"
          },
          {
-            "event_name": "Stock Split - Payment/Distribution Date",
-            "defination": "Payment or Distribution date of new shares"
+            "name": "Stock Split - Payment/Distribution Date",
+            "qcode": "stock split - payment/distribution date"
          },
          {
-            "event_name": "Stock Split - Record date",
-            "defination": "Entitlement date to receive new shares"
+            "name": "Stock Split - Record date",
+            "qcode": "stock split - record date"
          },
          {
-            "event_name": "Think Tank",
-            "defination": "Think tank news and events"
+            "name": "Think Tank",
+            "qcode": "think tank"
          },
          {
-            "event_name": "CSR / Business Sustainability",
-            "defination": ""
+            "name": "CSR / Business Sustainability",
+            "qcode": "csr / business sustainability"
          },
          {
-            "event_name": "Trade Conferences",
-            "defination": "Responsible business and corporate citizenship covering ethical, social, environmental, and sustainability issues. Business sustainability tries to minimise any negative economic, environmental and social impact, or potentially have a positive impact, on a local or global level"
+            "name": "Trade Conferences",
+            "qcode": "trade conferences"
          },
          {
-            "event_name": "Trade Exhibitions",
-            "defination": "Industry exhibitions for business people, professionals, and members of the trade"
+            "name": "Trade Exhibitions",
+            "qcode": "trade exhibitions"
          },
          {
-            "event_name": "Trading statement",
-            "defination": "Financial releases relating to sales or trading"
+            "name": "Trading statement",
+            "qcode": "trading statement"
          },
          {
-            "event_name": "UK Regional Elections",
-            "defination": "Elections to the Scottish Parliament and Welsh, Northern Ireland and London Assemblies; and to councils and Police and Crime Commissioners around the UK"
+            "name": "UK Regional Elections",
+            "qcode": "uk regional elections"
          },
          {
-            "event_name": "US Election",
-            "defination": "Events or issues relating to U.S. elections"
+            "name": "US Election",
+            "qcode": "us election"
          },
          {
-            "event_name": "US Highlights",
-            "defination": "Any event of major U.S. news interest (key political figures or current news stories)"
+            "name": "US Highlights",
+            "qcode": "us highlights"
          },
          {
-            "event_name": "Women's Interest",
-            "defination": "Events and issues of specific interest or relevance to women e.g. fashion shows with a major focus on women's fashion/women's awards/women's diseases/ladies day events/pageants/awareness days of women's issues/beauty trade events"
+            "name": "Women's Interest",
+            "qcode": "women's interest"
          },
          {
-            "event_name": "World War I",
-            "defination": "Events or issues relating to World War 1"
+            "name": "World War I",
+            "qcode": "world war i"
          },
          {
-            "event_name": "Youth (13-25 years)",
-            "defination": "Events or issues of specific interest or relevance to youth aged 13-25"
+            "name": "Youth (13-25 years)",
+            "qcode": "youth (13-25 years)"
          }
       ]
    }

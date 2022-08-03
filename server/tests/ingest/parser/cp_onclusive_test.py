@@ -71,6 +71,16 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "qcode": "228",
                         "scheme": "onclusive_event_types",
                     },
+                    {
+                        "name": "Trade Conferences",
+                        "qcode": "trade conferences",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Cyber Security and Fraud",
+                        "qcode": "cyber security and fraud",
+                        "scheme": "event_types",
+                    },
                 ]
                 expected_subjects.sort(key=lambda i: i["name"])
                 self.assertEqual(item["subject"], expected_subjects)
@@ -103,25 +113,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 ]
                 expected_categories.sort(key=lambda i: i["name"])
                 self.assertEqual(item["anpa_category"], expected_categories)
-                self.assertEqual(
-                    item["event_types"],
-                    [
-                        {
-                            "event_name": "Cyber Security and Fraud",
-                            "defination": "Events or issues relating to cyber security and fraud",
-                        },
-                        {
-                            "event_name": "Trade Conferences",
-                            "defination": (
-                                "Responsible business and corporate citizenship"
-                                " covering ethical, social, environmental, and sustainability issues."
-                                " Business sustainability tries to minimise any negative economic,"
-                                " environmental and social impact, or potentially have a positive impact"
-                                ", on a local or global level"
-                            ),
-                        },
-                    ],
-                )
                 self.assertEqual(
                     item[GUID_FIELD], "urn:newsml:2021-05-04T21:19:10.2:4112034"
                 )

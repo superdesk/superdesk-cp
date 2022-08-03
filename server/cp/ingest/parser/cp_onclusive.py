@@ -21,7 +21,7 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     def parse(self, content, provider=None):
         onclusive_cv_items = _get_cv_items("onclusive_ingest_categories")
         anpa_categories = _get_cv_items("categories")
-        event_types_cvs = _get_cv_items("event_types")
+        event_types_cvs = _get_cv_items("CP_event_types")
         items = super().parse(content, provider)
 
         for item in items:
@@ -47,11 +47,12 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                 )
                     if subject["scheme"] == "onclusive_event_types":
                         for event_item in event_types_cvs:
-                            if event_item["event_name"] == subject["name"]:
+                            if event_item["name"] == subject["name"]:
                                 eventType.append(
                                     {
-                                        "event_name": event_item["event_name"],
-                                        "defination": event_item["defination"],
+                                        "name": event_item["name"],
+                                        "qcode": event_item["qcode"],
+                                        "scheme": "event_types",
                                     }
                                 )
 
@@ -62,10 +63,10 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                         sorted(category, key=lambda k: k["qcode"])
                     )
                 ]
-                item["event_types"] = [
+                item["subject"] += [
                     dict(i)
                     for i, _ in itertools.groupby(
-                        sorted(eventType, key=lambda k: k["event_name"])
+                        sorted(eventType, key=lambda k: k["qcode"])
                     )
                 ]
             self.event.append(item)
