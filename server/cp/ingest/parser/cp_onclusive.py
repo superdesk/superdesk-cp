@@ -21,10 +21,12 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     def parse(self, content, provider=None):
         onclusive_cv_items = _get_cv_items("onclusive_ingest_categories")
         anpa_categories = _get_cv_items("categories")
+        event_types_cvs = _get_cv_items("event_types")
         items = super().parse(content, provider)
 
         for item in items:
             category = []
+            eventType = []
             if item.get("subject"):
                 for subject in item.get("subject"):
                     if subject["scheme"] == "onclusive_categories":
@@ -43,14 +45,29 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                         "translations": anpa_category["translations"],
                                     }
                                 )
+                    if subject["scheme"] == "onclusive_event_types":
+                        for event_item in event_types_cvs:
+                            if event_item["event_name"] == subject["name"]:
+                                eventType.append(
+                                    {
+                                        "event_name": event_item["event_name"],
+                                        "defination": event_item["defination"],
+                                    }
+                                )
 
-            # remove duplicates
-            item["anpa_category"] = [
-                dict(i)
-                for i, _ in itertools.groupby(
-                    sorted(category, key=lambda k: k["qcode"])
-                )
-            ]
+                # remove duplicates
+                item["anpa_category"] = [
+                    dict(i)
+                    for i, _ in itertools.groupby(
+                        sorted(category, key=lambda k: k["qcode"])
+                    )
+                ]
+                item["event_types"] = [
+                    dict(i)
+                    for i, _ in itertools.groupby(
+                        sorted(eventType, key=lambda k: k["event_name"])
+                    )
+                ]
             self.event.append(item)
         return self.event
 
