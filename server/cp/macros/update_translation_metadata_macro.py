@@ -44,7 +44,9 @@ def set_dateline(item, dateline):
             located["state"] = dateline["state"]
 
         if item.get("dateline", {}).get("text"):
-            item["dateline"]["text"] = format_dateline_to_locmmmddsrc(located, item["dateline"]["date"])
+            item["dateline"]["text"] = format_dateline_to_locmmmddsrc(
+                located, item["dateline"]["date"]
+            )
 
     return item
 
@@ -56,8 +58,7 @@ def get_destination(items, qcode):
 
 
 def set_dateline_for_translation(item):
-    """Set dateline fields required while translation using geoname API
-    """
+    """Set dateline fields required while translation using geoname API"""
     located = item.get("dateline", {}).get("located")
     if located and not located.get("place"):
         try:
@@ -75,7 +76,7 @@ def set_dateline_for_translation(item):
 
             formatted_geoname_item = None
             for item_ in json_data.get("geonames", []):
-                if(
+                if (
                     float(item_["lat"]) == located["location"]["lat"]
                     and float(item_["lng"]) == located["location"]["lon"]
                 ):
@@ -83,21 +84,27 @@ def set_dateline_for_translation(item):
                     break
 
             if formatted_geoname_item:
-                item["dateline"]["located"].update({
-                    "state_code": formatted_geoname_item["state_code"],
-                    "tz": formatted_geoname_item["tz"],
-                    "country_code": formatted_geoname_item["country_code"],
-                    "state": formatted_geoname_item["state"],
-                    "country": formatted_geoname_item["country"],
-                    "code": formatted_geoname_item["code"],
-                    "scheme": formatted_geoname_item["scheme"],
-                    "location": formatted_geoname_item["location"]
-                })
+                item["dateline"]["located"].update(
+                    {
+                        "state_code": formatted_geoname_item["state_code"],
+                        "tz": formatted_geoname_item["tz"],
+                        "country_code": formatted_geoname_item["country_code"],
+                        "state": formatted_geoname_item["state"],
+                        "country": formatted_geoname_item["country"],
+                        "code": formatted_geoname_item["code"],
+                        "scheme": formatted_geoname_item["scheme"],
+                        "location": formatted_geoname_item["location"],
+                    }
+                )
                 # set place key required while translation
                 item["dateline"]["located"]["place"] = formatted_geoname_item
 
         except Exception as e:
-            logger.exception("Unable to translate dateline for {} item: {}".format(item["guid"], str(e)))
+            logger.exception(
+                "Unable to translate dateline for {} item: {}".format(
+                    item["guid"], str(e)
+                )
+            )
             pass
 
 
@@ -109,7 +116,9 @@ def update_translation_metadata_macro(item, **kwargs):
 
     located = item.get("dateline", {}).get("located")
     if located and located.get("place"):
-        dateline = get_resource_service("places_autocomplete").get_place(located["place"]["code"], "fr")
+        dateline = get_resource_service("places_autocomplete").get_place(
+            located["place"]["code"], "fr"
+        )
         item = set_dateline(item, dateline)
 
     if item.get("anpa_take_key"):
@@ -138,7 +147,9 @@ def update_translation_metadata_macro(item, **kwargs):
     ]
 
     # Check if destination is present.
-    destination_present = any(subject for subject in subjects if subject.get("scheme") == "destinations")
+    destination_present = any(
+        subject for subject in subjects if subject.get("scheme") == "destinations"
+    )
 
     destinations = [
         cv_item for cv_item in cv["items"] if cv_item.get("qcode") in destination_qcodes
@@ -165,11 +176,13 @@ def update_translation_metadata_macro(item, **kwargs):
     else:
         destination = get_destination(destinations, "sfstf")
 
-        subjects.append({
-            "name": destination["name"],
-            "qcode": destination["qcode"],
-            "scheme": "destinations",
-        })
+        subjects.append(
+            {
+                "name": destination["name"],
+                "qcode": destination["qcode"],
+                "scheme": "destinations",
+            }
+        )
 
     item["subject"] = subjects
 
