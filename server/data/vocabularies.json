@@ -24979,483 +24979,80 @@
       ]
    },
    {
-      "_id": "CP_event_types",
-      "display_name": "CP Events Types",
+      "_id": "event_types",
+      "display_name": "Events Types",
       "type": "manageable",
       "selection_type": "multi selection",
-      "unique_field": "event_name",
+      "unique_field": "qcode",
       "items": [
          {
-            "name": "1H (Interims)",
-            "qcode": "1h (interims)"
-         },
-         {
-            "name": "AGM/EGM/Shareholder meeting",
-            "qcode": "agm/egm/shareholder meeting"
-         },
-         {
-            "name": "AGM/EGM/Shareholder meeting conference call",
-            "qcode": "agm/egm/shareholder meeting conference call"
-         },
-         {
-            "name": "Analyst/Investor meeting conference call",
-            "qcode": "analyst/investor meeting conference call"
-         },
-         {
-            "name": "Analyst/Investor meeting/Webcast",
-            "qcode": "analyst/investor meeting/webcast"
-         },
-         {
             "name": "Anniversaries",
-            "qcode": "anniversaries"
+            "qcode": "anniversaries",
+            "is_active": true
          },
          {
             "name": "Artificial Intelligence",
-            "qcode": "artificial intelligence"
+            "qcode": "artificial",
+            "is_active": true
          },
          {
             "name": "Awards",
-            "qcode": "awards"
+            "qcode": "awards",
+            "is_active": true
          },
          {
             "name": "Awareness Days",
-            "qcode": "awareness days"
-         },
-         {
-            "name": "Bond Auctions",
-            "qcode": "bond auctions"
+            "qcode": "awareness days",
+            "is_active": true
          },
          {
             "name": "Brexit",
-            "qcode": "brexit"
+            "qcode": "brexit",
+            "is_active": true
          },
          {
             "name": "Broadcast",
-            "qcode": "broadcast"
+            "qcode": "broadcast",
+            "is_active": true
+         }
+      ]
+   },
+   {
+      "_id": "cp_event_types",
+      "display_name": "CP Events Types",
+      "type": "manageable",
+      "selection_type": "multi selection",
+      "unique_field": "qcode",
+      "items": [
+         {
+            "name": "Trade Conferences",
+            "cp_type": "broadcast",
+            "qcode": "trade conferences",
+            "is_active": true
          },
          {
-            "name": "Broker Conferences",
-            "qcode": "broker conferences"
+            "name": "Artificial Intelligence",
+            "cp_type": "artificial",
+            "qcode": "artificial intelligence",
+            "is_active": true
          },
          {
-            "name": "Capital Markets Day",
-            "qcode": "capital markets day"
+            "name": "Awards",
+            "cp_type": "brexit",
+            "qcode": "awards",
+            "is_active": true
          },
          {
-            "name": "Celebrity",
-            "qcode": "celebrity"
-         },
-         {
-            "name": "Children (0-12 years)",
-            "qcode": "children (0-12 years)"
-         },
-         {
-            "name": "Consultations",
-            "qcode": "consultations"
-         },
-         {
-            "name": "Consumer Exhibitions",
-            "qcode": "consumer exhibitions"
-         },
-         {
-            "name": "Consumer/General Conferences",
-            "qcode": "consumer/general conferences"
-         },
-         {
-            "name": "Courts - Appeals",
-            "qcode": "courts - appeals"
-         },
-         {
-            "name": "Courts - Civil",
-            "qcode": "courts - civil"
-         },
-         {
-            "name": "Courts - Corporate",
-            "qcode": "courts - corporate"
-         },
-         {
-            "name": "Courts - Crime",
-            "qcode": "courts - crime"
-         },
-         {
-            "name": "C-suite Events",
-            "qcode": "c-suite events"
+            "name": "Awareness Days",
+            "cp_type": "anniversaries",
+            "qcode": "awareness days",
+            "is_active": true
          },
          {
             "name": "Cyber Security and Fraud",
-            "qcode": "cyber security and fraud"
-         },
-         {
-            "name": "Davos",
-            "qcode": "davos"
-         },
-         {
-            "name": "Devolved Politics",
-            "qcode": "devolved politics"
-         },
-         {
-            "name": "Disability",
-            "qcode": "disability"
-         },
-         {
-            "name": "Diversity and Discrimination",
-            "qcode": "diversity and discrimination"
-         },
-         {
-            "name": "Drug Use",
-            "qcode": "drug use"
-         },
-         {
-            "name": "Earnings conference call/Webcast-investor/Analyst",
-            "qcode": "earnings conference call/webcast-investor/analyst"
-         },
-         {
-            "name": "Earnings conference call/Webcast-press",
-            "qcode": "earnings conference call/webcast-press"
-         },
-         {
-            "name": "Election",
-            "qcode": "election"
-         },
-         {
-            "name": "Embargoed Content",
-            "qcode": "embargoed content"
-         },
-         {
-            "name": "European State bank interest rates",
-            "qcode": "european state bank interest rates"
-         },
-         {
-            "name": "Executive Board Changes",
-            "qcode": "executive board changes"
-         },
-         {
-            "name": "FIFA World Cup",
-            "qcode": "fifa world cup"
-         },
-         {
-            "name": "Final Dividend Payment Date",
-            "qcode": "final dividend payment date"
-         },
-         {
-            "name": "Final ex-dividend date",
-            "qcode": "final ex-dividend date"
-         },
-         {
-            "name": "Financial Outlook/Forecast",
-            "qcode": "financial outlook/forecast"
-         },
-         {
-            "name": "First Show",
-            "qcode": "first show"
-         },
-         {
-            "name": "Foreign Dignitary Visit",
-            "qcode": "foreign dignitary visit"
-         },
-         {
-            "name": "Full Year Earnings",
-            "qcode": "full year earnings"
-         },
-         {
-            "name": "Full year prelims",
-            "qcode": "full year prelims"
-         },
-         {
-            "name": "Gigs",
-            "qcode": "gigs"
-         },
-         {
-            "name": "Green",
-            "qcode": "green"
-         },
-         {
-            "name": "Highlights & Top Events",
-            "qcode": "highlights & top events"
-         },
-         {
-            "name": "Historical",
-            "qcode": "historical"
-         },
-         {
-            "name": "Holidays & Festivals",
-            "qcode": "holidays & festivals"
-         },
-         {
-            "name": "Human Resources",
-            "qcode": "human resources"
-         },
-         {
-            "name": "Humanitarian Issues",
-            "qcode": "humanitarian issues"
-         },
-         {
-            "name": "Interim Dividend Payment Date",
-            "qcode": "interim dividend payment date"
-         },
-         {
-            "name": "Interim ex-dividend date",
-            "qcode": "interim ex-dividend date"
-         },
-         {
-            "name": "International Development",
-            "qcode": "international development"
-         },
-         {
-            "name": "IPO - Admission of dealing",
-            "qcode": "ipo - admission of dealing"
-         },
-         {
-            "name": "IPO - Final pricing",
-            "qcode": "ipo - final pricing"
-         },
-         {
-            "name": "IPO - Initial pricing",
-            "qcode": "ipo - initial pricing"
-         },
-         {
-            "name": "Legislation",
-            "qcode": "legislation"
-         },
-         {
-            "name": "Local Government",
-            "qcode": "local government"
-         },
-         {
-            "name": "M&A - Date of last day of listing",
-            "qcode": "m&a - date of last day of listing"
-         },
-         {
-            "name": "M&A - Date of merger completion",
-            "qcode": "m&a - date of merger completion"
-         },
-         {
-            "name": "M&A - Date of Tender offer shares expiration",
-            "qcode": "m&a - date of tender offer shares expiration"
-         },
-         {
-            "name": "Men's Interest",
-            "qcode": "men's interest"
-         },
-         {
-            "name": "Mid-quarter guidance & update calls",
-            "qcode": "mid-quarter guidance & update calls"
-         },
-         {
-            "name": "Mid-quarter update/guidance",
-            "qcode": "mid-quarter update/guidance"
-         },
-         {
-            "name": "Monthly statistics",
-            "qcode": "monthly statistics"
-         },
-         {
-            "name": "Music Festivals",
-            "qcode": "music festivals"
-         },
-         {
-            "name": "NGO's, Charities & Pressure Groups",
-            "qcode": "ngo's, charities & pressure groups"
-         },
-         {
-            "name": "Olympics",
-            "qcode": "olympics"
-         },
-         {
-            "name": "Over 50s",
-            "qcode": "over 50s"
-         },
-         {
-            "name": "Parties & Balls",
-            "qcode": "parties & balls"
-         },
-         {
-            "name": "Party Conference",
-            "qcode": "party conference"
-         },
-         {
-            "name": "Political Conventions",
-            "qcode": "political conventions"
-         },
-         {
-            "name": "Political Fringe Event",
-            "qcode": "political fringe event"
-         },
-         {
-            "name": "Politics",
-            "qcode": "politics"
-         },
-         {
-            "name": "Premieres",
-            "qcode": "premieres"
-         },
-         {
-            "name": "Press conference",
-            "qcode": "press conference"
-         },
-         {
-            "name": "Press Preview",
-            "qcode": "press preview"
-         },
-         {
-            "name": "Product Launches",
-            "qcode": "product launches"
-         },
-         {
-            "name": "Public Sector Conferences",
-            "qcode": "public sector conferences"
-         },
-         {
-            "name": "Public Sector Exhibitions",
-            "qcode": "public sector exhibitions"
-         },
-         {
-            "name": "Protests/Rallies",
-            "qcode": "protests/rallies"
-         },
-         {
-            "name": "Q1",
-            "qcode": "q1"
-         },
-         {
-            "name": "Q2",
-            "qcode": "q2"
-         },
-         {
-            "name": "Q3",
-            "qcode": "q3"
-         },
-         {
-            "name": "Q4",
-            "qcode": "q4"
-         },
-         {
-            "name": "Quarterly dividend payment date",
-            "qcode": "quarterly dividend payment date"
-         },
-         {
-            "name": "Quarterly ex-dividend date",
-            "qcode": "quarterly ex-dividend date"
-         },
-         {
-            "name": "Reports & Surveys",
-            "qcode": "reports & surveys"
-         },
-         {
-            "name": "Rights issue - End of subscription date",
-            "qcode": "rights issue - end of subscription date"
-         },
-         {
-            "name": "Rights issue - Ratio & Price",
-            "qcode": "rights issue - ratio & price"
-         },
-         {
-            "name": "Rights issue - Record date",
-            "qcode": "rights issue - record date"
-         },
-         {
-            "name": "Rights issue - Start of subscription date",
-            "qcode": "rights issue - start of subscription date"
-         },
-         {
-            "name": "Sales/Trading statement conference call/Webcast",
-            "qcode": "sales/trading statement conference call/webcast"
-         },
-         {
-            "name": "Scottish Interest",
-            "qcode": "scottish interest"
-         },
-         {
-            "name": "Seasonal Events & Celebrations",
-            "qcode": "seasonal events & celebrations"
-         },
-         {
-            "name": "Signing Session",
-            "qcode": "signing session"
-         },
-         {
-            "name": "SMEs",
-            "qcode": "smes"
-         },
-         {
-            "name": "Social Media",
-            "qcode": "social media"
-         },
-         {
-            "name": "Society Events",
-            "qcode": "society events"
-         },
-         {
-            "name": "Special Dividend Payment Date",
-            "qcode": "special dividend payment date"
-         },
-         {
-            "name": "Special ex-dividend date",
-            "qcode": "special ex-dividend date"
-         },
-         {
-            "name": "Sponsored Events",
-            "qcode": "sponsored events"
-         },
-         {
-            "name": "Statistics & Economic Indicators",
-            "qcode": "statistics & economic indicators"
-         },
-         {
-            "name": "Stock Split - New Shares Start Trading Date",
-            "qcode": "stock split - new shares start trading date"
-         },
-         {
-            "name": "Stock Split - Payment/Distribution Date",
-            "qcode": "stock split - payment/distribution date"
-         },
-         {
-            "name": "Stock Split - Record date",
-            "qcode": "stock split - record date"
-         },
-         {
-            "name": "Think Tank",
-            "qcode": "think tank"
-         },
-         {
-            "name": "CSR / Business Sustainability",
-            "qcode": "csr / business sustainability"
-         },
-         {
-            "name": "Trade Conferences",
-            "qcode": "trade conferences"
-         },
-         {
-            "name": "Trade Exhibitions",
-            "qcode": "trade exhibitions"
-         },
-         {
-            "name": "Trading statement",
-            "qcode": "trading statement"
-         },
-         {
-            "name": "UK Regional Elections",
-            "qcode": "uk regional elections"
-         },
-         {
-            "name": "US Election",
-            "qcode": "us election"
-         },
-         {
-            "name": "US Highlights",
-            "qcode": "us highlights"
-         },
-         {
-            "name": "Women's Interest",
-            "qcode": "women's interest"
-         },
-         {
-            "name": "World War I",
-            "qcode": "world war i"
-         },
-         {
-            "name": "Youth (13-25 years)",
-            "qcode": "youth (13-25 years)"
+            "cp_type": "artificial",
+            "qcode": "cyber security and fraud",
+            "is_active": true
          }
       ]
    }
