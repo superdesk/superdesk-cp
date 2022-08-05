@@ -25018,8 +25018,8 @@
       ]
    },
    {
-      "_id": "cp_event_types",
-      "display_name": "CP Events Types",
+      "_id": "onclusive_event_types",
+      "display_name": "Onclusive Events Types",
       "type": "manageable",
       "selection_type": "multi selection",
       "unique_field": "qcode",

@@ -29,7 +29,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = self.parser.parse(data)[0]
-                print(item["subject"])
                 item["subject"].sort(key=lambda i: i["name"])
                 expected_subjects = [
                     {

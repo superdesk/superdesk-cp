@@ -5,8 +5,7 @@ from superdesk import get_resource_service
 
 
 def _get_cv_items(_id: str) -> List:
-    cv = get_resource_service("vocabularies").find_one(req=None, _id=_id)
-    return cv["items"]
+    return get_resource_service("vocabularies").get_items(_id=_id, is_active=True)
 
 
 class CPOnclusiveFeedParser(OnclusiveFeedParser):
@@ -22,7 +21,7 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
         onclusive_cv_items = _get_cv_items("onclusive_ingest_categories")
         anpa_categories = _get_cv_items("categories")
         event_types = _get_cv_items("event_types")
-        cp_event_types = _get_cv_items("cp_event_types")
+        onclusive_event_types = _get_cv_items("onclusive_event_types")
 
         items = super().parse(content, provider)
 
@@ -48,14 +47,14 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                     }
                                 )
                     if subject["scheme"] == "onclusive_event_types":
-                        cp_event_type = self.find_cv_item(
-                            cp_event_types, subject["name"].lower()
+                        onclusive_event_type = self.find_cv_item(
+                            onclusive_event_types, subject["name"].lower()
                         )
-                        if cp_event_type and cp_event_type.get("is_active"):
+                        if onclusive_event_type:
                             event_type = self.find_cv_item(
-                                event_types, cp_event_type["cp_type"]
+                                event_types, onclusive_event_type["cp_type"]
                             )
-                            if event_type and event_type.get("is_active"):
+                            if event_type:
                                 eventType.append(
                                     {
                                         "name": event_type["name"],

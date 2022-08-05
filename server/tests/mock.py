@@ -49,6 +49,11 @@ def get_place(geoname_id, language="en"):
     return format_geoname_item(json_data)
 
 
+def get_cv_items(_id, is_active):
+    cv = cvs.get(_id)
+    return [i for i in cv["items"] if i.get("is_active", True) == is_active]
+
+
 class Resource:
     def __init__(self, service):
         self.service = service
@@ -60,6 +65,7 @@ subscriber_service.generate_sequence_number.return_value = SEQUENCE_NUMBER
 vocabularies_service = create_autospec(VocabulariesService)
 vocabularies_service.find_one.side_effect = get_cv
 vocabularies_service.get_rightsinfo.side_effect = get_rightsinfo
+vocabularies_service.get_items.side_effect = get_cv_items
 
 news_service = create_autospec(NewsService)
 ingest_service = create_autospec(IngestService)
