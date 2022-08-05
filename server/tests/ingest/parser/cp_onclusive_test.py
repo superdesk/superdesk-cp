@@ -29,6 +29,7 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = self.parser.parse(data)[0]
+                print(item["subject"])
                 item["subject"].sort(key=lambda i: i["name"])
                 expected_subjects = [
                     {
@@ -72,13 +73,13 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_event_types",
                     },
                     {
-                        "name": "Trade Conferences",
-                        "qcode": "trade conferences",
+                        "name": "Artificial Intelligence",
+                        "qcode": "artificial",
                         "scheme": "event_types",
                     },
                     {
-                        "name": "Cyber Security and Fraud",
-                        "qcode": "cyber security and fraud",
+                        "name": "Broadcast",
+                        "qcode": "broadcast",
                         "scheme": "event_types",
                     },
                 ]

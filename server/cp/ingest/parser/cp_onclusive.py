@@ -21,7 +21,9 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     def parse(self, content, provider=None):
         onclusive_cv_items = _get_cv_items("onclusive_ingest_categories")
         anpa_categories = _get_cv_items("categories")
-        event_types_cvs = _get_cv_items("CP_event_types")
+        event_types = _get_cv_items("event_types")
+        cp_event_types = _get_cv_items("cp_event_types")
+
         items = super().parse(content, provider)
 
         for item in items:
@@ -46,16 +48,21 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                     }
                                 )
                     if subject["scheme"] == "onclusive_event_types":
-                        for event_item in event_types_cvs:
-                            if event_item["name"] == subject["name"]:
+                        cp_event_type = self.find_cv_item(
+                            cp_event_types, subject["name"].lower()
+                        )
+                        if cp_event_type and cp_event_type.get("is_active"):
+                            event_type = self.find_cv_item(
+                                event_types, cp_event_type["cp_type"]
+                            )
+                            if event_type and event_type.get("is_active"):
                                 eventType.append(
                                     {
-                                        "name": event_item["name"],
-                                        "qcode": event_item["qcode"],
+                                        "name": event_type["name"],
+                                        "qcode": event_type["qcode"],
                                         "scheme": "event_types",
                                     }
                                 )
-
                 # remove duplicates
                 item["anpa_category"] = [
                     dict(i)
