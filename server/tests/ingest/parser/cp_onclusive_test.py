@@ -71,6 +71,16 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "qcode": "228",
                         "scheme": "onclusive_event_types",
                     },
+                    {
+                        "name": "Artificial Intelligence",
+                        "qcode": "artificial",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Broadcast",
+                        "qcode": "broadcast",
+                        "scheme": "event_types",
+                    },
                 ]
                 expected_subjects.sort(key=lambda i: i["name"])
                 self.assertEqual(item["subject"], expected_subjects)
@@ -103,7 +113,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 ]
                 expected_categories.sort(key=lambda i: i["name"])
                 self.assertEqual(item["anpa_category"], expected_categories)
-
                 self.assertEqual(
                     item[GUID_FIELD], "urn:newsml:2021-05-04T21:19:10.2:4112034"
                 )
