@@ -48,20 +48,17 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                 )
                     if subject["scheme"] == "onclusive_event_types":
                         onclusive_event_type = self.find_cv_item(
-                            onclusive_event_types, subject["name"].lower()
+                            onclusive_event_types, subject["name"]
                         )
                         if onclusive_event_type:
-                            event_type = self.find_cv_item(
-                                event_types, onclusive_event_type["cp_type"]
+                            cp_event = self.parse_event_type(
+                                onclusive_event_type["cp_type"],
+                                event_types,
+                                all_event_types,
                             )
-                            if event_type:
-                                all_event_types.append(
-                                    {
-                                        "name": event_type["name"],
-                                        "qcode": event_type["qcode"],
-                                        "scheme": "event_types",
-                                    }
-                                )
+                            if cp_event:
+                                item["subject"] += cp_event
+
                 # remove duplicates
                 item["anpa_category"] = [
                     dict(i)
@@ -69,10 +66,10 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                         sorted(category, key=lambda k: k["qcode"])
                     )
                 ]
-                item["subject"] += [
+                item["subject"] = [
                     dict(i)
                     for i, _ in itertools.groupby(
-                        sorted(all_event_types, key=lambda k: k["qcode"])
+                        sorted(item["subject"], key=lambda k: k["qcode"])
                     )
                 ]
             self.event.append(item)
@@ -85,3 +82,22 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
         for item in cv_items:
             if item["qcode"] == qcode:
                 return item
+
+    def parse_event_type(self, qcode, cp_event_types, events: list) -> List:
+        """
+        Find events types from the CV including it's parent item.
+        """
+        event_type = self.find_cv_item(cp_event_types, qcode)
+        if event_type:
+            events.append(
+                {
+                    "name": event_type["name"],
+                    "qcode": event_type["qcode"],
+                    "parent": event_type["parent"],
+                    "scheme": "event_types",
+                }
+            )
+        if event_type and event_type.get("parent"):
+            self.parse_event_type(event_type["parent"], cp_event_types, events)
+
+        return events
