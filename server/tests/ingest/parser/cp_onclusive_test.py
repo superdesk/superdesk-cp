@@ -32,24 +32,24 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 item["subject"].sort(key=lambda i: i["name"])
                 expected_subjects = [
                     {
-                        "name": "Law & Order",
-                        "qcode": "88",
-                        "scheme": "onclusive_categories",
-                    },
-                    {
                         "name": "Conflict / Terrorism / Security",
                         "qcode": "133",
                         "scheme": "onclusive_categories",
                     },
                     {
-                        "name": "Trade Conferences",
-                        "qcode": "97",
-                        "scheme": "onclusive_categories",
+                        "name": "UK Regional Elections",
+                        "qcode": "148",
+                        "scheme": "onclusive_event_types",
                     },
                     {
                         "name": "Banking",
                         "qcode": "159",
                         "scheme": "onclusive_categories",
+                    },
+                    {
+                        "name": "Music Festivals",
+                        "qcode": "228",
+                        "scheme": "onclusive_event_types",
                     },
                     {
                         "name": "Finance General",
@@ -62,23 +62,43 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_categories",
                     },
                     {
+                        "name": "Law & Order",
+                        "qcode": "88",
+                        "scheme": "onclusive_categories",
+                    },
+                    {
                         "name": "Trade Conferences",
-                        "qcode": "148",
-                        "scheme": "onclusive_event_types",
+                        "qcode": "97",
+                        "scheme": "onclusive_categories",
                     },
                     {
-                        "name": "Cyber Security and Fraud",
-                        "qcode": "228",
-                        "scheme": "onclusive_event_types",
-                    },
-                    {
-                        "name": "Artificial Intelligence",
-                        "qcode": "artificial",
+                        "name": "Election",
+                        "qcode": "Election",
                         "scheme": "event_types",
                     },
                     {
-                        "name": "Broadcast",
-                        "qcode": "broadcast",
+                        "name": "Political event",
+                        "qcode": "Political event",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Music festival",
+                        "qcode": "Music festival",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Festival",
+                        "qcode": "Festival",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Literary event",
+                        "qcode": "Literary event",
+                        "scheme": "event_types",
+                    },
+                    {
+                        "name": "Entertainment event",
+                        "qcode": "Entertainment event",
                         "scheme": "event_types",
                     },
                 ]

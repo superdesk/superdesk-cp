@@ -121,13 +121,13 @@
     "eventTypes": [
         {
             "tagId": 148,
-            "tagName": "Trade Conferences",
+            "tagName": "UK Regional Elections",
             "tagTypeId": 7,
             "tagTypeName": null
         },
         {
             "tagId": 228,
-            "tagName": "Cyber Security and Fraud",
+            "tagName": "Music Festivals",
             "tagTypeId": 9,
             "tagTypeName": null
         }

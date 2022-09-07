@@ -24986,33 +24986,459 @@
       "unique_field": "qcode",
       "items": [
          {
-            "name": "Anniversaries",
-            "qcode": "anniversaries",
+            "name": "Anniversary",
+            "parent": null,
+            "qcode": "Anniversary",
             "is_active": true
          },
          {
-            "name": "Artificial Intelligence",
-            "qcode": "artificial",
+            "name": "Art show",
+            "parent": null,
+            "qcode": "Art show",
             "is_active": true
          },
          {
-            "name": "Awards",
-            "qcode": "awards",
+            "name": "Artist tour",
+            "parent": "Tour",
+            "qcode": "Artist tour",
             "is_active": true
          },
          {
-            "name": "Awareness Days",
-            "qcode": "awareness days",
+            "name": "Award announcement",
+            "parent": "Announcement",
+            "qcode": "Award announcement",
             "is_active": true
          },
          {
-            "name": "Brexit",
-            "qcode": "brexit",
+            "name": "Award ceremony",
+            "parent": null,
+            "qcode": "Award ceremony",
             "is_active": true
          },
          {
-            "name": "Broadcast",
-            "qcode": "broadcast",
+            "name": "Award nomination",
+            "parent": null,
+            "qcode": "Award nomination",
+            "is_active": true
+         },
+         {
+            "name": "Award show",
+            "parent": null,
+            "qcode": "Award show",
+            "is_active": true
+         },
+         {
+            "name": "Awareness event",
+            "parent": null,
+            "qcode": "Awareness event",
+            "is_active": true
+         },
+         {
+            "name": "Benefit event",
+            "parent": null,
+            "qcode": "Benefit event",
+            "is_active": true
+         },
+         {
+            "name": "Book festival",
+            "parent": "Festival",
+            "qcode": "Book festival",
+            "is_active": true
+         },
+         {
+            "name": "Breaking news",
+            "parent": null,
+            "qcode": "Breaking news",
+            "is_active": true
+         },
+         {
+            "name": "Celebrity sighting",
+            "parent": "Entertainment event",
+            "qcode": "Celebrity sighting",
+            "is_active": true
+         },
+         {
+            "name": "Commemorative event",
+            "parent": null,
+            "qcode": "Commemorative event",
+            "is_active": true
+         },
+         {
+            "name": "Commencement speech",
+            "parent": "Public speech",
+            "qcode": "Commencement speech",
+            "is_active": true
+         },
+         {
+            "name": "Competitive event",
+            "parent": "Entertainment event",
+            "qcode": "Competitive event",
+            "is_active": true
+         },
+         {
+            "name": "Conference",
+            "parent": null,
+            "qcode": "Conference",
+            "is_active": true
+         },
+         {
+            "name": "Conference and trade show",
+            "parent": null,
+            "qcode": "Conference and trade show",
+            "is_active": true
+         },
+         {
+            "name": "Conflict",
+            "parent": null,
+            "qcode": "Conflict",
+            "is_active": true
+         },
+         {
+            "name": "Consumer expo",
+            "parent": null,
+            "qcode": "Consumer expo",
+            "is_active": true
+         },
+         {
+            "name": "Convention",
+            "parent": "Political event",
+            "qcode": "Convention",
+            "is_active": true
+         },
+         {
+            "name": "Conversation",
+            "parent": null,
+            "qcode": "Conversation",
+            "is_active": true
+         },
+         {
+            "name": "Corporate event",
+            "parent": null,
+            "qcode": "Corporate event",
+            "is_active": true
+         },
+         {
+            "name": "Court proceedings",
+            "parent": null,
+            "qcode": "Court proceedings",
+            "is_active": true
+         },
+         {
+            "name": "Demonstration",
+            "parent": null,
+            "qcode": "Demonstration",
+            "is_active": true
+         },
+         {
+            "name": "Economic event",
+            "parent": null,
+            "qcode": "Economic event",
+            "is_active": true
+         },
+         {
+            "name": "Election",
+            "parent": "Political event",
+            "qcode": "Election",
+            "is_active": true
+         },
+         {
+            "name": "Entertainment event",
+            "parent": null,
+            "qcode": "Entertainment event",
+            "is_active": true
+         },
+         {
+            "name": "Fair",
+            "parent": null,
+            "qcode": "Fair",
+            "is_active": true
+         },
+         {
+            "name": "Fan convention",
+            "parent": "Convention",
+            "qcode": "Fan convention",
+            "is_active": true
+         },
+         {
+            "name": "Fashion show",
+            "parent": "Entertainment event",
+            "qcode": "Fashion show",
+            "is_active": true
+         },
+         {
+            "name": "Festival",
+            "parent": "Literary event",
+            "qcode": "Festival",
+            "is_active": true
+         },
+         {
+            "name": "Film festival",
+            "parent": "Festival",
+            "qcode": "Film festival",
+            "is_active": true
+         },
+         {
+            "name": "Financial markets event",
+            "parent": null,
+            "qcode": "Financial markets event",
+            "is_active": true
+         },
+         {
+            "name": "Food festival",
+            "parent": "Festival",
+            "qcode": "Food festival",
+            "is_active": true
+         },
+         {
+            "name": "Fundraiser",
+            "parent": null,
+            "qcode": "Fundraiser",
+            "is_active": true
+         },
+         {
+            "name": "Gala",
+            "parent": "Entertainment event",
+            "qcode": "Gala",
+            "is_active": true
+         },
+         {
+            "name": "Game show",
+            "parent": "Competitive event",
+            "qcode": "Game show",
+            "is_active": true
+         },
+         {
+            "name": "Head of state tour",
+            "parent": "Tour ",
+            "qcode": "Head of state tour",
+            "is_active": true
+         },
+         {
+            "name": "Historical event",
+            "parent": null,
+            "qcode": "Historical event",
+            "is_active": true
+         },
+         {
+            "name": "Holiday",
+            "parent": null,
+            "qcode": "Holiday",
+            "is_active": true
+         },
+         {
+            "name": "Inauguration",
+            "parent": null,
+            "qcode": "Inauguration",
+            "is_active": true
+         },
+         {
+            "name": "Induction",
+            "parent": null,
+            "qcode": "Induction",
+            "is_active": true
+         },
+         {
+            "name": "Labour event",
+            "parent": null,
+            "qcode": "Labour event",
+            "is_active": true
+         },
+         {
+            "name": "Literary event",
+            "parent": "Entertainment event",
+            "qcode": "Literary event",
+            "is_active": true
+         },
+         {
+            "name": "Live performance",
+            "parent": "Entertainment event",
+            "qcode": "Live performance",
+            "is_active": true
+         },
+         {
+            "name": "March",
+            "parent": null,
+            "qcode": "March",
+            "is_active": true
+         },
+         {
+            "name": "Meeting",
+            "parent": null,
+            "qcode": "Meeting",
+            "is_active": true
+         },
+         {
+            "name": "Military action",
+            "parent": "Military event",
+            "qcode": "Military action",
+            "is_active": true
+         },
+         {
+            "name": "Military event",
+            "parent": null,
+            "qcode": "Military event",
+            "is_active": true
+         },
+         {
+            "name": "Military parade",
+            "parent": "Military event",
+            "qcode": "Military parade",
+            "is_active": true
+         },
+         {
+            "name": "Music festival",
+            "parent": "Festival",
+            "qcode": "Music festival",
+            "is_active": true
+         },
+         {
+            "name": "Music tour",
+            "parent": "Tour",
+            "qcode": "Music tour",
+            "is_active": true
+         },
+         {
+            "name": "Nomination",
+            "parent": null,
+            "qcode": "Nomination",
+            "is_active": true
+         },
+         {
+            "name": "Official visit",
+            "parent": "Political event",
+            "qcode": "Official visit",
+            "is_active": true
+         },
+         {
+            "name": "Opening",
+            "parent": null,
+            "qcode": "Opening",
+            "is_active": true
+         },
+         {
+            "name": "Parade",
+            "parent": null,
+            "qcode": "Parade",
+            "is_active": true
+         },
+         {
+            "name": "Political convention",
+            "parent": "Convention ",
+            "qcode": "Political convention",
+            "is_active": true
+         },
+         {
+            "name": "Political event",
+            "parent": null,
+            "qcode": "Political event",
+            "is_active": true
+         },
+         {
+            "name": "Premiere",
+            "parent": "Entertainment event",
+            "qcode": "Premiere",
+            "is_active": true
+         },
+         {
+            "name": "Press event",
+            "parent": null,
+            "qcode": "Press event",
+            "is_active": true
+         },
+         {
+            "name": "Product launch",
+            "parent": null,
+            "qcode": "Product launch",
+            "is_active": true
+         },
+         {
+            "name": "Promotional event",
+            "parent": null,
+            "qcode": "Promotional event",
+            "is_active": true
+         },
+         {
+            "name": "Protest",
+            "parent": null,
+            "qcode": "Protest",
+            "is_active": true
+         },
+         {
+            "name": "Public consultation",
+            "parent": null,
+            "qcode": "Public consultation",
+            "is_active": true
+         },
+         {
+            "name": "Public speech",
+            "parent": null,
+            "qcode": "Public speech",
+            "is_active": true
+         },
+         {
+            "name": "Rally",
+            "parent": null,
+            "qcode": "Rally",
+            "is_active": true
+         },
+         {
+            "name": "Red carpet event",
+            "parent": "Entertainment event",
+            "qcode": "Red carpet event",
+            "is_active": true
+         },
+         {
+            "name": "Royalty tour",
+            "parent": "Tour",
+            "qcode": "Royalty tour",
+            "is_active": true
+         },
+         {
+            "name": "Session",
+            "parent": null,
+            "qcode": "Session",
+            "is_active": true
+         },
+         {
+            "name": "Sports event",
+            "parent": null,
+            "qcode": "Sports event",
+            "is_active": true
+         },
+         {
+            "name": "Strike",
+            "parent": "Labour event ",
+            "qcode": "Strike",
+            "is_active": true
+         },
+         {
+            "name": "Talk show",
+            "parent": "Entertainment event",
+            "qcode": "Talk show",
+            "is_active": true
+         },
+         {
+            "name": "Tour",
+            "parent": "Political event",
+            "qcode": "Tour",
+            "is_active": true
+         },
+         {
+            "name": "Trade show",
+            "parent": null,
+            "qcode": "Trade show",
+            "is_active": true
+         },
+         {
+            "name": "War",
+            "parent": null,
+            "qcode": "War",
+            "is_active": true
+         },
+         {
+            "name": "Wedding",
+            "parent": null,
+            "qcode": "Wedding",
             "is_active": true
          }
       ]
@@ -25025,33 +25451,789 @@
       "unique_field": "qcode",
       "items": [
          {
-            "name": "Trade Conferences",
-            "cp_type": "broadcast",
-            "qcode": "trade conferences",
+            "name": "1H (Interims)",
+            "cp_type": "Corporate event",
+            "qcode": "1H (Interims)",
+            "is_active": true
+         },
+         {
+            "name": "Agency Meetings",
+            "cp_type": "Meeting",
+            "qcode": "Agency Meetings",
+            "is_active": true
+         },
+         {
+            "name": "AGM/EGM/Shareholder meeting",
+            "cp_type": "Corporate event",
+            "qcode": "AGM/EGM/Shareholder meeting",
+            "is_active": true
+         },
+         {
+            "name": "AGM/EGM/Shareholder meeting conference call",
+            "cp_type": "Corporate event",
+            "qcode": "AGM/EGM/Shareholder meeting conference call",
+            "is_active": true
+         },
+         {
+            "name": "Analyst/Investor meeting conference call",
+            "cp_type": "Corporate event",
+            "qcode": "Analyst/Investor meeting conference call",
+            "is_active": true
+         },
+         {
+            "name": "Analyst/Investor meeting/Webcast",
+            "cp_type": "Corporate event",
+            "qcode": "Analyst/Investor meeting/Webcast",
+            "is_active": true
+         },
+         {
+            "name": "Anniversaries",
+            "cp_type": "Anniversary",
+            "qcode": "Anniversaries",
             "is_active": true
          },
          {
             "name": "Artificial Intelligence",
-            "cp_type": "artificial",
-            "qcode": "artificial intelligence",
+            "cp_type": "Book",
+            "qcode": "Artificial Intelligence",
             "is_active": true
          },
          {
             "name": "Awards",
-            "cp_type": "brexit",
-            "qcode": "awards",
+            "cp_type": "N/A: too broad",
+            "qcode": "Awards",
             "is_active": true
          },
          {
-            "name": "Awareness Days",
-            "cp_type": "anniversaries",
-            "qcode": "awareness days",
+            "name": "Awareness Days & Campaigns",
+            "cp_type": "Awareness event",
+            "qcode": "Awareness Days & Campaigns",
+            "is_active": true
+         },
+         {
+            "name": "Bond Auctions",
+            "cp_type": "Financial markets event",
+            "qcode": "Bond Auctions",
+            "is_active": true
+         },
+         {
+            "name": "Brexit",
+            "cp_type": "Political event",
+            "qcode": "Brexit",
+            "is_active": true
+         },
+         {
+            "name": "Broadcast",
+            "cp_type": null,
+            "qcode": "Broadcast",
+            "is_active": true
+         },
+         {
+            "name": "Broker Conferences",
+            "cp_type": "Conference",
+            "qcode": "Broker Conferences",
+            "is_active": true
+         },
+         {
+            "name": "Broker/Industry conference",
+            "cp_type": "Conference",
+            "qcode": "Broker/Industry conference",
+            "is_active": true
+         },
+         {
+            "name": "Capital Markets Day",
+            "cp_type": "Financial markets event",
+            "qcode": "Capital Markets Day",
+            "is_active": true
+         },
+         {
+            "name": "Celebrity",
+            "cp_type": null,
+            "qcode": "Celebrity",
+            "is_active": true
+         },
+         {
+            "name": "Children (0-12 years)",
+            "cp_type": null,
+            "qcode": "Children (0-12 years)",
+            "is_active": true
+         },
+         {
+            "name": "Consultations",
+            "cp_type": "Public consultation",
+            "qcode": "Consultations",
+            "is_active": true
+         },
+         {
+            "name": "Consumer Exhibitions",
+            "cp_type": "Consumer expo",
+            "qcode": "Consumer Exhibitions",
+            "is_active": true
+         },
+         {
+            "name": "Consumer/General Conferences",
+            "cp_type": "Conference",
+            "qcode": "Consumer/General Conferences",
+            "is_active": true
+         },
+         {
+            "name": "Coronavirus",
+            "cp_type": null,
+            "qcode": "Coronavirus",
+            "is_active": true
+         },
+         {
+            "name": "Corporate Changes",
+            "cp_type": "Corporate event",
+            "qcode": "Corporate Changes",
+            "is_active": true
+         },
+         {
+            "name": "Courts - Appeals",
+            "cp_type": "Court proceedings",
+            "qcode": "Courts - Appeals",
+            "is_active": true
+         },
+         {
+            "name": "Courts - Civil",
+            "cp_type": "Court proceedings",
+            "qcode": "Courts - Civil",
+            "is_active": true
+         },
+         {
+            "name": "Courts - Corporate",
+            "cp_type": "Court proceedings",
+            "qcode": "Courts - Corporate",
+            "is_active": true
+         },
+         {
+            "name": "Courts - Crime",
+            "cp_type": "Court proceedings",
+            "qcode": "Courts - Crime",
+            "is_active": true
+         },
+         {
+            "name": "CSR / Business Sustainability",
+            "cp_type": null,
+            "qcode": "CSR / Business Sustainability",
+            "is_active": true
+         },
+         {
+            "name": "C-suite Events",
+            "cp_type": "Corporate event",
+            "qcode": "C-suite Events",
             "is_active": true
          },
          {
             "name": "Cyber Security and Fraud",
-            "cp_type": "artificial",
-            "qcode": "cyber security and fraud",
+            "cp_type": null,
+            "qcode": "Cyber Security and Fraud",
+            "is_active": true
+         },
+         {
+            "name": "Davos",
+            "cp_type": "Economic event",
+            "qcode": "Davos",
+            "is_active": true
+         },
+         {
+            "name": "Devolved Politics",
+            "cp_type": null,
+            "qcode": "Devolved Politics",
+            "is_active": true
+         },
+         {
+            "name": "Disability",
+            "cp_type": null,
+            "qcode": "Disability",
+            "is_active": true
+         },
+         {
+            "name": "Diversity and Discrimination",
+            "cp_type": null,
+            "qcode": "Diversity and Discrimination",
+            "is_active": true
+         },
+         {
+            "name": "Drug Use",
+            "cp_type": null,
+            "qcode": "Drug Use",
+            "is_active": true
+         },
+         {
+            "name": "Earnings conference call/Webcast-investor/Analyst",
+            "cp_type": "Corporate event",
+            "qcode": "Earnings conference call/Webcast-investor/Analyst",
+            "is_active": true
+         },
+         {
+            "name": "Earnings conference call/Webcast-press",
+            "cp_type": "Corporate event",
+            "qcode": "Earnings conference call/Webcast-press",
+            "is_active": true
+         },
+         {
+            "name": "Economic Releases",
+            "cp_type": "Economic event",
+            "qcode": "Economic Releases",
+            "is_active": true
+         },
+         {
+            "name": "Election",
+            "cp_type": "Election",
+            "qcode": "Election",
+            "is_active": true
+         },
+         {
+            "name": "Embargoed Content",
+            "cp_type": null,
+            "qcode": "Embargoed Content",
+            "is_active": true
+         },
+         {
+            "name": "European State bank interest rates",
+            "cp_type": "Economic event",
+            "qcode": "European State bank interest rates",
+            "is_active": true
+         },
+         {
+            "name": "Executive Board Changes",
+            "cp_type": "Corporate event",
+            "qcode": "Executive Board Changes",
+            "is_active": true
+         },
+         {
+            "name": "FIFA World Cup",
+            "cp_type": "Sports event",
+            "qcode": "FIFA World Cup",
+            "is_active": true
+         },
+         {
+            "name": "Final Dividend Payment Date",
+            "cp_type": "Corporate event",
+            "qcode": "Final Dividend Payment Date",
+            "is_active": true
+         },
+         {
+            "name": "Final ex-dividend date",
+            "cp_type": "Corporate event",
+            "qcode": "Final ex-dividend date",
+            "is_active": true
+         },
+         {
+            "name": "Financial Outlook/Forecast",
+            "cp_type": "Corporate event",
+            "qcode": "Financial Outlook/Forecast",
+            "is_active": true
+         },
+         {
+            "name": "First Show",
+            "cp_type": "Premiere",
+            "qcode": "First Show",
+            "is_active": true
+         },
+         {
+            "name": "Foreign Dignitary Visit",
+            "cp_type": "Official visit",
+            "qcode": "Foreign Dignitary Visit",
+            "is_active": true
+         },
+         {
+            "name": "Fortune 500",
+            "cp_type": " ",
+            "qcode": "Fortune 500",
+            "is_active": true
+         },
+         {
+            "name": "Forward Features",
+            "cp_type": null,
+            "qcode": "Forward Features",
+            "is_active": true
+         },
+         {
+            "name": "Full Year Earnings",
+            "cp_type": "Corporate event",
+            "qcode": "Full Year Earnings",
+            "is_active": true
+         },
+         {
+            "name": "Full year prelims",
+            "cp_type": "Corporate event",
+            "qcode": "Full year prelims",
+            "is_active": true
+         },
+         {
+            "name": "Gigs",
+            "cp_type": "Artist tour",
+            "qcode": "Gigs",
+            "is_active": true
+         },
+         {
+            "name": "Green",
+            "cp_type": null,
+            "qcode": "Green",
+            "is_active": true
+         },
+         {
+            "name": "Highlights & Top Events",
+            "cp_type": null,
+            "qcode": "Highlights & Top Events",
+            "is_active": true
+         },
+         {
+            "name": "Historical",
+            "cp_type": "Historical event",
+            "qcode": "Historical",
+            "is_active": true
+         },
+         {
+            "name": "Holidays & Festivals",
+            "cp_type": "N/A: too broad",
+            "qcode": "Holidays & Festivals",
+            "is_active": true
+         },
+         {
+            "name": "Human Resources",
+            "cp_type": null,
+            "qcode": "Human Resources",
+            "is_active": true
+         },
+         {
+            "name": "Humanitarian Issues",
+            "cp_type": null,
+            "qcode": "Humanitarian Issues",
+            "is_active": true
+         },
+         {
+            "name": "Interim Dividend Payment Date",
+            "cp_type": "Corporate event",
+            "qcode": "Interim Dividend Payment Date",
+            "is_active": true
+         },
+         {
+            "name": "Interim ex-dividend date",
+            "cp_type": "Corporate event",
+            "qcode": "Interim ex-dividend date",
+            "is_active": true
+         },
+         {
+            "name": "International Development",
+            "cp_type": null,
+            "qcode": "International Development",
+            "is_active": true
+         },
+         {
+            "name": "Investment Trust",
+            "cp_type": null,
+            "qcode": "Investment Trust",
+            "is_active": true
+         },
+         {
+            "name": "IPO - Admission of dealing",
+            "cp_type": "Corporate event",
+            "qcode": "IPO - Admission of dealing",
+            "is_active": true
+         },
+         {
+            "name": "IPO - Final pricing",
+            "cp_type": "Corporate event",
+            "qcode": "IPO - Final pricing",
+            "is_active": true
+         },
+         {
+            "name": "IPO - Initial pricing",
+            "cp_type": "Corporate event",
+            "qcode": "IPO - Initial pricing",
+            "is_active": true
+         },
+         {
+            "name": "Key Election Races",
+            "cp_type": "Election",
+            "qcode": "Key Election Races",
+            "is_active": true
+         },
+         {
+            "name": "LatAm Political",
+            "cp_type": null,
+            "qcode": "LatAm Political",
+            "is_active": true
+         },
+         {
+            "name": "Legislation",
+            "cp_type": null,
+            "qcode": "Legislation",
+            "is_active": true
+         },
+         {
+            "name": "Local Government",
+            "cp_type": null,
+            "qcode": "Local Government",
+            "is_active": true
+         },
+         {
+            "name": "M&A - Date of last day of listing",
+            "cp_type": "Corporate event",
+            "qcode": "M&A - Date of last day of listing",
+            "is_active": true
+         },
+         {
+            "name": "M&A - Date of merger completion",
+            "cp_type": "Corporate event",
+            "qcode": "M&A - Date of merger completion",
+            "is_active": true
+         },
+         {
+            "name": "M&A - Date of Tender offer shares expiration",
+            "cp_type": "Corporate event",
+            "qcode": "M&A - Date of Tender offer shares expiration",
+            "is_active": true
+         },
+         {
+            "name": "Men's Interest",
+            "cp_type": null,
+            "qcode": "Men's Interest",
+            "is_active": true
+         },
+         {
+            "name": "Mid-quarter guidance & update calls",
+            "cp_type": "Corporate event",
+            "qcode": "Mid-quarter guidance & update calls",
+            "is_active": true
+         },
+         {
+            "name": "Mid-quarter update/guidance",
+            "cp_type": "Corporate event",
+            "qcode": "Mid-quarter update/guidance",
+            "is_active": true
+         },
+         {
+            "name": "Milestone",
+            "cp_type": null,
+            "qcode": "Milestone",
+            "is_active": true
+         },
+         {
+            "name": "Monthly Trading Figures",
+            "cp_type": "Corporate event",
+            "qcode": "Monthly Trading Figures",
+            "is_active": true
+         },
+         {
+            "name": "Music Festivals",
+            "cp_type": "Music festival",
+            "qcode": "Music Festivals",
+            "is_active": true
+         },
+         {
+            "name": "NGO's, Charities & Pressure Groups",
+            "cp_type": null,
+            "qcode": "NGO's, Charities & Pressure Groups",
+            "is_active": true
+         },
+         {
+            "name": "Olympics",
+            "cp_type": "Sports event",
+            "qcode": "Olympics",
+            "is_active": true
+         },
+         {
+            "name": "Over 50s",
+            "cp_type": null,
+            "qcode": "Over 50s",
+            "is_active": true
+         },
+         {
+            "name": "Parties & Balls",
+            "cp_type": null,
+            "qcode": "Parties & Balls",
+            "is_active": true
+         },
+         {
+            "name": "Party Conference",
+            "cp_type": "Political convention",
+            "qcode": "Party Conference",
+            "is_active": true
+         },
+         {
+            "name": "Political Fringe Event",
+            "cp_type": "Political event",
+            "qcode": "Political Fringe Event",
+            "is_active": true
+         },
+         {
+            "name": "Politics",
+            "cp_type": null,
+            "qcode": "Politics",
+            "is_active": true
+         },
+         {
+            "name": "Premieres",
+            "cp_type": "Premiere",
+            "qcode": "Premieres",
+            "is_active": true
+         },
+         {
+            "name": "Press conference",
+            "cp_type": "Press event",
+            "qcode": "Press conference",
+            "is_active": true
+         },
+         {
+            "name": "Press Preview",
+            "cp_type": "Press event",
+            "qcode": "Press Preview",
+            "is_active": true
+         },
+         {
+            "name": "Product Launches",
+            "cp_type": "Product launch",
+            "qcode": "Product Launches",
+            "is_active": true
+         },
+         {
+            "name": "Protests/Rallies",
+            "cp_type": "Protest",
+            "qcode": "Protests/Rallies",
+            "is_active": true
+         },
+         {
+            "name": "Public Sector Conferences",
+            "cp_type": null,
+            "qcode": "Public Sector Conferences",
+            "is_active": true
+         },
+         {
+            "name": "Public Sector Exhibitions",
+            "cp_type": null,
+            "qcode": "Public Sector Exhibitions",
+            "is_active": true
+         },
+         {
+            "name": "Q1",
+            "cp_type": "Corporate event",
+            "qcode": "Q1",
+            "is_active": true
+         },
+         {
+            "name": "Q2",
+            "cp_type": "Corporate event",
+            "qcode": "Q2",
+            "is_active": true
+         },
+         {
+            "name": "Q3",
+            "cp_type": "Corporate event",
+            "qcode": "Q3",
+            "is_active": true
+         },
+         {
+            "name": "Q4",
+            "cp_type": "Corporate event",
+            "qcode": "Q4",
+            "is_active": true
+         },
+         {
+            "name": "Quarterly dividend payment date",
+            "cp_type": "Corporate event",
+            "qcode": "Quarterly dividend payment date",
+            "is_active": true
+         },
+         {
+            "name": "Quarterly ex-dividend date",
+            "cp_type": "Corporate event",
+            "qcode": "Quarterly ex-dividend date",
+            "is_active": true
+         },
+         {
+            "name": "Reports & Surveys",
+            "cp_type": null,
+            "qcode": "Reports & Surveys",
+            "is_active": true
+         },
+         {
+            "name": "Rescheduled - Coronavirus",
+            "cp_type": null,
+            "qcode": "Rescheduled - Coronavirus",
+            "is_active": true
+         },
+         {
+            "name": "Rights issue - End of subscription date",
+            "cp_type": "Corporate event",
+            "qcode": "Rights issue - End of subscription date",
+            "is_active": true
+         },
+         {
+            "name": "Rights issue - Ratio & Price",
+            "cp_type": "Corporate event",
+            "qcode": "Rights issue - Ratio & Price",
+            "is_active": true
+         },
+         {
+            "name": "Rights issue - Record date",
+            "cp_type": "Corporate event",
+            "qcode": "Rights issue - Record date",
+            "is_active": true
+         },
+         {
+            "name": "Rights issue - Start of subscription date",
+            "cp_type": "Corporate event",
+            "qcode": "Rights issue - Start of subscription date",
+            "is_active": true
+         },
+         {
+            "name": "Sales/Trading statement conference call/Webcast",
+            "cp_type": "Corporate event",
+            "qcode": "Sales/Trading statement conference call/Webcast",
+            "is_active": true
+         },
+         {
+            "name": "Scottish Interest",
+            "cp_type": null,
+            "qcode": "Scottish Interest",
+            "is_active": true
+         },
+         {
+            "name": "Seasonal Events & Celebrations",
+            "cp_type": "Holiday",
+            "qcode": "Seasonal Events & Celebrations",
+            "is_active": true
+         },
+         {
+            "name": "Signing Session",
+            "cp_type": "Session",
+            "qcode": "Signing Session",
+            "is_active": true
+         },
+         {
+            "name": "SMEs",
+            "cp_type": null,
+            "qcode": "SMEs",
+            "is_active": true
+         },
+         {
+            "name": "Social Media",
+            "cp_type": null,
+            "qcode": "Social Media",
+            "is_active": true
+         },
+         {
+            "name": "Society Events",
+            "cp_type": "  ",
+            "qcode": "Society Events",
+            "is_active": true
+         },
+         {
+            "name": "Special Dividend Payment Date",
+            "cp_type": "Corporate event",
+            "qcode": "Special Dividend Payment Date",
+            "is_active": true
+         },
+         {
+            "name": "Special ex-dividend date",
+            "cp_type": null,
+            "qcode": "Special ex-dividend date",
+            "is_active": true
+         },
+         {
+            "name": "Sponsored Events",
+            "cp_type": null,
+            "qcode": "Sponsored Events",
+            "is_active": true
+         },
+         {
+            "name": "Statistics & Economic Indicators",
+            "cp_type": null,
+            "qcode": "Statistics & Economic Indicators",
+            "is_active": true
+         },
+         {
+            "name": "Stock Split - New Shares Start Trading Date",
+            "cp_type": "Corporate event",
+            "qcode": "Stock Split - New Shares Start Trading Date",
+            "is_active": true
+         },
+         {
+            "name": "Stock Split - Payment/Distribution Date",
+            "cp_type": "Corporate event",
+            "qcode": "Stock Split - Payment/Distribution Date",
+            "is_active": true
+         },
+         {
+            "name": "Stock Split - Record date",
+            "cp_type": "Corporate event",
+            "qcode": "Stock Split - Record date",
+            "is_active": true
+         },
+         {
+            "name": "Think Tank",
+            "cp_type": null,
+            "qcode": "Think Tank",
+            "is_active": true
+         },
+         {
+            "name": "Trade Conferences",
+            "cp_type": "Conference",
+            "qcode": "Trade Conferences",
+            "is_active": true
+         },
+         {
+            "name": "Trade Exhibitions",
+            "cp_type": "Trade show",
+            "qcode": "Trade Exhibitions",
+            "is_active": true
+         },
+         {
+            "name": "Trading statement",
+            "cp_type": null,
+            "qcode": "Trading statement",
+            "is_active": true
+         },
+         {
+            "name": "UK General Election",
+            "cp_type": "Election",
+            "qcode": "UK General Election",
+            "is_active": true
+         },
+         {
+            "name": "UK Regional Elections",
+            "cp_type": "Election",
+            "qcode": "UK Regional Elections",
+            "is_active": true
+         },
+         {
+            "name": "US Election",
+            "cp_type": "Election",
+            "qcode": "US Election",
+            "is_active": true
+         },
+         {
+            "name": "US Highlights",
+            "cp_type": null,
+            "qcode": "US Highlights",
+            "is_active": true
+         },
+         {
+            "name": "Virtual Events",
+            "cp_type": "isVirtual",
+            "qcode": "Virtual Events",
+            "is_active": true
+         },
+         {
+            "name": "Women's Interest",
+            "cp_type": null,
+            "qcode": "Women's Interest",
+            "is_active": true
+         },
+         {
+            "name": "World War I / World War II",
+            "cp_type": "Commemorative event | Historical event",
+            "qcode": "World War I / World War II",
+            "is_active": true
+         },
+         {
+            "name": "Youth (13-25 years)",
+            "cp_type": null,
+            "qcode": "Youth (13-25 years)",
             "is_active": true
          }
       ]
