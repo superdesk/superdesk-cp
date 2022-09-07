@@ -93,7 +93,6 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                 {
                     "name": event_type["name"],
                     "qcode": event_type["qcode"],
-                    "parent": event_type["parent"],
                     "scheme": "event_types",
                 }
             )

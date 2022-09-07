@@ -74,37 +74,31 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     {
                         "name": "Election",
                         "qcode": "Election",
-                        "parent": "Political event",
                         "scheme": "event_types",
                     },
                     {
                         "name": "Political event",
                         "qcode": "Political event",
-                        "parent": None,
                         "scheme": "event_types",
                     },
                     {
                         "name": "Music festival",
                         "qcode": "Music festival",
-                        "parent": "Festival",
                         "scheme": "event_types",
                     },
                     {
                         "name": "Festival",
                         "qcode": "Festival",
-                        "parent": "Literary event",
                         "scheme": "event_types",
                     },
                     {
                         "name": "Literary event",
                         "qcode": "Literary event",
-                        "parent": "Entertainment event",
                         "scheme": "event_types",
                     },
                     {
                         "name": "Entertainment event",
                         "qcode": "Entertainment event",
-                        "parent": None,
                         "scheme": "event_types",
                     },
                 ]
