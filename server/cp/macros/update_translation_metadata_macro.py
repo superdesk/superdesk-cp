@@ -75,7 +75,7 @@ def set_dateline_for_translation(item):
 
             formatted_geoname_item = None
             for item_ in json_data.get("geonames", []):
-                if(
+                if (
                     float(item_["lat"]) == located["location"]["lat"]
                     and float(item_["lng"]) == located["location"]["lon"]
                 ):
