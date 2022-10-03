@@ -196,6 +196,6 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         self.assertIn("located", dateline)
         self.assertEqual("Londres", dateline["located"]["city"])
         self.assertEqual("Angleterre", dateline["located"]["state"])
-        self.assertEqual("R.-U.", dateline["located"]["country"])
+        self.assertEqual("Royaume Uni", dateline["located"]["country"])
         self.assertEqual(51.50853, dateline["located"]["location"]["lat"])
         self.assertEqual(-0.12574, dateline["located"]["location"]["lon"])

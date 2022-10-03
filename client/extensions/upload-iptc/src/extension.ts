@@ -31,6 +31,19 @@ const copySubj = (scheme: string) => (subj: ISubject) => ({
     source: '',
 });
 
+const toString = (value: string | Array<string> | undefined) : string => (
+    Array.isArray(value) ? value[0] : (value || '')
+);
+
+const toArray = (value: string | Array<string> | undefined) : Array<string> => {
+    if (value == null) {
+        return [];
+    }
+
+    return (Array.isArray(value) ? value : value.split('\n'))
+        .map((value) => value.trim());
+}
+
 const extension: IExtension = {
     activate: (superdesk: ISuperdesk) => {
         const result: IExtensionActivationResult = {
@@ -40,16 +53,16 @@ const extension: IExtension = {
                     superdesk.entities.vocabulary.getVocabulary(PHOTO_SUPPCAT_ID),
                 ]).then(([categories, supp_categories]: [Array<ISubject>, Array<ISubject>]) => {
                     Object.assign(item, {
-                        slugline: data.ObjectName,
-                        byline: data['By-line'],
-                        headline: data.Headline,
-                        ednote: data.SpecialInstructions,
+                        slugline: toString(data.ObjectName),
+                        byline: toString(data['By-line']),
+                        headline: toString(data.Headline),
+                        ednote: toString(data.SpecialInstructions),
 
-                        original_source: data.Source,
-                        creditline: data.Credit,
-                        copyrightnotice: data.CopyrightNotice,
-                        language: data.LanguageIdentifier || 'en',
-                        keywords: data.SubjectReference ? data.SubjectReference.split('\n').map((keyword: string) => keyword.trim()) : [],
+                        original_source: toString(data.Source),
+                        creditline: toString(data.Credit),
+                        copyrightnotice: toString(data.CopyrightNotice),
+                        language: toString(data.LanguageIdentifier || 'en'),
+                        keywords: toArray(data.SubjectReference),
                         subject: (item.subject || []).concat(
                             data.Category != null ?
                                 categories.filter((subj) => subj.qcode === data.Category).map(copySubj(PHOTO_CAT_ID)) :
@@ -60,21 +73,21 @@ const extension: IExtension = {
                         ),
                         dateline: {
                             text: [
-                                data.City,
-                                data['Province-State'],
-                                data['Country-PrimaryLocationName'],
+                                toString(data.City),
+                                toString(data['Province-State']),
+                                toString(data['Country-PrimaryLocationName']),
                             ].filter((x) => !!x).join(', '),
                             located: {
-                                city: data.City,
-                                state: data['Province-State'],
-                                country: data['Country-PrimaryLocationName'],
-                                country_code: data['Country-PrimaryLocationCode'],
+                                city: toString(data.City),
+                                state: toString(data['Province-State']),
+                                country: toString(data['Country-PrimaryLocationName']),
+                                country_code: toString(data['Country-PrimaryLocationCode']),
                             },
                         },
                         extra: {
-                            filename: data.OriginalTransmissionReference,
-                            photographer_code: data['By-lineTitle'],
-                            caption_writer: data['Writer-Editor'],
+                            filename: toString(data.OriginalTransmissionReference),
+                            photographer_code: toString(data['By-lineTitle']),
+                            caption_writer: toString(data['Writer-Editor']),
                         },
                     });
 

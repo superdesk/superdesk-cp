@@ -13,7 +13,6 @@ import os
 import settings
 
 from superdesk.factory import get_app as superdesk_app
-from elasticapm.contrib.flask import ElasticAPM
 
 SUPERDESK_PATH = os.path.abspath(
     os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
@@ -42,17 +41,6 @@ def get_app(config=None):
         + ";"
         + os.path.join(SUPERDESK_PATH, "server/translations")
     )
-
-    if os.environ.get("APM_SERVER_URL") and os.environ.get("APM_SECRET_TOKEN"):
-        app.config["ELASTIC_APM"] = {
-            "DEBUG": app.debug,
-            "TRANSACTIONS_IGNORE_PATTERNS": ["^OPTIONS "],
-            "SERVICE_NAME": app.config.get("APM_SERVICE_NAME") or "superdesk-cp",
-            "SERVER_URL": os.environ["APM_SERVER_URL"],
-            "SECRET_TOKEN": os.environ["APM_SECRET_TOKEN"],
-        }
-
-        ElasticAPM(app)
 
     return app
 
