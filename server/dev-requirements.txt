@@ -1,8 +1,9 @@
 -r requirements.txt
 
+pytest
 flake8
-nose
 pep8
+nose
 mypy<=0.799
 httmock==1.4.0
 wooper==0.4.4

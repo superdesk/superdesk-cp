@@ -4,6 +4,6 @@ python3-saml>=1.9,<1.10
 python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.10
 
--e git+https://github.com/superdesk/superdesk-core.git@develop#egg=superdesk-core
+git+https://github.com/superdesk/superdesk-core.git@develop#egg=superdesk-core
 git+https://github.com/superdesk/superdesk-planning.git@develop#egg=superdesk-planning
--e git+https://github.com/superdesk/superdesk-analytics.git@develop#egg=superdesk-analytics
+git+https://github.com/superdesk/superdesk-analytics.git@develop#egg=superdesk-analytics
