@@ -50,4 +50,4 @@ class UpdateEventTypesCommand(superdesk.Command):
                 event_types["init_version"] += 1
                 vocabularies.seek(0)
                 vocabularies.truncate()
-                json.dump(cvs, vocabularies, indent=4)
+                json.dump(cvs, vocabularies, indent=4, ensure_ascii=False)
