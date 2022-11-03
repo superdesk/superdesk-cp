@@ -77,8 +77,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "event_types",
                     },
                     {
-                        "name": "Political event",
-                        "qcode": "Political event",
+                        "name": "Festival",
+                        "qcode": "Festival",
                         "scheme": "event_types",
                     },
                     {
@@ -87,18 +87,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "event_types",
                     },
                     {
-                        "name": "Festival",
-                        "qcode": "Festival",
-                        "scheme": "event_types",
-                    },
-                    {
-                        "name": "Literary event",
-                        "qcode": "Literary event",
-                        "scheme": "event_types",
-                    },
-                    {
-                        "name": "Entertainment event",
-                        "qcode": "Entertainment event",
+                        "name": "Political event",
+                        "qcode": "Political event",
                         "scheme": "event_types",
                     },
                 ]
