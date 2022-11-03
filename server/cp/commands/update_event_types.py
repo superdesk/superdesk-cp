@@ -1,10 +1,11 @@
 import superdesk
 import json
 import os
-from typing import Optional
+import logging
 
 
 class UpdateEventTypesCommand(superdesk.Command):
+
     """Update event_types in Vocabularies"""
 
     """
@@ -21,7 +22,7 @@ class UpdateEventTypesCommand(superdesk.Command):
         ),
     ]
 
-    def run(self, filename: Optional[str]):
+    def run(self, filename: str):
         print()
         with open(
             os.path.join(
@@ -51,3 +52,4 @@ class UpdateEventTypesCommand(superdesk.Command):
                 vocabularies.seek(0)
                 vocabularies.truncate()
                 json.dump(cvs, vocabularies, indent=4, ensure_ascii=False)
+                logging.info("Events types sucessfully updated ")
