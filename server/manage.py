@@ -20,4 +20,6 @@ app = get_app()
 manager = Manager(app)
 
 if __name__ == "__main__":
+    import cp.commands  # noqa
+
     manager.run(superdesk.COMMANDS)
