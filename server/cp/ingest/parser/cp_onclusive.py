@@ -4,10 +4,6 @@ from typing import List
 from superdesk import get_resource_service
 
 
-def _get_cv_items(_id: str) -> List:
-    return get_resource_service("vocabularies").get_items(_id=_id, is_active=True)
-
-
 class CPOnclusiveFeedParser(OnclusiveFeedParser):
     """
     Superdesk -CP event parser
@@ -15,15 +11,21 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     Feed Parser which can parse the Onclusive API Events
     """
 
-    event = []
+    _cv_items = {}
+
+    def _get_cv_items(self, _id: str) -> List:
+        if _id not in self._cv_items:
+            self._cv_items[_id] = get_resource_service("vocabularies").get_items(_id=_id, is_active=True)
+        return self._cv_items[_id]
 
     def parse(self, content, provider=None):
-        onclusive_cv_items = _get_cv_items("onclusive_ingest_categories")
-        anpa_categories = _get_cv_items("categories")
-        event_types = _get_cv_items("event_types")
-        onclusive_event_types = _get_cv_items("onclusive_event_types")
+        onclusive_cv_items = self._get_cv_items("onclusive_ingest_categories")
+        anpa_categories = self._get_cv_items("categories")
+        event_types = self._get_cv_items("event_types")
+        onclusive_event_types = self._get_cv_items("onclusive_event_types")
 
         items = super().parse(content, provider)
+        events = []
 
         for item in items:
             category = []
@@ -72,8 +74,8 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                         sorted(item["subject"], key=lambda k: k["qcode"])
                     )
                 ]
-            self.event.append(item)
-        return self.event
+            events.append(item)
+        return events
 
     def find_cv_item(self, cv_items, qcode):
         """
