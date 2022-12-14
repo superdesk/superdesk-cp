@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "cp.output",
     "cp.ultrad",
     "cp.planning_exports",
+    "cp.set_province_on_publish",
 ]
 
 MACROS_MODULE = "cp.macros"
