@@ -14,6 +14,7 @@ from superdesk.places.places_autocomplete import PlacesAutocompleteService
 from superdesk.geonames import geonames_request, format_geoname_item
 from flask import current_app as app
 from planning.events.events import EventsService
+from apps.contacts import ContactsService
 
 SEQUENCE_NUMBER = 100
 
@@ -83,6 +84,8 @@ places_autocomplete_service.get_place.side_effect = get_place
 event_service = create_autospec(EventsService)
 event_service.find_one.return_value = None
 
+contacts_service = create_autospec(ContactsService)
+
 resources = {
     "news": Resource(news_service),
     "ingest": Resource(ingest_service),
@@ -92,4 +95,5 @@ resources = {
     "vocabularies": Resource(vocabularies_service),
     "places_autocomplete": Resource(places_autocomplete_service),
     "events": Resource(event_service),
+    "contacts": Resource(contacts_service),
 }

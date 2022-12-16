@@ -124,18 +124,10 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 expected_categories.sort(key=lambda i: i["name"])
                 self.assertEqual(item["anpa_category"], expected_categories)
                 self.assertEqual(
-                    item[GUID_FIELD], "urn:newsml:2021-05-04T21:19:10.2:4112034"
+                    item[GUID_FIELD], "urn:onclusive:2021-05-04T21:19:10.2:4112034"
                 )
                 self.assertEqual(item[ITEM_TYPE], CONTENT_TYPE.EVENT)
                 self.assertEqual(item["state"], CONTENT_STATE.INGESTED)
-                self.assertEqual(
-                    item["firstcreated"],
-                    datetime.datetime(2021, 5, 4, 21, 19, 10, 200000, tzinfo=tzutc()),
-                )
-                self.assertEqual(
-                    item["versioncreated"],
-                    datetime.datetime(2022, 5, 10, 13, 14, 34, 873000, tzinfo=tzutc()),
-                )
 
                 self.assertEqual(item["occur_status"]["qcode"], "eocstat:eos5")
 
@@ -152,7 +144,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     item["dates"]["end"],
                     datetime.datetime(2022, 6, 16, 0, 0, tzinfo=tzutc()),
                 )
-                self.assertEqual(item["dates"]["tz"], "EDT")
 
                 self.assertEqual(
                     item["name"],
