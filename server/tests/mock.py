@@ -52,7 +52,12 @@ def get_place(geoname_id, language="en"):
 
 def get_cv_items(_id, is_active):
     cv = cvs.get(_id)
-    return [i for i in cv["items"] if i.get("is_active", True) == is_active]
+    items = []
+    for item in cv["items"]:
+        item.setdefault("scheme", _id)
+        if item.get("is_active", True) == is_active:
+            items.append(item)
+    return items
 
 
 class Resource:
