@@ -70,3 +70,6 @@ class PublishSignalTestCase(unittest.TestCase):
             assert "subject" in updates
             assert 1 == len(updates["subject"])
             assert item["subject"] == updates["subject"]
+
+    def test_empty_located(self):
+        set_province_on_publish(None, {"dateline": {"located": None}}, {}, bar=1)
