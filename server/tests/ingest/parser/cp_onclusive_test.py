@@ -25,6 +25,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
     provider = "Test_CP_Onclusive"
     app = flask.Flask(__name__)
 
+    maxDiff = None
+
     def test_content(self):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
@@ -39,6 +41,11 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     {
                         "name": "UK Regional Elections",
                         "qcode": "148",
+                        "scheme": "onclusive_event_types",
+                    },
+                    {
+                        "name": "Testing",
+                        "qcode": "149",
                         "scheme": "onclusive_event_types",
                     },
                     {
@@ -72,24 +79,43 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_categories",
                     },
                     {
-                        "name": "Election",
-                        "qcode": "Election",
+                        "name": "Conference",
+                        "qcode": "Conference",
                         "scheme": "event_types",
+                        "parent": None,
+                        "translations": {
+                            "name": {
+                                "en-ca": "Conference",
+                                "fr-ca": "Conférence",
+                            },
+                        },
                     },
                     {
-                        "name": "Festival",
-                        "qcode": "Festival",
+                        "name": "Trade show",
+                        "qcode": "Trade show",
                         "scheme": "event_types",
+                        "parent": None,
+                        "translations": {
+                            "name": {
+                                "en-ca": "Trade show",
+                                "fr-ca": "Salon professionnel"
+                            }
+                        },
                     },
                     {
-                        "name": "Music festival",
-                        "qcode": "Music festival",
-                        "scheme": "event_types",
-                    },
-                    {
-                        "name": "Political event",
-                        "qcode": "Political event",
-                        "scheme": "event_types",
+                        "name": "economy, business and finance",
+                        "qcode": "04000000",
+                        "scheme": "subject_custom",
+                        "parent": None,
+                        "iptc_subject": "04000000",
+                        "ap_subject": "c8e409f8858510048872ff2260dd383e",
+                        "in_jimi": True,
+                        "translations": {
+                            "name": {
+                                "en-CA": "Business",
+                                "fr-CA": "Affaires"
+                            }
+                        }
                     },
                 ]
                 expected_subjects.sort(key=lambda i: i["name"])
