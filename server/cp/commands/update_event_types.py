@@ -48,12 +48,14 @@ class UpdateEventTypesCommand(superdesk.Command):
                             "qcode": name,
                             "is_active": True,
                             "subject": self.get_subject(event),
-                            "translations": {"name": event["name"]},
                             "onclusive_ids": event["sourceMeta"][0]["key"]
                             if event.get("sourceMeta")
                             else None,
                         }
                     )
+                    if type(event["name"]) is not str:
+                        items.append({"translations": {"name": event["name"]}})
+
                 event_types["items"] = items
                 event_types["init_version"] += 1
                 vocabularies.seek(0)
