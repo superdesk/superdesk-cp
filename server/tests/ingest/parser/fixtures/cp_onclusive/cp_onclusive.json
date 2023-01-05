@@ -130,6 +130,11 @@
             "tagName": "Music Festivals",
             "tagTypeId": 9,
             "tagTypeName": null
+        },
+        {
+            "tagId": 149,
+            "tagName": "Testing",
+            "tagTypeId": 9
         }
     ],
     "influencers": [],
