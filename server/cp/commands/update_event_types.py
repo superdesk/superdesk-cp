@@ -23,7 +23,6 @@ class UpdateEventTypesCommand(superdesk.Command):
     ]
 
     def run(self, filename: str):
-        print()
         with open(
             os.path.join(
                 os.path.dirname(__file__), "../..", "data", "vocabularies.json"
@@ -37,14 +36,22 @@ class UpdateEventTypesCommand(superdesk.Command):
                 updated_event_types = json.load(updated_file)
                 items = []
                 for event in updated_event_types["eventTypes"]:
+                    name = (
+                        event["name"]
+                        if type(event["name"]) is str
+                        else event["name"]["en-ca"]
+                    )
                     items.append(
                         {
-                            "name": event["name"],
-                            "parent": event["broader"][0]["name"]
-                            if event.get("broader")
-                            else None,
-                            "qcode": event["name"],
+                            "name": name,
+                            "parent": self.get_parent(event),
+                            "qcode": name,
                             "is_active": True,
+                            "subject": self.get_subject(event),
+                            "translations": {"name": event["name"]},
+                            "onclusive_ids": event["sourceMeta"][0]["key"]
+                            if event.get("sourceMeta")
+                            else None,
                         }
                     )
                 event_types["items"] = items
@@ -53,3 +60,18 @@ class UpdateEventTypesCommand(superdesk.Command):
                 vocabularies.truncate()
                 json.dump(cvs, vocabularies, indent=4, ensure_ascii=False)
                 logging.info("Events types sucessfully updated ")
+
+    def get_subject(self, event):
+        if event.get("subject"):
+            subj = []
+            for i in event["subject"]:
+                subj.append(i["name"])
+            return subj
+        return None
+
+    def get_parent(self, event):
+        if event.get("broader"):
+            broader = event["broader"][0]["name"]
+            if type(broader) is not str and broader.get("en-ca"):
+                return broader["en-ca"]
+            return broader

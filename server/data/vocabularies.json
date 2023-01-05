@@ -24984,445 +24984,1258 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
-        "init_version": 2,
+        "init_version": 4,
         "items": [
             {
                 "name": "Anniversary",
                 "parent": null,
                 "qcode": "Anniversary",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Anniversary",
+                        "fr-ca": "Anniversaire"
+                    }
+                },
+                "onclusive_ids": [
+                    "132"
+                ]
             },
             {
                 "name": "Art show",
                 "parent": "Entertainment event",
                 "qcode": "Art show",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Art",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Art show",
+                        "fr-ca": "Exposition d'art"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Artist tour",
                 "parent": "Entertainment event",
                 "qcode": "Artist tour",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Artist tour",
+                        "fr-ca": "Tournée d'artiste"
+                    }
+                },
+                "onclusive_ids": [
+                    "175"
+                ]
             },
             {
                 "name": "Award ceremony",
                 "parent": null,
                 "qcode": "Award ceremony",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Award ceremony",
+                        "fr-ca": "Cérémonie de remise de prix"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Award nomination",
                 "parent": null,
                 "qcode": "Award nomination",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Award nomination",
+                        "fr-ca": "Mise en nomination de prix"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Award show",
                 "parent": "Entertainment event",
                 "qcode": "Award show",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Award show",
+                        "fr-ca": "Spectacle de remise de prix"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Awareness event",
                 "parent": null,
                 "qcode": "Awareness event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Awareness event",
+                        "fr-ca": "Événement de sensibilisation"
+                    }
+                },
+                "onclusive_ids": [
+                    "153"
+                ]
             },
             {
                 "name": "Military action",
                 "parent": "Military event",
                 "qcode": "Military action",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Military action",
+                        "fr-ca": "Opération militaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Book festival",
                 "parent": "Festival",
                 "qcode": "Book festival",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Books",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Book festival",
+                        "fr-ca": "Festival littéraire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Breaking news",
                 "parent": null,
                 "qcode": "Breaking news",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Breaking news",
+                        "fr-ca": "Nouvelle de dernière heure"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Celebrity sighting",
                 "parent": "Entertainment event",
                 "qcode": "Celebrity sighting",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Celebrity sighting",
+                        "fr-ca": "Événement avec célébrités"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Commemorative event",
                 "parent": null,
                 "qcode": "Commemorative event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Commemorative event",
+                        "fr-ca": "Événement commémoratif"
+                    }
+                },
+                "onclusive_ids": [
+                    "220"
+                ]
             },
             {
                 "name": "Commencement speech",
                 "parent": "Public speech",
                 "qcode": "Commencement speech",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Education",
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Commencement speech",
+                        "fr-ca": "Discours de remise de diplômes"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Competitive event",
                 "parent": null,
                 "qcode": "Competitive event",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Competitive event",
+                        "fr-ca": "Compétition"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Conference",
                 "parent": null,
                 "qcode": "Conference",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Conference",
+                        "fr-ca": "Conférence"
+                    }
+                },
+                "onclusive_ids": [
+                    "123",
+                    "134",
+                    "136",
+                    "148"
+                ]
             },
             {
                 "name": "Conflict",
                 "parent": null,
                 "qcode": "Conflict",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": "Conflict"
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Consumer expo",
                 "parent": null,
                 "qcode": "Consumer expo",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Consumer expo",
+                        "fr-ca": "Exposition"
+                    }
+                },
+                "onclusive_ids": [
+                    "137"
+                ]
             },
             {
                 "name": "Convention",
                 "parent": null,
                 "qcode": "Convention",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Convention",
+                        "fr-ca": "Congrès"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Conversation",
                 "parent": null,
                 "qcode": "Conversation",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Conversation",
+                        "fr-ca": "Conversation"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Corporate event",
                 "parent": null,
                 "qcode": "Corporate event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Corporate event",
+                        "fr-ca": "Événement corporatif"
+                    }
+                },
+                "onclusive_ids": [
+                    "24",
+                    "25",
+                    "26",
+                    "62",
+                    "71",
+                    "72",
+                    "73",
+                    "74",
+                    "75",
+                    "76",
+                    "77",
+                    "79",
+                    "80",
+                    "82",
+                    "83",
+                    "85",
+                    "88",
+                    "89",
+                    "93",
+                    "116",
+                    "119",
+                    "120",
+                    "121",
+                    "122",
+                    "124",
+                    "125",
+                    "126",
+                    "127",
+                    "170",
+                    "197",
+                    "199",
+                    "200",
+                    "202",
+                    "205",
+                    "206",
+                    "207",
+                    "208",
+                    "209",
+                    "210",
+                    "248",
+                    "249"
+                ]
             },
             {
                 "name": "Court proceedings",
                 "parent": null,
                 "qcode": "Court proceedings",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Court proceedings",
+                        "fr-ca": "Procès"
+                    }
+                },
+                "onclusive_ids": [
+                    "217",
+                    "218",
+                    "219",
+                    "234"
+                ]
             },
             {
                 "name": "Demonstration",
                 "parent": null,
                 "qcode": "Demonstration",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Demonstration",
+                        "fr-ca": "Manifestation"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Economic event",
                 "parent": null,
                 "qcode": "Economic event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Economy",
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Economic event",
+                        "fr-ca": "Événement économique"
+                    }
+                },
+                "onclusive_ids": [
+                    "171",
+                    "229",
+                    "242"
+                ]
             },
             {
                 "name": "Election",
                 "parent": "Political event",
                 "qcode": "Election",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Government and politics",
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Election",
+                        "fr-ca": "Élections"
+                    }
+                },
+                "onclusive_ids": [
+                    "180",
+                    "198",
+                    "223",
+                    "233",
+                    "256"
+                ]
             },
             {
                 "name": "Entertainment event",
                 "parent": null,
                 "qcode": "Entertainment event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Entertainment event",
+                        "fr-ca": "Événement culturel"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Fair",
                 "parent": null,
                 "qcode": "Fair",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": "Fair"
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Fan convention",
                 "parent": "Convention",
                 "qcode": "Fan convention",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture",
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Fan convention",
+                        "fr-ca": "Congrès de fans"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Festival",
                 "parent": null,
                 "qcode": "Festival",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Festival",
+                        "fr-ca": "Festival"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Film festival",
                 "parent": "Festival",
                 "qcode": "Film festival",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Film",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Film festival",
+                        "fr-ca": "Festival de film"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Financial markets event",
                 "parent": null,
                 "qcode": "Financial markets event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Financial markets event",
+                        "fr-ca": "Événement des marchés financiers"
+                    }
+                },
+                "onclusive_ids": [
+                    "164",
+                    "186"
+                ]
             },
             {
                 "name": "Food festival",
                 "parent": "Festival",
                 "qcode": "Food festival",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Food and drink",
+                    "Lifestyle"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Food festival",
+                        "fr-ca": "Festival culinaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Fundraiser",
                 "parent": null,
                 "qcode": "Fundraiser",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Fundraiser",
+                        "fr-ca": "Campagne de financement"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Gala",
                 "parent": "Entertainment event",
                 "qcode": "Gala",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Gala",
+                        "fr-ca": "Gala"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Game show",
                 "parent": "Competitive event",
                 "qcode": "Game show",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Television",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Game show",
+                        "fr-ca": "Émission de jeux"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Head of state tour",
                 "parent": "Tour",
                 "qcode": "Head of state tour",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "International relations",
+                    "Government and politics"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Head of state tour",
+                        "fr-ca": "Tournée de chef d'état"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Historical event",
                 "parent": null,
                 "qcode": "Historical event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Historical event",
+                        "fr-ca": "Événement historique"
+                    }
+                },
+                "onclusive_ids": [
+                    "220"
+                ]
             },
             {
                 "name": "Holiday",
                 "parent": null,
                 "qcode": "Holiday",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Lifestyle"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Holiday",
+                        "fr-ca": "Fête"
+                    }
+                },
+                "onclusive_ids": [
+                    "178"
+                ]
             },
             {
                 "name": "Inauguration",
                 "parent": null,
                 "qcode": "Inauguration",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Inauguration",
+                        "fr-ca": "Inauguration"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Induction",
                 "parent": null,
                 "qcode": "Induction",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Induction",
+                        "fr-ca": "Intronisation"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Labour event",
                 "parent": null,
                 "qcode": "Labour event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Labour event",
+                        "fr-ca": "Événement syndical"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Literary event",
                 "parent": "Entertainment event",
                 "qcode": "Literary event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Literary event",
+                        "fr-ca": "Événement littéraire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Live performance",
                 "parent": "Entertainment event",
                 "qcode": "Live performance",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Live performance",
+                        "fr-ca": "Performance en direct"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "March",
                 "parent": null,
                 "qcode": "March",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "March",
+                        "fr-ca": "Marche"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Meeting",
                 "parent": null,
                 "qcode": "Meeting",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Meeting",
+                        "fr-ca": "Rencontre"
+                    }
+                },
+                "onclusive_ids": [
+                    "236"
+                ]
             },
             {
                 "name": "Military action",
                 "parent": "Military event",
                 "qcode": "Military action",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Military action",
+                        "fr-ca": "Opération militaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Military event",
                 "parent": null,
                 "qcode": "Military event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Military event",
+                        "fr-ca": "Événement militaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Military parade",
                 "parent": "Military event",
                 "qcode": "Military parade",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Military parade",
+                        "fr-ca": "Parade militaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Political convention",
                 "parent": "Convention",
                 "qcode": "Political convention",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Government and politics"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Political convention",
+                        "fr-ca": "Congrès politique"
+                    }
+                },
+                "onclusive_ids": [
+                    "224"
+                ]
             },
             {
                 "name": "Political event",
                 "parent": null,
                 "qcode": "Political event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Government and politics"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Political event",
+                        "fr-ca": "Événement politique"
+                    }
+                },
+                "onclusive_ids": [
+                    "225",
+                    "247"
+                ]
             },
             {
                 "name": "Music festival",
                 "parent": "Festival",
                 "qcode": "Music festival",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Music",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Music festival",
+                        "fr-ca": "Festival de musique"
+                    }
+                },
+                "onclusive_ids": [
+                    "176"
+                ]
             },
             {
                 "name": "Music tour",
                 "parent": "Tour",
                 "qcode": "Music tour",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Music",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Music tour",
+                        "fr-ca": "Tournée musicale"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Nomination",
                 "parent": null,
                 "qcode": "Nomination",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Nomination",
+                        "fr-ca": "Mise en candidature"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Official visit",
                 "parent": "Political event",
                 "qcode": "Official visit",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "International relations",
+                    "Government and politics"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Official visit",
+                        "fr-ca": "Visite officielle"
+                    }
+                },
+                "onclusive_ids": [
+                    "129"
+                ]
             },
             {
                 "name": "Opening",
-                "parent": "Political event",
+                "parent": null,
                 "qcode": "Opening",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Opening",
+                        "fr-ca": "Ouverture"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Parade",
                 "parent": null,
                 "qcode": "Parade",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Parade",
+                        "fr-ca": "Parade"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Premiere",
                 "parent": "Entertainment event",
                 "qcode": "Premiere",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Premiere",
+                        "fr-ca": "Première"
+                    }
+                },
+                "onclusive_ids": [
+                    "174",
+                    "192"
+                ]
             },
             {
                 "name": "Press event",
                 "parent": null,
                 "qcode": "Press event",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Press event",
+                        "fr-ca": "Événement médiatique"
+                    }
+                },
+                "onclusive_ids": [
+                    "115",
+                    "143"
+                ]
             },
             {
                 "name": "Product launch",
                 "parent": null,
                 "qcode": "Product launch",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Product launch",
+                        "fr-ca": "Lancement de produit"
+                    }
+                },
+                "onclusive_ids": [
+                    "144"
+                ]
             },
             {
                 "name": "Promotional event",
-                "parent": "Business event",
+                "parent": null,
                 "qcode": "Promotional event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Promotional event",
+                        "fr-ca": "Événement promotionnel"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Protest",
                 "parent": null,
                 "qcode": "Protest",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Protest",
+                        "fr-ca": "Manifestation"
+                    }
+                },
+                "onclusive_ids": [
+                    "257"
+                ]
             },
             {
                 "name": "Public consultation",
                 "parent": null,
                 "qcode": "Public consultation",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Public policy",
+                    "Government and politics"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Public consultation",
+                        "fr-ca": "Consultation publique"
+                    }
+                },
+                "onclusive_ids": [
+                    "215"
+                ]
             },
             {
                 "name": "Public speech",
                 "parent": null,
                 "qcode": "Public speech",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Public speech",
+                        "fr-ca": "Allocution publique"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Rally",
                 "parent": null,
                 "qcode": "Rally",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Rally",
+                        "fr-ca": "Rassemblement"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Red carpet event",
                 "parent": "Entertainment event",
                 "qcode": "Red carpet event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Red carpet event",
+                        "fr-ca": "Tapis rouge"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
-                "name": "Royalty tour",
-                "parent": "Tour",
-                "qcode": "Royalty tour",
-                "is_active": true
+                "name": "Military event",
+                "parent": null,
+                "qcode": "Military event",
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Military event",
+                        "fr-ca": "Événement militaire"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Session",
                 "parent": null,
                 "qcode": "Session",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Session",
+                        "fr-ca": "Séance"
+                    }
+                },
+                "onclusive_ids": [
+                    "156"
+                ]
             },
             {
                 "name": "Sports event",
                 "parent": null,
                 "qcode": "Sports event",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Sports"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Sports event",
+                        "fr-ca": "Événement sportif"
+                    }
+                },
+                "onclusive_ids": [
+                    "179",
+                    "183"
+                ]
             },
             {
                 "name": "Strike",
-                "parent": "Labour event ",
+                "parent": "Labour event",
                 "qcode": "Strike",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business",
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Strike",
+                        "fr-ca": "Grève"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Talk show",
                 "parent": "Entertainment event",
                 "qcode": "Talk show",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Television",
+                    "Entertainment and culture"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Talk show",
+                        "fr-ca": "Émission d'entrevues"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Tour",
                 "parent": null,
                 "qcode": "Tour",
-                "is_active": true
+                "is_active": true,
+                "subject": null,
+                "translations": {
+                    "name": {
+                        "en-ca": "Tour",
+                        "fr-ca": "Tournée"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Trade show",
                 "parent": null,
                 "qcode": "Trade show",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Trade show",
+                        "fr-ca": "Salon professionnel"
+                    }
+                },
+                "onclusive_ids": [
+                    "149"
+                ]
             },
             {
                 "name": "War",
                 "parent": null,
                 "qcode": "War",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "General news"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "War",
+                        "fr-ca": "Guerre"
+                    }
+                },
+                "onclusive_ids": null
             },
             {
                 "name": "Wedding",
                 "parent": null,
                 "qcode": "Wedding",
-                "is_active": true
+                "is_active": true,
+                "subject": [
+                    "Lifestyle"
+                ],
+                "translations": {
+                    "name": {
+                        "en-ca": "Wedding",
+                        "fr-ca": "Mariage"
+                    }
+                },
+                "onclusive_ids": null
             }
         ]
     },
