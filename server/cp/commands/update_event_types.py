@@ -41,21 +41,19 @@ class UpdateEventTypesCommand(superdesk.Command):
                         if type(event["name"]) is str
                         else event["name"]["en-ca"]
                     )
-                    items.append(
-                        {
-                            "name": name,
-                            "parent": self.get_parent(event),
-                            "qcode": name,
-                            "is_active": True,
-                            "subject": self.get_subject(event),
-                            "onclusive_ids": event["sourceMeta"][0]["key"]
-                            if event.get("sourceMeta")
-                            else None,
-                        }
-                    )
+                    obj = {
+                        "name": name,
+                        "parent": self.get_parent(event),
+                        "qcode": name,
+                        "is_active": True,
+                        "subject": self.get_subject(event),
+                        "onclusive_ids": event["sourceMeta"][0]["key"]
+                        if event.get("sourceMeta")
+                        else None,
+                    }
                     if type(event["name"]) is not str:
-                        items.append({"translations": {"name": event["name"]}})
-
+                        obj["translations"] = {"name": event["name"]}
+                    items.append(obj)
                 event_types["items"] = items
                 event_types["init_version"] += 1
                 vocabularies.seek(0)
