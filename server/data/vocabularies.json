@@ -24984,7 +24984,12 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
-        "init_version": 6,
+        "init_version": 7,
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "parent": {}
+        },
         "items": [
             {
                 "name": "Anniversary",
@@ -24997,8 +25002,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Anniversary",
-                        "fr-ca": "Anniversaire"
+                        "en-CA": "Anniversary",
+                        "fr-CA": "Anniversaire"
                     }
                 }
             },
@@ -25014,8 +25019,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Art show",
-                        "fr-ca": "Exposition d'art"
+                        "en-CA": "Art show",
+                        "fr-CA": "Exposition d'art"
                     }
                 }
             },
@@ -25032,8 +25037,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Artist tour",
-                        "fr-ca": "Tournée d'artiste"
+                        "en-CA": "Artist tour",
+                        "fr-CA": "Tournée d'artiste"
                     }
                 }
             },
@@ -25046,8 +25051,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Award ceremony",
-                        "fr-ca": "Cérémonie de remise de prix"
+                        "en-CA": "Award ceremony",
+                        "fr-CA": "Cérémonie de remise de prix"
                     }
                 }
             },
@@ -25060,8 +25065,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Award nomination",
-                        "fr-ca": "Mise en nomination de prix"
+                        "en-CA": "Award nomination",
+                        "fr-CA": "Mise en nomination de prix"
                     }
                 }
             },
@@ -25076,8 +25081,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Award show",
-                        "fr-ca": "Spectacle de remise de prix"
+                        "en-CA": "Award show",
+                        "fr-CA": "Spectacle de remise de prix"
                     }
                 }
             },
@@ -25094,8 +25099,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Awareness event",
-                        "fr-ca": "Événement de sensibilisation"
+                        "en-CA": "Awareness event",
+                        "fr-CA": "Événement de sensibilisation"
                     }
                 }
             },
@@ -25110,8 +25115,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Military action",
-                        "fr-ca": "Opération militaire"
+                        "en-CA": "Military action",
+                        "fr-CA": "Opération militaire"
                     }
                 }
             },
@@ -25127,8 +25132,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Book festival",
-                        "fr-ca": "Festival littéraire"
+                        "en-CA": "Book festival",
+                        "fr-CA": "Festival littéraire"
                     }
                 }
             },
@@ -25143,8 +25148,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Breaking news",
-                        "fr-ca": "Nouvelle de dernière heure"
+                        "en-CA": "Breaking news",
+                        "fr-CA": "Nouvelle de dernière heure"
                     }
                 }
             },
@@ -25159,8 +25164,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Celebrity sighting",
-                        "fr-ca": "Événement avec célébrités"
+                        "en-CA": "Celebrity sighting",
+                        "fr-CA": "Événement avec célébrités"
                     }
                 }
             },
@@ -25177,8 +25182,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Commemorative event",
-                        "fr-ca": "Événement commémoratif"
+                        "en-CA": "Commemorative event",
+                        "fr-CA": "Événement commémoratif"
                     }
                 }
             },
@@ -25194,8 +25199,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Commencement speech",
-                        "fr-ca": "Discours de remise de diplômes"
+                        "en-CA": "Commencement speech",
+                        "fr-CA": "Discours de remise de diplômes"
                     }
                 }
             },
@@ -25208,8 +25213,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Competitive event",
-                        "fr-ca": "Compétition"
+                        "en-CA": "Competitive event",
+                        "fr-CA": "Compétition"
                     }
                 }
             },
@@ -25227,8 +25232,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Conference",
-                        "fr-ca": "Conférence"
+                        "en-CA": "Conference",
+                        "fr-CA": "Conférence"
                     }
                 }
             },
@@ -25255,8 +25260,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Consumer expo",
-                        "fr-ca": "Exposition"
+                        "en-CA": "Consumer expo",
+                        "fr-CA": "Exposition"
                     }
                 }
             },
@@ -25269,8 +25274,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Convention",
-                        "fr-ca": "Congrès"
+                        "en-CA": "Convention",
+                        "fr-CA": "Congrès"
                     }
                 }
             },
@@ -25283,8 +25288,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Conversation",
-                        "fr-ca": "Conversation"
+                        "en-CA": "Conversation",
+                        "fr-CA": "Conversation"
                     }
                 }
             },
@@ -25341,8 +25346,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Corporate event",
-                        "fr-ca": "Événement corporatif"
+                        "en-CA": "Corporate event",
+                        "fr-CA": "Événement corporatif"
                     }
                 }
             },
@@ -25362,8 +25367,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Court proceedings",
-                        "fr-ca": "Procès"
+                        "en-CA": "Court proceedings",
+                        "fr-CA": "Procès"
                     }
                 }
             },
@@ -25378,8 +25383,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Demonstration",
-                        "fr-ca": "Manifestation"
+                        "en-CA": "Demonstration",
+                        "fr-CA": "Manifestation"
                     }
                 }
             },
@@ -25399,8 +25404,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Economic event",
-                        "fr-ca": "Événement économique"
+                        "en-CA": "Economic event",
+                        "fr-CA": "Événement économique"
                     }
                 }
             },
@@ -25422,8 +25427,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Election",
-                        "fr-ca": "Élections"
+                        "en-CA": "Election",
+                        "fr-CA": "Élections"
                     }
                 }
             },
@@ -25438,8 +25443,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Entertainment event",
-                        "fr-ca": "Événement culturel"
+                        "en-CA": "Entertainment event",
+                        "fr-CA": "Événement culturel"
                     }
                 }
             },
@@ -25463,8 +25468,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Fan convention",
-                        "fr-ca": "Congrès de fans"
+                        "en-CA": "Fan convention",
+                        "fr-CA": "Congrès de fans"
                     }
                 }
             },
@@ -25477,8 +25482,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Festival",
-                        "fr-ca": "Festival"
+                        "en-CA": "Festival",
+                        "fr-CA": "Festival"
                     }
                 }
             },
@@ -25494,8 +25499,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Film festival",
-                        "fr-ca": "Festival de film"
+                        "en-CA": "Film festival",
+                        "fr-CA": "Festival de film"
                     }
                 }
             },
@@ -25513,8 +25518,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Financial markets event",
-                        "fr-ca": "Événement des marchés financiers"
+                        "en-CA": "Financial markets event",
+                        "fr-CA": "Événement des marchés financiers"
                     }
                 }
             },
@@ -25530,8 +25535,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Food festival",
-                        "fr-ca": "Festival culinaire"
+                        "en-CA": "Food festival",
+                        "fr-CA": "Festival culinaire"
                     }
                 }
             },
@@ -25544,8 +25549,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Fundraiser",
-                        "fr-ca": "Campagne de financement"
+                        "en-CA": "Fundraiser",
+                        "fr-CA": "Campagne de financement"
                     }
                 }
             },
@@ -25560,8 +25565,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Gala",
-                        "fr-ca": "Gala"
+                        "en-CA": "Gala",
+                        "fr-CA": "Gala"
                     }
                 }
             },
@@ -25577,8 +25582,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Game show",
-                        "fr-ca": "Émission de jeux"
+                        "en-CA": "Game show",
+                        "fr-CA": "Émission de jeux"
                     }
                 }
             },
@@ -25594,8 +25599,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Head of state tour",
-                        "fr-ca": "Tournée de chef d'état"
+                        "en-CA": "Head of state tour",
+                        "fr-CA": "Tournée de chef d'état"
                     }
                 }
             },
@@ -25612,8 +25617,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Historical event",
-                        "fr-ca": "Événement historique"
+                        "en-CA": "Historical event",
+                        "fr-CA": "Événement historique"
                     }
                 }
             },
@@ -25630,8 +25635,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Holiday",
-                        "fr-ca": "Fête"
+                        "en-CA": "Holiday",
+                        "fr-CA": "Fête"
                     }
                 }
             },
@@ -25646,8 +25651,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Inauguration",
-                        "fr-ca": "Inauguration"
+                        "en-CA": "Inauguration",
+                        "fr-CA": "Inauguration"
                     }
                 }
             },
@@ -25660,8 +25665,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Induction",
-                        "fr-ca": "Intronisation"
+                        "en-CA": "Induction",
+                        "fr-CA": "Intronisation"
                     }
                 }
             },
@@ -25676,8 +25681,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Labour event",
-                        "fr-ca": "Événement syndical"
+                        "en-CA": "Labour event",
+                        "fr-CA": "Événement syndical"
                     }
                 }
             },
@@ -25692,8 +25697,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Literary event",
-                        "fr-ca": "Événement littéraire"
+                        "en-CA": "Literary event",
+                        "fr-CA": "Événement littéraire"
                     }
                 }
             },
@@ -25708,8 +25713,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Live performance",
-                        "fr-ca": "Performance en direct"
+                        "en-CA": "Live performance",
+                        "fr-CA": "Performance en direct"
                     }
                 }
             },
@@ -25724,8 +25729,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "March",
-                        "fr-ca": "Marche"
+                        "en-CA": "March",
+                        "fr-CA": "Marche"
                     }
                 }
             },
@@ -25740,8 +25745,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Meeting",
-                        "fr-ca": "Rencontre"
+                        "en-CA": "Meeting",
+                        "fr-CA": "Rencontre"
                     }
                 }
             },
@@ -25756,8 +25761,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Military action",
-                        "fr-ca": "Opération militaire"
+                        "en-CA": "Military action",
+                        "fr-CA": "Opération militaire"
                     }
                 }
             },
@@ -25772,8 +25777,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Military event",
-                        "fr-ca": "Événement militaire"
+                        "en-CA": "Military event",
+                        "fr-CA": "Événement militaire"
                     }
                 }
             },
@@ -25788,8 +25793,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Military parade",
-                        "fr-ca": "Parade militaire"
+                        "en-CA": "Military parade",
+                        "fr-CA": "Parade militaire"
                     }
                 }
             },
@@ -25806,8 +25811,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Political convention",
-                        "fr-ca": "Congrès politique"
+                        "en-CA": "Political convention",
+                        "fr-CA": "Congrès politique"
                     }
                 }
             },
@@ -25825,8 +25830,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Political event",
-                        "fr-ca": "Événement politique"
+                        "en-CA": "Political event",
+                        "fr-CA": "Événement politique"
                     }
                 }
             },
@@ -25844,8 +25849,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Music festival",
-                        "fr-ca": "Festival de musique"
+                        "en-CA": "Music festival",
+                        "fr-CA": "Festival de musique"
                     }
                 }
             },
@@ -25861,8 +25866,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Music tour",
-                        "fr-ca": "Tournée musicale"
+                        "en-CA": "Music tour",
+                        "fr-CA": "Tournée musicale"
                     }
                 }
             },
@@ -25875,8 +25880,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Nomination",
-                        "fr-ca": "Mise en candidature"
+                        "en-CA": "Nomination",
+                        "fr-CA": "Mise en candidature"
                     }
                 }
             },
@@ -25894,8 +25899,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Official visit",
-                        "fr-ca": "Visite officielle"
+                        "en-CA": "Official visit",
+                        "fr-CA": "Visite officielle"
                     }
                 }
             },
@@ -25910,8 +25915,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Opening",
-                        "fr-ca": "Ouverture"
+                        "en-CA": "Opening",
+                        "fr-CA": "Ouverture"
                     }
                 }
             },
@@ -25924,8 +25929,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Parade",
-                        "fr-ca": "Parade"
+                        "en-CA": "Parade",
+                        "fr-CA": "Parade"
                     }
                 }
             },
@@ -25943,8 +25948,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Premiere",
-                        "fr-ca": "Première"
+                        "en-CA": "Premiere",
+                        "fr-CA": "Première"
                     }
                 }
             },
@@ -25960,8 +25965,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Press event",
-                        "fr-ca": "Événement médiatique"
+                        "en-CA": "Press event",
+                        "fr-CA": "Événement médiatique"
                     }
                 }
             },
@@ -25978,8 +25983,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Product launch",
-                        "fr-ca": "Lancement de produit"
+                        "en-CA": "Product launch",
+                        "fr-CA": "Lancement de produit"
                     }
                 }
             },
@@ -25994,8 +25999,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Promotional event",
-                        "fr-ca": "Événement promotionnel"
+                        "en-CA": "Promotional event",
+                        "fr-CA": "Événement promotionnel"
                     }
                 }
             },
@@ -26012,8 +26017,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Protest",
-                        "fr-ca": "Manifestation"
+                        "en-CA": "Protest",
+                        "fr-CA": "Manifestation"
                     }
                 }
             },
@@ -26031,8 +26036,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Public consultation",
-                        "fr-ca": "Consultation publique"
+                        "en-CA": "Public consultation",
+                        "fr-CA": "Consultation publique"
                     }
                 }
             },
@@ -26045,8 +26050,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Public speech",
-                        "fr-ca": "Allocution publique"
+                        "en-CA": "Public speech",
+                        "fr-CA": "Allocution publique"
                     }
                 }
             },
@@ -26061,8 +26066,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Rally",
-                        "fr-ca": "Rassemblement"
+                        "en-CA": "Rally",
+                        "fr-CA": "Rassemblement"
                     }
                 }
             },
@@ -26077,8 +26082,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Red carpet event",
-                        "fr-ca": "Tapis rouge"
+                        "en-CA": "Red carpet event",
+                        "fr-CA": "Tapis rouge"
                     }
                 }
             },
@@ -26093,8 +26098,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Military event",
-                        "fr-ca": "Événement militaire"
+                        "en-CA": "Military event",
+                        "fr-CA": "Événement militaire"
                     }
                 }
             },
@@ -26109,8 +26114,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Session",
-                        "fr-ca": "Séance"
+                        "en-CA": "Session",
+                        "fr-CA": "Séance"
                     }
                 }
             },
@@ -26128,8 +26133,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Sports event",
-                        "fr-ca": "Événement sportif"
+                        "en-CA": "Sports event",
+                        "fr-CA": "Événement sportif"
                     }
                 }
             },
@@ -26145,8 +26150,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Strike",
-                        "fr-ca": "Grève"
+                        "en-CA": "Strike",
+                        "fr-CA": "Grève"
                     }
                 }
             },
@@ -26162,8 +26167,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Talk show",
-                        "fr-ca": "Émission d'entrevues"
+                        "en-CA": "Talk show",
+                        "fr-CA": "Émission d'entrevues"
                     }
                 }
             },
@@ -26176,8 +26181,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Tour",
-                        "fr-ca": "Tournée"
+                        "en-CA": "Tour",
+                        "fr-CA": "Tournée"
                     }
                 }
             },
@@ -26194,8 +26199,8 @@
                 ],
                 "translations": {
                     "name": {
-                        "en-ca": "Trade show",
-                        "fr-ca": "Salon professionnel"
+                        "en-CA": "Trade show",
+                        "fr-CA": "Salon professionnel"
                     }
                 }
             },
@@ -26210,8 +26215,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "War",
-                        "fr-ca": "Guerre"
+                        "en-CA": "War",
+                        "fr-CA": "Guerre"
                     }
                 }
             },
@@ -26226,8 +26231,8 @@
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-ca": "Wedding",
-                        "fr-ca": "Mariage"
+                        "en-CA": "Wedding",
+                        "fr-CA": "Mariage"
                     }
                 }
             }
