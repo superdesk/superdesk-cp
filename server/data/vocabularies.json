@@ -24984,11 +24984,14 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
-        "init_version": 7,
+        "init_version": 8,
         "schema": {
             "name": {},
             "qcode": {},
             "parent": {}
+        },
+        "service": {
+            "all": 1
         },
         "items": [
             {
