@@ -85,8 +85,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "parent": None,
                         "translations": {
                             "name": {
-                                "en-ca": "Conference",
-                                "fr-ca": "Conférence",
+                                "en-CA": "Conference",
+                                "fr-CA": "Conférence",
                             },
                         },
                     },
@@ -97,8 +97,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "parent": None,
                         "translations": {
                             "name": {
-                                "en-ca": "Trade show",
-                                "fr-ca": "Salon professionnel"
+                                "en-CA": "Trade show",
+                                "fr-CA": "Salon professionnel"
                             }
                         },
                     },

@@ -1,4 +1,5 @@
 import os
+import bson
 import json
 
 from unittest.mock import create_autospec
@@ -90,6 +91,7 @@ event_service = create_autospec(EventsService)
 event_service.find_one.return_value = None
 
 contacts_service = create_autospec(ContactsService)
+contacts_service.find_one.return_value = {"_id": bson.ObjectId()}
 
 resources = {
     "news": Resource(news_service),
