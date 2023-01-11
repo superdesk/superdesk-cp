@@ -59,6 +59,11 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_event_types",
                     },
                     {
+                        "name": "Testing2",
+                        "qcode": "129",
+                        "scheme": "onclusive_event_types",
+                    },
+                    {
                         "name": "Finance General",
                         "qcode": "35",
                         "scheme": "onclusive_categories",
@@ -103,6 +108,18 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         },
                     },
                     {
+                        "name": "Official visit",
+                        "parent": "Political event",
+                        "qcode": "Official visit",
+                        "scheme": "event_types",
+                        "translations": {
+                            "name": {
+                                "en-CA": "Official visit",
+                                "fr-CA": "Visite officielle"
+                            }
+                        },
+                    },
+                    {
                         "name": "economy, business and finance",
                         "qcode": "04000000",
                         "scheme": "subject_custom",
@@ -114,6 +131,21 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                             "name": {
                                 "en-CA": "Business",
                                 "fr-CA": "Affaires"
+                            }
+                        }
+                    },
+                    {
+                        "name": "international relations",
+                        "qcode": "20000638",
+                        "parent": "11000000",
+                        "scheme": "subject_custom",
+                        "iptc_subject": "11002002",
+                        "ap_subject": None,
+                        "in_jimi": False,
+                        "translations": {
+                            "name": {
+                                "en-CA": "international relations",
+                                "fr-CA": "Relations internationales"
                             }
                         }
                     },
@@ -150,7 +182,7 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 expected_categories.sort(key=lambda i: i["name"])
                 self.assertEqual(item["anpa_category"], expected_categories)
                 self.assertEqual(
-                    item[GUID_FIELD], "urn:onclusive:2021-05-04T21:19:10.2:4112034"
+                    item[GUID_FIELD], "urn:onclusive:4112034"
                 )
                 self.assertEqual(item[ITEM_TYPE], CONTENT_TYPE.EVENT)
                 self.assertEqual(item["state"], CONTENT_STATE.INGESTED)
