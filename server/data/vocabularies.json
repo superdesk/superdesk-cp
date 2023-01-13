@@ -24141,6 +24141,13 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
+        "schema": {
+            "name": {},
+            "qcode": {},
+            "parent": {},
+            "cp_category": {}
+        },
+        "init_version": 2,
         "items": [
             {
                 "name": "Corporate Social Responsibility / Business Sustainability",
@@ -24151,19 +24158,19 @@
             {
                 "name": "Investments / Savings",
                 "cp_category": "f",
-                "qcode": "[New for CP]",
+                "qcode": "10",
                 "is_active": true
             },
             {
                 "name": "Mortgages",
                 "cp_category": "f",
-                "qcode": "[New for CP]",
+                "qcode": "11",
                 "is_active": true
             },
             {
                 "name": "Personal Finance",
                 "cp_category": "f",
-                "qcode": "[New for CP]",
+                "qcode": "8",
                 "is_active": true
             },
             {
@@ -24289,7 +24296,7 @@
             {
                 "name": "Leading Canadian Stocks 500 Tracker  + Top Global 1200 ",
                 "cp_category": "b",
-                "qcode": "[New for CP]",
+                "qcode": "262",
                 "is_active": true
             },
             {
@@ -24607,7 +24614,7 @@
             {
                 "name": "Indigeneous Peoples",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "261",
                 "is_active": true
             },
             {
@@ -24637,7 +24644,7 @@
             {
                 "name": "Canadian National Statistics",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "259",
                 "is_active": true
             },
             {
@@ -24781,19 +24788,19 @@
             {
                 "name": "Canadian Elections",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "257",
                 "is_active": true
             },
             {
                 "name": "Canadian National Politics",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "258",
                 "is_active": true
             },
             {
                 "name": "Canadian Provincial Politics",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "260",
                 "is_active": true
             },
             {
@@ -24805,7 +24812,7 @@
             {
                 "name": "Parliamentary Committees",
                 "cp_category": "g",
-                "qcode": "[New for CP]",
+                "qcode": "247",
                 "is_active": true
             },
             {

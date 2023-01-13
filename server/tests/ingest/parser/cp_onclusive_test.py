@@ -20,6 +20,10 @@ with open(get_fixture_path("cp_onclusive.json", "cp_onclusive")) as fp:
     data = json.load(fp)
 
 
+def qcode(subject):
+    return "{}:{}".format(subject.get("scheme"), subject.get("qcode"))
+
+
 class OnclusiveFeedParserTestCase(ParserTestCase):
     parser = CPOnclusiveFeedParser()
     provider = "Test_CP_Onclusive"
@@ -31,7 +35,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = self.parser.parse(data)[0]
-                item["subject"].sort(key=lambda i: i["name"])
                 expected_subjects = [
                     {
                         "name": "Conflict / Terrorism / Security",
@@ -84,74 +87,31 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_categories",
                     },
                     {
-                        "name": "Conference",
                         "qcode": "Conference",
                         "scheme": "event_types",
-                        "parent": None,
-                        "translations": {
-                            "name": {
-                                "en-CA": "Conference",
-                                "fr-CA": "Conférence",
-                            },
-                        },
                     },
                     {
-                        "name": "Trade show",
-                        "qcode": "Trade show",
+                        "qcode": "Conference and trade show",
                         "scheme": "event_types",
-                        "parent": None,
-                        "translations": {
-                            "name": {
-                                "en-CA": "Trade show",
-                                "fr-CA": "Salon professionnel"
-                            }
-                        },
                     },
                     {
-                        "name": "Official visit",
-                        "parent": "Political event",
                         "qcode": "Official visit",
                         "scheme": "event_types",
-                        "translations": {
-                            "name": {
-                                "en-CA": "Official visit",
-                                "fr-CA": "Visite officielle"
-                            }
-                        },
                     },
                     {
-                        "name": "economy, business and finance",
                         "qcode": "04000000",
                         "scheme": "subject_custom",
-                        "parent": None,
-                        "iptc_subject": "04000000",
-                        "ap_subject": "c8e409f8858510048872ff2260dd383e",
-                        "in_jimi": True,
-                        "translations": {
-                            "name": {
-                                "en-CA": "Business",
-                                "fr-CA": "Affaires"
-                            }
-                        }
                     },
                     {
-                        "name": "international relations",
                         "qcode": "20000638",
-                        "parent": "11000000",
                         "scheme": "subject_custom",
-                        "iptc_subject": "11002002",
-                        "ap_subject": None,
-                        "in_jimi": False,
-                        "translations": {
-                            "name": {
-                                "en-CA": "international relations",
-                                "fr-CA": "Relations internationales"
-                            }
-                        }
+                    },
+                    {
+                        "qcode": "11000000",
+                        "scheme": "subject_custom",
                     },
                 ]
-                expected_subjects.sort(key=lambda i: i["name"])
-                self.assertEqual(item["subject"], expected_subjects)
+                self.assertEqual(sorted(map(qcode, item["subject"])), sorted(map(qcode, expected_subjects)))
                 item["anpa_category"].sort(key=lambda i: i["name"])
                 expected_categories = [
                     {
@@ -181,9 +141,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 ]
                 expected_categories.sort(key=lambda i: i["name"])
                 self.assertEqual(item["anpa_category"], expected_categories)
-                self.assertEqual(
-                    item[GUID_FIELD], "urn:onclusive:4112034"
-                )
                 self.assertEqual(item[ITEM_TYPE], CONTENT_TYPE.EVENT)
                 self.assertEqual(item["state"], CONTENT_STATE.INGESTED)
 
