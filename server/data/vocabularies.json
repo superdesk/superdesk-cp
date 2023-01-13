@@ -24984,7 +24984,7 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
-        "init_version": 8,
+        "init_version": 10,
         "schema": {
             "name": {},
             "qcode": {},
@@ -24999,7 +24999,9 @@
                 "parent": null,
                 "qcode": "Anniversary",
                 "is_active": true,
-                "subject": null,
+                "subject": [
+                    "anniversary"
+                ],
                 "onclusive_ids": [
                     "132"
                 ],
@@ -25017,7 +25019,7 @@
                 "is_active": true,
                 "subject": [
                     "Art",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25033,7 +25035,7 @@
                 "qcode": "Artist tour",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": [
                     "175"
@@ -25046,11 +25048,29 @@
                 }
             },
             {
+                "name": "Award announcement",
+                "parent": null,
+                "qcode": "Award announcement",
+                "is_active": true,
+                "subject": [
+                    "award and prize"
+                ],
+                "onclusive_ids": null,
+                "translations": {
+                    "name": {
+                        "en-CA": "Award announcement",
+                        "fr-CA": "Annonce de remise de prix"
+                    }
+                }
+            },
+            {
                 "name": "Award ceremony",
                 "parent": null,
                 "qcode": "Award ceremony",
                 "is_active": true,
-                "subject": null,
+                "subject": [
+                    "award and prize"
+                ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25064,7 +25084,9 @@
                 "parent": null,
                 "qcode": "Award nomination",
                 "is_active": true,
-                "subject": null,
+                "subject": [
+                    "award and prize"
+                ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25075,11 +25097,12 @@
             },
             {
                 "name": "Award show",
-                "parent": "Entertainment event",
+                "parent": "award and prize",
                 "qcode": "Award show",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "award and prize",
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25094,9 +25117,7 @@
                 "parent": null,
                 "qcode": "Awareness event",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": [
                     "153"
                 ],
@@ -25108,18 +25129,16 @@
                 }
             },
             {
-                "name": "Military action",
-                "parent": "Military event",
-                "qcode": "Military action",
+                "name": "Benefit Event",
+                "parent": null,
+                "qcode": "Benefit Event",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-CA": "Military action",
-                        "fr-CA": "Opération militaire"
+                        "en-CA": "Benefit Event",
+                        "fr-CA": "Événement caritatif"
                     }
                 }
             },
@@ -25130,7 +25149,7 @@
                 "is_active": true,
                 "subject": [
                     "Books",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25145,9 +25164,7 @@
                 "parent": null,
                 "qcode": "Breaking news",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25162,7 +25179,7 @@
                 "qcode": "Celebrity sighting",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25177,9 +25194,7 @@
                 "parent": null,
                 "qcode": "Commemorative event",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": [
                     "220"
                 ],
@@ -25196,8 +25211,7 @@
                 "qcode": "Commencement speech",
                 "is_active": true,
                 "subject": [
-                    "Education",
-                    "General news"
+                    "Education"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25241,14 +25255,38 @@
                 }
             },
             {
+                "name": "Conference and trade show",
+                "parent": null,
+                "qcode": "Conference and trade show",
+                "is_active": true,
+                "subject": [
+                    "Business"
+                ],
+                "onclusive_ids": [
+                    "149"
+                ],
+                "translations": {
+                    "name": {
+                        "en-CA": "Conference and trade show",
+                        "fr-CA": "Congrès commercial"
+                    }
+                }
+            },
+            {
                 "name": "Conflict",
                 "parent": null,
                 "qcode": "Conflict",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "conflict, war and peace"
                 ],
-                "onclusive_ids": null
+                "onclusive_ids": null,
+                "translations": {
+                    "name": {
+                        "en-CA": "Conflict",
+                        "fr-CA": "Conflit"
+                    }
+                }
             },
             {
                 "name": "Consumer expo",
@@ -25269,16 +25307,24 @@
                 }
             },
             {
-                "name": "Convention",
+                "name": {
+                    "en-ca": "Convention",
+                    "fr-ca": "Congrès"
+                },
                 "parent": null,
-                "qcode": "Convention",
+                "qcode": {
+                    "en-ca": "Convention",
+                    "fr-ca": "Congrès"
+                },
                 "is_active": true,
                 "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-CA": "Convention",
-                        "fr-CA": "Congrès"
+                        "en-CA": {
+                            "en-ca": "Convention",
+                            "fr-ca": "Congrès"
+                        }
                     }
                 }
             },
@@ -25360,7 +25406,7 @@
                 "qcode": "Court proceedings",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Justice"
                 ],
                 "onclusive_ids": [
                     "217",
@@ -25381,7 +25427,7 @@
                 "qcode": "Demonstration",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Politics"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25418,8 +25464,7 @@
                 "qcode": "Election",
                 "is_active": true,
                 "subject": [
-                    "Government and politics",
-                    "General news"
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "180",
@@ -25441,7 +25486,7 @@
                 "qcode": "Entertainment event",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25457,7 +25502,13 @@
                 "qcode": "Fair",
                 "is_active": true,
                 "subject": null,
-                "onclusive_ids": null
+                "onclusive_ids": null,
+                "translations": {
+                    "name": {
+                        "en-CA": "Fair",
+                        "fr-CA": "Foire"
+                    }
+                }
             },
             {
                 "name": "Fan convention",
@@ -25465,14 +25516,30 @@
                 "qcode": "Fan convention",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture",
-                    "General news"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
                         "en-CA": "Fan convention",
                         "fr-CA": "Congrès de fans"
+                    }
+                }
+            },
+            {
+                "name": "Fashion show",
+                "parent": "Entertainment event",
+                "qcode": "Fashion show",
+                "is_active": true,
+                "subject": [
+                    "Entertainment, Arts",
+                    "Fashion"
+                ],
+                "onclusive_ids": null,
+                "translations": {
+                    "name": {
+                        "en-CA": "Fashion show",
+                        "fr-CA": "Défilé de mode"
                     }
                 }
             },
@@ -25497,7 +25564,7 @@
                 "is_active": true,
                 "subject": [
                     "Film",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25532,7 +25599,7 @@
                 "qcode": "Food festival",
                 "is_active": true,
                 "subject": [
-                    "Food and drink",
+                    "Food",
                     "Lifestyle"
                 ],
                 "onclusive_ids": null,
@@ -25563,7 +25630,7 @@
                 "qcode": "Gala",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25580,7 +25647,7 @@
                 "is_active": true,
                 "subject": [
                     "Television",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25596,8 +25663,8 @@
                 "qcode": "Head of state tour",
                 "is_active": true,
                 "subject": [
-                    "International relations",
-                    "Government and politics"
+                    "international relations",
+                    "Politics"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25613,7 +25680,7 @@
                 "qcode": "Historical event",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Social"
                 ],
                 "onclusive_ids": [
                     "220"
@@ -25648,9 +25715,7 @@
                 "parent": null,
                 "qcode": "Inauguration",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25664,7 +25729,9 @@
                 "parent": null,
                 "qcode": "Induction",
                 "is_active": true,
-                "subject": null,
+                "subject": [
+                    "award and prize"
+                ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25679,7 +25746,7 @@
                 "qcode": "Labour event",
                 "is_active": true,
                 "subject": [
-                    "Business"
+                    "Labour"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25695,7 +25762,7 @@
                 "qcode": "Literary event",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25711,7 +25778,7 @@
                 "qcode": "Live performance",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25727,7 +25794,7 @@
                 "qcode": "March",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Politics"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25759,7 +25826,7 @@
                 "qcode": "Military action",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "conflict, war and peace"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25775,7 +25842,7 @@
                 "qcode": "Military event",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "defence"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25791,7 +25858,7 @@
                 "qcode": "Military parade",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "defence"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25807,7 +25874,7 @@
                 "qcode": "Political convention",
                 "is_active": true,
                 "subject": [
-                    "Government and politics"
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "224"
@@ -25825,7 +25892,7 @@
                 "qcode": "Political event",
                 "is_active": true,
                 "subject": [
-                    "Government and politics"
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "225",
@@ -25845,7 +25912,7 @@
                 "is_active": true,
                 "subject": [
                     "Music",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": [
                     "176"
@@ -25864,7 +25931,7 @@
                 "is_active": true,
                 "subject": [
                     "Music",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -25879,7 +25946,9 @@
                 "parent": null,
                 "qcode": "Nomination",
                 "is_active": true,
-                "subject": null,
+                "subject": [
+                    "award and prize"
+                ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25894,8 +25963,8 @@
                 "qcode": "Official visit",
                 "is_active": true,
                 "subject": [
-                    "International relations",
-                    "Government and politics"
+                    "international relations",
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "129"
@@ -25912,9 +25981,7 @@
                 "parent": null,
                 "qcode": "Opening",
                 "is_active": true,
-                "subject": [
-                    "General news"
-                ],
+                "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
@@ -25943,7 +26010,7 @@
                 "qcode": "Premiere",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": [
                     "174",
@@ -26013,7 +26080,7 @@
                 "qcode": "Protest",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "257"
@@ -26031,8 +26098,7 @@
                 "qcode": "Public consultation",
                 "is_active": true,
                 "subject": [
-                    "Public policy",
-                    "Government and politics"
+                    "Politics"
                 ],
                 "onclusive_ids": [
                     "215"
@@ -26064,7 +26130,7 @@
                 "qcode": "Rally",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Politics"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -26080,7 +26146,7 @@
                 "qcode": "Red carpet event",
                 "is_active": true,
                 "subject": [
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -26091,18 +26157,18 @@
                 }
             },
             {
-                "name": "Military event",
-                "parent": null,
-                "qcode": "Military event",
+                "name": "Royalty tour",
+                "parent": "Entertainment event",
+                "qcode": "Royalty tour",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-CA": "Military event",
-                        "fr-CA": "Événement militaire"
+                        "en-CA": "Royalty tour",
+                        "fr-CA": "Tournée royale"
                     }
                 }
             },
@@ -26147,8 +26213,7 @@
                 "qcode": "Strike",
                 "is_active": true,
                 "subject": [
-                    "Business",
-                    "General news"
+                    "Labour"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -26165,7 +26230,7 @@
                 "is_active": true,
                 "subject": [
                     "Television",
-                    "Entertainment and culture"
+                    "Entertainment, Arts"
                 ],
                 "onclusive_ids": null,
                 "translations": {
@@ -26213,7 +26278,7 @@
                 "qcode": "War",
                 "is_active": true,
                 "subject": [
-                    "General news"
+                    "conflict, war and peace"
                 ],
                 "onclusive_ids": null,
                 "translations": {
