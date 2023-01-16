@@ -41,6 +41,7 @@ class UpdateEventTypesCommand(superdesk.Command):
                         if type(event["name"]) is str
                         else event["name"]["en-ca"]
                     )
+                    assert type(name) is str, name
                     obj = {
                         "name": name,
                         "parent": self.get_parent(event),

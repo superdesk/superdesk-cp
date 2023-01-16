@@ -24991,7 +24991,7 @@
         "type": "manageable",
         "selection_type": "multi selection",
         "unique_field": "qcode",
-        "init_version": 10,
+        "init_version": 12,
         "schema": {
             "name": {},
             "qcode": {},
@@ -25314,24 +25314,16 @@
                 }
             },
             {
-                "name": {
-                    "en-ca": "Convention",
-                    "fr-ca": "Congrès"
-                },
+                "name": "Convention",
                 "parent": null,
-                "qcode": {
-                    "en-ca": "Convention",
-                    "fr-ca": "Congrès"
-                },
+                "qcode": "Convention",
                 "is_active": true,
                 "subject": null,
                 "onclusive_ids": null,
                 "translations": {
                     "name": {
-                        "en-CA": {
-                            "en-ca": "Convention",
-                            "fr-ca": "Congrès"
-                        }
+                        "en-CA": "Convention",
+                        "fr-CA": "Congrès"
                     }
                 }
             },
