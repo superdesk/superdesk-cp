@@ -10,6 +10,7 @@
         "@superdesk/build-tools": "^1.0.18"
     },
     "scripts": {
-        "build": "npx @superdesk/build-tools build-root-repo ./"
+        "build": "npx @superdesk/build-tools build-root-repo ./",
+        "start": "npx grunt server"
     }
 }
