@@ -20,6 +20,8 @@ class FixEventsCommand(superdesk.Command):
         start = datetime.fromisoformat(start)
         end = datetime.fromisoformat(end)
         offset = timedelta(hours=int(offset))
+        europe_start = datetime.fromisoformat("2023-03-26T01:00:00+00:00")
+        europe_end = datetime.fromisoformat("2023-10-29T01:00:00+00:00")
 
         app.logger.info(
             "Updating events from %s to %s",
@@ -46,12 +48,19 @@ class FixEventsCommand(superdesk.Command):
                 },
             ],
             "ingest_provider": {"$exists": 0},  # ignore ingested events
+            "dates.tz": {"$nin": [
+                "America/Regina",
+                "America/Whitehorse",
+            ]},
         }
 
         updated_count = 0
         events_service = superdesk.get_resource_service("events")
         for event in events_service.get_from_mongo(req=None, lookup=query):
             dates = event["dates"].copy()
+            if dates.get("tz") and "Europe" in dates.get("tz"):
+                if dates["start"] < europe_start or dates["end"] > europe_end:
+                    continue
             if dates["start"] > start:
                 dates["start"] += offset
             if dates["end"] < end:
