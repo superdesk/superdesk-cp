@@ -117,7 +117,7 @@ def set_item_location(item, event):
         try:
             address_qcode = (item["location"][0] or {}).get("qcode")
             if address_qcode:
-                address_item = get_resource_service("locations").find_one(req=None, guid=address_qcode)
+                address_item = get_resource_service("locations").find_one(req=None, guid=address_qcode) or {}
                 address = address_item.get("address") or {}
 
                 try:
