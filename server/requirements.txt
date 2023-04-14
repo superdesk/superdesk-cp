@@ -24,9 +24,9 @@ blinker==1.4
     #   flask-mail
     #   raven
     #   superdesk-core
-boto3==1.26.112
+boto3==1.26.113
     # via superdesk-core
-botocore==1.29.112
+botocore==1.29.113
     # via
     #   boto3
     #   s3transfer
