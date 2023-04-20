@@ -291,6 +291,9 @@ PLANNING_AUTO_ASSIGN_TO_WORKFLOW = True
 # check for unfulfilled assignments when publishing a story
 PLANNING_CHECK_FOR_ASSIGNMENT_ON_PUBLISH = True
 
+# set events expiry to 30d (after the end)t
+PLANNING_EXPIRY_MINUTES = 60 * 24 * 30  # 30d
+
 # url used when clicking on a location of an Event
 STREET_MAP_URL = "https://www.google.ca/maps/?q="
 
