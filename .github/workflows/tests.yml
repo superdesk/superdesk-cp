@@ -14,11 +14,11 @@ jobs:
         working-directory: server
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-python@v2
+    - uses: actions/setup-python@v4
       with:
-        python-version: 3.8
+        python-version: '3.8'
 
     - run: |
         sudo apt-get update
@@ -26,17 +26,8 @@ jobs:
 
     - run: docker-compose -f ../.travis-docker-compose.yml up -d
 
-    - name: Cache pip
-      uses: actions/cache@v2
-      with:
-        path: ~/.cache/pip
-        key: ${{ runner.os }}-pip-${{ hashFiles('server/dev-requirements.txt') }}
-        restore-keys: |
-          ${{ runner.os }}-pip
-          ${{ runner.os }}-
-
     - run: |
-        python -m pip install --upgrade 'pip<21.3' wheel setuptools
+        python -m pip install --upgrade pip wheel setuptools
         pip install -r dev-requirements.txt
 
     - run: flake8
@@ -57,19 +48,11 @@ jobs:
         working-directory: client
 
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
 
-    - uses: actions/setup-node@v1
+    - uses: actions/setup-node@v3
       with:
-        node-version: 12.x
-
-    - uses: actions/cache@v2
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-npm-${{ hashFiles('client/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-npm
-          ${{ runner.os }}-
+        node-version: '14.x'
 
     - run: npm install --no-audit
 
