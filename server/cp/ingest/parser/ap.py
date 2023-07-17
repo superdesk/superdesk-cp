@@ -59,6 +59,18 @@ AP_SUBJECT_CODES = set(
     ]
 )
 
+# https://api.ap.org/media/v2.1/docs/index.html#t=AP_Classification_Metadata.htm&rhsearch=editorialpriority&rhhlterm=editorialpriority
+PRIORITY_MAP = {
+    1: "f",
+    2: "b",
+    3: "u",
+    4: "r",
+    5: "d",
+    6: "w",
+    7: "a",
+    8: "s",
+}
+
 
 sess = requests.Session()
 
@@ -334,11 +346,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if data["item"].get("profile")
             else "unknown"
         )
-        priority = (
-            data["item"]["editorialpriority"].lower()
-            if data["item"].get("editorialpriority")
-            else ""
-        )
+
+        priority = PRIORITY_MAP.get(data["item"].get("urgency")) or ""
 
         if "fr" in item["language"]:
             if re.search(r"^(insolite)", slugline, re.IGNORECASE):
