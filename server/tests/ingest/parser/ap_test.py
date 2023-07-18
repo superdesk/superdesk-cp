@@ -401,3 +401,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 item = parser.parse(_data, {})
 
         self.assertEqual("International", item["anpa_category"][0]["name"])
+
+    def test_parse_ranking(self):
+        item = {"language": "fr"}
+        data = {"item": {"urgency": 1}}
+        self.assertEqual(cp.NEWS_URGENT, parser._parse_ranking(data, item))
