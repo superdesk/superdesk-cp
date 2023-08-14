@@ -85,6 +85,7 @@ module.exports = function(grunt) {
             },
             swimlane: {defaultNumberOfColumns: 4},
             editor3: true,
+            onlyEditor3: true,
             validatePointOfInterestForImages: true,
             editorHighlights: true,
             editFeaturedImage: true,
