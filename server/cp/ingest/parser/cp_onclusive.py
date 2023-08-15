@@ -121,8 +121,8 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
             if (
                 subject.get("translations")
                 and subject["translations"].get("name")
-                and name in subject["translations"]["name"].values()
+                and name.lower() in [value.lower() for value in subject["translations"]["name"].values() if value]
             ):
                 return subject
-            if subject.get("name") == name:
+            if subject["name"].lower() == name.lower():
                 return subject

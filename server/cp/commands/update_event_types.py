@@ -41,6 +41,7 @@ class UpdateEventTypesCommand(superdesk.Command):
                         if type(event["name"]) is str
                         else event["name"]["en-ca"]
                     )
+                    assert type(name) is str, name
                     obj = {
                         "name": name,
                         "parent": self.get_parent(event),
@@ -52,7 +53,12 @@ class UpdateEventTypesCommand(superdesk.Command):
                         else None,
                     }
                     if type(event["name"]) is not str:
-                        obj["translations"] = {"name": event["name"]}
+                        obj["translations"] = {
+                            "name": {
+                                key.replace("ca", "CA"): val
+                                for key, val in event["name"].items()
+                            }
+                        }
                     items.append(obj)
                 event_types["items"] = items
                 event_types["init_version"] += 1

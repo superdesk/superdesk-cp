@@ -8,7 +8,7 @@ PROVINCE_CV = "regions"
 def set_province_on_publish(sender, item, updates, **kwargs):
     try:
         region = item["dateline"]["located"]["state"]
-    except (AttributeError, KeyError):
+    except (AttributeError, KeyError, TypeError):
         return
     if not region:
         return
