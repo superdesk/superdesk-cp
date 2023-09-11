@@ -559,9 +559,13 @@ class JimiFormatter(Formatter):
             [
                 slug(self._get_original_item(ref))
                 for ref in superdesk.get_resource_service("news").get(
-                    req=None, lookup={"refs.guid": item["guid"]}
+                    req=None,
+                    lookup={
+                        "refs.guid": item["guid"],
+                        "pubstatus": "usable",
+                        "state": "published",
+                    },
                 )
-                if ref.get("pubstatus") == "usable"
             ]
         )
 
