@@ -486,7 +486,6 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
     def test_picture_container_ids(self):
         resources["news"].service.get.side_effect = [
             [
-                {"guid": "canceled", "pubstatus": "canceled", "type": "text"},
                 {"guid": "usable", "pubstatus": "usable", "type": "text"},
                 {
                     "guid": "usable2",
