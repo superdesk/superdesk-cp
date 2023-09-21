@@ -248,6 +248,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             "extra": {
                 cp.FILENAME: "NY538",
                 "photographer_code": "stf",
+                cp.CAPTION_WRITER: ["foo", "bar"],
             },
             "subject": [
                 {"name": "Americas", "qcode": "A", "scheme": "photo_categories"},
@@ -287,6 +288,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual(updates["copyrightnotice"][:50], item.find("Copyright").text)
         self.assertEqual(updates["description_text"], item.find("EnglishCaption").text)
         self.assertEqual("2020-06-03T17:00:56", item.find("DateTaken").text)
+        self.assertEqual("foo, bar", item.find("CaptionWriter").text)
 
         self.assertEqual("media_id", item.find("FileName").text)
         self.assertEqual("media_id.jpg", item.find("ViewFile").text)

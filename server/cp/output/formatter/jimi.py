@@ -7,6 +7,7 @@ import lxml.etree as etree
 import cp.ingest.parser.globenewswire as globenewswire
 import superdesk.etree as sd_etree
 
+from typing import List, Union
 from num2words import num2words
 from collections import OrderedDict
 from celery.utils.functional import uniq
@@ -103,6 +104,12 @@ def filename(item) -> str:
 
 def is_french(item) -> bool:
     return "fr" in item.get("language", "en")
+
+
+def text_value(value: Union[str, List[str]]) -> str:
+    if not isinstance(value, list):
+        value = [value]
+    return ", ".join(value)
 
 
 class JimiFormatter(Formatter):
@@ -513,12 +520,12 @@ class JimiFormatter(Formatter):
             content.find("Source").text = item["original_source"]
 
         if extra.get(cp.ARCHIVE_SOURCE):
-            etree.SubElement(content, "ArchiveSources").text = extra[cp.ARCHIVE_SOURCE]
+            etree.SubElement(content, "ArchiveSources").text = text_value(extra[cp.ARCHIVE_SOURCE])
 
         if extra.get(cp.PHOTOGRAPHER_CODE):
-            etree.SubElement(content, "BylineTitle").text = extra[
+            etree.SubElement(content, "BylineTitle").text = text_value(extra[
                 cp.PHOTOGRAPHER_CODE
-            ].upper()
+            ]).upper()
 
         if item.get("copyrightnotice"):
             etree.SubElement(content, "Copyright").text = item["copyrightnotice"][:50]
@@ -529,7 +536,7 @@ class JimiFormatter(Formatter):
             ].replace("  ", " ")
 
         if extra.get(cp.CAPTION_WRITER):
-            etree.SubElement(content, "CaptionWriter").text = extra[cp.CAPTION_WRITER]
+            etree.SubElement(content, "CaptionWriter").text = text_value(extra[cp.CAPTION_WRITER])
 
         if item.get("ednote"):
             etree.SubElement(content, "SpecialInstructions").text = item["ednote"]
@@ -543,13 +550,13 @@ class JimiFormatter(Formatter):
             ).text
 
         if extra.get(cp.INFOSOURCE):
-            etree.SubElement(content, "CustomField6").text = extra[cp.INFOSOURCE]
+            etree.SubElement(content, "CustomField6").text = text_value(extra[cp.INFOSOURCE])
 
         if extra.get(cp.XMP_KEYWORDS):
-            etree.SubElement(content, "XmpKeywords").text = extra[cp.XMP_KEYWORDS]
+            etree.SubElement(content, "XmpKeywords").text = text_value(extra[cp.XMP_KEYWORDS])
 
         if extra.get("container"):
-            etree.SubElement(content, "ContainerIDs").text = extra["container"]
+            etree.SubElement(content, "ContainerIDs").text = text_value(extra["container"])
         else:
             self._format_refs(content, item)
 
