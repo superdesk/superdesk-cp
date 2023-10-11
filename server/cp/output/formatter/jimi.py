@@ -565,14 +565,17 @@ class JimiFormatter(Formatter):
         refs = set(
             [
                 slug(self._get_original_item(ref))
-                for ref in superdesk.get_resource_service("news").get(
-                    req=None,
-                    lookup={
-                        "refs.guid": item["guid"],
-                        "pubstatus": "usable",
-                        "state": "published",
+                for ref in superdesk.get_resource_service("news").search({
+                    "query": {
+                        "bool": {
+                            "must": [
+                                {"term": {"refs.guid": item["guid"]}},
+                                {"term": {"pubstatus": "usable"}},
+                                {"terms": {"state": ["published", "scheduled"]}},
+                            ],
+                        },
                     },
-                )
+                })
             ]
         )
 
