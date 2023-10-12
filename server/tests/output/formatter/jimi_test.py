@@ -486,7 +486,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("00000001", item.find("NewsCompID").text)
 
     def test_picture_container_ids(self):
-        resources["news"].service.get.side_effect = [
+        resources["news"].service.search.side_effect = [
             [
                 {"guid": "usable", "pubstatus": "usable", "type": "text"},
                 {
@@ -507,7 +507,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             }
         )
 
-        resources["news"].service.get.side_effect = None
+        resources["news"].service.search.side_effect = None
 
         self.assertEqual("{}, usable".format(32 * "a"), item.find("ContainerIDs").text)
 
