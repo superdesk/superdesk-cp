@@ -4,6 +4,10 @@ setTimeout(() => {
     startApp(
         [
             {
+                id: 'auto-tagging-widget',
+                load: () => import('superdesk-core/scripts/extensions/auto-tagging-widget')
+            },
+            {
                 id: 'planning-extension',
                 load: () => import('superdesk-planning/client/planning-extension'),
                 configuration: {
