@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "cp.ultrad",
     "cp.planning_exports",
     "cp.set_province_on_publish",
-    'superdesk.text_checkers.ai.imatrics',
+    'superdesk.text_checkers.ai.semaphore',
 ]
 
 MACROS_MODULE = "cp.macros"
