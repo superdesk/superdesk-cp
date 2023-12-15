@@ -172,7 +172,7 @@ module.exports = function(grunt) {
                 }
             },
         },
-        iMatricsFields: {
+        semaphoreFields: {
 			entities: {
 				organisation: {
 					name: 'Organisations',
