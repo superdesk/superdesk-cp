@@ -2,11 +2,7 @@ import {startApp} from 'superdesk-core/scripts/index';
 
 setTimeout(() => {
     startApp(
-        [
-            {
-                id: 'auto-tagging-widget',
-                load: () => import('superdesk-core/scripts/extensions/auto-tagging-widget'),
-            },
+        [            
             {
                 id: 'auto-tagger',
                 load: () => import('superdesk-core/scripts/extensions/auto-tagger'),
