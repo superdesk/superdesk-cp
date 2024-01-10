@@ -19,6 +19,10 @@ setTimeout(() => {
                 load: () => import('./extensions/upload-iptc'),
             },
             {
+                id: 'auto-tagger',
+                load: () => import('./extensions/auto-tagger'),
+            },
+            {
                 id: 'usage-metrics',
                 load: () => import('superdesk-core/scripts/extensions/usageMetrics'),
             },
