@@ -272,8 +272,6 @@ class JimiFormatter(Formatter):
         if item.get("keywords") and item.get("source") == globenewswire.SOURCE:
             etree.SubElement(content, "Stocks").text = ",".join(item["keywords"])
 
-        #  IndexCodes are set here
-        
         self._format_category_index(content, item)
         self._format_genre(content, item)
         self._format_urgency(content, item.get("urgency"), item["language"])
@@ -399,14 +397,6 @@ class JimiFormatter(Formatter):
     def _format_category_index(self, content, item):
         categories = self._get_categories(item)
         indexes = uniq(categories + self._get_indexes(item))
-
-        #  Add code here to remove the small case letters from here
-        filtered_indexes = [' '.join(word for word in index.split() if not word[0].islower()) for index in indexes]
-        # Remove empty strings from the filtered list
-        indexes = [index for index in filtered_indexes if index]
-        
-
-
         if categories:
             etree.SubElement(content, "Category").text = ",".join(categories)
         if indexes:
@@ -440,19 +430,13 @@ class JimiFormatter(Formatter):
         )
         return names
 
-    #  This was changed for IndeCodes Updates
     def _get_indexes(self, item):
         SUBJECTS_ID = "subject_custom"
-
-        SUBJECTS_ID_2 = "subject"
-
-        SUBJECTS_ID_3 = "http://cv.iptc.org/newscodes/mediatopic/"
-
 
         subject = [
             s
             for s in item.get("subject", [])
-            if s.get("name") and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
+            if s.get("name") and s.get("scheme") in (None, SUBJECTS_ID)
         ]
 
         return self._resolve_names(subject, item["language"], SUBJECTS_ID)
