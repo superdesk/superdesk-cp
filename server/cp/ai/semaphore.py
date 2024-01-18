@@ -17,7 +17,8 @@ TIMEOUT = (5, 30)
 class Semaphore(AIServiceBase):
     """Semaphore autotagging service
 
-    Environment variables SEMAPHORE_BASE_URL, SEMAPHORE_ANALYZE_URL, SEMAPHORE_SEARCH_URL, SEMAPHORE_GET_PARENT_URL and SEMAPHORE_API_KEY must be set.
+    Environment variables SEMAPHORE_BASE_URL, SEMAPHORE_ANALYZE_URL, SEMAPHORE_SEARCH_URL, SEMAPHORE_GET_PARENT_URL
+    and SEMAPHORE_API_KEY must be set.
     """
 
     name = "semaphore"
