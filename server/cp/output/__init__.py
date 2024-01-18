@@ -3,6 +3,8 @@ import lxml.etree as etree
 
 from .formatter.jimi import JimiFormatter  # noqa
 from .formatter.newsmlg2 import CPNewsMLG2Formatter  # noqa
+from .formatter.cp_ninjs_formatter import CPNINJSFormatter  # noqa
+from .formatter.semaphore import SemaphoreFormatter  # noqa
 
 from superdesk.publish.publish_service import PublishService, set_publish_service
 
