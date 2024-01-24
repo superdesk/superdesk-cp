@@ -1,15 +1,17 @@
-import {ISuperdesk, IExtension} from 'superdesk-api';
+import {ISuperdesk, IExtension, IExtensionActivationResult} from 'superdesk-api';
 import {searchPanelWidgetFactory} from './search-panel-widget';
 
 const extension: IExtension = {
     activate: (superdesk: ISuperdesk) => {
-        return Promise.resolve({
+        const result: IExtensionActivationResult = {
             contributions: {
                 searchPanelWidgets: [
                     searchPanelWidgetFactory(superdesk.localization.gettext),
                 ],
             }
-        });
+        };
+
+        return Promise.resolve(result);
     },
 };
 

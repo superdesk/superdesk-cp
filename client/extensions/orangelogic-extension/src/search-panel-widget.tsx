@@ -16,7 +16,9 @@ interface IMediaTypeLabel {
     label: string;
 }
 
-export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['gettext']) => {
+export const searchPanelWidgetFactory = (
+    gettext: ISuperdesk['localization']['gettext'],
+): React.ComponentType<ISearchPanelWidgetProps<unknown>> => {
     const mediaTypes: Array<IMediaTypeLabel> = [
         {
             type: 'Image',
@@ -28,8 +30,7 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
         },
     ];
 
-    return class SearchPanelWidget extends React.PureComponent<ISearchPanelWidgetProps<IParams>> {
-
+    class SearchPanelWidget extends React.PureComponent<ISearchPanelWidgetProps<IParams>> {
         toggleMediaType(type: IMediaType) {
             const mediaTypes = this.props.params.mediaTypes || {};
 
@@ -43,7 +44,7 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
 
         render() {
             const {params} = this.props;
-            
+
             if (this.props.provider !== 'orangelogic') {
                 return null;
             }
@@ -75,4 +76,7 @@ export const searchPanelWidgetFactory = (gettext: ISuperdesk['localization']['ge
             );
         }
     };
+
+    // casting is required because of limitations on use of generics in superdesk-api
+    return SearchPanelWidget as React.ComponentType<ISearchPanelWidgetProps<unknown>>;
 };
