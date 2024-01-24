@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {OrderedMap, OrderedSet, Map} from 'immutable';
-import {Switch, Button, ButtonGroup, EmptyState, Autocomplete} from 'superdesk-ui-framework/react';
+import {Switch, Button, ButtonGroup, EmptyState, Autocomplete, Modal} from 'superdesk-ui-framework/react';
 import {ToggleBoxNext} from 'superdesk-ui-framework';
 
-import {IArticle, ISuperdesk} from 'superdesk-api';
+import {IArticle, IArticleSideWidget, ISuperdesk} from 'superdesk-api';
 
 import {getTagsListComponent} from './tag-list';
 import {getNewItemComponent} from './new-item';
@@ -35,9 +35,7 @@ interface IAutoTaggingSearchResult {
     };
 }
 
-interface IProps {
-    article: IArticle;
-}
+type IProps = React.ComponentProps<IArticleSideWidget['component']>;
 
 interface ISemaphoreFields {
     [key: string]: {
@@ -95,48 +93,11 @@ export function getAutoTaggingData(data: IEditableData, semaphoreConfig: any) {
 function showAutoTaggerServiceErrorModal(superdesk: ISuperdesk, errors: Array<ITagUi>) {
     const {gettext} = superdesk.localization;
     const {showModal} = superdesk.ui;
-    const {Modal, ModalHeader, ModalBody, ModalFooter} = superdesk.components;
 
     showModal(({closeModal}) => (
-        <Modal>
-            <ModalHeader onClose={closeModal}>
-                {gettext('Autotagger service error')}
-            </ModalHeader>
-
-            <ModalBody>
-                <h3>{gettext('Some tags can not be displayed')}</h3>
-
-                <p>
-                    {
-                        gettext(
-                            'Autotagger service has returned tags '
-                            + 'referencing parents that do not exist in the response.',
-                        )
-                    }
-                </p>
-
-                <table className="table">
-                    <thead>
-                        <th>{gettext('tag name')}</th>
-                        <th>{gettext('qcode')}</th>
-                        <th>{gettext('parent ID')}</th>
-                    </thead>
-
-                    <tbody>
-                        {
-                            errors.map((tag) => (
-                                <tr key={tag.qcode}>
-                                    <td>{tag.name}</td>
-                                    <td>{tag.qcode}</td>
-                                    <td>{tag.parent}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </table>
-            </ModalBody>
-
-            <ModalFooter>
+        <Modal
+            headerTemplate={gettext('Autotagger service error')}
+            footerTemplate={(
                 <Button
                     aria-label="close"
                     text={gettext('close')}
@@ -144,17 +105,48 @@ function showAutoTaggerServiceErrorModal(superdesk: ISuperdesk, errors: Array<IT
                         closeModal();
                     }}
                 />
-            </ModalFooter>
+            )}
+        >
+            <h3>{gettext('Some tags can not be displayed')}</h3>
+
+            <p>
+                {
+                    gettext(
+                        'Autotagger service has returned tags '
+                        + 'referencing parents that do not exist in the response.',
+                    )
+                }
+            </p>
+
+            <table className="table">
+                <thead>
+                    <th>{gettext('tag name')}</th>
+                    <th>{gettext('qcode')}</th>
+                    <th>{gettext('parent ID')}</th>
+                </thead>
+
+                <tbody>
+                    {
+                        errors.map((tag) => (
+                            <tr key={tag.qcode}>
+                                <td>{tag.name}</td>
+                                <td>{tag.qcode}</td>
+                                <td>{tag.parent}</td>
+                            </tr>
+                        ))
+                    }
+                </tbody>
+            </table>
         </Modal>
     ));
 }
 
-export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string) {
+export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IArticleSideWidget['component'] {
     const {preferences} = superdesk;
     const {httpRequestJsonLocal} = superdesk;
     const {gettext, gettextPlural} = superdesk.localization;
     const {memoize, generatePatch, arrayToTree} = superdesk.utilities;
-    const {WidgetHeading, Alert} = superdesk.components;
+    const {AuthoringWidgetLayout, AuthoringWidgetHeading, Alert} = superdesk.components;
     const groupLabels = getGroups(superdesk);
 
     const TagListComponent = getTagsListComponent(superdesk);
@@ -411,388 +403,390 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string) {
             const readOnly = superdesk.entities.article.isLockedInOtherSession(this.props.article);
 
             return (
-                <React.Fragment>
-                    {
-                        (() => {
-                            if (data === 'loading' || data === 'not-initialized') {
-                                return null;
-                            } else {
-                                const treeErrors = arrayToTree(
-                                    data.changes.analysis.toArray(),
-                                    (item) => item.qcode,
-                                    (item) => item.parent,
-                                ).errors;
-
-                                // only show errors when there are unsaved changes
-                                if (treeErrors.length > 0 && dirty) {
-                                    return (
-                                        <Alert
-                                            type="warning"
-                                            size="small"
-                                            title={gettext('Autotagger service error')}
-                                            message={
-                                                gettextPlural(
-                                                    treeErrors.length,
-                                                    '1 tag can not be displayed',
-                                                    '{{n}} tags can not be displayed',
-                                                    {n: treeErrors.length},
-                                                )
-                                            }
-                                            actions={[
-                                                {
-                                                    label: gettext('details'),
-                                                    onClick: () => {
-                                                        showAutoTaggerServiceErrorModal(superdesk, treeErrors);
-                                                    },
-                                                    icon: 'info-sign',
-                                                },
-                                            ]}
-                                        />
-                                    );
-                                } else {
-                                    return null;
-                                }
-                            }
-                        })()
-                    }
-
-                    <WidgetHeading
-                        widgetName={label}
-                        editMode={dirty}
-                    >
-                        {
-                            data === 'loading' || data === 'not-initialized' || !dirty ? null : (
-                                <div>
-                                    <button
-                                        aria-label="save"
-                                        className="btn btn--primary"
-                                        onClick={this.save}
-                                    >
-                                        {gettext('Save')}
-                                    </button>
-
-                                    <button
-                                        aria-label="cancel"
-                                        className="btn"
-                                        onClick={this.reload}
-                                    >
-                                        {gettext('Cancel')}
-                                    </button>
-                                </div>
-                            )
-                        }
-                    </WidgetHeading>
-
-                    <div className="widget-content sd-padding-all--2">
-                        <div>
-                            {/* Run automatically button is hidden for the next release */}
-                            <div className="form__row form__row--flex sd-padding-b--1" style={{display: 'none'}}>
-                                <ButtonGroup align="start">
-                                    <Switch
-                                        value={runAutomaticallyPreference}
-                                        disabled={readOnly}
-                                        onChange={() => {
-                                            const newValue = !runAutomaticallyPreference;
-
-                                            this.setState({runAutomaticallyPreference: newValue});
-
-                                            superdesk.preferences.set(RUN_AUTOMATICALLY_PREFERENCE, newValue);
-
-                                            if (newValue && this.state.data === 'not-initialized') {
-                                                this.runAnalysis();
-                                            }
-                                        }}
-                                        aria-label="Run automatically"
-                                        label={{content: gettext('Run automatically')}}
-                                    />
-                                </ButtonGroup>
-                            </div>
-
+                <AuthoringWidgetLayout
+                    header={(
+                        <AuthoringWidgetHeading
+                            widgetName={label}
+                            editMode={dirty}
+                        >
                             {
-                                data === 'loading' || data === 'not-initialized' ? null : (
-                                    <>
-                                        <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
-                                            <div style={{flexGrow: 1}}>
-                                                <Autocomplete
-                                                    value={''}
-                                                    key={this.state.forceRenderKey}
-                                                    keyValue="keyValue"
-                                                    items={[]}
-                                                    placeholder="Search for an entity or subject"
-                                                    search={(searchString, callback) => {
-                                                        let cancelled = false;
+                                data === 'loading' || data === 'not-initialized' || !dirty ? null : (
+                                    <div>
+                                        <button
+                                            aria-label="save"
+                                            className="btn btn--primary"
+                                            onClick={this.save}
+                                        >
+                                            {gettext('Save')}
+                                        </button>
 
-                                                        httpRequestJsonLocal<{analysis: IAutoTaggingSearchResult}>({
-                                                            method: 'POST',
-                                                            path: '/ai/',
-                                                            payload: {
-                                                                service: 'semaphore',
-                                                                item: {
-                                                                    searchString,
-                                                                },
-                                                            },
-                                                        }).then((res) => {
-                                                            if (cancelled === true) {
-                                                                return;
-                                                            }
-
-                                                            const json_response = res.analysis.result.tags;
-                                                            const result_data = res.analysis;
-
-                                                            const result = toClientFormat(json_response).toArray();
-
-                                                            const withoutExistingTags = result.filter(
-                                                                (searchTag) => !tagAlreadyExists(data, searchTag.qcode),
-                                                            );
-
-                                                            const withResponse = withoutExistingTags.map((tag) => ({
-                                                                // required for Autocomplete component
-                                                                keyValue: tag.name,
-
-                                                                tag,
-
-                                                                // required to get all parents when an item is selected
-                                                                entireResponse: result_data,
-                                                            }));
-
-                                                            // Assuming 'callback' is a function
-                                                            // that takes the processed data
-                                                            callback(withResponse);
-                                                        });
-
-                                                        return {
-                                                            cancel: () => {
-                                                                cancelled = true;
-                                                            },
-                                                        };
-                                                    }}
-                                                    listItemTemplate={(__item: any) => {
-                                                        const _item: ITagUi = __item.tag;
-
-                                                        return (
-                                                            <div className="auto-tagging-widget__autocomplete-item">
-                                                                <b>{_item.name}</b>
-
-                                                                {
-                                                                    _item?.group?.value == null ? null : (
-                                                                        <p>{_item.group.value}</p>
-                                                                    )
-                                                                }
-
-                                                                {
-                                                                    _item?.description == null ? null : (
-                                                                        <p>{_item.description}</p>
-                                                                    )
-                                                                }
-                                                            </div>
-                                                        );
-                                                    }}
-                                                    onSelect={(_value: any) => {
-                                                        const tag: ITagUi = _value.tag;
-                                                        const entireResponse: IAutoTaggingSearchResult =
-                                                            _value.entireResponse;
-
-                                                        this.insertTagFromSearch(tag, data, entireResponse);
-                                                        this.setState({
-                                                            tentativeTagName: '',
-                                                            forceRenderKey: Math.random(),
-                                                        });
-                                                    }}
-                                                    onChange={noop}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
-                                            <Button
-                                                aria-label="Add an entity"
-                                                type="primary"
-                                                size="small"
-                                                shape="round"
-                                                text={gettext('Add an entity')}
-                                                disabled={readOnly}
-                                                onClick={() => {
-                                                    this.setState({
-                                                        newItem: {
-                                                            name: '',
-                                                        },
-                                                    });
-                                                }}
-                                            />
-                                        </div>
-                                    </>
+                                        <button
+                                            aria-label="cancel"
+                                            className="btn"
+                                            onClick={this.reload}
+                                        >
+                                            {gettext('Cancel')}
+                                        </button>
+                                    </div>
                                 )
                             }
-                        </div>
+                        </AuthoringWidgetHeading>
+                    )}
+                    body={(
+                        <React.Fragment>
+                            {
+                                (() => {
+                                    if (data === 'loading' || data === 'not-initialized') {
+                                        return null;
+                                    } else {
+                                        const treeErrors = arrayToTree(
+                                            data.changes.analysis.toArray(),
+                                            (item) => item.qcode,
+                                            (item) => item.parent,
+                                        ).errors;
 
-                        {(() => {
-                            if (data === 'loading') {
-                                return (
-                                    <div style={{display: 'flex', alignItems: 'center'}}>
-                                        <div className="spinner-big" />
-                                    </div>
-                                );
-                            } else if (data === 'not-initialized') {
-                                return (
-                                    <EmptyState
-                                        title={gettext('No tags yet')}
-                                        description={readOnly ? undefined : gettext('Click "Run" to test Autotagger')}
-                                    />
-                                );
-                            } else {
-                                const {
-                                    entitiesGroupedAndSorted,
-                                    othersGrouped,
-                                } = getAutoTaggingData(data, this.semaphoreFields);
-
-                                const savedTags = data.original.analysis.keySeq().toSet();
-
-                                let allGrouped = OrderedMap<string, JSX.Element>();
-
-                                othersGrouped.forEach((tags, groupId) => {
-                                    if (tags != null && groupId != null) {
-                                        allGrouped = allGrouped.set(groupId,
-                                            <ToggleBoxNext
-                                                key={groupId}
-                                                title={gettext('Subjects')}
-                                                style="circle"
-                                                isOpen={true}
-                                            >
-                                                <TagListComponent
-                                                    savedTags={savedTags}
-                                                    tags={tags.toMap()}
-                                                    readOnly={readOnly}
-                                                    // array of qcodes are ids of tags to remove
-                                                    onRemove={(ids) => {
-                                                        this.updateTags(
-                                                            ids.reduce(
-                                                                (analysis, id) => analysis.remove(id),
-                                                                data.changes.analysis,
-                                                            ),
-                                                            data,
-                                                        );
-                                                    }}
+                                        // only show errors when there are unsaved changes
+                                        if (treeErrors.length > 0 && dirty) {
+                                            return (
+                                                <Alert
+                                                    type="warning"
+                                                    size="small"
+                                                    title={gettext('Autotagger service error')}
+                                                    message={
+                                                        gettextPlural(
+                                                            treeErrors.length,
+                                                            '1 tag can not be displayed',
+                                                            '{{n}} tags can not be displayed',
+                                                            {n: treeErrors.length},
+                                                        )
+                                                    }
+                                                    actions={[
+                                                        {
+                                                            label: gettext('details'),
+                                                            onClick: () => {
+                                                                showAutoTaggerServiceErrorModal(superdesk, treeErrors);
+                                                            },
+                                                            icon: 'info-sign',
+                                                        },
+                                                    ]}
                                                 />
-                                            </ToggleBoxNext>,
-                                        );
+                                            );
+                                        } else {
+                                            return null;
+                                        }
                                     }
-                                });
-                                //  renders the tags in the entities group in the widget window
-                                if (entitiesGroupedAndSorted.size > 0) {
-                                    allGrouped = allGrouped.set('entities',
-                                        <ToggleBoxNext
-                                            title={gettext('Entities')}
-                                            style="circle"
-                                            isOpen={true}
-                                            key="entities"
-                                        >
-                                            {entitiesGroupedAndSorted.map((tags, key) => (
-                                                <div key={key}>
-                                                    <div
-                                                        className="form-label"
-                                                        style={{
-                                                            display: 'block',
-                                                            marginBottom: '5px',
-                                                            marginTop: '10px',
-                                                        }}
-                                                    >
-                                                        {groupLabels.get(key).plural}
+                                })()
+                            }
+
+                            <div className="widget-content sd-padding-all--2">
+                                <div>
+                                    {/* Run automatically button is hidden for the next release */}
+                                    <div className="form__row form__row--flex sd-padding-b--1" style={{display: 'none'}}>
+                                        <ButtonGroup align="start">
+                                            <Switch
+                                                value={runAutomaticallyPreference}
+                                                disabled={readOnly}
+                                                onChange={() => {
+                                                    const newValue = !runAutomaticallyPreference;
+
+                                                    this.setState({runAutomaticallyPreference: newValue});
+
+                                                    superdesk.preferences.set(RUN_AUTOMATICALLY_PREFERENCE, newValue);
+
+                                                    if (newValue && this.state.data === 'not-initialized') {
+                                                        this.runAnalysis();
+                                                    }
+                                                }}
+                                                aria-label="Run automatically"
+                                                label={{content: gettext('Run automatically')}}
+                                            />
+                                        </ButtonGroup>
+                                    </div>
+
+                                    {
+                                        data === 'loading' || data === 'not-initialized' ? null : (
+                                            <>
+                                                <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
+                                                    <div style={{flexGrow: 1}}>
+                                                        <Autocomplete
+                                                            value={''}
+                                                            key={this.state.forceRenderKey}
+                                                            keyValue="keyValue"
+                                                            items={[]}
+                                                            placeholder="Search for an entity or subject"
+                                                            search={(searchString, callback) => {
+                                                                let cancelled = false;
+
+                                                                httpRequestJsonLocal<{analysis: IAutoTaggingSearchResult}>({
+                                                                    method: 'POST',
+                                                                    path: '/ai/',
+                                                                    payload: {
+                                                                        service: 'semaphore',
+                                                                        item: {
+                                                                            searchString,
+                                                                        },
+                                                                    },
+                                                                }).then((res) => {
+                                                                    if (cancelled === true) {
+                                                                        return;
+                                                                    }
+
+                                                                    const json_response = res.analysis.result.tags;
+                                                                    const result_data = res.analysis;
+
+                                                                    const result = toClientFormat(json_response).toArray();
+
+                                                                    const withoutExistingTags = result.filter(
+                                                                        (searchTag) => !tagAlreadyExists(data, searchTag.qcode),
+                                                                    );
+
+                                                                    const withResponse = withoutExistingTags.map((tag) => ({
+                                                                        // required for Autocomplete component
+                                                                        keyValue: tag.name,
+
+                                                                        tag,
+
+                                                                        // required to get all parents when an item is selected
+                                                                        entireResponse: result_data,
+                                                                    }));
+
+                                                                    // Assuming 'callback' is a function
+                                                                    // that takes the processed data
+                                                                    callback(withResponse);
+                                                                });
+
+                                                                return {
+                                                                    cancel: () => {
+                                                                        cancelled = true;
+                                                                    },
+                                                                };
+                                                            }}
+                                                            listItemTemplate={(__item: any) => {
+                                                                const _item: ITagUi = __item.tag;
+
+                                                                return (
+                                                                    <div className="auto-tagging-widget__autocomplete-item">
+                                                                        <b>{_item.name}</b>
+
+                                                                        {
+                                                                            _item?.group?.value == null ? null : (
+                                                                                <p>{_item.group.value}</p>
+                                                                            )
+                                                                        }
+
+                                                                        {
+                                                                            _item?.description == null ? null : (
+                                                                                <p>{_item.description}</p>
+                                                                            )
+                                                                        }
+                                                                    </div>
+                                                                );
+                                                            }}
+                                                            onSelect={(_value: any) => {
+                                                                const tag: ITagUi = _value.tag;
+                                                                const entireResponse: IAutoTaggingSearchResult =
+                                                                    _value.entireResponse;
+
+                                                                this.insertTagFromSearch(tag, data, entireResponse);
+                                                                this.setState({
+                                                                    tentativeTagName: '',
+                                                                    forceRenderKey: Math.random(),
+                                                                });
+                                                            }}
+                                                            onChange={noop}
+                                                        />
                                                     </div>
-                                                    <TagListComponent
-                                                        savedTags={savedTags}
-                                                        tags={tags.toMap()}
-                                                        readOnly={readOnly}
-                                                        onRemove={(ids) => {
-                                                            this.updateTags(
-                                                                ids.reduce(
-                                                                    (analysis, id) => analysis.remove(id),
-                                                                    data.changes.analysis,
-                                                                ),
-                                                                data,
-                                                            );
+                                                </div>
+                                                <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
+                                                    <Button
+                                                        aria-label="Add an entity"
+                                                        type="primary"
+                                                        size="small"
+                                                        shape="round"
+                                                        text={gettext('Add an entity')}
+                                                        disabled={readOnly}
+                                                        onClick={() => {
+                                                            this.setState({
+                                                                newItem: {
+                                                                    name: '',
+                                                                },
+                                                            });
                                                         }}
                                                     />
                                                 </div>
-                                            )).toArray()}
-                                        </ToggleBoxNext>,
-                                    );
-                                }
+                                            </>
+                                        )
+                                    }
+                                </div>
 
-                                const allGroupedAndSortedByConfig = allGrouped
-                                    .filter((_, key) => hasConfig(key, this.semaphoreFields.others))
-                                    .sortBy((_, key) => this.semaphoreFields.others[key].order,
-                                        (a, b) => a - b);
+                                {(() => {
+                                    if (data === 'loading') {
+                                        return (
+                                            <div style={{display: 'flex', alignItems: 'center'}}>
+                                                <div className="spinner-big" />
+                                            </div>
+                                        );
+                                    } else if (data === 'not-initialized') {
+                                        return (
+                                            <EmptyState
+                                                title={gettext('No tags yet')}
+                                                description={readOnly ? undefined : gettext('Click "Run" to test Autotagger')}
+                                            />
+                                        );
+                                    } else {
+                                        const {
+                                            entitiesGroupedAndSorted,
+                                            othersGrouped,
+                                        } = getAutoTaggingData(data, this.semaphoreFields);
 
-                                const allGroupedAndSortedNotInConfig = allGrouped
-                                    .filter((_, key) => !hasConfig(key, this.semaphoreFields.others));
+                                        const savedTags = data.original.analysis.keySeq().toSet();
 
-                                const allGroupedAndSorted = allGroupedAndSortedByConfig
-                                    .concat(allGroupedAndSortedNotInConfig);
+                                        let allGrouped = OrderedMap<string, JSX.Element>();
 
-                                return (
-                                    <React.Fragment>
-                                        {
-                                            this.state.newItem == null ? null : (
-                                                <NewItemComponent
-                                                    item={this.state.newItem}
-                                                    onChange={(newItem) => {
-                                                        this.setState({newItem});
-                                                    }}
-                                                    save={(newItem: INewItem) => {
-                                                        this.createNewTag(newItem, data);
-                                                    }}
-                                                    cancel={() => {
-                                                        this.setState({newItem: null});
-                                                    }}
-                                                    tagAlreadyExists={
-                                                        (qcode) => tagAlreadyExists(data, qcode)
-                                                    }
-                                                />
-                                            )
+                                        othersGrouped.forEach((tags, groupId) => {
+                                            if (tags != null && groupId != null) {
+                                                allGrouped = allGrouped.set(groupId,
+                                                    <ToggleBoxNext
+                                                        key={groupId}
+                                                        title={gettext('Subjects')}
+                                                        style="circle"
+                                                        isOpen={true}
+                                                    >
+                                                        <TagListComponent
+                                                            savedTags={savedTags}
+                                                            tags={tags.toMap()}
+                                                            readOnly={readOnly}
+                                                            // array of qcodes are ids of tags to remove
+                                                            onRemove={(ids) => {
+                                                                this.updateTags(
+                                                                    ids.reduce(
+                                                                        (analysis, id) => analysis.remove(id),
+                                                                        data.changes.analysis,
+                                                                    ),
+                                                                    data,
+                                                                );
+                                                            }}
+                                                        />
+                                                    </ToggleBoxNext>,
+                                                );
+                                            }
+                                        });
+                                        //  renders the tags in the entities group in the widget window
+                                        if (entitiesGroupedAndSorted.size > 0) {
+                                            allGrouped = allGrouped.set('entities',
+                                                <ToggleBoxNext
+                                                    title={gettext('Entities')}
+                                                    style="circle"
+                                                    isOpen={true}
+                                                    key="entities"
+                                                >
+                                                    {entitiesGroupedAndSorted.map((tags, key) => (
+                                                        <div key={key}>
+                                                            <div
+                                                                className="form-label"
+                                                                style={{
+                                                                    display: 'block',
+                                                                    marginBottom: '5px',
+                                                                    marginTop: '10px',
+                                                                }}
+                                                            >
+                                                                {groupLabels.get(key).plural}
+                                                            </div>
+                                                            <TagListComponent
+                                                                savedTags={savedTags}
+                                                                tags={tags.toMap()}
+                                                                readOnly={readOnly}
+                                                                onRemove={(ids) => {
+                                                                    this.updateTags(
+                                                                        ids.reduce(
+                                                                            (analysis, id) => analysis.remove(id),
+                                                                            data.changes.analysis,
+                                                                        ),
+                                                                        data,
+                                                                    );
+                                                                }}
+                                                            />
+                                                        </div>
+                                                    )).toArray()}
+                                                </ToggleBoxNext>,
+                                            );
                                         }
 
-                                        <div className="widget-content__main">
-                                            {allGroupedAndSorted.map((item) => item).toArray()}
-                                        </div>
-                                    </React.Fragment>
-                                );
-                            }
-                        })()}
+                                        const allGroupedAndSortedByConfig = allGrouped
+                                            .filter((_, key) => hasConfig(key, this.semaphoreFields.others))
+                                            .sortBy((_, key) => this.semaphoreFields.others[key].order,
+                                                (a, b) => a - b);
 
-                        <div className="widget-content__footer">
-                            {(() => {
-                                if (data === 'loading') {
-                                    return null;
-                                } else if (data === 'not-initialized') {
-                                    return (
-                                        <Button
-                                            aria-label="Run"
-                                            type="primary"
-                                            text={gettext('Run')}
-                                            expand={true}
-                                            disabled={readOnly}
-                                            onClick={() => {
-                                                this.runAnalysis();
-                                            }}
-                                        />
-                                    );
-                                } else {
-                                    return (
-                                        <Button
-                                            aria-label="Refresh"
-                                            type="primary"
-                                            text={gettext('Refresh')}
-                                            expand={true}
-                                            disabled={readOnly}
-                                            onClick={() => {
-                                                this.runAnalysis();
-                                            }}
-                                        />
-                                    );
-                                }
-                            })()}
-                        </div>
-                    </div>
-                </React.Fragment>
+                                        const allGroupedAndSortedNotInConfig = allGrouped
+                                            .filter((_, key) => !hasConfig(key, this.semaphoreFields.others));
+
+                                        const allGroupedAndSorted = allGroupedAndSortedByConfig
+                                            .concat(allGroupedAndSortedNotInConfig);
+
+                                        return (
+                                            <React.Fragment>
+                                                {
+                                                    this.state.newItem == null ? null : (
+                                                        <NewItemComponent
+                                                            item={this.state.newItem}
+                                                            onChange={(newItem) => {
+                                                                this.setState({newItem});
+                                                            }}
+                                                            save={(newItem: INewItem) => {
+                                                                this.createNewTag(newItem, data);
+                                                            }}
+                                                            cancel={() => {
+                                                                this.setState({newItem: null});
+                                                            }}
+                                                            tagAlreadyExists={
+                                                                (qcode) => tagAlreadyExists(data, qcode)
+                                                            }
+                                                        />
+                                                    )
+                                                }
+
+                                                <div className="widget-content__main">
+                                                    {allGroupedAndSorted.map((item) => item).toArray()}
+                                                </div>
+                                            </React.Fragment>
+                                        );
+                                    }
+                                })()}
+                            </div>
+                        </React.Fragment>
+                    )}
+                    footer={(() => {
+                        if (data === 'loading') {
+                            return <span />;
+                        } else if (data === 'not-initialized') {
+                            return (
+                                <Button
+                                    aria-label="Run"
+                                    type="primary"
+                                    text={gettext('Run')}
+                                    expand={true}
+                                    disabled={readOnly}
+                                    onClick={() => {
+                                        this.runAnalysis();
+                                    }}
+                                />
+                            );
+                        } else {
+                            return (
+                                <Button
+                                    aria-label="Refresh"
+                                    type="primary"
+                                    text={gettext('Refresh')}
+                                    expand={true}
+                                    disabled={readOnly}
+                                    onClick={() => {
+                                        this.runAnalysis();
+                                    }}
+                                />
+                            );
+                        }
+                    })()}
+                />
             );
         }
     };
