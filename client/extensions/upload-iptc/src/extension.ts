@@ -48,10 +48,10 @@ const extension: IExtension = {
     activate: (superdesk: ISuperdesk) => {
         const result: IExtensionActivationResult = {
             contributions: {
-                iptcMapping: (data, item: IArticle) => Promise.all([
-                    superdesk.entities.vocabulary.getVocabulary(PHOTO_CAT_ID),
-                    superdesk.entities.vocabulary.getVocabulary(PHOTO_SUPPCAT_ID),
-                ]).then(([categories, supp_categories]: [Array<ISubject>, Array<ISubject>]) => {
+                iptcMapping: (data, item: IArticle) => {
+                    const categories = superdesk.entities.vocabulary.getVocabulary(PHOTO_CAT_ID).items;
+                    const supp_categories = superdesk.entities.vocabulary.getVocabulary(PHOTO_SUPPCAT_ID).items;
+
                     Object.assign(item, {
                         slugline: toString(data.ObjectName),
                         byline: toString(data['By-line']),
@@ -106,8 +106,8 @@ const extension: IExtension = {
 
                     console.debug('iptc', data, item);
 
-                    return item;
-                }),
+                    return Promise.resolve(item);
+                },
             },
         };
 
