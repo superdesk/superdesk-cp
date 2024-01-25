@@ -14,7 +14,7 @@ import {getAutoTaggingVocabularyLabels} from './common';
 import {getExistingTags, createTagsPatch} from './data-transformations';
 import {noop} from 'lodash';
 
-export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event']);
+export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event', 'subject']);
 
 export type INewItem = Partial<ITagUi>;
 
@@ -53,6 +53,7 @@ interface IState {
     vocabularyLabels: Map<string, string> | null;
     tentativeTagName: string;
     forceRenderKey: number;
+    log: string | 'error';
 }
 
 const RUN_AUTOMATICALLY_PREFERENCE = 'run_automatically';
@@ -67,7 +68,6 @@ export function hasConfig(key: string, semaphoreFields: ISemaphoreFields) {
 // Runs when clicking the "Run" button. Returns the tags from the semaphore service
 export function getAutoTaggingData(data: IEditableData, semaphoreConfig: any) {
     const items = data.changes.analysis;
-
     const isEntity = (tag: ITagUi) => tag.group && entityGroups.has(tag.group.value);
 
     const entities = items.filter((tag) => isEntity(tag));
@@ -167,6 +167,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 vocabularyLabels: null,
                 tentativeTagName: '',
                 forceRenderKey: Math.random(),
+                log: '',
             };
 
             this._mounted = false;
@@ -203,9 +204,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 }).then((res) => {
                     const resClient = toClientFormat(res.analysis);
 
-                    // Use the line below to get the existing tags from the article
-                    // const existingTags = getExistingTags(this.props.article);
-
                     if (this._mounted) {
                         const existingTags = dataBeforeLoading !== 'loading' && dataBeforeLoading !== 'not-initialized'
                             ? dataBeforeLoading.changes.analysis // keep existing tags
@@ -228,7 +226,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
 
                     if (this._mounted) {
                         this.setState({
-                            data: 'not-initialized', // or you could set to a new error state
+                            data: 'not-initialized',
                         });
                     }
                 });
@@ -248,6 +246,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                     this.runAnalysis();
                 }
             } catch (error) {
+                this.setState({ log: "error" });
                 console.error('Error in initializeData:', error);
             }
         }
@@ -270,6 +269,8 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
             if (_title == null || newItem.group == null) {
                 return;
             }
+            // Determine the group kind based on the group value
+            const groupKind = newItem.group.value === 'subject' ? 'scheme' : newItem.group.kind;
 
             const tag: ITagUi = {
                 qcode: Math.random().toString(),
@@ -277,7 +278,12 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 description: newItem.description,
                 source: 'manual',
                 altids: {},
-                group: newItem.group,
+                group: {
+                    ...newItem.group,
+                    kind: groupKind
+                },
+                scheme: newItem.group.value,
+                original_source: 'human',
             };
 
             this.updateTags(
@@ -355,7 +361,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 method: 'POST',
                 path: '/ai_data_op/',
                 payload: {
-                    service: 'imatrics',
+                    service: 'semaphore',
                     operation: 'feedback',
                     data: {
                         item: {
@@ -396,7 +402,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 return null;
             }
 
-            const {data} = this.state;
+            const {data, log} = this.state;
             const dirty = data === 'loading' || data === 'not-initialized' ? false :
                 this.isDirty(data.original, data.changes);
 
@@ -504,7 +510,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                     </div>
 
                                     {
-                                        data === 'loading' || data === 'not-initialized' ? null : (
+                                        data === 'loading' || data === 'not-initialized' || log === 'error' ? null : (
                                             <>
                                                 <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
                                                     <div style={{flexGrow: 1}}>
@@ -550,8 +556,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                         entireResponse: result_data,
                                                                     }));
 
-                                                                    // Assuming 'callback' is a function
-                                                                    // that takes the processed data
                                                                     callback(withResponse);
                                                                 });
 
@@ -599,11 +603,11 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                 </div>
                                                 <div className="form__row form__row--flex" style={{alignItems: 'center'}}>
                                                     <Button
-                                                        aria-label="Add an entity"
+                                                        aria-label="Add a tag"
                                                         type="primary"
                                                         size="small"
                                                         shape="round"
-                                                        text={gettext('Add an entity')}
+                                                        text={gettext('Add a tag')}
                                                         disabled={readOnly}
                                                         onClick={() => {
                                                             this.setState({
@@ -631,6 +635,14 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                             <EmptyState
                                                 title={gettext('No tags yet')}
                                                 description={readOnly ? undefined : gettext('Click "Run" to test Autotagger')}
+                                            />
+                                        );
+                                    } else if (this.state.log == 'error') {
+                                        console.error('Error during analysis');
+                                        return (
+                                            <EmptyState
+                                                title={gettext('Unable to use Autotagger service')}
+                                                description={gettext('Please use the Index field to add tags manually')}
                                             />
                                         );
                                     } else {
@@ -756,7 +768,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                         </React.Fragment>
                     )}
                     footer={(() => {
-                        if (data === 'loading') {
+                        if (data === 'loading' || log === 'error') {
                             return <span />;
                         } else if (data === 'not-initialized') {
                             return (

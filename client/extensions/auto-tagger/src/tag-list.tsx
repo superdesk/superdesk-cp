@@ -3,7 +3,6 @@ import {Set, OrderedMap} from 'immutable';
 import {ISuperdesk, ITreeNode} from 'superdesk-api';
 import {ITagUi} from './types';
 import {Tag} from 'superdesk-ui-framework/react';
-// import {noop} from 'lodash';
 import {TagPopover} from './tag-popover';
 import {noop} from 'lodash';
 
@@ -73,25 +72,13 @@ export function getTagsListComponent(superdesk: ISuperdesk): React.ComponentType
 
             function renderTreeNode(treeNodes: Array<ITreeNode<ITagUi>>, level: number = 0): JSX.Element {
                 const treeNodesMap = treeNodes.map((node) => (
-                    <div key={node.value.qcode} style={{paddingLeft: level === 0 || inline ? 0 : 14}}>
+                    <div key={node.value.qcode} style={{paddingLeft: level * 14}}>
                         {tagListItem(node)}
                         {node.children != null && renderTreeNode(node.children, level + 1)}
                     </div>
                 ));
 
-                return (
-                    !inline ? (
-                        <div style={{paddingLeft: level === 0 || inline ? 0 : 14}}>
-                            { treeNodesMap }
-                        </div>
-                    ) : (
-                        <React.Fragment>
-                            {level === 0 ? '' : ' | '}
-                            { treeNodesMap }
-                        </React.Fragment>
-                    )
-
-                );
+                return <div>{treeNodesMap}</div>;
             }
 
             return renderTreeNode(tagsTree);

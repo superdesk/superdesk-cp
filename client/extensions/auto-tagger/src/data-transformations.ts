@@ -68,7 +68,9 @@ export function getExistingTags(article: IArticle): IServerResponse {
 
         if (key === 'subject') {
             if (values.length > 0) {
-                result[key] = values.map((subjectItem) => {
+                result[key] = values
+                .filter(subjectItem => subjectItem.scheme != null) // Only include items with a scheme
+                .map(subjectItem => {
                     const {
                         name,
                         description,
@@ -80,10 +82,6 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         original_source,
                         parent,
                     } = subjectItem;
-
-                    if (scheme == null) {
-                        throw new Error('Scheme must be defined for all semaphore tags stored in subject field.');
-                    }
 
                     const subjectTag: ISubjectTag = {
                         name,

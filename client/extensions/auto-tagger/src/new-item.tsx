@@ -81,7 +81,7 @@ export function getNewItemComponent(superdesk: ISuperdesk): React.ComponentType<
                     }}
                 >
                     <div className="sd-card__header sd-card__header--white">
-                        <div className="sd-card__heading">{gettext('Add entity')}</div>
+                        <div className="sd-card__heading">{gettext('Add tag')}</div>
                     </div>
                     <div className="sd-card__content">
                         {
@@ -142,7 +142,7 @@ export function getNewItemComponent(superdesk: ISuperdesk): React.ComponentType<
                             this.state.type !== 'entity' ? null : (
                                 <div className="form__row">
                                     <Select
-                                        label={gettext('Entity type')}
+                                        label={gettext('Tag type')}
                                         value={this.state.entityType ?? ''}
                                         onChange={(value) => {
                                             this.setState({entityType: value});
@@ -202,7 +202,7 @@ export function getNewItemComponent(superdesk: ISuperdesk): React.ComponentType<
                                 }
 
                                 if (this.state.type === 'entity' && this.state.entityType == null) {
-                                    validationErrors.push(gettext('Entity type is required.'));
+                                    validationErrors.push(gettext('Tag type is required.'));
                                 }
 
                                 if (validationErrors.length > 0) {
