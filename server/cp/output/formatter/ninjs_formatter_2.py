@@ -108,8 +108,8 @@ class NINJSFormatter_2(Formatter):
     and ``type``. In the latest case the items are sent separately before the package item.
     """
 
-    type = "ninjs"
-    name = "NINJS"
+    name = "NINJSv3"
+    type = "ninjs3"
 
     direct_copy_properties: Tuple[str, ...] = (
         "versioncreated",
@@ -196,19 +196,11 @@ class NINJSFormatter_2(Formatter):
             ninjs["profile"] = self._format_profile(article["profile"])
 
         extra_items = None
+        # Updated the output for associations HERE
         if recursive:
             if article[ITEM_TYPE] == CONTENT_TYPE.COMPOSITE:
                 ninjs[ASSOCIATIONS] = self._get_associations(article, subscriber)
-        #         if article.get(ASSOCIATIONS):
-        #             associations, extra_items = self._format_related(article, subscriber)
-        #             ninjs[ASSOCIATIONS].update(associations)
-        #     elif article.get(ASSOCIATIONS):
-        #         ninjs[ASSOCIATIONS], extra_items = self._format_related(article, subscriber)
-        # elif article.get(ASSOCIATIONS) and recursive:
-        #     ninjs[ASSOCIATIONS], extra_items = self._format_related(article, subscriber)
-        # if extra_items:
-        #     ninjs.setdefault(EXTRA_ITEMS, {}).update(extra_items)
-
+        
         if article.get("embargoed"):
             ninjs["embargoed"] = article["embargoed"].isoformat()
 
@@ -339,26 +331,25 @@ class NINJSFormatter_2(Formatter):
             return CONTENT_TYPE.TEXT
         return article[ITEM_TYPE]
 
-    def _get_associations(self, article, subscriber):
-        """Create associations dict for package groups."""
-        associations = dict()
-        for group in article.get(GROUPS, []):
-            if group[GROUP_ID] == ROOT_GROUP:
-                continue
+    
 
-            group_items = []
-            for ref in group[REFS]:
-                if RESIDREF in ref:
-                    item = {}
-                    item["guid"] = ref[RESIDREF]
-                    
-                    group_items.append(item)
-            if len(group_items) == 1:
-                associations[group[GROUP_ID]] = group_items[0]
-            elif len(group_items) > 1:
-                for index in range(0, len(group_items)):
-                    associations[group[GROUP_ID] + "-" + str(index)] = group_items[index]
-        return associations
+    # Added an updated _get_associations method
+    def _get_associations(self, article, subscriber):
+    """Create associations dict for package groups, including only the guid."""
+    associations = {}
+    for group in article.get(GROUPS, []):
+        if group[GROUP_ID] == ROOT_GROUP:
+            continue
+
+        group_items = [ {"guid": ref[RESIDREF]} for ref in group[REFS] if RESIDREF in ref ]
+
+        if len(group_items) == 1:
+            associations[group[GROUP_ID]] = group_items[0]
+        else:
+            for index, item in enumerate(group_items):
+                associations[f"{group[GROUP_ID]}-{index}"] = item
+
+    return associations
 
     def _format_related(self, article, subscriber):
         """Format all associated items for simple items (not packages)."""
