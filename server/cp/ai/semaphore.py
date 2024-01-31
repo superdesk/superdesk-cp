@@ -413,10 +413,15 @@ class Semaphore(AIServiceBase):
                             print('Running for Search')
                             
                             self.output = self.analyze_parent_info(html_content)
-                            updated_output = replace_qcodes(self.index_file_path,self.output)
 
-                
-                            return updated_output
+                            try:
+                                updated_output = replace_qcodes(self.index_file_path,self.output)
+                                return updated_output
+                            
+                            except Exception as e:
+                                print(f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}")
+                                return self.output
+
                         
                 except Exception as e:
                     print(e)
@@ -555,16 +560,19 @@ class Semaphore(AIServiceBase):
                 return response_dict
                                           
                 
-            # root = root.replace('<?xml version="1.0" encoding="UTF-8"?>','')
+           
             json_response = transform_xml_response(root)
 
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
 
-            print('Json Response in Analyze is  ')
-            updated_output = replace_qcodes(self.index_file_path,json_response)
-
+            try:
+                updated_output = replace_qcodes(self.index_file_path,json_response)
+                return updated_output
             
-            return updated_output
+            except Exception as e:
+                print(f"Error occurred in replace_qcodes: {e}")
+                return json_response
+                    
 
         except requests.exceptions.RequestException as e:
             traceback.print_exc()
