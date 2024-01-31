@@ -641,14 +641,14 @@ def extract_manual_tags(data):
 def capitalize_name_if_parent_none(tag):
     # Check if 'parent' is None and capitalize the first letter of 'name' if so
     if tag.get('parent') is None:
-        tag['name'] = tag['name'].capitalize()
+        tag['name'] = tag['name'].title()
     return tag
 
 def capitalize_name_if_parent_none_for_analyze(response):
     for category in ['subject', 'organisation', 'person', 'event', 'place']:
         for item in response.get(category, []):
             if item.get('parent') is None:
-                item['name'] = item['name'].capitalize()
+                item['name'] = item['name'].title()
     return response
 
 
