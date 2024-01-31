@@ -197,9 +197,8 @@ class NINJSFormatter_2(Formatter):
 
         extra_items = None
         # Updated the output for associations HERE
-        if recursive:
-            if article[ITEM_TYPE] == CONTENT_TYPE.COMPOSITE:
-                ninjs[ASSOCIATIONS] = self._get_associations(article, subscriber)
+        if article.get("associations"):
+            ninjs["associations"] = self._get_associations(article, subscriber)
         
         if article.get("embargoed"):
             ninjs["embargoed"] = article["embargoed"].isoformat()
@@ -334,22 +333,16 @@ class NINJSFormatter_2(Formatter):
     
 
     # Added an updated _get_associations method
-    def _get_associations(self, article, subscriber):
-    """Create associations dict for package groups, including only the guid."""
-    associations = {}
-    for group in article.get(GROUPS, []):
-        if group[GROUP_ID] == ROOT_GROUP:
-            continue
 
-        group_items = [ {"guid": ref[RESIDREF]} for ref in group[REFS] if RESIDREF in ref ]
+    def _get_associations(self, article, subscriber):       
+        """Create associations dict for package groups, including only the guid."""
+        associations = {}
+        for key, value in article.get('associations', {}).items():
+            if '_id' in value:
+                associations[key] = {'guid': value['_id']}
 
-        if len(group_items) == 1:
-            associations[group[GROUP_ID]] = group_items[0]
-        else:
-            for index, item in enumerate(group_items):
-                associations[f"{group[GROUP_ID]}-{index}"] = item
-
-    return associations
+        return associations
+        
 
     def _format_related(self, article, subscriber):
         """Format all associated items for simple items (not packages)."""
