@@ -116,8 +116,8 @@ class JimiFormatter(Formatter):
 
     ENCODING = "utf-8"
 
-    type = "jimi_2"
-    name = "Jimi XML 2"
+    type = "jimi"
+    name = "Jimi XML"
 
     def can_format(self, format_type, article):
         return format_type == self.type
