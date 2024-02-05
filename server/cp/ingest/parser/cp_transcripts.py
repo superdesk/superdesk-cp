@@ -6,7 +6,7 @@ from superdesk.text_utils import plain_text_to_html
 
 
 def get_previous_version(original_ingest_id: str, version_number: int) -> Optional[Dict[str, Any]]:
-    while version_number > 0:
+    while version_number >= 0:
         ingest_id = f"{original_ingest_id}.{version_number}"
         prev_item = get_resource_service("archive").find_one(req=None, ingest_id=ingest_id)
 
