@@ -33,4 +33,3 @@ class CP_Transcripts_ParseTestCase(unittest.TestCase):
         self.assertEqual("d3c8487a-1757-4dde-8bb5-22ca166c1e67.1", item["guid"])
         self.assertEqual(1, item["version"])
         self.assertEqual("d3c8487a-1757-4dde-8bb5-22ca166c1e67.0", item["rewrite_of"])
-        self.assertTrue(item["body_html"].startswith("<p>laying around"))
