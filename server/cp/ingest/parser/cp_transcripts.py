@@ -2,7 +2,6 @@ from typing import Dict, Any, Optional
 
 from superdesk import get_resource_service
 from superdesk.io.feed_parsers.ninjs import NINJSFeedParser
-from superdesk.text_utils import plain_text_to_html
 
 
 def get_previous_version(
@@ -34,7 +33,7 @@ class CPTranscriptsFeedParser(NINJSFeedParser):
         item["body_html"] = (
             item["body_html"]
             if item["body_html"].strip().startswith("<p>")
-            else plain_text_to_html(item["body_html"])
+            else "<p>{}</p>".format(item["body_html"])
         )
         item.setdefault("extra", {}).update(
             dict(
