@@ -8,7 +8,6 @@ from superdesk.publish.formatters.ninjs_formatter import (
 def format_cv_item(item, language):
     """Format item from controlled vocabulary for output."""
     if item.get("scheme") == "subject":
-
         return filter_empty_vals(
             {
                 "code": item.get("qcode"),
@@ -17,7 +16,6 @@ def format_cv_item(item, language):
             }
         )
     else:
-
         return filter_empty_vals(
             {
                 "code": item.get("qcode"),
