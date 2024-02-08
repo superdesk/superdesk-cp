@@ -1,6 +1,6 @@
 import os
 import logging
-from typing import Optional
+from typing import Dict, Optional
 import requests
 from requests.exceptions import HTTPError
 import xml.etree.ElementTree as ET
@@ -280,7 +280,9 @@ class Semaphore(AIServiceBase):
                 f"Semaphore Search request failed. We are in analyze RequestError exception: {str(e)}"
             )
 
-    def create_tag_in_semaphore(self, html_content: str) -> dict:
+        return {}
+
+    def create_tag_in_semaphore(self, html_content: Dict[str, str]) -> Dict:
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -366,6 +368,7 @@ class Semaphore(AIServiceBase):
             logger.error(
                 f"Semaphore Create Tag Failed failed. We are in analyze RequestError exception: {str(e)}"
             )
+        return {}
 
     def data_operation(
         self, verb: str, operation: str, name: Optional[str], data: dict
@@ -374,6 +377,7 @@ class Semaphore(AIServiceBase):
             return self.analyze(data["item"])
         if operation == "search":
             return self.search(data)
+        return {}
 
     def search(self, data) -> dict:
         try:
@@ -400,7 +404,7 @@ class Semaphore(AIServiceBase):
             pass
         return {}
 
-    def analyze(self, html_content: dict[str, str], tags=None) -> dict:
+    def analyze(self, html_content: Dict[str, str], tags=None) -> Dict:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -540,8 +544,9 @@ class Semaphore(AIServiceBase):
         except Exception as e:
             traceback.print_exc()
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
+        return {}
 
-    def html_to_xml(self, html_content: str) -> str:
+    def html_to_xml(self, html_content: Dict[str, str]) -> str:
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
