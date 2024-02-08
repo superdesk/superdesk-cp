@@ -1,13 +1,13 @@
 import os
 import logging
+from typing import Optional
 import requests
 from requests.exceptions import HTTPError
 import xml.etree.ElementTree as ET
-from flask import current_app, abort
-from .base import AIServiceBase
+from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
-import io
 import json
+import superdesk
 
 
 
@@ -28,10 +28,6 @@ class Semaphore(AIServiceBase):
 
     name = "semaphore"
     label = "Semaphore autotagging service"
-    print(AIServiceBase)
-
-
-	
 	
     def __init__(self,data):
 
@@ -39,7 +35,7 @@ class Semaphore(AIServiceBase):
         self.base_url =  os.getenv('SEMAPHORE_BASE_URL')
 
 	#  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = os.getenv(' SEMAPHORE_ANALYZE_URL')
+        self.analyze_url = os.getenv('SEMAPHORE_ANALYZE_URL')
 
 	#  SEMAPHORE_API_KEY Goes Here
         self.api_key = os.getenv('SEMAPHORE_API_KEY')
@@ -59,31 +55,19 @@ class Semaphore(AIServiceBase):
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv('SEMAPHORE_CREATE_TAG_QUERY')
 
-        #  METADATA Index.json File Path Goes Here
-        self.index_file_path = os.getenv('INDEX_FILE_PATH')
-        
 
-
-        
-
-
-        self.output = self.analyze(data)
-
-    
     def convert_to_desired_format(input_data):
         result = {
-            "result": {
-                "tags": {
-                    "subject": input_data['subject'],
-                    "organisation": input_data['organisation'],
-                    "person": input_data['person'],
-                    "event": input_data['event'],
-                    "place": input_data['place'],
-                    "object": []  # Assuming no data for 'object'
-                },
-                "broader": {
-                    "subject": input_data['broader']
-                }
+            "tags": {
+                "subject": input_data['subject'],
+                "organisation": input_data['organisation'],
+                "person": input_data['person'],
+                "event": input_data['event'],
+                "place": input_data['place'],
+                "object": []  # Assuming no data for 'object'
+            },
+            "broader": {
+                "subject": input_data['broader']
             }
         }
 
@@ -134,7 +118,7 @@ class Semaphore(AIServiceBase):
             return [] 
     
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, html_content: str) -> dict:
+    def analyze_parent_info(self, html_content: dict) -> dict:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning("Semaphore Search is not configured properly, can't analyze content")
@@ -258,18 +242,16 @@ class Semaphore(AIServiceBase):
 
             def convert_to_desired_format(input_data):
                 result = {
-                    "result": {
-                        "tags": {
-                            "subject": [capitalize_name_if_parent_none(tag) for tag in input_data['subject']],
-                            "organisation": [capitalize_name_if_parent_none(tag) for tag in input_data['organisation']],
-                            "person": [capitalize_name_if_parent_none(tag) for tag in input_data['person']],
-                            "event": [capitalize_name_if_parent_none(tag) for tag in input_data['event']],
-                            "place": [capitalize_name_if_parent_none(tag) for tag in input_data['place']],
-                            "object": []  # Assuming no data for 'object'
-                        },
-                        "broader": {
-                            "subject": [capitalize_name_if_parent_none(tag) for tag in input_data['broader']]
-                        }
+                    "tags": {
+                        "subject": [capitalize_name_if_parent_none(tag) for tag in input_data['subject']],
+                        "organisation": [capitalize_name_if_parent_none(tag) for tag in input_data['organisation']],
+                        "person": [capitalize_name_if_parent_none(tag) for tag in input_data['person']],
+                        "event": [capitalize_name_if_parent_none(tag) for tag in input_data['event']],
+                        "place": [capitalize_name_if_parent_none(tag) for tag in input_data['place']],
+                        "object": []  # Assuming no data for 'object'
+                    },
+                    "broader": {
+                        "subject": [capitalize_name_if_parent_none(tag) for tag in input_data['broader']]
                     }
                 }
 
@@ -394,55 +376,38 @@ class Semaphore(AIServiceBase):
             traceback.print_exc()
             logger.error(f"Semaphore Create Tag Failed failed. We are in analyze RequestError exception: {str(e)}")
 
+    def data_operation(self, verb: str, operation: str, name: Optional[str], data: dict) -> dict:
+        if operation == "feedback":
+            return self.analyze(data["item"])
+        if operation == "search":
+            return self.search(data)
+    
+    def search(self, data) -> dict:
+        try:
+            print('----------------------------------------------------------------------')
+            print('----------------------------------------------------------------------')
+            print('Running for Search')
+            
+            self.output = self.analyze_parent_info(data)
 
-    def analyze(self, html_content: str) -> dict:
+            try:
+                updated_output = replace_qcodes(self.output)
+                return updated_output
+            except Exception as e:
+                print(f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}")
+                return self.output
+        except Exception as e:
+            print(e)
+            pass
+        return {}
+
+    def analyze(self, html_content: dict[str, str], tags=None) -> dict:
         try:
             
             if not self.base_url or not self.api_key:
                 logger.warning("Semaphore is not configured properly, can't analyze content")
                 return {}
             
-            try:
-
-
-                try:
-                    for key,value in html_content.items():
-                        if key == 'searchString':
-                            print('----------------------------------------------------------------------')
-                            print('----------------------------------------------------------------------')
-                            print('Running for Search')
-                            
-                            self.output = self.analyze_parent_info(html_content)
-
-                            try:
-                                updated_output = replace_qcodes(self.index_file_path,self.output)
-                                return updated_output
-                            
-                            except Exception as e:
-                                print(f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}")
-                                return self.output
-
-                        
-                except Exception as e:
-                    print(e)
-                    pass
-
-                if isinstance(html_content, list):
-                    # Iterate over each element in the list
-                    for item in html_content:
-                        # Check if the item is a dictionary and contains the 'operation' key
-                        if isinstance(item, dict) and item.get('operation') == "feedback":                           
-                            print('----------------------------------------------------------------------')
-                            print('----------------------------------------------------------------------')
-                            print('Running to Create a New Tag in Semaphore')
-                            self.output = self.create_tag_in_semaphore(item)
-                            return self.output
-              
-            
-                              
-            except TypeError:
-                pass
-
             # Convert HTML to XML
             xml_payload = self.html_to_xml(html_content)
 			
@@ -453,7 +418,6 @@ class Semaphore(AIServiceBase):
             headers = {
                 "Authorization": f"bearer {self.get_access_token()}"
             }
-
             
             try:
                 response = session.post(self.analyze_url, headers=headers, data=payload)
@@ -566,7 +530,7 @@ class Semaphore(AIServiceBase):
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
 
             try:
-                updated_output = replace_qcodes(self.index_file_path,json_response)
+                updated_output = replace_qcodes(json_response)
                 return updated_output
             
             except Exception as e:
@@ -583,7 +547,7 @@ class Semaphore(AIServiceBase):
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
 
     
-    def html_to_xml(self,html_content: str) -> str: 
+    def html_to_xml(self, html_content: str) -> str: 
 
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
@@ -618,11 +582,10 @@ class Semaphore(AIServiceBase):
 				
 			
 			
-        body_html = html_content['body_html']
-        headline = html_content['headline']
-        headline_extended = html_content['abstract']
-        slugline = html_content['slugline']
-       
+        body_html = html_content.get('body_html', '')
+        headline = html_content.get('headline', '')
+        headline_extended = html_content.get('abstract', '')
+        slugline = html_content.get('slugline', '')
 
 				# Embed the 'body_html' into the XML template		
         xml_output = xml_template.format(headline,headline_extended,body_html,slugline)
@@ -660,14 +623,11 @@ def capitalize_name_if_parent_none_for_analyze(response):
     return response
 
 
-def replace_qcodes(index_file_path,output_data):
-
-    # Load the index file
-    with open(index_file_path, 'r') as file:
-        index_data = json.load(file)
+def replace_qcodes(output_data):
+    cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
 
     # Create a mapping from semaphore_id to qcode
-    semaphore_to_qcode = {item['semaphore_id']: item['qcode'] for item in index_data['items']}
+    semaphore_to_qcode = {item['semaphore_id']: item['qcode'] for item in cv['items']}
 
     # Define a function to replace qcodes in a given list
     def replace_in_list(data_list):
@@ -685,8 +645,5 @@ def replace_qcodes(index_file_path,output_data):
     return output_data
 
 def init_app(app):
-    print(type(app))
-    print(app)
-    a = Semaphore(app)
-    return a.output
+    Semaphore(app)
 
