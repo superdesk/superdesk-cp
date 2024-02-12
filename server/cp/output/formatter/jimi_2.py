@@ -105,7 +105,7 @@ def is_french(item) -> bool:
     return "fr" in item.get("language", "en")
 
 
-class JimiFormatter(Formatter):
+class Jimi2Formatter(Formatter):
     ENCODING = "utf-8"
 
     type = "jimi_2"
