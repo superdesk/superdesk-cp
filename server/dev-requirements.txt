@@ -4,7 +4,12 @@ pytest
 flake8
 pep8
 nose
-mypy<=0.799
+mypy<=1.8.0
 httmock==1.4.0
 wooper==0.4.4
 requests_mock
+
+types-python-dateutil
+types-pytz
+types-requests
+types-six
