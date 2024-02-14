@@ -78,8 +78,6 @@ cryptography==42.0.2
     #   jwcrypto
 deepdiff==6.7.1
     # via superdesk-planning
-defusedxml==0.7.1
-    # via python3-saml
 docopt==0.6.2
     # via num2words
 draftjs-exporter[lxml]==2.1.7
@@ -164,6 +162,7 @@ ldap3==2.5.2
 lxml==4.6.5
     # via
     #   draftjs-exporter
+    #   python3-saml
     #   superdesk-core
     #   xmlsec
 markupsafe==2.0.1
@@ -220,7 +219,7 @@ python-twitter==3.5
     # via superdesk-core
 python-xmp-toolkit==2.0.2
     # via -r requirements.in
-python3-saml==1.9.0
+python3-saml==1.16.0
     # via -r requirements.in
 pytz==2024.1
     # via
