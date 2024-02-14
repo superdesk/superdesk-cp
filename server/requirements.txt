@@ -173,7 +173,7 @@ mongolock==1.3.4
     # via superdesk-core
 natsort==8.4.0
     # via croniter
-num2words==0.5.10
+num2words==0.5.13
     # via -r requirements.in
 oauth2client==4.1.3
     # via flask-oidc-ex
