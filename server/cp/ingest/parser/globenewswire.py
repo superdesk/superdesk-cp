@@ -29,7 +29,6 @@ logger = logging.getLogger(__name__)
 
 
 class GlobeNewswireParser(NewsMLTwoFeedParser):
-
     NAME = "globenewswire"
     label = SOURCE
     ALLOWED_EXT = {".newsml", ".xml"}

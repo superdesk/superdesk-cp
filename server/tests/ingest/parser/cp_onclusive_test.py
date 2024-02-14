@@ -111,7 +111,10 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "subject_custom",
                     },
                 ]
-                self.assertEqual(sorted(map(qcode, item["subject"])), sorted(map(qcode, expected_subjects)))
+                self.assertEqual(
+                    sorted(map(qcode, item["subject"])),
+                    sorted(map(qcode, expected_subjects)),
+                )
                 item["anpa_category"].sort(key=lambda i: i["name"])
                 expected_categories = [
                     {

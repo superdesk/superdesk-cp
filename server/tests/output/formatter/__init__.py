@@ -8,7 +8,6 @@ from unittest.mock import patch
 
 
 class BaseXmlFormatterTestCase(unittest.TestCase):
-
     subscriber = {}
     formatter = None
     article = None

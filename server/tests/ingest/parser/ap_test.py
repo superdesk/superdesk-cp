@@ -33,7 +33,6 @@ parser = CP_APMediaFeedParser()
 
 
 class CP_AP_ParseTestCase(unittest.TestCase):
-
     app = flask.Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
@@ -91,11 +90,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 "qcode": "w",
                 "scheme": "categories",
                 "translations": {
-                    "name": {
-                        "en-CA": "International",
-                        "fr-CA": "International"
-                    }
-                }
+                    "name": {"en-CA": "International", "fr-CA": "International"}
+                },
             },
             item["anpa_category"],
         )
@@ -111,7 +107,9 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("APV", tags)
         self.assertIn("TSX", tags)
 
-        products = [s["qcode"] for s in item["subject"] if s.get("scheme") == cp.AP_PRODUCT]
+        products = [
+            s["qcode"] for s in item["subject"] if s.get("scheme") == cp.AP_PRODUCT
+        ]
         self.assertEqual(6, len(products))
         self.assertIn("33381", products)
 
@@ -228,11 +226,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     "qcode": "w",
                     "scheme": CATEGORY_SCHEME,
                     "translations": {
-                        "name": {
-                            "en-CA": "International",
-                            "fr-CA": "International"
-                        }
-                    }
+                        "name": {"en-CA": "International", "fr-CA": "International"}
+                    },
                 }
             ],
             item["anpa_category"],
@@ -252,11 +247,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     "qcode": "w",
                     "scheme": CATEGORY_SCHEME,
                     "translations": {
-                        "name": {
-                            "en-CA": "International",
-                            "fr-CA": "International"
-                        }
-                    }
+                        "name": {"en-CA": "International", "fr-CA": "International"}
+                    },
                 }
             ],
             item["anpa_category"],
@@ -276,16 +268,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     "qcode": "r",
                     "scheme": CATEGORY_SCHEME,
                     "translations": {
-                        "name": {
-                            "en-CA": "Agate",
-                            "fr-CA": "Statistiques"
-                        }
-                    }
+                        "name": {"en-CA": "Agate", "fr-CA": "Statistiques"}
+                    },
                 }
             ],
             item["anpa_category"],
         )
-        self.assertEqual([], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV])
+        self.assertEqual(
+            [], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV]
+        )
         output = self.format(item)
         self.assertIn("<Category>Agate</Category>", output)
         self.assertIn("<IndexCode>Agate</IndexCode>", output)
@@ -295,7 +286,9 @@ class CP_AP_ParseTestCase(unittest.TestCase):
             _data = json.load(fp)
             # Prefix slugline with `BC` so slugline -> subject mapping works
             # in this case, slugline -> "BC-TEN-" -> "15065000"
-            _data["data"]["item"]["slugline"] = "BC" + _data["data"]["item"]["slugline"][2:]
+            _data["data"]["item"]["slugline"] = (
+                "BC" + _data["data"]["item"]["slugline"][2:]
+            )
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
@@ -308,16 +301,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                     "qcode": "r",
                     "scheme": CATEGORY_SCHEME,
                     "translations": {
-                        "name": {
-                            "en-CA": "Agate",
-                            "fr-CA": "Statistiques"
-                        }
-                    }
+                        "name": {"en-CA": "Agate", "fr-CA": "Statistiques"}
+                    },
                 }
             ],
             item["anpa_category"],
         )
-        self.assertEqual([], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV])
+        self.assertEqual(
+            [], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV]
+        )
         output = self.format(item)
         self.assertIn("<Category>Agate</Category>", output)
 

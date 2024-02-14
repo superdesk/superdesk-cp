@@ -16,7 +16,6 @@ def get_fixture_path(filename, provider):
 
 
 class ParserTestCase(unittest.TestCase):
-
     parser: FeedParser
     provider: str
 

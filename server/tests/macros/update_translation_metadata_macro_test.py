@@ -5,7 +5,9 @@ import superdesk
 
 from unittest.mock import patch
 from tests.mock import resources
-from cp.macros.update_translation_metadata_macro import update_translation_metadata_macro as macro
+from cp.macros.update_translation_metadata_macro import (
+    update_translation_metadata_macro as macro,
+)
 
 import pytz
 import settings
@@ -24,67 +26,67 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         """
 
         item = {
-            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'headline': 'test headline',
-            'slugine': 'test slugline',
-            'state': 'in_progress',
-            'type': 'text',
-            'language': 'en',
-            'anpa_take_key': 'update',
-            'subject': [{
-                'name': 'Command News',
-                'qcode': 'CMPD1',
-                'scheme': 'destinations'
-            }]
+            "_id": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "guid": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "headline": "test headline",
+            "slugine": "test slugline",
+            "state": "in_progress",
+            "type": "text",
+            "language": "en",
+            "anpa_take_key": "update",
+            "subject": [
+                {"name": "Command News", "qcode": "CMPD1", "scheme": "destinations"}
+            ],
         }
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 macro(item)
 
-        self.assertIn('subject', item)
+        self.assertIn("subject", item)
         self.assertIn(
             {
-                'name': 'Presse Canadienne staff',
-                'qcode': 'sfstf',
-                'scheme': 'destinations',
+                "name": "Presse Canadienne staff",
+                "qcode": "sfstf",
+                "scheme": "destinations",
             },
-            item['subject'],
+            item["subject"],
         )
-        self.assertEqual(item.get('anpa_take_key'), '')
+        self.assertEqual(item.get("anpa_take_key"), "")
 
     def test_override_destination_canadian_press_staff_to_presse_canadienne_staff(self):
         """
         If Canadian Press Staff destination is present override it with Presse Canadienne staff
         """
         item = {
-            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'headline': 'test headline',
-            'slugine': 'test slugline',
-            'state': 'in_progress',
-            'type': 'text',
-            'language': 'en',
-            'subject': [{
-                'name': 'Canadian Press Staff',
-                'qcode': 'cpstf',
-                'scheme': 'destinations'
-            }]
+            "_id": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "guid": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "headline": "test headline",
+            "slugine": "test slugline",
+            "state": "in_progress",
+            "type": "text",
+            "language": "en",
+            "subject": [
+                {
+                    "name": "Canadian Press Staff",
+                    "qcode": "cpstf",
+                    "scheme": "destinations",
+                }
+            ],
         }
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 macro(item)
 
-        self.assertIn('subject', item)
+        self.assertIn("subject", item)
         self.assertIn(
             {
-                'name': 'Presse Canadienne staff',
-                'qcode': 'sfstf',
-                'scheme': 'destinations',
+                "name": "Presse Canadienne staff",
+                "qcode": "sfstf",
+                "scheme": "destinations",
             },
-            item['subject'],
+            item["subject"],
         )
 
     def test_override_destination_the_associated_press_to_l_associated_press(self):
@@ -92,32 +94,34 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         If The Associated Press destination is present override it with L'Associated Press
         """
         item = {
-            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'headline': 'test headline',
-            'slugine': 'test slugline',
-            'state': 'in_progress',
-            'type': 'text',
-            'language': 'en',
-            'subject': [{
-                'name': 'The Associated Press',
-                'qcode': 'ap---',
-                'scheme': 'destinations'
-            }]
+            "_id": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "guid": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "headline": "test headline",
+            "slugine": "test slugline",
+            "state": "in_progress",
+            "type": "text",
+            "language": "en",
+            "subject": [
+                {
+                    "name": "The Associated Press",
+                    "qcode": "ap---",
+                    "scheme": "destinations",
+                }
+            ],
         }
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 macro(item)
 
-        self.assertIn('subject', item)
+        self.assertIn("subject", item)
         self.assertIn(
             {
-                'name': "L'Associated Press",
-                'qcode': 'apfra',
-                'scheme': 'destinations',
+                "name": "L'Associated Press",
+                "qcode": "apfra",
+                "scheme": "destinations",
             },
-            item['subject'],
+            item["subject"],
         )
 
     def test_destination_is_empty_add_presse_canadienne_staff(self):
@@ -125,48 +129,49 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         If the destination is empty add Presse Canadienne staff
         """
         item = {
-            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'headline': 'test headline',
-            'slugine': 'test slugline',
-            'state': 'in_progress',
-            'type': 'text',
-            'keywords': ['foo', 'bar'],
-            'language': 'en'
+            "_id": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "guid": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "headline": "test headline",
+            "slugine": "test slugline",
+            "state": "in_progress",
+            "type": "text",
+            "keywords": ["foo", "bar"],
+            "language": "en",
         }
 
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 macro(item)
 
-        self.assertIn('subject', item)
+        self.assertIn("subject", item)
         self.assertIn(
             {
-                'name': 'Presse Canadienne staff',
-                'qcode': 'sfstf',
-                'scheme': 'destinations',
+                "name": "Presse Canadienne staff",
+                "qcode": "sfstf",
+                "scheme": "destinations",
             },
-            item['subject'],
+            item["subject"],
         )
 
     def test_dateline(self):
-
-        self.app.config.update({
-            "GEONAMES_SEARCH_STYLE": settings.GEONAMES_SEARCH_STYLE,
-            "GEONAMES_FEATURE_CLASSES": settings.GEONAMES_FEATURE_CLASSES,
-            "GEONAMES_USERNAME": settings.GEONAMES_USERNAME,
-            "GEONAMES_URL": default_settings.GEONAMES_URL,
-            "GEONAMES_TOKEN": default_settings.GEONAMES_TOKEN,
-        })
+        self.app.config.update(
+            {
+                "GEONAMES_SEARCH_STYLE": settings.GEONAMES_SEARCH_STYLE,
+                "GEONAMES_FEATURE_CLASSES": settings.GEONAMES_FEATURE_CLASSES,
+                "GEONAMES_USERNAME": settings.GEONAMES_USERNAME,
+                "GEONAMES_URL": default_settings.GEONAMES_URL,
+                "GEONAMES_TOKEN": default_settings.GEONAMES_TOKEN,
+            }
+        )
 
         item = {
-            '_id': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'guid': 'urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564',
-            'headline': 'test headline',
-            'slugine': 'test slugline',
-            'state': 'in_progress',
-            'type': 'text',
-            'dateline': {
+            "_id": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "guid": "urn:newsml:localhost:5000:2019-12-10T14:43:46.224107:d13ac5ae-7f43-4b7f-89a5-2c6835389564",
+            "headline": "test headline",
+            "slugine": "test slugline",
+            "state": "in_progress",
+            "type": "text",
+            "dateline": {
                 "date": datetime(2021, 7, 22, 00, 00, tzinfo=pytz.UTC),
                 "text": "LONDON, Jun 22 testing source -",
                 "source": "The Associated Press",
@@ -179,12 +184,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
                     "country": "United Kingdom",
                     "country_code": "GB",
                     "dateline": "city",
-                    "location": {
-                        "lat": 51.50853,
-                        "lon": -0.12574
-                    }
-                }
-            }
+                    "location": {"lat": 51.50853, "lon": -0.12574},
+                },
+            },
         }
 
         with self.app.app_context():

@@ -229,13 +229,13 @@ SAML_LABEL = env("SAML_LABEL", "SSO")
 SAML_BASE_PATH = env("SAML_PATH", os.path.join(ABS_PATH, "saml"))
 if SERVER_URL == "http://localhost:5000/api":
     SAML_PATH = os.path.join(SAML_BASE_PATH, "localhost")
-elif 'scp-master' in SERVER_URL:
+elif "scp-master" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "test")
-elif 'cp-uat-api' in SERVER_URL:
+elif "cp-uat-api" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "uat-old")
-elif 'cp-uat' in SERVER_URL:
+elif "cp-uat" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "uat")
-elif 'cms-api' in SERVER_URL:
+elif "cms-api" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "prod-old")
 else:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "prod")

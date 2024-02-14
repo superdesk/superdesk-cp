@@ -34,7 +34,9 @@ jobs:
 
     - run: mypy .
 
-    - run: nosetests tests
+    - run: black --check .
+
+    - run: pytest tests
 
     - run: python manage.py app:initialize_data
 
@@ -54,6 +56,6 @@ jobs:
       with:
         node-version: '14.x'
 
-    - run: npm install --no-audit
+    - run: npm ci
 
     - run: npm run build

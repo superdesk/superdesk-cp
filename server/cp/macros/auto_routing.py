@@ -30,7 +30,7 @@ def find_name_item(cv_id, name):
 
 
 def callback(item, **kwargs):
-    """ This macro will set the language of the articles to the Desk language. """
+    """This macro will set the language of the articles to the Desk language."""
     rule = kwargs.get("rule")
     item["profile"] = "autorouting"
     if rule and ":" in rule["name"]:

@@ -58,7 +58,6 @@ def fetch_ok(url, request):
 
 
 class OrangelogicTestCase(unittest.TestCase):
-
     provider = {"config": {"username": "foo", "password": "bar"}}
 
     def setUp(self):

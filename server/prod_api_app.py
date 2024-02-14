@@ -10,4 +10,6 @@ application = get_app()
 # fix pagination limit
 application.config["PAGINATION_LIMIT"] = 200
 
-superdesk.register_resource("usage_metrics", UsageResource, UsageService, _app=application)
+superdesk.register_resource(
+    "usage_metrics", UsageResource, UsageService, _app=application
+)

@@ -13,7 +13,6 @@ now = utcnow()
 
 
 class CPPublishServiceTestCase(unittest.TestCase):
-
     formatter = JimiFormatter()
 
     def format_queue_item(self, item):
