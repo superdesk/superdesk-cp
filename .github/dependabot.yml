@@ -9,7 +9,7 @@ updates:
     directory: "client" # Location of package manifests
     schedule:
       interval: "weekly"
-  - package-ecosystem: "pip-compile"
+  - package-ecosystem: "pip"
     directory: "server"
     schedule:
       interval: "weekly"
