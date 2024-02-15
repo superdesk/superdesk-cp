@@ -9,7 +9,6 @@ NS = {
 
 
 class BusinessWireParser(NewsMLOneFeedParser):
-
     label = "BusinessWire"
 
     NAME = label.lower()

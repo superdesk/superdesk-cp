@@ -11,7 +11,6 @@ NSMAP = {
 
 
 class NewsmlG2TestCase(BaseXmlFormatterTestCase):
-
     now = utcnow()
     formatter = CPNewsMLG2Formatter()
     article = {

@@ -31,7 +31,6 @@ def fixture(filename):
 
 
 class AP2JimiTestCase(unittest.TestCase):
-
     app = flask.Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})

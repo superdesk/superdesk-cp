@@ -29,7 +29,9 @@ GROUP_QCODE_ORDER = [
 
 
 def get_french_name(item) -> str:
-    return ((item.get("translations") or {}).get("name") or {}).get("fr-CA") or item.get("name")
+    return ((item.get("translations") or {}).get("name") or {}).get(
+        "fr-CA"
+    ) or item.get("name")
 
 
 def set_item_group(item):
@@ -37,16 +39,10 @@ def set_item_group(item):
 
     qcodes = []
     if len(item.get("calendars") or []):
-        qcodes = [
-            calendar.get("qcode")
-            for calendar in item["calendars"]
-        ]
+        qcodes = [calendar.get("qcode") for calendar in item["calendars"]]
     elif len(item.get("agendas") or []):
         # Agendas are converted from `_id` to Agenda item in `planning_article_export` endpoint
-        qcodes = [
-            agenda.get("_id")
-            for agenda in item["agendas"]
-        ]
+        qcodes = [agenda.get("_id") for agenda in item["agendas"]]
 
     if not len(qcodes):
         return
@@ -112,11 +108,17 @@ def group_items_by_french_topics(items):
     item_translations = {
         "calendars": {
             calendar.get("qcode"): get_french_name(calendar).upper()
-            for calendar in vocabs_service.find_one(req=None, _id="event_calendars").get("items") or []
+            for calendar in vocabs_service.find_one(
+                req=None, _id="event_calendars"
+            ).get("items")
+            or []
         },
         "coverage_types": {
             coverage_type.get("name"): get_french_name(coverage_type).lower()
-            for coverage_type in vocabs_service.find_one(req=None, _id="g2_content_type").get("items") or []
+            for coverage_type in vocabs_service.find_one(
+                req=None, _id="g2_content_type"
+            ).get("items")
+            or []
         },
     }
 
@@ -140,7 +142,9 @@ def group_items_by_french_topics(items):
             date_groups[local_date_str] = {
                 # Format name for heading, in Canadian French i.e.
                 # jeudi 24 juin
-                "name": format_date(item["local_date"], "EEEE d MMMM", locale="fr_CA").capitalize(),
+                "name": format_date(
+                    item["local_date"], "EEEE d MMMM", locale="fr_CA"
+                ).capitalize(),
                 "groups": {
                     item_translations["calendars"].get(qcode): []
                     for qcode in GROUP_QCODE_ORDER
@@ -151,6 +155,8 @@ def group_items_by_french_topics(items):
         date_groups[local_date_str]["groups"][group_name].append(item)
 
     if not date_groups:
-        raise SuperdeskApiError.badRequestError(_("No items matched the required calendar/agenda"))
+        raise SuperdeskApiError.badRequestError(
+            _("No items matched the required calendar/agenda")
+        )
 
     return date_groups.items()

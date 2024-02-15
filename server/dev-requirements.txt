@@ -1,13 +1,14 @@
 -r requirements.txt
 
+pep8
 pytest
 flake8
-pep8
 nose
 mypy<=1.8.0
 httmock==1.4.0
 wooper==0.4.4
 requests_mock
+black~=23.0
 
 types-python-dateutil
 types-pytz

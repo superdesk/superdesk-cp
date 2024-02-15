@@ -6,7 +6,6 @@ from cp.ingest import BusinessWireParser
 
 
 class BusinessWireTestCase(ParserTestCase):
-
     parser = BusinessWireParser()
     provider = "businesswire"
 

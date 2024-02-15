@@ -14,9 +14,9 @@ jobs:
         working-directory: server
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v4
+    - uses: actions/setup-python@v5
       with:
         python-version: '3.8'
 
@@ -34,7 +34,9 @@ jobs:
 
     - run: mypy .
 
-    - run: nosetests tests
+    - run: black --check .
+
+    - run: pytest tests
 
     - run: python manage.py app:initialize_data
 
@@ -48,12 +50,12 @@ jobs:
         working-directory: client
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
         node-version: '14.x'
 
-    - run: npm install --no-audit
+    - run: npm ci
 
     - run: npm run build

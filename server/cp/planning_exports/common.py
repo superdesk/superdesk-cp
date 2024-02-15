@@ -26,9 +26,13 @@ def set_item_title(item, event):
     Prioritise the Event's slugline/name before Planning item's
     """
 
-    item["title"] = event.get("name") or item.get("name") or \
-        event.get("slugline") or item.get("slugline") or \
-        ""
+    item["title"] = (
+        event.get("name")
+        or item.get("name")
+        or event.get("slugline")
+        or item.get("slugline")
+        or ""
+    )
 
 
 def set_item_description(item, event):
@@ -38,18 +42,18 @@ def set_item_description(item, event):
     """
 
     description = (
-        event.get("definition_long") or
-        item.get("definition_long") or
-        event.get("definition_short") or
-        item.get("definition_short") or
-        item.get("description_text") or
-        ""
+        event.get("definition_long")
+        or item.get("definition_long")
+        or event.get("definition_short")
+        or item.get("definition_short")
+        or item.get("description_text")
+        or ""
     ).rstrip()
     short_description = (
-        event.get("definition_short") or
-        item.get("definition_short") or
-        item.get("description_text") or
-        ""
+        event.get("definition_short")
+        or item.get("definition_short")
+        or item.get("description_text")
+        or ""
     ).rstrip()
 
     if description:
@@ -73,7 +77,7 @@ def set_item_dates(item, event):
         else:
             item["dates"] = {
                 "start": item["planning_date"],
-                "tz": app.config["DEFAULT_TIMEZONE"]
+                "tz": app.config["DEFAULT_TIMEZONE"],
             }
 
     # Construct the date string here so we don't have to use
@@ -81,7 +85,9 @@ def set_item_dates(item, event):
     tz = item["dates"].get("tz") or app.config["DEFAULT_TIMEZONE"]
     start_local = utc_to_local(tz, item["dates"]["start"])
     start_local_str = start_local.strftime("%I:%M %P")
-    end_local = utc_to_local(tz, item["dates"]["end"]) if item["dates"].get("end") else None
+    end_local = (
+        utc_to_local(tz, item["dates"]["end"]) if item["dates"].get("end") else None
+    )
     end_local_str = end_local.strftime("%I:%M %P") if end_local else None
     tz_name = start_local.tzname()
 
@@ -117,7 +123,12 @@ def set_item_location(item, event):
         try:
             address_qcode = (item["location"][0] or {}).get("qcode")
             if address_qcode:
-                address_item = get_resource_service("locations").find_one(req=None, guid=address_qcode) or {}
+                address_item = (
+                    get_resource_service("locations").find_one(
+                        req=None, guid=address_qcode
+                    )
+                    or {}
+                )
                 address = address_item.get("address") or {}
 
                 try:
@@ -127,13 +138,17 @@ def set_item_location(item, event):
 
                 item["address"] = {
                     "country": address["country"] if address.get("country") else None,
-                    "locality": address["locality"] if address.get("locality") else None,
+                    "locality": address["locality"]
+                    if address.get("locality")
+                    else None,
                     "city": address["city"] if address.get("city") else "",
                     "state": address["state"] if address.get("state") else None,
                     "name": address.get("city") or address_item.get("name") or "",
-                    "full": address_item.get("unique_name") or address_item.get("formatted_address") or "",
+                    "full": address_item.get("unique_name")
+                    or address_item.get("formatted_address")
+                    or "",
                     "title": address_item.get("name") or "",
-                    "address": address_line
+                    "address": address_line,
                 }
         except (IndexError, KeyError):
             pass
@@ -143,7 +158,9 @@ def set_item_location(item, event):
         item["address"]["name"] = item["address"]["name"].upper()
 
     if item["address"]["title"] and item["address"]["address"]:
-        item["address"]["short"] = item["address"]["title"] + ", " + item["address"]["address"]
+        item["address"]["short"] = (
+            item["address"]["title"] + ", " + item["address"]["address"]
+        )
     else:
         item["address"]["short"] = item["address"]["full"]
 

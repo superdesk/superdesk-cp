@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 def translate_to_desk_language(item, **kwargs):
-    """ This macro will set the language of the articles to the Desk language. """
+    """This macro will set the language of the articles to the Desk language."""
 
     dest_desk = kwargs.get("dest_desk_id")
 
