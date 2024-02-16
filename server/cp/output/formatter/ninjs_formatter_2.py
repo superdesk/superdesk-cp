@@ -333,16 +333,46 @@ class NINJSFormatter_2(Formatter):
     
 
     # Added an updated _get_associations method
-
-    def _get_associations(self, article, subscriber):       
-        """Create associations dict for package groups, including only the guid."""
+    
+    # Updated _get_association to work with both Pictures and Text
+    
+    def _get_associations(self, article, subscriber):
         associations = {}
-        for key, value in article.get('associations', {}).items():
-            if '_id' in value:
-                associations[key] = {'guid': value['_id']}
-
-        return associations
+        article_type = self._get_type(article)
         
+	
+        if article_type == "text":
+            for key, value in article.get('associations', {}).items():
+            
+                if '_id' in value:
+                    associations[key] = {'guid': value['_id']}
+
+            return associations
+        
+        elif article_type == 'picture':
+            for group in article.get(GROUPS, []):  
+                if group[GROUP_ID] == ROOT_GROUP:  
+                    continue  
+
+            group_items = []
+            for ref in group[REFS]:
+                if RESIDREF in ref:
+                    item = {}
+                    item["guid"] = ref[RESIDREF]
+                    item[ITEM_TYPE] = ref.get(ITEM_TYPE, "text")
+                    if "label" in ref:
+                        item["label"] = ref.get("label")
+                    if ref.get("package_item"):
+                        item.update(self._transform_to_ninjs(ref["package_item"], subscriber, recursive=False))
+                    group_items.append(item)
+            if len(group_items) == 1:
+                associations[group[GROUP_ID]] = group_items[0]
+            elif len(group_items) > 1:
+                for index in range(0, len(group_items)):
+                    associations[group[GROUP_ID] + "-" + str(index)] = group_items[index]
+            
+            return associations
+
 
     def _format_related(self, article, subscriber):
         """Format all associated items for simple items (not packages)."""
@@ -670,7 +700,8 @@ class NINJS2Formatter(NINJSFormatter_2):
         self.format_type = "ninjs3"
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
-        print('Using NinjsFormatter 2')
+       
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
         ninjs["version"] = str(article.get("correction_sequence", 1))
+        
         return ninjs
