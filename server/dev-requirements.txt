@@ -8,7 +8,7 @@ mypy<=1.8.0
 httmock==1.4.0
 wooper==0.4.4
 requests_mock
-black~=23.0
+black~=24.2
 
 types-python-dateutil
 types-pytz
