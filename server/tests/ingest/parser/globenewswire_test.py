@@ -11,7 +11,6 @@ from cp.output.formatter.jimi import JimiFormatter
 
 
 class GlobeNewswireParserTestCase(ParserTestCase):
-
     parser = GlobeNewswireParser()
     provider = "globenewswire"
 

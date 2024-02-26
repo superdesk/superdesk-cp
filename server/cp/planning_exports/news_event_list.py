@@ -56,7 +56,7 @@ STATE_GROUPS = {
         "nunavut",
         "northwest territories",
         "yukon",
-    ]
+    ],
 }
 
 
@@ -125,8 +125,8 @@ def group_items_by_state(items):
                     SORT_GROUPS.PRAIRIES: [],
                     SORT_GROUPS.BRITISH_COLUMBIA: [],
                     SORT_GROUPS.NORTH: [],
-                    SORT_GROUPS.UNDATED: []
-                }
+                    SORT_GROUPS.UNDATED: [],
+                },
             }
 
         date_groups[local_date_str]["groups"][item["group"]].append(item)

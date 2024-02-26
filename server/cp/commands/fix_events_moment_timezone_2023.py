@@ -48,10 +48,12 @@ class FixEventsCommand(superdesk.Command):
                 },
             ],
             "ingest_provider": {"$exists": 0},  # ignore ingested events
-            "dates.tz": {"$nin": [
-                "America/Regina",
-                "America/Whitehorse",
-            ]},
+            "dates.tz": {
+                "$nin": [
+                    "America/Regina",
+                    "America/Whitehorse",
+                ]
+            },
         }
 
         updated_count = 0

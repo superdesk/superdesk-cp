@@ -14,7 +14,6 @@ from . import BaseXmlFormatterTestCase
 
 
 class JimiFormatterTestCase(BaseXmlFormatterTestCase):
-
     formatter = JimiFormatter()
     article = {
         "_id": "id",
@@ -470,9 +469,11 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("00000001", item.find("NewsCompID").text)
 
     def test_ap_update_keeps_newscomip(self):
-        resources["ingest"].service.find_one.side_effect = [{
-            "unique_id": 1,
-        }]
+        resources["ingest"].service.find_one.side_effect = [
+            {
+                "unique_id": 1,
+            }
+        ]
 
         item = self.format_item(
             {
@@ -553,8 +554,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         item = self.format_item(
             {
                 "language": "fr-CA",
-                "extra": {cp.ORIG_ID: 'a' * 32},
+                "extra": {cp.ORIG_ID: "a" * 32},
             }
         )
 
-        self.assertEqual('a' * 30 + 'fa', item.find('SystemSlug').text)
+        self.assertEqual("a" * 30 + "fa", item.find("SystemSlug").text)

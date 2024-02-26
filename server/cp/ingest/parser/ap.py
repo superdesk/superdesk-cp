@@ -293,8 +293,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item["type"] == "text":
             try:
-                prev_item = superdesk.get_resource_service("archive").find_one(req=None, ingest_id=item["guid"])
-                if prev_item is not None and prev_item["extra"]["ap_version"] != ap_item["version"]:
+                prev_item = superdesk.get_resource_service("archive").find_one(
+                    req=None, ingest_id=item["guid"]
+                )
+                if (
+                    prev_item is not None
+                    and prev_item["extra"]["ap_version"] != ap_item["version"]
+                ):
                     item["rewrite_of"] = prev_item["guid"]
             except KeyError:
                 pass
@@ -518,9 +523,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             if subj.get("ap_subject"):
                 codes = [code.strip() for code in subj["ap_subject"].split(",")]
                 for ap_subj in subject:
-                    if ap_subj.get('creator') == 'Editorial' and any(
-                        [code for code in codes if ap_subj["code"].startswith(code)]
-                    ) and subj["qcode"] not in added:
+                    if (
+                        ap_subj.get("creator") == "Editorial"
+                        and any(
+                            [code for code in codes if ap_subj["code"].startswith(code)]
+                        )
+                        and subj["qcode"] not in added
+                    ):
                         added.add(subj["qcode"])
                         item["subject"].append(
                             {
@@ -735,7 +744,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                     "name": cat["name"],
                     "qcode": cat["qcode"],
                     "scheme": CATEGORY_SCHEME,
-                    "translations": cat.get("translations")
+                    "translations": cat.get("translations"),
                 }
             )
 
@@ -860,14 +869,16 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             products = data["meta"]["products"]
         except KeyError:
             return
-        item.setdefault("subject", []).extend([
-            {
-                "name": p["name"],
-                "qcode": str(p["id"]),
-                "scheme": cp.AP_PRODUCT,
-            }
-            for p in products
-        ])
+        item.setdefault("subject", []).extend(
+            [
+                {
+                    "name": p["name"],
+                    "qcode": str(p["id"]),
+                    "scheme": cp.AP_PRODUCT,
+                }
+                for p in products
+            ]
+        )
 
     def categorisation_mapping(self, in_item, item):
         """Avoid extra mapping."""
@@ -900,8 +911,8 @@ def clean_html(html):
     for elem in root.iter():
         elem.attrib.pop("id", None)
         elem.attrib.pop("class", None)
-        if elem.tag in ('hl2', 'pre', 'note'):
-            elem.tag = 'p'
+        if elem.tag in ("hl2", "pre", "note"):
+            elem.tag = "p"
 
     root = cleaner.clean_html(root)
     return sd_etree.to_string(root, method="html")

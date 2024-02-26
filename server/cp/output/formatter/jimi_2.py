@@ -105,8 +105,7 @@ def is_french(item) -> bool:
     return "fr" in item.get("language", "en")
 
 
-class JimiFormatter(Formatter):
-
+class Jimi2Formatter(Formatter):
     ENCODING = "utf-8"
 
     type = "jimi_2"
@@ -181,7 +180,9 @@ class JimiFormatter(Formatter):
             if root.find("PscCodes") is None:
                 etree.SubElement(root, "PscCodes").text = "Online"
         elif service:
-            etree.SubElement(root, "Services").text = "Écrit" if is_french(item) else "Print"
+            etree.SubElement(root, "Services").text = (
+                "Écrit" if is_french(item) else "Print"
+            )
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
@@ -255,9 +256,7 @@ class JimiFormatter(Formatter):
             item.get("abstract")
         )
         etree.SubElement(content, "ContentText").text = self._format_html(content_html)
-        etree.SubElement(content, "Language").text = (
-            "2" if is_french(item) else "1"
-        )
+        etree.SubElement(content, "Language").text = "2" if is_french(item) else "1"
 
         if item["type"] == "text" and content_html:
             content.find("DirectoryText").text = format_maxlength(
@@ -273,7 +272,7 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, "Stocks").text = ",".join(item["keywords"])
 
         #  IndexCodes are set here
-        
+
         self._format_category_index(content, item)
         self._format_genre(content, item)
         self._format_urgency(content, item.get("urgency"), item["language"])
@@ -302,7 +301,9 @@ class JimiFormatter(Formatter):
 
     def get_item_id(self, item):
         if item.get("family_id"):
-            ingest_item = superdesk.get_resource_service("ingest").find_one(req=None, _id=item["family_id"])
+            ingest_item = superdesk.get_resource_service("ingest").find_one(
+                req=None, _id=item["family_id"]
+            )
             if ingest_item and ingest_item.get("unique_id"):
                 return ingest_item["unique_id"]
         return item["unique_id"]
@@ -401,11 +402,12 @@ class JimiFormatter(Formatter):
         indexes = uniq(categories + self._get_indexes(item))
 
         #  Add code here to remove the small case letters from here
-        filtered_indexes = [' '.join(word for word in index.split() if not word[0].islower()) for index in indexes]
+        filtered_indexes = [
+            " ".join(word for word in index.split() if not word[0].islower())
+            for index in indexes
+        ]
         # Remove empty strings from the filtered list
         indexes = [index for index in filtered_indexes if index]
-        
-
 
         if categories:
             etree.SubElement(content, "Category").text = ",".join(categories)
@@ -448,11 +450,11 @@ class JimiFormatter(Formatter):
 
         SUBJECTS_ID_3 = "http://cv.iptc.org/newscodes/mediatopic/"
 
-
         subject = [
             s
             for s in item.get("subject", [])
-            if s.get("name") and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
+            if s.get("name")
+            and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
         ]
 
         return self._resolve_names(subject, item["language"], SUBJECTS_ID)
@@ -682,7 +684,11 @@ class JimiFormatter(Formatter):
                 elem.tag = "em"
 
             # Remove whitespace and empty tags
-            if elem.tag in INLINE_ELEMENTS and elem.text is not None and not elem.text.strip():
+            if (
+                elem.tag in INLINE_ELEMENTS
+                and elem.text is not None
+                and not elem.text.strip()
+            ):
                 elem.drop_tree()
 
         return sd_etree.to_string(tree, encoding="unicode", method="html")
@@ -715,7 +721,7 @@ def _find_qcode_item(code, items, jimi_only=True):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
 
-        elif item.get("semaphore_id") == code:            
+        elif item.get("semaphore_id") == code:
             if not jimi_only:
                 pass
             if item.get("in_jimi"):

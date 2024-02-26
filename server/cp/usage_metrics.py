@@ -31,7 +31,6 @@ class UsageResource(superdesk.Resource):
 
 
 class UsageService(superdesk.Service):
-
     def on_fetched(self, doc):
         super().on_fetched(doc)
 

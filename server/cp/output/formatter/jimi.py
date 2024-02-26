@@ -113,7 +113,6 @@ def text_value(value: Union[str, List[str]]) -> str:
 
 
 class JimiFormatter(Formatter):
-
     ENCODING = "utf-8"
 
     type = "jimi"
@@ -188,7 +187,9 @@ class JimiFormatter(Formatter):
             if root.find("PscCodes") is None:
                 etree.SubElement(root, "PscCodes").text = "Online"
         elif service:
-            etree.SubElement(root, "Services").text = "Écrit" if is_french(item) else "Print"
+            etree.SubElement(root, "Services").text = (
+                "Écrit" if is_french(item) else "Print"
+            )
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
@@ -262,9 +263,7 @@ class JimiFormatter(Formatter):
             item.get("abstract")
         )
         etree.SubElement(content, "ContentText").text = self._format_html(content_html)
-        etree.SubElement(content, "Language").text = (
-            "2" if is_french(item) else "1"
-        )
+        etree.SubElement(content, "Language").text = "2" if is_french(item) else "1"
 
         if item["type"] == "text" and content_html:
             content.find("DirectoryText").text = format_maxlength(
@@ -307,7 +306,9 @@ class JimiFormatter(Formatter):
 
     def get_item_id(self, item):
         if item.get("family_id"):
-            ingest_item = superdesk.get_resource_service("ingest").find_one(req=None, _id=item["family_id"])
+            ingest_item = superdesk.get_resource_service("ingest").find_one(
+                req=None, _id=item["family_id"]
+            )
             if ingest_item and ingest_item.get("unique_id"):
                 return ingest_item["unique_id"]
         return item["unique_id"]
@@ -520,12 +521,14 @@ class JimiFormatter(Formatter):
             content.find("Source").text = item["original_source"]
 
         if extra.get(cp.ARCHIVE_SOURCE):
-            etree.SubElement(content, "ArchiveSources").text = text_value(extra[cp.ARCHIVE_SOURCE])
+            etree.SubElement(content, "ArchiveSources").text = text_value(
+                extra[cp.ARCHIVE_SOURCE]
+            )
 
         if extra.get(cp.PHOTOGRAPHER_CODE):
-            etree.SubElement(content, "BylineTitle").text = text_value(extra[
-                cp.PHOTOGRAPHER_CODE
-            ]).upper()
+            etree.SubElement(content, "BylineTitle").text = text_value(
+                extra[cp.PHOTOGRAPHER_CODE]
+            ).upper()
 
         if item.get("copyrightnotice"):
             etree.SubElement(content, "Copyright").text = item["copyrightnotice"][:50]
@@ -536,7 +539,9 @@ class JimiFormatter(Formatter):
             ].replace("  ", " ")
 
         if extra.get(cp.CAPTION_WRITER):
-            etree.SubElement(content, "CaptionWriter").text = text_value(extra[cp.CAPTION_WRITER])
+            etree.SubElement(content, "CaptionWriter").text = text_value(
+                extra[cp.CAPTION_WRITER]
+            )
 
         if item.get("ednote"):
             etree.SubElement(content, "SpecialInstructions").text = item["ednote"]
@@ -550,13 +555,19 @@ class JimiFormatter(Formatter):
             ).text
 
         if extra.get(cp.INFOSOURCE):
-            etree.SubElement(content, "CustomField6").text = text_value(extra[cp.INFOSOURCE])
+            etree.SubElement(content, "CustomField6").text = text_value(
+                extra[cp.INFOSOURCE]
+            )
 
         if extra.get(cp.XMP_KEYWORDS):
-            etree.SubElement(content, "XmpKeywords").text = text_value(extra[cp.XMP_KEYWORDS])
+            etree.SubElement(content, "XmpKeywords").text = text_value(
+                extra[cp.XMP_KEYWORDS]
+            )
 
         if extra.get("container"):
-            etree.SubElement(content, "ContainerIDs").text = text_value(extra["container"])
+            etree.SubElement(content, "ContainerIDs").text = text_value(
+                extra["container"]
+            )
         else:
             self._format_refs(content, item)
 
@@ -565,17 +576,19 @@ class JimiFormatter(Formatter):
         refs = set(
             [
                 slug(self._get_original_item(ref))
-                for ref in superdesk.get_resource_service("news").search({
-                    "query": {
-                        "bool": {
-                            "must": [
-                                {"term": {"refs.guid": item["guid"]}},
-                                {"term": {"pubstatus": "usable"}},
-                                {"terms": {"state": ["published", "scheduled"]}},
-                            ],
+                for ref in superdesk.get_resource_service("news").search(
+                    {
+                        "query": {
+                            "bool": {
+                                "must": [
+                                    {"term": {"refs.guid": item["guid"]}},
+                                    {"term": {"pubstatus": "usable"}},
+                                    {"terms": {"state": ["published", "scheduled"]}},
+                                ],
+                            },
                         },
-                    },
-                })
+                    }
+                )
             ]
         )
 
@@ -680,7 +693,11 @@ class JimiFormatter(Formatter):
                 elem.tag = "em"
 
             # Remove whitespace and empty tags
-            if elem.tag in INLINE_ELEMENTS and elem.text is not None and not elem.text.strip():
+            if (
+                elem.tag in INLINE_ELEMENTS
+                and elem.text is not None
+                and not elem.text.strip()
+            ):
                 elem.drop_tree()
 
         return sd_etree.to_string(tree, encoding="unicode", method="html")

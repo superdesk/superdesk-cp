@@ -67,7 +67,6 @@ class OrangelogicListCursor(ListCursor):
 
 
 class OrangelogicSearchProvider(SearchProvider):
-
     label = "Orange Logic"
 
     TZ = "America/Toronto"
