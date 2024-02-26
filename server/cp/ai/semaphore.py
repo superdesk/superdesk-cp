@@ -1,3 +1,4 @@
+
 import os
 import logging
 import requests
@@ -7,6 +8,7 @@ from flask import current_app, abort
 from .base import AIServiceBase
 import traceback
 import io
+import superdesk
 import json
 
 
@@ -35,7 +37,8 @@ class Semaphore(AIServiceBase):
 	
     def __init__(self,data):
 
-        #  SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
+
+        # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
         self.base_url =  os.getenv('SEMAPHORE_BASE_URL')
 
 	#  SEMAPHORE_ANALYZE_URL Goes Here
@@ -59,13 +62,8 @@ class Semaphore(AIServiceBase):
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv('SEMAPHORE_CREATE_TAG_QUERY')
 
-        #  METADATA Index.json File Path Goes Here
-        self.index_file_path = os.getenv('INDEX_FILE_PATH')
+        # self.index_file_path = "Index.json"
         
-
-
-        
-
 
         self.output = self.analyze(data)
 
@@ -284,10 +282,7 @@ class Semaphore(AIServiceBase):
 
             json_response = convert_to_desired_format(json_response)
 
-            print('Json Response is ')
-            print(json_response)
-
-
+            
             return json_response
         
         except requests.exceptions.RequestException as e:
@@ -308,9 +303,7 @@ class Semaphore(AIServiceBase):
 
             query_string = self.create_tag_query
             
-            new_url = url+task+query_string
-
-         
+            new_url = url+task+query_string     
 
             # Make a POST request using XML payload
             headers = {
@@ -397,13 +390,12 @@ class Semaphore(AIServiceBase):
 
     def analyze(self, html_content: str) -> dict:
         try:
-            
+                      
             if not self.base_url or not self.api_key:
                 logger.warning("Semaphore is not configured properly, can't analyze content")
                 return {}
             
             try:
-
 
                 try:
                     for key,value in html_content.items():
@@ -415,7 +407,8 @@ class Semaphore(AIServiceBase):
                             self.output = self.analyze_parent_info(html_content)
 
                             try:
-                                updated_output = replace_qcodes(self.index_file_path,self.output)
+                                updated_output = replace_qcodes(self.output)
+                                
                                 return updated_output
                             
                             except Exception as e:
@@ -447,18 +440,15 @@ class Semaphore(AIServiceBase):
             xml_payload = self.html_to_xml(html_content)
 			
             payload = {'XML_INPUT': xml_payload}
-
-            
+          
             # Make a POST request using XML payload
             headers = {
                 "Authorization": f"bearer {self.get_access_token()}"
             }
-
-            
+           
             try:
                 response = session.post(self.analyze_url, headers=headers, data=payload)
-                print('response is')
-                print(response)
+                
 
                 response.raise_for_status()
             except Exception as e:
@@ -566,7 +556,8 @@ class Semaphore(AIServiceBase):
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
 
             try:
-                updated_output = replace_qcodes(self.index_file_path,json_response)
+                updated_output = replace_qcodes(json_response)
+                
                 return updated_output
             
             except Exception as e:
@@ -649,6 +640,7 @@ def extract_manual_tags(data):
 def capitalize_name_if_parent_none(tag):
     # Check if 'parent' is None and capitalize the first letter of 'name' if so
     if tag.get('parent') is None:
+        
         tag['name'] = tag['name'].title()
     return tag
 
@@ -656,18 +648,20 @@ def capitalize_name_if_parent_none_for_analyze(response):
     for category in ['subject', 'organisation', 'person', 'event', 'place']:
         for item in response.get(category, []):
             if item.get('parent') is None:
+                
                 item['name'] = item['name'].title()
     return response
 
 
-def replace_qcodes(index_file_path,output_data):
+def replace_qcodes(output_data):
 
-    # Load the index file
-    with open(index_file_path, 'r') as file:
-        index_data = json.load(file)
+    cv = superdesk.get_resource_service("vocabularies").find_one(
+            req=None, _id="subject_custom"
+        )
 
     # Create a mapping from semaphore_id to qcode
-    semaphore_to_qcode = {item['semaphore_id']: item['qcode'] for item in index_data['items']}
+    semaphore_to_qcode = {item['semaphore_id']: item['qcode'] for item in cv["items"]}
+    
 
     # Define a function to replace qcodes in a given list
     def replace_in_list(data_list):
@@ -678,15 +672,27 @@ def replace_qcodes(index_file_path,output_data):
                 item['parent'] = semaphore_to_qcode[item['parent']]
 
     # Iterate over different categories and apply the replacement
+                
+    category_data = output_data.get('result', {}).get('tags', {}).get('subject', [])
+    
+    broader_data = output_data.get('result', {}).get('broader', {}).get('subject', [])
+    
     for category in ['subject']:
         if category in output_data:
+            
             replace_in_list(output_data[category])
+            
+        elif category_data:
+            
+            replace_in_list(category_data)
+            replace_in_list(broader_data)
 
+   
     return output_data
+
 
 def init_app(app):
     print(type(app))
     print(app)
     a = Semaphore(app)
     return a.output
-
