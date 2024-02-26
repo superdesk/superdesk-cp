@@ -406,7 +406,6 @@ class JimiFormatter(Formatter):
         indexes = [index for index in filtered_indexes if index]
         
 
-
         if categories:
             etree.SubElement(content, "Category").text = ",".join(categories)
         if indexes:
@@ -419,16 +418,20 @@ class JimiFormatter(Formatter):
             req=None, _id=cv_id
         )
         names = []
+
+        filtered_items = filter_items_by_jimi(cv["items"], jimi_only=True)
+
         if not cv:
             return names
         for selected_item in selected_items:
-            item = _find_qcode_item(selected_item["qcode"], cv["items"], jimi_only)
-            name = (
-                _get_name(item, language)
-                if item
-                else _get_name(selected_item, language)
-            )
-            if name and name not in names:
+            item = _find_qcode_item(selected_item["qcode"], filtered_items, jimi_only)
+            
+            if item:
+                name = _get_name(item, language)
+            else:
+                name = None
+
+            if name is not None and name not in names:
                 names.append(name)
         return names
 
@@ -703,29 +706,39 @@ def to_datetime(value):
         return arrow.get(value)
     return value
 
+def filter_items_by_jimi(items, jimi_only=True):
+    """Filter items where 'in_jimi' is true."""
+    if jimi_only:
+        return [item for item in items if item.get("in_jimi", False)]
+    return items
 
 def _find_qcode_item(code, items, jimi_only=True):
     for item in items:
         if item.get("qcode") == code:
-            if not jimi_only:
+            if not jimi_only:               
                 pass
             if item.get("in_jimi"):
+                
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
 
-        elif item.get("semaphore_id") == code:            
+        elif item.get("semaphore_id") == code:
+            
             if not jimi_only:
                 pass
             if item.get("in_jimi"):
+                
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
+
 
 
 def _get_name(item, language):
+    
     lang = language.replace("_", "-")
     if "-CA" not in lang:
         lang = "{}-CA".format(lang)
