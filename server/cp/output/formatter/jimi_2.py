@@ -434,11 +434,32 @@ class JimiFormatter(Formatter):
             if name is not None and name not in names:
                 names.append(name)
         return names
+    
+
+    def _resolve_names_categories(self, selected_items, language, cv_id, jimi_only=True):
+        cv = superdesk.get_resource_service("vocabularies").find_one(
+            req=None, _id=cv_id
+        )
+        names = []
+        if not cv:
+            return names
+        for selected_item in selected_items:
+            item = _find_qcode_item(selected_item["qcode"], cv["items"], jimi_only)
+            name = (
+                _get_name(item, language)
+                if item
+                else _get_name(selected_item, language)
+            )
+            if name and name not in names:
+                names.append(name)
+        return names
+    
+
 
     def _get_categories(self, item):
         if not item.get("anpa_category"):
             return []
-        names = self._resolve_names(
+        names = self._resolve_names_categories(
             item["anpa_category"], item["language"], "categories", False
         )
         return names
@@ -463,7 +484,7 @@ class JimiFormatter(Formatter):
     def _format_genre(self, content, item):
         version_type = etree.SubElement(content, "VersionType")
         if item.get("genre"):
-            names = self._resolve_names(item["genre"], item["language"], "genre", False)
+            names = self._resolve_names_categories(item["genre"], item["language"], "genre", False)
             if names:
                 version_type.text = names[0]
 
@@ -474,7 +495,7 @@ class JimiFormatter(Formatter):
             ]
         except KeyError:
             return
-        names = self._resolve_names(services, item["language"], cp.DISTRIBUTION, False)
+        names = self._resolve_names_categories(services, item["language"], cp.DISTRIBUTION, False)
         if names:
             etree.SubElement(root, "Services").text = names[0]
 
