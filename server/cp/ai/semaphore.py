@@ -41,10 +41,10 @@ class Semaphore(AIServiceBase):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
         self.base_url =  os.getenv('SEMAPHORE_BASE_URL')
 
-	#  SEMAPHORE_ANALYZE_URL Goes Here
+	    #  SEMAPHORE_ANALYZE_URL Goes Here
         self.analyze_url = os.getenv(' SEMAPHORE_ANALYZE_URL')
 
-	#  SEMAPHORE_API_KEY Goes Here
+	    #  SEMAPHORE_API_KEY Goes Here
         self.api_key = os.getenv('SEMAPHORE_API_KEY')
 
 	#  SEMAPHORE_SEARCH_URL Goes Here
@@ -53,15 +53,17 @@ class Semaphore(AIServiceBase):
 	#  SEMAPHORE_GET_PARENT_URL Goes Here
         self.get_parent_url = os.getenv('SEMAPHORE_GET_PARENT_URL')
     
-        #  SEMAPHORE_CREATE_TAG_URL Goes Here
+    #  SEMAPHORE_CREATE_TAG_URL Goes Here
         self.create_tag_url = os.getenv('SEMAPHORE_CREATE_TAG_URL')
 
 	#  SEMAPHORE_CREATE_TAG_TASK Goes Here
         self.create_tag_task = os.getenv('SEMAPHORE_CREATE_TAG_TASK')
 
-        #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
+    #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv('SEMAPHORE_CREATE_TAG_QUERY')
+   
 
+        "For UAT test, the Index file needs to put in this folder  /opt/superdesk/server "
         # self.index_file_path = "Index.json"
         
 
@@ -138,7 +140,7 @@ class Semaphore(AIServiceBase):
                 logger.warning("Semaphore Search is not configured properly, can't analyze content")
                 return {}
             
-            print(html_content['searchString'])
+            
             query = html_content['searchString']
             
             new_url = self.search_url+query+".json"
@@ -151,8 +153,7 @@ class Semaphore(AIServiceBase):
             
             try:
                 response = session.get(new_url, headers=headers)
-                print('response is')
-                print(response)
+                
 
                 response.raise_for_status()
             except Exception as e:
@@ -160,10 +161,7 @@ class Semaphore(AIServiceBase):
                 logger.error(f"An error occurred while making the request: {str(e)}")
 
             root = response.text
-            print('Root is')
-            print(root)
-
-            print(type(root))
+           
 
           
 
@@ -365,12 +363,12 @@ class Semaphore(AIServiceBase):
                     
 
                     if response.status_code == 409:
-                        print("Tag already exists in KMM. Response is 409 . The Tag is")
-                        print(concept_name)
+                        print("Tag already exists in KMM. Response is 409 . The Tag is: " + concept_name)
+                        
                     else:
                         response.raise_for_status()
-                        print('Tag Got Created is ')
-                        print(concept_name)
+                        print('Tag Got Created is: '+ concept_name)
+                       
                     
 
                 except HTTPError as http_err:
@@ -408,7 +406,8 @@ class Semaphore(AIServiceBase):
 
                             try:
                                 updated_output = replace_qcodes(self.output)
-                                
+
+                        
                                 return updated_output
                             
                             except Exception as e:
@@ -435,7 +434,8 @@ class Semaphore(AIServiceBase):
                               
             except TypeError:
                 pass
-
+            
+            
             # Convert HTML to XML
             xml_payload = self.html_to_xml(html_content)
 			
@@ -480,21 +480,34 @@ class Semaphore(AIServiceBase):
                     if tag_data["qcode"] and tag_data not in response_dict[group]:
                         response_dict[group].append(tag_data)
 
+                # Function to adjust score to avoid duplicate score entries for different items
+                def adjust_score(score, existing_scores):
+                    original_score = float(score)
+                    while score in existing_scores:
+                        original_score += 0.001  # Increment by the smallest possible amount
+                        score = "{:.3f}".format(original_score)  # Keep score to three decimal places
+                    return score
+
                 # Iterate through the XML elements and populate the dictionary
                 for element in root.iter():
                     if element.tag == "META":
                         meta_name = element.get("name")
                         meta_value = element.get("value")
-                        meta_score = element.get("score","0")
-                        
+                        meta_score = element.get("score", "0")
                         meta_id = element.get("id")
 
-                        # Process 'Media Topic_PATH_LABEL' and 'Media Topic_PATH_GUID'
+                        # Adjust score if necessary to avoid duplicates
+                        if meta_name in ["Media Topic_PATH_LABEL", "Media Topic_PATH_GUID"]:
+                            meta_score = adjust_score(meta_score, path_labels.keys() if meta_name == "Media Topic_PATH_LABEL" else path_guids.keys())
+                        
+                        # Split and process path labels or GUIDs
                         if meta_name == "Media Topic_PATH_LABEL":
                             path_labels[meta_score] = meta_value.split("/")[1:]
                         elif meta_name == "Media Topic_PATH_GUID":
                             path_guids[meta_score] = meta_value.split("/")[1:]
 
+                        # Process 'Media Topic_PATH_LABEL' and 'Media Topic_PATH_GUID'
+                        
                         # Process other categories
                         else:
                             group = None
@@ -548,16 +561,18 @@ class Semaphore(AIServiceBase):
                         parent_qcode = guid  # Update the parent qcode for the next iteration
 
                 return response_dict
-                                          
+                
+                                                    
                 
            
             json_response = transform_xml_response(root)
 
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
+        
 
             try:
                 updated_output = replace_qcodes(json_response)
-                
+
                 return updated_output
             
             except Exception as e:
@@ -692,7 +707,6 @@ def replace_qcodes(output_data):
 
 
 def init_app(app):
-    print(type(app))
-    print(app)
+
     a = Semaphore(app)
     return a.output
