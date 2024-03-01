@@ -47,6 +47,7 @@ from superdesk.vocabularies import is_related_content
 from apps.archive.common import get_utc_schedule
 from superdesk import text_utils
 from superdesk.attachments import get_attachment_public_url
+import superdesk
 from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
@@ -160,6 +161,7 @@ class NINJSFormatter_2(Formatter):
             raise FormatterError.ninjsFormatterError(ex, subscriber)
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
+        
         ninjs = {
             "guid": article.get(GUID_FIELD, article.get("uri")),
             "version": str(article.get(config.VERSION, 1)),
@@ -223,6 +225,7 @@ class NINJSFormatter_2(Formatter):
                                 self._get_place(article) + self._get_event(article) + 
                                 self._get_person(article))
             ninjs["subject"] = combined_subjects
+        
 
         if article.get("anpa_category"):
             ninjs["service"] = self._get_service(article)
@@ -307,6 +310,10 @@ class NINJSFormatter_2(Formatter):
             for key, value in ninjs["extra"].items():
                 if type(value) == dict and "embed" in value:
                     value.setdefault("description", "")
+        
+        
+        # Method to Append Jimi Tags in Subjects
+        self.update_ninjs_subjects(ninjs, language='en-CA')
 
         return ninjs
 
@@ -446,10 +453,57 @@ class NINJSFormatter_2(Formatter):
         return [format_cv_item(item, lang) for item in article["genre"]]
 
 
-    
+    # Method to Append Jimi Tags in Subjects           
+    def update_ninjs_subjects(self, ninjs, language='en-CA'):
+        try:
+            # Fetch the vocabulary
+            cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
+            
+            # Extract the items from the vocabulary
+            vocab_items = cv.get('items', [])
+
+            # Prepare a mapping from subject name to the desired data (qcode and translated name)
+            vocab_mapping = {}
+            
+            for item in vocab_items:
+                # Check if 'in_jimi' is true for the item
+                if item.get('in_jimi') is True:
+                    name_in_vocab = item.get('name')
+                    qcode = item.get('qcode')
+                    # Attempt to fetch the translated name, default to the original name if translation is not available
+                    translated_name = item.get('translations', {}).get('name', {}).get(language, name_in_vocab)
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
+                        
+            # Initialize a list to hold the updated subjects
+            updated_subjects = list(ninjs['subject'])  # Start with the existing subjects
+
+            # Iterate over the original subjects to find matches and add new entries
+            for subject in ninjs['subject']:
+                subject_name = subject.get('name').lower()  # Assuming case-insensitive matching
+                if subject_name in vocab_mapping:
+                    qcode, translated_name = vocab_mapping[subject_name]
+                    # Add a new subject entry with the updated scheme, ensuring both versions are kept
+                    updated_subjects.append({
+                        "code": qcode,
+                        "name": translated_name,
+                        "scheme": "http://cv.cp.org/cp-subject-legacy/"  # New scheme for the added subject
+                    })
+            
+            # Update the ninjs['subject'] with the updated subjects list
+            ninjs['subject'] = updated_subjects
+
+            
+
+        except Exception as e:
+            logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
+
+        
+        
     
     def _get_subject(self, article):
         """Get subject list for article."""
+        
         return [format_cv_item(item, article.get("language", "")) for item in article.get("subject", [])]
 
     #  Updated Code here to fetch Organisations from Article
@@ -702,6 +756,7 @@ class NINJS2Formatter(NINJSFormatter_2):
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
        
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+        
         ninjs["version"] = str(article.get("correction_sequence", 1))
         
         return ninjs
