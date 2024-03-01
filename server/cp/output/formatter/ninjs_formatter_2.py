@@ -39,13 +39,7 @@ from flask import current_app as app
 from eve.utils import config
 from superdesk.publish.formatters import Formatter
 from superdesk.errors import FormatterError
-from superdesk.metadata.item import (
-    ITEM_TYPE,
-    CONTENT_TYPE,
-    EMBARGO,
-    GUID_FIELD,
-    ASSOCIATIONS,
-)
+from superdesk.metadata.item import ITEM_TYPE, CONTENT_TYPE, EMBARGO, GUID_FIELD, ASSOCIATIONS
 from superdesk.metadata.packages import RESIDREF, GROUP_ID, GROUPS, ROOT_GROUP, REFS
 from superdesk.utils import json_serialize_datetime_objectId
 from superdesk.media.renditions import get_renditions_spec
@@ -53,6 +47,7 @@ from superdesk.vocabularies import is_related_content
 from apps.archive.common import get_utc_schedule
 from superdesk import text_utils
 from superdesk.attachments import get_attachment_public_url
+import superdesk
 from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
@@ -82,20 +77,14 @@ def get_locale_name(item, language):
 def format_cv_item(item, language):
     """Format item from controlled vocabulary for output."""
     if item.get("scheme") == "subject":
+
         return filter_empty_vals(
-            {
-                "code": item.get("qcode"),
-                "name": get_locale_name(item, language),
-                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
-            }
-        )
+        {"code": item.get("qcode"), "name": get_locale_name(item, language), "scheme": "http://cv.iptc.org/newscodes/mediatopic/"}
+    )
     else:
+
         return filter_empty_vals(
-            {
-                "code": item.get("qcode"),
-                "name": get_locale_name(item, language),
-                "scheme": item.get("scheme"),
-            }
+            {"code": item.get("qcode"), "name": get_locale_name(item, language), "scheme": item.get("scheme")}
         )
 
 
@@ -164,21 +153,15 @@ class NINJSFormatter_2(Formatter):
 
     def format(self, article, subscriber, codes=None):
         try:
-            pub_seq_num = superdesk.get_resource_service(
-                "subscribers"
-            ).generate_sequence_number(subscriber)
+            pub_seq_num = superdesk.get_resource_service("subscribers").generate_sequence_number(subscriber)
 
             ninjs = self._transform_to_ninjs(article, subscriber)
-            return [
-                (
-                    pub_seq_num,
-                    json.dumps(ninjs, default=json_serialize_datetime_objectId),
-                )
-            ]
+            return [(pub_seq_num, json.dumps(ninjs, default=json_serialize_datetime_objectId))]
         except Exception as ex:
             raise FormatterError.ninjsFormatterError(ex, subscriber)
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
+        
         ninjs = {
             "guid": article.get(GUID_FIELD, article.get("uri")),
             "version": str(article.get(config.VERSION, 1)),
@@ -218,7 +201,7 @@ class NINJSFormatter_2(Formatter):
         # Updated the output for associations HERE
         if article.get("associations"):
             ninjs["associations"] = self._get_associations(article, subscriber)
-
+        
         if article.get("embargoed"):
             ninjs["embargoed"] = article["embargoed"].isoformat()
 
@@ -232,25 +215,17 @@ class NINJSFormatter_2(Formatter):
 
         # Merging Various Entities into Subjects for ninjs Response
         # ---------------------------------------------------------
-        # This section of the code is responsible for aggregating different entity types
-        # like 'organisation', 'place', 'event', and 'person' along with 'subject' into
+        # This section of the code is responsible for aggregating different entity types 
+        # like 'organisation', 'place', 'event', and 'person' along with 'subject' into 
         # a single list.
-
-        if (
-            article.get("subject")
-            or article.get("organisation")
-            or article.get("place")
-            or article.get("event")
-            or article.get("person")
-        ):
-            combined_subjects = (
-                self._get_subject(article)
-                + self._get_organisation(article)
-                + self._get_place(article)
-                + self._get_event(article)
-                + self._get_person(article)
-            )
+        
+        
+        if article.get("subject") or article.get("organisation") or article.get("place") or article.get("event") or article.get("person"):
+            combined_subjects = (self._get_subject(article) + self._get_organisation(article) + 
+                                self._get_place(article) + self._get_event(article) + 
+                                self._get_person(article))
             ninjs["subject"] = combined_subjects
+        
 
         if article.get("anpa_category"):
             ninjs["service"] = self._get_service(article)
@@ -268,9 +243,9 @@ class NINJSFormatter_2(Formatter):
             ninjs["description_text"] = text_utils.get_text(article["abstract"])
         elif article.get("description_text"):
             ninjs["description_text"] = article["description_text"]
-            ninjs["description_html"] = article.get(
-                "description_html"
-            ) or "<p>{}</p>".format(article["description_text"])
+            ninjs["description_html"] = article.get("description_html") or "<p>{}</p>".format(
+                article["description_text"]
+            )
         elif "abstract" in article:  # BC
             ninjs["description_text"] = ninjs["description_html"] = ""
 
@@ -279,12 +254,7 @@ class NINJSFormatter_2(Formatter):
                 {
                     "name": c.get("name", ""),
                     "rel": "Securities Identifier",
-                    "symbols": [
-                        {
-                            "ticker": c.get("qcode", ""),
-                            "exchange": c.get("security_exchange", ""),
-                        }
-                    ],
+                    "symbols": [{"ticker": c.get("qcode", ""), "exchange": c.get("security_exchange", "")}],
                 }
                 for c in article["company_codes"]
             ]
@@ -294,14 +264,8 @@ class NINJSFormatter_2(Formatter):
         if article.get("rewrite_of"):
             ninjs["evolvedfrom"] = article["rewrite_of"]
 
-        if (
-            not ninjs.get("copyrightholder")
-            and not ninjs.get("copyrightnotice")
-            and not ninjs.get("usageterms")
-        ):
-            ninjs.update(
-                superdesk.get_resource_service("vocabularies").get_rightsinfo(article)
-            )
+        if not ninjs.get("copyrightholder") and not ninjs.get("copyrightnotice") and not ninjs.get("usageterms"):
+            ninjs.update(superdesk.get_resource_service("vocabularies").get_rightsinfo(article))
 
         if article.get("genre"):
             ninjs["genre"] = self._get_genre(article)
@@ -310,30 +274,22 @@ class NINJSFormatter_2(Formatter):
             ninjs["signal"] = self._format_signal_cwarn()
 
         if article.get("signal"):
-            ninjs.setdefault("signal", []).extend(
-                [self._format_signal(signal) for signal in article["signal"]]
-            )
+            ninjs.setdefault("signal", []).extend([self._format_signal(signal) for signal in article["signal"]])
 
         if article.get("attachments"):
             ninjs["attachments"] = self._format_attachments(article)
 
-        if ninjs["type"] == CONTENT_TYPE.TEXT and (
-            "body_html" in ninjs or "body_text" in ninjs
-        ):
+        if ninjs["type"] == CONTENT_TYPE.TEXT and ("body_html" in ninjs or "body_text" in ninjs):
             if "body_html" in ninjs:
                 body_html = ninjs["body_html"]
                 word_count = text_utils.get_word_count(body_html)
                 char_count = text_utils.get_char_count(body_html)
-                readtime = text_utils.get_reading_time(
-                    body_html, word_count, article.get("language")
-                )
+                readtime = text_utils.get_reading_time(body_html, word_count, article.get("language"))
             else:
                 body_text = ninjs["body_text"]
                 word_count = text_utils.get_text_word_count(body_text)
                 char_count = len(body_text)
-                readtime = text_utils.get_reading_time(
-                    body_text, word_count, article.get("language")
-                )
+                readtime = text_utils.get_reading_time(body_text, word_count, article.get("language"))
             ninjs["charcount"] = char_count
             ninjs["wordcount"] = word_count
             ninjs["readtime"] = readtime
@@ -342,10 +298,8 @@ class NINJSFormatter_2(Formatter):
             ninjs["authors"] = self._format_authors(article)
 
         if (article.get("schedule_settings") or {}).get("utc_publish_schedule"):
-            ninjs["publish_schedule"] = article["schedule_settings"][
-                "utc_publish_schedule"
-            ]
-
+            ninjs["publish_schedule"] = article["schedule_settings"]["utc_publish_schedule"]
+        
         #  Added Code to create Original_id attribute
         if article.get("family_id"):
             ninjs["original_id"] = article["family_id"]
@@ -354,8 +308,12 @@ class NINJSFormatter_2(Formatter):
         if article.get("extra"):
             ninjs["extra"] = article["extra"]
             for key, value in ninjs["extra"].items():
-                if isinstance(value, dict) and "embed" in value:
+                if type(value) == dict and "embed" in value:
                     value.setdefault("description", "")
+        
+        
+        # Method to Append Jimi Tags in Subjects
+        self.update_ninjs_subjects(ninjs, language='en-CA')
 
         return ninjs
 
@@ -379,25 +337,29 @@ class NINJSFormatter_2(Formatter):
             return CONTENT_TYPE.TEXT
         return article[ITEM_TYPE]
 
+    
+
     # Added an updated _get_associations method
-
+    
     # Updated _get_association to work with both Pictures and Text
-
+    
     def _get_associations(self, article, subscriber):
         associations = {}
         article_type = self._get_type(article)
-
+        
+	
         if article_type == "text":
-            for key, value in article.get("associations", {}).items():
-                if "_id" in value:
-                    associations[key] = {"guid": value["_id"]}
+            for key, value in article.get('associations', {}).items():
+            
+                if '_id' in value:
+                    associations[key] = {'guid': value['_id']}
 
             return associations
-
-        elif article_type == "picture":
-            for group in article.get(GROUPS, []):
-                if group[GROUP_ID] == ROOT_GROUP:
-                    continue
+        
+        elif article_type == 'picture':
+            for group in article.get(GROUPS, []):  
+                if group[GROUP_ID] == ROOT_GROUP:  
+                    continue  
 
             group_items = []
             for ref in group[REFS]:
@@ -408,21 +370,16 @@ class NINJSFormatter_2(Formatter):
                     if "label" in ref:
                         item["label"] = ref.get("label")
                     if ref.get("package_item"):
-                        item.update(
-                            self._transform_to_ninjs(
-                                ref["package_item"], subscriber, recursive=False
-                            )
-                        )
+                        item.update(self._transform_to_ninjs(ref["package_item"], subscriber, recursive=False))
                     group_items.append(item)
             if len(group_items) == 1:
                 associations[group[GROUP_ID]] = group_items[0]
             elif len(group_items) > 1:
                 for index in range(0, len(group_items)):
-                    associations[group[GROUP_ID] + "-" + str(index)] = group_items[
-                        index
-                    ]
-
+                    associations[group[GROUP_ID] + "-" + str(index)] = group_items[index]
+            
             return associations
+
 
     def _format_related(self, article, subscriber):
         """Format all associated items for simple items (not packages)."""
@@ -433,10 +390,7 @@ class NINJSFormatter_2(Formatter):
         archive_service = superdesk.get_resource_service("archive")
 
         article_associations = OrderedDict(
-            sorted(
-                article.get(ASSOCIATIONS, {}).items(),
-                key=lambda itm: (itm[1] or {}).get("order", 1),
-            )
+            sorted(article.get(ASSOCIATIONS, {}).items(), key=lambda itm: (itm[1] or {}).get("order", 1))
         )
 
         for key, item in article_associations.items():
@@ -452,9 +406,7 @@ class NINJSFormatter_2(Formatter):
                 renditions = item.get("renditions")
                 if renditions:
                     for rendition in renditions.keys():
-                        if rendition != "original" and renditions.get(
-                            rendition, {}
-                        ).get("poi"):
+                        if rendition != "original" and renditions.get(rendition, {}).get("poi"):
                             renditions[rendition].pop("poi", None)
 
                 associations[key] = item  # all items should stay in associations
@@ -466,22 +418,15 @@ class NINJSFormatter_2(Formatter):
                         try:
                             profile = article["profile"]
                         except KeyError:
-                            logger.warning(
-                                "missing profile in article (guid: {guid})".format(
-                                    guid=article.get("guid")
-                                )
-                            )
+                            logger.warning("missing profile in article (guid: {guid})".format(guid=article.get("guid")))
                             content_profile = {"schema": {}}
                         else:
-                            content_profile = superdesk.get_resource_service(
-                                "content_types"
-                            ).find_one(_id=profile, req=None)
+                            content_profile = superdesk.get_resource_service("content_types").find_one(
+                                _id=profile, req=None
+                            )
                     field_id = match.group("field_id")
                     schema = content_profile["schema"].get(field_id, {})
-                    if (
-                        schema.get("type") == "media"
-                        or schema.get("type") == "related_content"
-                    ):
+                    if schema.get("type") == "media" or schema.get("type") == "related_content":
                         # we want custom media fields in "extra_items", cf. SDESK-2955
                         version = match.group("version")
                         media.setdefault(field_id, []).append((version, item))
@@ -507,53 +452,81 @@ class NINJSFormatter_2(Formatter):
         lang = article.get("language", "")
         return [format_cv_item(item, lang) for item in article["genre"]]
 
+    def update_ninjs_subjects(self, ninjs, language='en-CA'):
+        try:
+            # Fetch the vocabulary
+            cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
+            
+            # Extract the items from the vocabulary
+            vocab_items = cv.get('items', [])
+
+            # Prepare a mapping from subject name to the desired data (qcode and translated name)
+            vocab_mapping = {}
+            
+            for item in vocab_items:
+                # Check if 'in_jimi' is true for the item
+                if item.get('in_jimi') is True:
+                    name_in_vocab = item.get('name')
+                    qcode = item.get('qcode')
+                    # Attempt to fetch the translated name, default to the original name if translation is not available
+                    translated_name = item.get('translations', {}).get('name', {}).get(language, name_in_vocab)
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
+                        
+            # Initialize a list to hold the updated subjects
+            updated_subjects = list(ninjs['subject'])  # Start with the existing subjects
+
+            # Iterate over the original subjects to find matches and add new entries
+            for subject in ninjs['subject']:
+                subject_name = subject.get('name').lower()  # Assuming case-insensitive matching
+                if subject_name in vocab_mapping:
+                    qcode, translated_name = vocab_mapping[subject_name]
+                    # Add a new subject entry with the updated scheme, ensuring both versions are kept
+                    updated_subjects.append({
+                        "code": qcode,
+                        "name": translated_name,
+                        "scheme": "http://cv.cp.org/cp-subject-legacy/"  # New scheme for the added subject
+                    })
+            
+            # Update the ninjs['subject'] with the updated subjects list
+            ninjs['subject'] = updated_subjects
+
+            
+
+        except Exception as e:
+            logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
+
+    
+    
     def _get_subject(self, article):
         """Get subject list for article."""
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("subject", [])
-        ]
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("subject", [])]
 
     #  Updated Code here to fetch Organisations from Article
     def _get_organisation(self, article):
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("organisation", [])
-        ]
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("organisation", [])]
 
     #  Updated Code here to fetch Places from Article
     def _get_place(self, article):
         """Get place list for article."""
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("place", [])
-        ]
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("place", [])]
 
     #  Updated Code here to fetch Events from Article
     def _get_event(self, article):
         """Get event list for article."""
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("event", [])
-        ]
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("event", [])]
 
     #  Updated Code here to fetch Person from Article
     def _get_person(self, article):
         """Get person list for article."""
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("person", [])
-        ]
-
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("person", [])]
+    
     def _get_service(self, article):
         """Get service list for article.
 
         It's using `anpa_category` to populate service field for now.
         """
-        return [
-            format_cv_item(item, article.get("language", ""))
-            for item in article.get("anpa_category", [])
-        ]
+        return [format_cv_item(item, article.get("language", "")) for item in article.get("anpa_category", [])]
 
     def _get_renditions(self, article):
         """Get renditions for article."""
@@ -566,9 +539,7 @@ class NINJSFormatter_2(Formatter):
             )
             # filter renditions and keep only the ones we want to publish
             actual_renditions = {
-                name: actual_renditions[name]
-                for name in renditions_to_publish
-                if name in actual_renditions
+                name: actual_renditions[name] for name in renditions_to_publish if name in actual_renditions
             }
         # format renditions to Ninjs
         renditions = {}
@@ -601,11 +572,7 @@ class NINJSFormatter_2(Formatter):
 
         def get_label(item):
             if locator_map:
-                locators = [
-                    loc
-                    for loc in locator_map.get("items", [])
-                    if loc["qcode"] == item.get("qcode")
-                ]
+                locators = [loc for loc in locator_map.get("items", []) if loc["qcode"] == item.get("qcode")]
                 if locators and len(locators) == 1:
                     return (
                         locators[0].get("state")
@@ -653,10 +620,7 @@ class NINJSFormatter_2(Formatter):
         if app.config.get("NINJS_PLACE_EXTENDED") and place.get("location"):
             geo["geometry_point"] = {
                 "type": "Point",
-                "coordinates": [
-                    place["location"].get("lat"),
-                    place["location"].get("lon"),
-                ],
+                "coordinates": [place["location"].get("lat"), place["location"].get("lon")],
             }
         return geo
 
@@ -664,17 +628,13 @@ class NINJSFormatter_2(Formatter):
         return superdesk.get_resource_service("content_types").get_output_name(profile)
 
     def _format_signal_cwarn(self):
-        return [
-            {"name": "Content Warning", "code": "cwarn", "scheme": SCHEME_MAP["sig"]}
-        ]
+        return [{"name": "Content Warning", "code": "cwarn", "scheme": SCHEME_MAP["sig"]}]
 
     def _format_attachments(self, article):
         output = []
         attachments_service = superdesk.get_resource_service("attachments")
         for attachment_ref in article["attachments"]:
-            attachment = attachments_service.find_one(
-                req=None, _id=attachment_ref["attachment"]
-            )
+            attachment = attachments_service.find_one(req=None, _id=attachment_ref["attachment"])
             href = get_attachment_public_url(attachment)
             if href:
                 # If we get a href, the attachment is available for subscriber consumption
@@ -700,11 +660,7 @@ class NINJSFormatter_2(Formatter):
             job_titles_voc["items"] = vocabularies_service.get_locale_vocabulary(
                 job_titles_voc.get("items"), article.get("language")
             )
-        job_titles_map = (
-            {v["qcode"]: v["name"] for v in job_titles_voc["items"]}
-            if job_titles_voc is not None
-            else {}
-        )
+        job_titles_map = {v["qcode"]: v["name"] for v in job_titles_voc["items"]} if job_titles_voc is not None else {}
 
         authors = []
         for author in article["authors"]:
@@ -745,10 +701,7 @@ class NINJSFormatter_2(Formatter):
 
             job_title_qcode = user.get("job_title")
             if job_title_qcode is not None:
-                author["jobtitle"] = {
-                    "qcode": job_title_qcode,
-                    "name": job_titles_map.get(job_title_qcode, ""),
-                }
+                author["jobtitle"] = {"qcode": job_title_qcode, "name": job_titles_map.get(job_title_qcode, "")}
 
             authors.append(author)
         return authors
@@ -797,7 +750,9 @@ class NINJS2Formatter(NINJSFormatter_2):
         self.format_type = "ninjs3"
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
+       
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+        
         ninjs["version"] = str(article.get("correction_sequence", 1))
-
+        
         return ninjs
