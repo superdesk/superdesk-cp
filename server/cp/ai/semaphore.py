@@ -39,13 +39,13 @@ class Semaphore(AIServiceBase):
 
 
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
-        self.base_url =  os.getenv("SEMAPHORE_BASE_URL")
+        self.base_url =  os.getenv('SEMAPHORE_BASE_URL')
 
 	    #  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = os.getenv("SEMAPHORE_ANALYZE_URL")
+        self.analyze_url = os.getenv(' SEMAPHORE_ANALYZE_URL')
 
 	    #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = os.getenv("SEMAPHORE_API_KEY")
+        self.api_key = os.getenv('SEMAPHORE_API_KEY')
 
 	#  SEMAPHORE_SEARCH_URL Goes Here
         self.search_url = os.getenv("SEMAPHORE_SEARCH_URL")
@@ -54,15 +54,17 @@ class Semaphore(AIServiceBase):
         self.get_parent_url = os.getenv("SEMAPHORE_GET_PARENT_URL")
     
     #  SEMAPHORE_CREATE_TAG_URL Goes Here
-        self.create_tag_url = os.getenv("SEMAPHORE_CREATE_TAG_URL")
+        self.create_tag_url = os.getenv('SEMAPHORE_CREATE_TAG_URL')
 
 	#  SEMAPHORE_CREATE_TAG_TASK Goes Here
         self.create_tag_task = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 
     #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
-        self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+        self.create_tag_query = os.getenv('SEMAPHORE_CREATE_TAG_QUERY')
+   
 
-
+        "For UAT test, the Index file needs to put in this folder  /opt/superdesk/server "
+        # self.index_file_path = "Index.json"
         
 
         self.output = self.analyze(data)
