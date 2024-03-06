@@ -531,7 +531,6 @@ class Semaphore(AIServiceBase):
                                     "creator": "Machine",
                                     "source": "Semaphore",
                                     "relevance": meta_score,
-                                    "altids": {"source_name": "source_id"},
                                     "altids": f'{{"{meta_value}": "{meta_id}"}}',
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
