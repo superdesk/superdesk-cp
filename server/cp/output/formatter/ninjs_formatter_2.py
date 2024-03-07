@@ -515,7 +515,6 @@ class NINJSFormatter_2(Formatter):
         try:
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
-            
             vocab_items = cv.get("items", [])
             vocab_mapping = {}
             for item in vocab_items:
@@ -524,17 +523,16 @@ class NINJSFormatter_2(Formatter):
                     qcode = item.get("qcode")
                     translated_name = item.get("translations", {}).get("name", {}).get(language, name_in_vocab)
                     vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
-            
             updated_subjects = list(ninjs["subject"])
             for subject in ninjs["subject"]:
                 subject_name = subject.get("name").lower()
                 if subject_name in vocab_mapping:
-                    qcode, translated_name = vocab_mapping[subject_name]                    
+                    qcode, translated_name = vocab_mapping[subject_name]
                     updated_subjects.append({
                         "code": qcode,
                         "name": translated_name,
                         "scheme": "http://cv.cp.org/cp-subject-legacy/",
-                    })  
+                    })
             ninjs["subject"] = updated_subjects
         except Exception as e:
             logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
