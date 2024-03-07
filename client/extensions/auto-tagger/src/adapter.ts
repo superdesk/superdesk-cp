@@ -158,7 +158,7 @@ export function toServerFormat(items: OrderedMap<string, ITagUi>, superdesk: ISu
                 source,
                 altids,
                 parent,
-                scheme: item.group.value,
+                scheme: "subject_custom",
                 aliases,
                 original_source,
             };
