@@ -604,7 +604,7 @@ class NINJSFormatter_2(Formatter):
                     "name": (
                         subject["name"].lower()
                         if subject.get("scheme")
-                        == "http://cv.iptc.org/newscodes/mediatopic/"
+                        == "subject_custom"
                         and subject["name"] not in capital_subjects
                         else subject["name"]
                     ),
