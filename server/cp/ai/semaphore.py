@@ -280,8 +280,10 @@ class Semaphore(AIServiceBase):
             logger.error(
                 f"Semaphore Search request failed. We are in analyze RequestError exception: {str(e)}"
             )
+            return {}
 
     def create_tag_in_semaphore(self, html_content: str) -> dict:
+        result_summary = {"created_tags": [], "failed_tags": [], "existing_tags": []}
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -350,25 +352,23 @@ class Semaphore(AIServiceBase):
                             "Tag already exists in KMM. Response is 409 . The Tag is: "
                             + concept_name
                         )
+                        result_summary["existing_tags"].append(concept_name)
 
                     else:
                         response.raise_for_status()
                         print("Tag Got Created is: " + concept_name)
+                        result_summary["created_tags"].append(concept_name)
 
-                except HTTPError as http_err:
-                    # Handle specific HTTP errors here
-                    logger.error(f"HTTP error occurred: {http_err}")
+                
                 except Exception as e:
-                    traceback.print_exc()
-                    logger.error(
-                        f"An error occurred while making the create tag request: {str(e)}"
-                    )
+                    print(f"Failed to create tag: {concept_name}, Error: {e}")                   
+                    result_summary["failed_tags"].append(concept_name)
+                    
+        except Exception as e:
+            print(f"Semaphore Create Tag operation failed: {e}")
+            return {"error": f"Create Tag operation failed: {e}"}
 
-        except requests.exceptions.RequestException as e:
-            traceback.print_exc()
-            logger.error(
-                f"Semaphore Create Tag Failed failed. We are in analyze RequestError exception: {str(e)}"
-            )
+        return result_summary
 
     def analyze(self, html_content: str) -> dict:
         try:
@@ -581,10 +581,12 @@ class Semaphore(AIServiceBase):
             logger.error(
                 f"Semaphore request failed. We are in analyze RequestError exception: {str(e)}"
             )
+            return {}
 
         except Exception as e:
             traceback.print_exc()
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
+            return {}
 
     def html_to_xml(self, html_content: str) -> str:
         def clean_html_content(input_str):
