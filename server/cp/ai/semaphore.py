@@ -54,9 +54,6 @@ class Semaphore(AIServiceBase):
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
 
-        "For UAT test, the Index file needs to put in this folder  /opt/superdesk/server "
-        # self.index_file_path = "Index.json"
-
         self.output = self.analyze(data)
 
     def convert_to_desired_format(input_data):
