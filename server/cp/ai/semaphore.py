@@ -358,12 +358,10 @@ class Semaphore(AIServiceBase):
                         response.raise_for_status()
                         print("Tag Got Created is: " + concept_name)
                         result_summary["created_tags"].append(concept_name)
-
-                
                 except Exception as e:
-                    print(f"Failed to create tag: {concept_name}, Error: {e}")                   
+                    print(f"Failed to create tag: {concept_name}, Error: {e}")
                     result_summary["failed_tags"].append(concept_name)
-                    
+
         except Exception as e:
             print(f"Semaphore Create Tag operation failed: {e}")
             return {"error": f"Create Tag operation failed: {e}"}
