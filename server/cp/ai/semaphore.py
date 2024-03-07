@@ -118,7 +118,7 @@ class Semaphore(AIServiceBase):
             return []
 
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, html_content: str) -> dict:
+    def analyze_parent_info(self, html_content) -> dict:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -282,8 +282,8 @@ class Semaphore(AIServiceBase):
             )
             return {}
 
-    def create_tag_in_semaphore(self, html_content: str) -> dict:
-        result_summary = {"created_tags": [], "failed_tags": [], "existing_tags": []}
+    def create_tag_in_semaphore(self, html_content) -> dict:
+        result_summary = {"created_tags": [], "failed_tags": [], "existing_tags": []}  # type: Dict[str, List[str]]
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -586,7 +586,7 @@ class Semaphore(AIServiceBase):
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
             return {}
 
-    def html_to_xml(self, html_content: str) -> str:
+    def html_to_xml(self, html_content) -> str:
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
