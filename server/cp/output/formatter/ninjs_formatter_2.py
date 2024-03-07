@@ -22,6 +22,7 @@
     Fixed copyrightholder/copyrightnotice handling to be consistent with newsml.
     Fixed place property qcode should be code.
     Output profile name instead of _id in profile field.
+    
 
 .. versionadded:: 1.6
     Added *evolvedfrom* field to ninjs output.
