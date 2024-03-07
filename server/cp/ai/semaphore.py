@@ -9,6 +9,7 @@ import traceback
 import io
 import superdesk
 import json
+from typing import Dict, List
 
 
 logger = logging.getLogger(__name__)
@@ -283,7 +284,7 @@ class Semaphore(AIServiceBase):
             return {}
 
     def create_tag_in_semaphore(self, html_content) -> dict:
-        result_summary = {"created_tags": [], "failed_tags": [], "existing_tags": []}  # type: Dict[str, List[str]]
+        result_summary: Dict[str, List[str]] = {"created_tags": [], "failed_tags": [], "existing_tags": []}
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -368,7 +369,7 @@ class Semaphore(AIServiceBase):
 
         return result_summary
 
-    def analyze(self, html_content: str) -> dict:
+    def analyze(self, html_content) -> dict:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
