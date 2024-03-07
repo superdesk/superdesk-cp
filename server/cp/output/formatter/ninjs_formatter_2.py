@@ -515,33 +515,27 @@ class NINJSFormatter_2(Formatter):
         try:
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
-            # Extract the items from the vocabulary
-            vocab_items = cv.get("items", [])   
-            # Prepare a mapping from subject name to the desired data (qcode and translated name)
-            vocab_mapping = {}   
+            
+            vocab_items = cv.get("items", [])
+            vocab_mapping = {}
             for item in vocab_items:
-                # Check if 'in_jimi' is true for the item
                 if item.get("in_jimi") is True:
                     name_in_vocab = item.get("name")
                     qcode = item.get("qcode")
-                    # Attempt to fetch the translated name, default to the original name if translation is not available
                     translated_name = item.get("translations", {}).get("name", {}).get(language, name_in_vocab)
-                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)   
-            # Initialize a list to hold the updated subjects
-            updated_subjects = list(ninjs["subject"])  # Start with the existing subjects    
-            # Iterate over the original subjects to find matches and add new entries
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+            
+            updated_subjects = list(ninjs["subject"])
             for subject in ninjs["subject"]:
-                subject_name = subject.get("name").lower()  # Assuming case-insensitive matching
+                subject_name = subject.get("name").lower()
                 if subject_name in vocab_mapping:
-                    qcode, translated_name = vocab_mapping[subject_name]
-                    # Add a new subject entry with the updated scheme, ensuring both versions are kept
+                    qcode, translated_name = vocab_mapping[subject_name]                    
                     updated_subjects.append({
                         "code": qcode,
                         "name": translated_name,
-                        "scheme": "http://cv.cp.org/cp-subject-legacy/",  # New scheme for the added subject
+                        "scheme": "http://cv.cp.org/cp-subject-legacy/",
                     })  
-            # Update the ninjs['subject'] with the updated subjects list
-            ninjs["subject"] = updated_subjects    
+            ninjs["subject"] = updated_subjects
         except Exception as e:
             logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
             
