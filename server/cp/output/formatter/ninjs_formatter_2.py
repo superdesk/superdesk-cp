@@ -603,8 +603,7 @@ class NINJSFormatter_2(Formatter):
                     **subject,
                     "name": (
                         subject["name"].lower()
-                        if subject.get("scheme")
-                        == "subject_custom"
+                        if subject.get("scheme") == "subject_custom"
                         and subject["name"] not in capital_subjects
                         else subject["name"]
                     ),
