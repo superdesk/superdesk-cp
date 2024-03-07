@@ -31,28 +31,28 @@ class Semaphore(AIServiceBase):
 
     def __init__(self, data):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
-        self.base_url = "https://ca.cloud.smartlogic.com/token"
+        self.base_url = os.getenv('SEMAPHORE_BASE_URL')
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/?operation=classify"
+        self.analyze_url = os.getenv('SEMAPHORE_ANALYZE_URL')
 
         #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = "OoP3QRRkLVCzo4sRa6iAyg=="
+        self.api_key = os.getenv('SEMAPHORE_API_KEY')
 
         #  SEMAPHORE_SEARCH_URL Goes Here
-        self.search_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/SES//CPKnowledgeSystem/en/hints/"
+        self.search_url = os.getenv('SEMAPHORE_SEARCH_URL')
 
         #  SEMAPHORE_GET_PARENT_URL Goes Here
-        self.get_parent_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/SES/CPKnowledgeSystem/relatedFrom/"
+        self.get_parent_url = os.getenv('SEMAPHORE_GET_PARENT_URL')
 
         #  SEMAPHORE_CREATE_TAG_URL Goes Here
-        self.create_tag_url = "https://ca.cloud.smartlogic.com/semaphore/71ef3209-3436-4530-b8ad-0950cc2236c1/kmm/api"
+        self.create_tag_url = os.getenv('SEMAPHORE_CREATE_TAG_URL')
 
         #  SEMAPHORE_CREATE_TAG_TASK Goes Here
-        self.create_tag_task = "/task:CPKnowledgeSystem:SuggestedTerm"
+        self.create_tag_task = os.getenv('SEMAPHORE_CREATE_TAG_TASK')
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
-        self.create_tag_query = "/skos:Concept/rdf:instance"
+        self.create_tag_query = os.getenv('SEMAPHORE_CREATE_TAG_QUERY')
 
         self.output = self.analyze(data)
 
