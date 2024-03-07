@@ -536,7 +536,7 @@ class NINJSFormatter_2(Formatter):
             ninjs["subject"] = updated_subjects
         except Exception as e:
             logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
-            
+
     def _get_subject(self, article):
         """Get subject list for article."""
         return [format_cv_item(item, article.get("language", "")) for item in article.get("subject", [])]
