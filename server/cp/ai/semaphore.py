@@ -31,28 +31,28 @@ class Semaphore(AIServiceBase):
 
     def __init__(self, data):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
-        self.base_url = os.getenv("SEMAPHORE_BASE_URL")
+        self.base_url = "https://ca.cloud.smartlogic.com/token"
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = os.getenv(" SEMAPHORE_ANALYZE_URL")
+        self.analyze_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/?operation=classify"
 
         #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = os.getenv("SEMAPHORE_API_KEY")
+        self.api_key = "OoP3QRRkLVCzo4sRa6iAyg=="
 
         #  SEMAPHORE_SEARCH_URL Goes Here
-        self.search_url = os.getenv("SEMAPHORE_SEARCH_URL")
+        self.search_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/SES//CPKnowledgeSystem/en/hints/"
 
         #  SEMAPHORE_GET_PARENT_URL Goes Here
-        self.get_parent_url = os.getenv("SEMAPHORE_GET_PARENT_URL")
+        self.get_parent_url = "https://ca.cloud.smartlogic.com/svc/5457e590-c2cc-4219-8947-e7f74c8675be/SES/CPKnowledgeSystem/relatedFrom/"
 
         #  SEMAPHORE_CREATE_TAG_URL Goes Here
-        self.create_tag_url = os.getenv("SEMAPHORE_CREATE_TAG_URL")
+        self.create_tag_url = "https://ca.cloud.smartlogic.com/semaphore/71ef3209-3436-4530-b8ad-0950cc2236c1/kmm/api"
 
         #  SEMAPHORE_CREATE_TAG_TASK Goes Here
-        self.create_tag_task = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
+        self.create_tag_task = "/task:CPKnowledgeSystem:SuggestedTerm"
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
-        self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+        self.create_tag_query = "/skos:Concept/rdf:instance"
 
         self.output = self.analyze(data)
 
@@ -214,9 +214,11 @@ class Semaphore(AIServiceBase):
                             broader_entry = {
                                 "name": reversed_parent_info[i]["name"],
                                 "qcode": reversed_parent_info[i]["qcode"],
-                                "parent": reversed_parent_info[i + 1]["qcode"]
-                                if i + 1 < len(reversed_parent_info)
-                                else None,
+                                "parent": (
+                                    reversed_parent_info[i + 1]["qcode"]
+                                    if i + 1 < len(reversed_parent_info)
+                                    else None
+                                ),
                                 "creator": "Human",
                                 "source": "Semaphore",
                                 "relevance": "100",
@@ -280,7 +282,11 @@ class Semaphore(AIServiceBase):
             return {}
 
     def create_tag_in_semaphore(self, html_content) -> dict:
-        result_summary: Dict[str, List[str]] = {"created_tags": [], "failed_tags": [], "existing_tags": []}
+        result_summary: Dict[str, List[str]] = {
+            "created_tags": [],
+            "failed_tags": [],
+            "existing_tags": [],
+        }
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -490,9 +496,11 @@ class Semaphore(AIServiceBase):
                         ]:
                             meta_score = adjust_score(
                                 meta_score,
-                                path_labels.keys()
-                                if meta_name == "Media Topic_PATH_LABEL"
-                                else path_guids.keys(),
+                                (
+                                    path_labels.keys()
+                                    if meta_name == "Media Topic_PATH_LABEL"
+                                    else path_guids.keys()
+                                ),
                             )
 
                         # Split and process path labels or GUIDs
