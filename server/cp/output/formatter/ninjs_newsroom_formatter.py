@@ -74,7 +74,6 @@ class NewsroomNinjsFormatter(NINJSFormatter):
                             "scheme": "http://cv.cp.org/cp-subject-legacy/",
                         }
                     )
-
                 else:
                     if subject_name in vocab_mapping_all:
                         qcode, translated_name = vocab_mapping_all[subject_name]
@@ -114,7 +113,7 @@ class NewsroomNinjsFormatter(NINJSFormatter):
 
         except Exception as e:
             logger.error(
-                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: {str(e)}"
+                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception:  {str(e)}"
             )
 
     @elasticapm.capture_span()
