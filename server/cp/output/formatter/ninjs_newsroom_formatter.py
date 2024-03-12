@@ -27,10 +27,10 @@ class NewsroomNinjsFormatter(NINJSFormatter):
         self.can_preview = False
         self.can_export = False
         self.internal_renditions = ["original", "viewImage", "baseImage"]
-    
+
     def update_ninjs_subjects(self, ninjs, language="en-CA"):
         try:
-            
+
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(
                 req=None, _id="subject_custom"
@@ -39,7 +39,7 @@ class NewsroomNinjsFormatter(NINJSFormatter):
             vocab_mapping = {}
 
             vocab_mapping_all = {}
-             
+
             for item in vocab_items:
                 if item.get("in_jimi") is True:
                     name_in_vocab = item.get("name")
@@ -49,20 +49,20 @@ class NewsroomNinjsFormatter(NINJSFormatter):
                         .get("name", {})
                         .get(language, name_in_vocab)
                     )
-                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name) 
-            
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
             for item in vocab_items:
                 name_in_vocab = item.get("name")
                 qcode = item.get("qcode")
                 translated_name = (
-                        item.get("translations", {})
-                        .get("name", {})
-                        .get(language, name_in_vocab)
-                    )
-                vocab_mapping_all[name_in_vocab.lower()] = (qcode, translated_name) 
-           
+                    item.get("translations", {})
+                    .get("name", {})
+                    .get(language, name_in_vocab)
+                )
+                vocab_mapping_all[name_in_vocab.lower()] = (qcode, translated_name)
+
             updated_subjects = list(ninjs["subject"])
-            
+
             for subject in ninjs["subject"]:
                 subject_name = subject.get("name").lower()
                 if subject_name in vocab_mapping:
@@ -73,25 +73,26 @@ class NewsroomNinjsFormatter(NINJSFormatter):
                             "name": translated_name,
                             "scheme": "http://cv.cp.org/cp-subject-legacy/",
                         }
-                    )                  
-                
+                    )
+
                 else:
                     if subject_name in vocab_mapping_all:
                         qcode, translated_name = vocab_mapping_all[subject_name]
                         updated_subjects.append(
-                        {
-                            "code": qcode,
-                            "name": translated_name,
-                            "scheme": "subject_custom",
-                        }
+                            {
+                                "code": qcode,
+                                "name": translated_name,
+                                "scheme": "subject_custom",
+                            }
                         )
-                     
+
             ninjs["subject"] = [
                 {
                     **subject,
-                    "name":  (
+                    "name": (
                         vocab_mapping_all[subject["name"].lower()][1]
-                        if subject["name"].lower() in vocab_mapping_all and subject['scheme'] in ["subject"]
+                        if subject["name"].lower() in vocab_mapping_all
+                        and subject["scheme"] in ["subject"]
                         else subject["name"]
                     ),
                     "scheme": (
@@ -104,12 +105,17 @@ class NewsroomNinjsFormatter(NINJSFormatter):
                 for subject in updated_subjects
             ]
 
-
-            ninjs['subject'] = list({json.dumps(subject, sort_keys=True): subject for subject in ninjs['subject']}.values())
-
+            ninjs["subject"] = list(
+                {
+                    json.dumps(subject, sort_keys=True): subject
+                    for subject in ninjs["subject"]
+                }.values()
+            )
 
         except Exception as e:
-            logger.error(f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: {str(e)}")
+            logger.error(
+                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: {str(e)}"
+            )
 
     @elasticapm.capture_span()
     def _format_products(self, article):
@@ -120,7 +126,11 @@ class NewsroomNinjsFormatter(NINJSFormatter):
         :return:
         """
         result = superdesk.get_resource_service("product_tests").test_products(article)
-        return [{"code": p["product_id"], "name": p.get("name")} for p in result if p.get("matched", False)]
+        return [
+            {"code": p["product_id"], "name": p.get("name")}
+            for p in result
+            if p.get("matched", False)
+        ]
 
     @elasticapm.capture_span()
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
@@ -134,7 +144,9 @@ class NewsroomNinjsFormatter(NINJSFormatter):
         ninjs["products"] = self._format_products(article)
 
         if article.get("assignment_id"):
-            assignment = superdesk.get_resource_service("assignments").find_one(req=None, _id=article["assignment_id"])
+            assignment = superdesk.get_resource_service("assignments").find_one(
+                req=None, _id=article["assignment_id"]
+            )
             if assignment is not None:
                 if assignment.get("coverage_item"):
                     ninjs.setdefault("coverage_id", assignment["coverage_item"])
@@ -143,7 +155,7 @@ class NewsroomNinjsFormatter(NINJSFormatter):
 
         if article.get("refs"):
             ninjs["refs"] = article["refs"]
-        
-        self.update_ninjs_subjects(ninjs,"en-CA")
+
+        self.update_ninjs_subjects(ninjs, "en-CA")
 
         return ninjs

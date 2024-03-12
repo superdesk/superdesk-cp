@@ -576,6 +576,7 @@ class NINJSFormatter_2(Formatter):
             )
             vocab_items = cv.get("items", [])
             vocab_mapping = {}
+
             for item in vocab_items:
                 if item.get("in_jimi") is True:
                     name_in_vocab = item.get("name")
@@ -586,7 +587,9 @@ class NINJSFormatter_2(Formatter):
                         .get(language, name_in_vocab)
                     )
                     vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
             updated_subjects = list(ninjs["subject"])
+
             for subject in ninjs["subject"]:
                 subject_name = subject.get("name").lower()
                 if subject_name in vocab_mapping:
@@ -598,18 +601,27 @@ class NINJSFormatter_2(Formatter):
                             "scheme": "http://cv.cp.org/cp-subject-legacy/",
                         }
                     )
+
             ninjs["subject"] = [
                 {
                     **subject,
                     "name": (
                         subject["name"].lower()
-                        if subject.get("scheme") == "subject_custom"
+                        if subject.get("scheme")
+                        == "http://cv.iptc.org/newscodes/mediatopic/"
                         and subject["name"] not in capital_subjects
                         else subject["name"]
+                    ),
+                    "scheme": (
+                        "subject_custom"
+                        if subject.get("scheme")
+                        == "http://cv.iptc.org/newscodes/mediatopic/"
+                        else subject.get("scheme")
                     ),
                 }
                 for subject in updated_subjects
             ]
+
         except Exception as e:
             logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
 
