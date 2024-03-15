@@ -1,21 +1,30 @@
 import os
 import logging
 import requests
-from requests.exceptions import HTTPError
 import xml.etree.ElementTree as ET
-from flask import current_app, abort
 from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
-import io
 import superdesk
 import json
-from typing import Dict, List
+from typing import Any, Dict, List, Mapping, Optional, TypedDict, Union
 
 
 logger = logging.getLogger(__name__)
 session = requests.Session()
 
 TIMEOUT = (5, 30)
+
+
+ResponseType = Mapping[str, Union[str, List[str]]]
+
+
+class RequestType(TypedDict, total=False):
+    searchString: str
+    data: Any
+
+
+class OperationRequest(TypedDict):
+    item: RequestType
 
 
 class Semaphore(AIServiceBase):
@@ -27,7 +36,6 @@ class Semaphore(AIServiceBase):
 
     name = "semaphore"
     label = "Semaphore autotagging service"
-    print(AIServiceBase)
 
     def __init__(self, data):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
@@ -53,25 +61,6 @@ class Semaphore(AIServiceBase):
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
-
-        self.output = self.analyze(data)
-
-    def convert_to_desired_format(input_data):
-        result = {
-            "result": {
-                "tags": {
-                    "subject": input_data["subject"],
-                    "organisation": input_data["organisation"],
-                    "person": input_data["person"],
-                    "event": input_data["event"],
-                    "place": input_data["place"],
-                    "object": [],  # Assuming no data for 'object'
-                },
-                "broader": {"subject": input_data["broader"]},
-            }
-        }
-
-        return result
 
     def get_access_token(self):
         """Get access token for Semaphore."""
@@ -115,7 +104,7 @@ class Semaphore(AIServiceBase):
             return []
 
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, html_content) -> dict:
+    def analyze_parent_info(self, html_content: RequestType) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -231,41 +220,37 @@ class Semaphore(AIServiceBase):
                 return result
 
             def convert_to_desired_format(input_data):
-                result = {
-                    "result": {
-                        "tags": {
-                            "subject": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["subject"]
-                            ],
-                            "organisation": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["organisation"]
-                            ],
-                            "person": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["person"]
-                            ],
-                            "event": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["event"]
-                            ],
-                            "place": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["place"]
-                            ],
-                            "object": [],  # Assuming no data for 'object'
-                        },
-                        "broader": {
-                            "subject": [
-                                capitalize_name_if_parent_none(tag)
-                                for tag in input_data["broader"]
-                            ]
-                        },
-                    }
+                return {
+                    "tags": {
+                        "subject": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["subject"]
+                        ],
+                        "organisation": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["organisation"]
+                        ],
+                        "person": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["person"]
+                        ],
+                        "event": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["event"]
+                        ],
+                        "place": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["place"]
+                        ],
+                        "object": [],  # Assuming no data for 'object'
+                    },
+                    "broader": {
+                        "subject": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["broader"]
+                        ]
+                    },
                 }
-
-                return result
 
             root = json.loads(root)
             json_response = transform_xml_response(root)
@@ -281,7 +266,7 @@ class Semaphore(AIServiceBase):
             )
             return {}
 
-    def create_tag_in_semaphore(self, html_content) -> dict:
+    def create_tag_in_semaphore(self, html_content: RequestType) -> ResponseType:
         result_summary: Dict[str, List[str]] = {
             "created_tags": [],
             "failed_tags": [],
@@ -371,63 +356,51 @@ class Semaphore(AIServiceBase):
 
         return result_summary
 
-    def analyze(self, html_content) -> dict:
+    def data_operation(
+        self,
+        verb: str,
+        operation: str,
+        name: Optional[str],
+        data: OperationRequest,
+    ) -> ResponseType:
+        if operation == "feedback":
+            return self.analyze(data["item"])
+        if operation == "search":
+            return self.search(data)
+        return {}
+
+    def search(self, data) -> ResponseType:
+        try:
+            print(
+                "----------------------------------------------------------------------"
+            )
+            print(
+                "----------------------------------------------------------------------"
+            )
+            print("Running for Search")
+
+            self.output = self.analyze_parent_info(data)
+
+            try:
+                updated_output = replace_qcodes(self.output)
+                return updated_output
+            except Exception as e:
+                print(
+                    f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}"
+                )
+                return self.output
+        except Exception as e:
+            print(e)
+            pass
+        return {}
+
+    def analyze(self, html_content: RequestType, tags=None) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
                     "Semaphore is not configured properly, can't analyze content"
                 )
                 return {}
-
-            try:
-                try:
-                    for key, value in html_content.items():
-                        if key == "searchString":
-                            print(
-                                "----------------------------------------------------------------------"
-                            )
-                            print(
-                                "----------------------------------------------------------------------"
-                            )
-                            print("Running for Search")
-
-                            self.output = self.analyze_parent_info(html_content)
-
-                            try:
-                                updated_output = replace_qcodes(self.output)
-
-                                return updated_output
-
-                            except Exception as e:
-                                print(
-                                    f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}"
-                                )
-                                return self.output
-
-                except Exception as e:
-                    print(e)
-                    pass
-
-                if isinstance(html_content, list):
-                    # Iterate over each element in the list
-                    for item in html_content:
-                        # Check if the item is a dictionary and contains the 'operation' key
-                        if (
-                            isinstance(item, dict)
-                            and item.get("operation") == "feedback"
-                        ):
-                            print(
-                                "----------------------------------------------------------------------"
-                            )
-                            print(
-                                "----------------------------------------------------------------------"
-                            )
-                            print("Running to Create a New Tag in Semaphore")
-                            self.output = self.create_tag_in_semaphore(item)
-                            return self.output
-
-            except TypeError:
-                pass
 
             # Convert HTML to XML
             xml_payload = self.html_to_xml(html_content)
@@ -681,9 +654,9 @@ def replace_qcodes(output_data):
 
     # Iterate over different categories and apply the replacement
 
-    category_data = output_data.get("result", {}).get("tags", {}).get("subject", [])
+    category_data = output_data.get("tags", {}).get("subject", [])
 
-    broader_data = output_data.get("result", {}).get("broader", {}).get("subject", [])
+    broader_data = output_data.get("broader", {}).get("subject", [])
 
     for category in ["subject"]:
         if category in output_data:
@@ -697,5 +670,4 @@ def replace_qcodes(output_data):
 
 
 def init_app(app):
-    a = Semaphore(app)
-    return a.output
+    Semaphore(app)
