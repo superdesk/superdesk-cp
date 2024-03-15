@@ -23,6 +23,7 @@
     Fixed place property qcode should be code.
     Output profile name instead of _id in profile field.
 
+
 .. versionadded:: 1.6
     Added *evolvedfrom* field to ninjs output.
 
@@ -53,6 +54,7 @@ from superdesk.vocabularies import is_related_content
 from apps.archive.common import get_utc_schedule
 from superdesk import text_utils
 from superdesk.attachments import get_attachment_public_url
+import superdesk
 from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
@@ -357,6 +359,9 @@ class NINJSFormatter_2(Formatter):
                 if isinstance(value, dict) and "embed" in value:
                     value.setdefault("description", "")
 
+        # Method to Append Jimi Tags in Subjects
+        self.update_ninjs_subjects(ninjs, language="en-CA")
+
         return ninjs
 
     def _generate_renditions(self, article):
@@ -506,6 +511,119 @@ class NINJSFormatter_2(Formatter):
     def _get_genre(self, article):
         lang = article.get("language", "")
         return [format_cv_item(item, lang) for item in article["genre"]]
+
+    def update_ninjs_subjects(self, ninjs, language="en-CA"):
+        capital_subjects = [
+            "HIV and AIDS",
+            "traditional Chinese medicine",
+            "Buddhism",
+            "Christianity",
+            "Mormonism",
+            "Christian Orthodoxy",
+            "Protestantism",
+            "Confucianism",
+            "Hinduism",
+            "Islam",
+            "Jainism",
+            "Judaism",
+            "Zoroastrianism",
+            "Scientology",
+            "Shintoism",
+            "Sikhism",
+            "Taoism",
+            "Unificationism",
+            "Christmas",
+            "Easter",
+            "Pentecost",
+            "Ramadan",
+            "Yom Kippur",
+            "Bible",
+            "Qur'an",
+            "Torah",
+            "Dating and Relationships",
+            "LGBTQ",
+            "American football",
+            "Australian rules football",
+            "Canadian football",
+            "Gaelic football",
+            "Jai Alai (Pelota)",
+            "Taekwon-Do",
+            "Swiss wrestling",
+            "Nordic combined",
+            "Telemark skiing",
+            "Olympic Games",
+            "Paralympic Games",
+            "eSports",
+            "environmental, social and governance policy (ESG)",
+            "Midsummer",
+            "National day",
+            "New year",
+            "Halloween",
+            "All Saints Day",
+            "Walpurgis night",
+            "stand up paddleboarding (SUP)",
+            "Catholicism",
+            "Shia Islam",
+            "Sunni Islam",
+            "Eid al-Adha",
+            "Hasidism",
+            "Hanukkah",
+        ]
+        try:
+            # Fetch the vocabulary
+            cv = superdesk.get_resource_service("vocabularies").find_one(
+                req=None, _id="subject_custom"
+            )
+            vocab_items = cv.get("items", [])
+            vocab_mapping = {}
+
+            for item in vocab_items:
+                if item.get("in_jimi") is True:
+                    name_in_vocab = item.get("name")
+                    qcode = item.get("qcode")
+                    translated_name = (
+                        item.get("translations", {})
+                        .get("name", {})
+                        .get(language, name_in_vocab)
+                    )
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
+            updated_subjects = list(ninjs["subject"])
+
+            for subject in ninjs["subject"]:
+                subject_name = subject.get("name").lower()
+                if subject_name in vocab_mapping:
+                    qcode, translated_name = vocab_mapping[subject_name]
+                    updated_subjects.append(
+                        {
+                            "code": qcode,
+                            "name": translated_name,
+                            "scheme": "http://cv.cp.org/cp-subject-legacy/",
+                        }
+                    )
+
+            ninjs["subject"] = [
+                {
+                    **subject,
+                    "name": (
+                        subject["name"].lower()
+                        if subject.get("scheme")
+                        == "http://cv.iptc.org/newscodes/mediatopic/"
+                        and subject["name"] not in capital_subjects
+                        else subject["name"]
+                    ),
+                    "scheme": (
+                        "subject_custom"
+                        if subject.get("scheme")
+                        == "http://cv.iptc.org/newscodes/mediatopic/"
+                        else subject.get("scheme")
+                    ),
+                }
+                for subject in updated_subjects
+            ]
+
+        except Exception as e:
+            logger.error(f"An error occurred. We are in ninjs exception: {str(e)}")
 
     def _get_subject(self, article):
         """Get subject list for article."""
@@ -798,6 +916,7 @@ class NINJS2Formatter(NINJSFormatter_2):
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+
         ninjs["version"] = str(article.get("correction_sequence", 1))
 
         return ninjs

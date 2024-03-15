@@ -1,13 +1,12 @@
 import os
 import logging
-from typing import Dict, Optional
 import requests
-from requests.exceptions import HTTPError
 import xml.etree.ElementTree as ET
 from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
-import json
 import superdesk
+import json
+from typing import Any, Dict, List, Mapping, Optional, TypedDict, Union
 
 
 logger = logging.getLogger(__name__)
@@ -16,19 +15,30 @@ session = requests.Session()
 TIMEOUT = (5, 30)
 
 
+ResponseType = Mapping[str, Union[str, List[str]]]
+
+
+class RequestType(TypedDict, total=False):
+    searchString: str
+    data: Any
+
+
+class OperationRequest(TypedDict):
+    item: RequestType
+
+
 class Semaphore(AIServiceBase):
     """Semaphore autotagging service
 
     Environment variables SEMAPHORE_BASE_URL, SEMAPHORE_ANALYZE_URL, SEMAPHORE_SEARCH_URL, SEMAPHORE_GET_PARENT_URL,
-    SEMAPHORE_CREATE_TAG_URL, SEMAPHORE_CREATE_TAG_TASK, SEMAPHORE_CREATE_TAG_QUERY and SEMAPHORE_API_KEY must be set.
-
+    SEMAPHORE_CREATE_TAG_URL, SEMAPHORE_CREATE_TAG_TASK, SEMAPHORE_CREATE_TAG_QUERY, SEMAPHORE_API_KEY.
     """
 
     name = "semaphore"
     label = "Semaphore autotagging service"
 
     def __init__(self, data):
-        #  SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
+        # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
         self.base_url = os.getenv("SEMAPHORE_BASE_URL")
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
@@ -51,21 +61,6 @@ class Semaphore(AIServiceBase):
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
-
-    def convert_to_desired_format(input_data):
-        result = {
-            "tags": {
-                "subject": input_data["subject"],
-                "organisation": input_data["organisation"],
-                "person": input_data["person"],
-                "event": input_data["event"],
-                "place": input_data["place"],
-                "object": [],  # Assuming no data for 'object'
-            },
-            "broader": {"subject": input_data["broader"]},
-        }
-
-        return result
 
     def get_access_token(self):
         """Get access token for Semaphore."""
@@ -109,7 +104,7 @@ class Semaphore(AIServiceBase):
             return []
 
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, html_content: dict) -> dict:
+    def analyze_parent_info(self, html_content: RequestType) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -117,7 +112,6 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            print(html_content["searchString"])
             query = html_content["searchString"]
 
             new_url = self.search_url + query + ".json"
@@ -127,8 +121,6 @@ class Semaphore(AIServiceBase):
 
             try:
                 response = session.get(new_url, headers=headers)
-                print("response is")
-                print(response)
 
                 response.raise_for_status()
             except Exception as e:
@@ -136,10 +128,6 @@ class Semaphore(AIServiceBase):
                 logger.error(f"An error occurred while making the request: {str(e)}")
 
             root = response.text
-            print("Root is")
-            print(root)
-
-            print(type(root))
 
             # def transform_xml_response(xml_data):
             def transform_xml_response(api_response):
@@ -215,9 +203,11 @@ class Semaphore(AIServiceBase):
                             broader_entry = {
                                 "name": reversed_parent_info[i]["name"],
                                 "qcode": reversed_parent_info[i]["qcode"],
-                                "parent": reversed_parent_info[i + 1]["qcode"]
-                                if i + 1 < len(reversed_parent_info)
-                                else None,
+                                "parent": (
+                                    reversed_parent_info[i + 1]["qcode"]
+                                    if i + 1 < len(reversed_parent_info)
+                                    else None
+                                ),
                                 "creator": "Human",
                                 "source": "Semaphore",
                                 "relevance": "100",
@@ -230,7 +220,7 @@ class Semaphore(AIServiceBase):
                 return result
 
             def convert_to_desired_format(input_data):
-                result = {
+                return {
                     "tags": {
                         "subject": [
                             capitalize_name_if_parent_none(tag)
@@ -262,15 +252,10 @@ class Semaphore(AIServiceBase):
                     },
                 }
 
-                return result
-
             root = json.loads(root)
             json_response = transform_xml_response(root)
 
             json_response = convert_to_desired_format(json_response)
-
-            print("Json Response is ")
-            print(json_response)
 
             return json_response
 
@@ -279,10 +264,14 @@ class Semaphore(AIServiceBase):
             logger.error(
                 f"Semaphore Search request failed. We are in analyze RequestError exception: {str(e)}"
             )
+            return {}
 
-        return {}
-
-    def create_tag_in_semaphore(self, html_content: Dict[str, str]) -> Dict:
+    def create_tag_in_semaphore(self, html_content: RequestType) -> ResponseType:
+        result_summary: Dict[str, List[str]] = {
+            "created_tags": [],
+            "failed_tags": [],
+            "existing_tags": [],
+        }
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
@@ -347,39 +336,40 @@ class Semaphore(AIServiceBase):
                     response = session.post(new_url, headers=headers, data=payload)
 
                     if response.status_code == 409:
-                        print("Tag already exists in KMM. Response is 409 . The Tag is")
-                        print(concept_name)
+                        print(
+                            "Tag already exists in KMM. Response is 409 . The Tag is: "
+                            + concept_name
+                        )
+                        result_summary["existing_tags"].append(concept_name)
+
                     else:
                         response.raise_for_status()
-                        print("Tag Got Created is ")
-                        print(concept_name)
-
-                except HTTPError as http_err:
-                    # Handle specific HTTP errors here
-                    logger.error(f"HTTP error occurred: {http_err}")
+                        print("Tag Got Created is: " + concept_name)
+                        result_summary["created_tags"].append(concept_name)
                 except Exception as e:
-                    traceback.print_exc()
-                    logger.error(
-                        f"An error occurred while making the create tag request: {str(e)}"
-                    )
+                    print(f"Failed to create tag: {concept_name}, Error: {e}")
+                    result_summary["failed_tags"].append(concept_name)
 
-        except requests.exceptions.RequestException as e:
-            traceback.print_exc()
-            logger.error(
-                f"Semaphore Create Tag Failed failed. We are in analyze RequestError exception: {str(e)}"
-            )
-        return {}
+        except Exception as e:
+            print(f"Semaphore Create Tag operation failed: {e}")
+            return {"error": f"Create Tag operation failed: {e}"}
+
+        return result_summary
 
     def data_operation(
-        self, verb: str, operation: str, name: Optional[str], data: dict
-    ) -> dict:
+        self,
+        verb: str,
+        operation: str,
+        name: Optional[str],
+        data: OperationRequest,
+    ) -> ResponseType:
         if operation == "feedback":
             return self.analyze(data["item"])
         if operation == "search":
             return self.search(data)
         return {}
 
-    def search(self, data) -> dict:
+    def search(self, data) -> ResponseType:
         try:
             print(
                 "----------------------------------------------------------------------"
@@ -404,7 +394,7 @@ class Semaphore(AIServiceBase):
             pass
         return {}
 
-    def analyze(self, html_content: Dict[str, str], tags=None) -> Dict:
+    def analyze(self, html_content: RequestType, tags=None) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -422,8 +412,6 @@ class Semaphore(AIServiceBase):
 
             try:
                 response = session.post(self.analyze_url, headers=headers, data=payload)
-                print("response is")
-                print(response)
 
                 response.raise_for_status()
             except Exception as e:
@@ -454,19 +442,47 @@ class Semaphore(AIServiceBase):
                     if tag_data["qcode"] and tag_data not in response_dict[group]:
                         response_dict[group].append(tag_data)
 
+                # Function to adjust score to avoid duplicate score entries for different items
+                def adjust_score(score, existing_scores):
+                    original_score = float(score)
+                    while score in existing_scores:
+                        original_score += (
+                            0.001  # Increment by the smallest possible amount
+                        )
+                        score = "{:.3f}".format(
+                            original_score
+                        )  # Keep score to three decimal places
+                    return score
+
                 # Iterate through the XML elements and populate the dictionary
                 for element in root.iter():
                     if element.tag == "META":
                         meta_name = element.get("name")
-                        meta_value = element.get("value") or ""
+                        meta_value = element.get("value")
                         meta_score = element.get("score", "0")
-                        meta_id = element.get("id") or ""
+                        meta_id = element.get("id")
 
-                        # Process 'Media Topic_PATH_LABEL' and 'Media Topic_PATH_GUID'
+                        # Adjust score if necessary to avoid duplicates
+                        if meta_name in [
+                            "Media Topic_PATH_LABEL",
+                            "Media Topic_PATH_GUID",
+                        ]:
+                            meta_score = adjust_score(
+                                meta_score,
+                                (
+                                    path_labels.keys()
+                                    if meta_name == "Media Topic_PATH_LABEL"
+                                    else path_guids.keys()
+                                ),
+                            )
+
+                        # Split and process path labels or GUIDs
                         if meta_name == "Media Topic_PATH_LABEL":
                             path_labels[meta_score] = meta_value.split("/")[1:]
                         elif meta_name == "Media Topic_PATH_GUID":
                             path_guids[meta_score] = meta_value.split("/")[1:]
+
+                        # Process 'Media Topic_PATH_LABEL' and 'Media Topic_PATH_GUID'
 
                         # Process other categories
                         else:
@@ -491,7 +507,7 @@ class Semaphore(AIServiceBase):
                                     "creator": "Machine",
                                     "source": "Semaphore",
                                     "relevance": meta_score,
-                                    "altids": {meta_value: meta_id},
+                                    "altids": f'{{"{meta_value}": "{meta_id}"}}',
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
                                 }
@@ -529,6 +545,7 @@ class Semaphore(AIServiceBase):
 
             try:
                 updated_output = replace_qcodes(json_response)
+
                 return updated_output
 
             except Exception as e:
@@ -540,13 +557,14 @@ class Semaphore(AIServiceBase):
             logger.error(
                 f"Semaphore request failed. We are in analyze RequestError exception: {str(e)}"
             )
+            return {}
 
         except Exception as e:
             traceback.print_exc()
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
-        return {}
+            return {}
 
-    def html_to_xml(self, html_content: Dict[str, str]) -> str:
+    def html_to_xml(self, html_content) -> str:
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
@@ -573,10 +591,10 @@ class Semaphore(AIServiceBase):
                 </request>
                 """
 
-        body_html = html_content.get("body_html", "")
-        headline = html_content.get("headline", "")
-        headline_extended = html_content.get("abstract", "")
-        slugline = html_content.get("slugline", "")
+        body_html = html_content["body_html"]
+        headline = html_content["headline"]
+        headline_extended = html_content["abstract"]
+        slugline = html_content["slugline"]
 
         # Embed the 'body_html' into the XML template
         xml_output = xml_template.format(
@@ -635,9 +653,18 @@ def replace_qcodes(output_data):
                 item["parent"] = semaphore_to_qcode[item["parent"]]
 
     # Iterate over different categories and apply the replacement
+
+    category_data = output_data.get("tags", {}).get("subject", [])
+
+    broader_data = output_data.get("broader", {}).get("subject", [])
+
     for category in ["subject"]:
         if category in output_data:
             replace_in_list(output_data[category])
+
+        elif category_data:
+            replace_in_list(category_data)
+            replace_in_list(broader_data)
 
     return output_data
 

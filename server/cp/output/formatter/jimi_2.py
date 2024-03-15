@@ -402,10 +402,7 @@ class Jimi2Formatter(Formatter):
         indexes = uniq(categories + self._get_indexes(item))
 
         #  Add code here to remove the small case letters from here
-        filtered_indexes = [
-            " ".join(word for word in index.split() if not word[0].islower())
-            for index in indexes
-        ]
+        filtered_indexes = [index for index in indexes if not index[0].islower()]
         # Remove empty strings from the filtered list
         indexes = [index for index in filtered_indexes if index]
 
@@ -417,6 +414,32 @@ class Jimi2Formatter(Formatter):
             etree.SubElement(content, "IndexCode")
 
     def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
+        cv = superdesk.get_resource_service("vocabularies").find_one(
+            req=None, _id=cv_id
+        )
+        names = []
+
+        filtered_items = filter_items_by_jimi(cv["items"], jimi_only=True)
+
+        if not cv:
+            return names
+        for selected_item in selected_items:
+            item = _find_qcode_item(selected_item["qcode"], filtered_items, jimi_only)
+
+            if item:
+                name = _get_name(item, language)
+
+            else:
+                name = None
+
+            if name is not None and name not in names:
+                names.append(name)
+
+        return names
+
+    def _resolve_names_categories(
+        self, selected_items, language, cv_id, jimi_only=True
+    ):
         cv = superdesk.get_resource_service("vocabularies").find_one(
             req=None, _id=cv_id
         )
@@ -437,7 +460,7 @@ class Jimi2Formatter(Formatter):
     def _get_categories(self, item):
         if not item.get("anpa_category"):
             return []
-        names = self._resolve_names(
+        names = self._resolve_names_categories(
             item["anpa_category"], item["language"], "categories", False
         )
         return names
@@ -462,7 +485,9 @@ class Jimi2Formatter(Formatter):
     def _format_genre(self, content, item):
         version_type = etree.SubElement(content, "VersionType")
         if item.get("genre"):
-            names = self._resolve_names(item["genre"], item["language"], "genre", False)
+            names = self._resolve_names_categories(
+                item["genre"], item["language"], "genre", False
+            )
             if names:
                 version_type.text = names[0]
 
@@ -473,7 +498,9 @@ class Jimi2Formatter(Formatter):
             ]
         except KeyError:
             return
-        names = self._resolve_names(services, item["language"], cp.DISTRIBUTION, False)
+        names = self._resolve_names_categories(
+            services, item["language"], cp.DISTRIBUTION, False
+        )
         if names:
             etree.SubElement(root, "Services").text = names[0]
 
@@ -708,6 +735,13 @@ def to_datetime(value):
     if value and isinstance(value, str):
         return arrow.get(value)
     return value
+
+
+def filter_items_by_jimi(items, jimi_only=True):
+    """Filter items where 'in_jimi' is true."""
+    if jimi_only:
+        return [item for item in items if item.get("in_jimi", False)]
+    return items
 
 
 def _find_qcode_item(code, items, jimi_only=True):

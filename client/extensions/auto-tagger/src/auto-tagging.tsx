@@ -235,12 +235,20 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
         initializeData(preload: boolean) {
             try {
                 const existingTags = getExistingTags(this.props.article);
-
-                if (Object.keys(existingTags).length > 0) {
+                console.log("existingTags", existingTags);
+                // Check if existingTags.subject has any object with scheme value of subject or if organisation or person or event or place or object exists
+                // Added check because of destinations and distribution scheme values are present in subject array which causes the empty data to be shown
+                if (Object.keys(existingTags).length > 0 && 
+                    (existingTags.subject && existingTags.subject.some(s => s.scheme === 'subject')) ||
+                    (Array.isArray(existingTags.organisation) && existingTags.organisation.length > 0) ||
+                    (Array.isArray(existingTags.person) && existingTags.person.length > 0) ||
+                    (Array.isArray(existingTags.event) && existingTags.event.length > 0) ||
+                    (Array.isArray(existingTags.place) && existingTags.place.length > 0) ||
+                    (Array.isArray(existingTags.object) && existingTags.object.length > 0)) {
                     const resClient = toClientFormat(existingTags);
-
+                    console.log("resClient", resClient);
                     this.setState({
-                        data: {original: {analysis: resClient}, changes: {analysis: resClient}},
+                        data: { original: { analysis: resClient }, changes: { analysis: resClient } },
                     });
                 } else if (preload) {
                     this.runAnalysis();
