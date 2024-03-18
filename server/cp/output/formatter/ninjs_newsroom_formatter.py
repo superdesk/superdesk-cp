@@ -30,7 +30,6 @@ class NewsroomNinjsFormatter(NINJSFormatter):
 
     def update_ninjs_subjects(self, ninjs, language="en-CA"):
         try:
-
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(
                 req=None, _id="subject_custom"
