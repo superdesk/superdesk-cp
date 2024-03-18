@@ -17,6 +17,7 @@
   "superdeskExtension": {
     "translations-extract-paths": [
       "./src"
-    ]
+    ],
+    "translations-directory": "translations"
   }
 }
