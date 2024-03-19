@@ -15,6 +15,8 @@ import json
 
 from superdesk.publish.formatters import NewsroomNinjsFormatter
 
+from cp import is_broadcast
+
 
 logger = logging.getLogger(__name__)
 
@@ -118,5 +120,10 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+
         self.update_ninjs_subjects(ninjs, "en-CA")
+
+        if is_broadcast(article) and ninjs["guid"] == article.get("ingest_id"):
+            ninjs["guid"] = ninjs["guid"] + "-br"
+
         return ninjs
