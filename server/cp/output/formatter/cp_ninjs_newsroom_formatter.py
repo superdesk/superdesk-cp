@@ -9,16 +9,17 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 
-from .ninjs_formatter import NINJSFormatter
 import superdesk
-import elasticapm
-import json
 import logging
+import json
+
+from superdesk.publish.formatters import NewsroomNinjsFormatter
+
 
 logger = logging.getLogger(__name__)
 
 
-class NewsroomNinjsFormatter(NINJSFormatter):
+class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
     name = "CP Newsroom NINJS"
     type = "cp newsroom ninjs"
 
@@ -115,45 +116,7 @@ class NewsroomNinjsFormatter(NINJSFormatter):
                 f"An error occurred. We are in CP NewsRoom Ninjs Formatter Ninjs Subjects exception:  {str(e)}"
             )
 
-    @elasticapm.capture_span()
-    def _format_products(self, article):
-        """
-        Return a list of API product id's that the article matches.
-
-        :param article:
-        :return:
-        """
-        result = superdesk.get_resource_service("product_tests").test_products(article)
-        return [
-            {"code": p["product_id"], "name": p.get("name")}
-            for p in result
-            if p.get("matched", False)
-        ]
-
-    @elasticapm.capture_span()
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
-
-        if article.get("ingest_id") and article.get("auto_publish"):
-            ninjs["guid"] = article.get("ingest_id")
-            if article.get("ingest_version"):
-                ninjs["version"] = article["ingest_version"]
-
-        ninjs["products"] = self._format_products(article)
-
-        if article.get("assignment_id"):
-            assignment = superdesk.get_resource_service("assignments").find_one(
-                req=None, _id=article["assignment_id"]
-            )
-            if assignment is not None:
-                if assignment.get("coverage_item"):
-                    ninjs.setdefault("coverage_id", assignment["coverage_item"])
-                if assignment.get("planning_item"):
-                    ninjs.setdefault("planning_id", assignment["planning_item"])
-
-        if article.get("refs"):
-            ninjs["refs"] = article["refs"]
-
         self.update_ninjs_subjects(ninjs, "en-CA")
-
         return ninjs
