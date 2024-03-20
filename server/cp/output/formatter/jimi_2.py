@@ -106,6 +106,7 @@ def is_french(item) -> bool:
 
 
 class Jimi2Formatter(Formatter):
+
     ENCODING = "utf-8"
 
     type = "jimi_2"
@@ -142,6 +143,11 @@ class Jimi2Formatter(Formatter):
                 etree.SubElement(root, elem).text = subj["qcode"]
 
     def _format_item(self, root, item, pub_seq_num, service, services) -> None:
+
+        # Added Fix here to fetch Parents of Manual Tags.
+
+        item = self._add_parent_manual_tags(item)
+
         if is_picture(item):
             D2P1 = "http://www.w3.org/2001/XMLSchema-instance"
             content = etree.SubElement(
@@ -180,9 +186,7 @@ class Jimi2Formatter(Formatter):
             if root.find("PscCodes") is None:
                 etree.SubElement(root, "PscCodes").text = "Online"
         elif service:
-            etree.SubElement(root, "Services").text = (
-                "Écrit" if is_french(item) else "Print"
-            )
+            etree.SubElement(root, "Services").text = "Écrit" if is_french(item) else "Print"
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
@@ -256,7 +260,9 @@ class Jimi2Formatter(Formatter):
             item.get("abstract")
         )
         etree.SubElement(content, "ContentText").text = self._format_html(content_html)
-        etree.SubElement(content, "Language").text = "2" if is_french(item) else "1"
+        etree.SubElement(content, "Language").text = (
+            "2" if is_french(item) else "1"
+        )
 
         if item["type"] == "text" and content_html:
             content.find("DirectoryText").text = format_maxlength(
@@ -272,7 +278,7 @@ class Jimi2Formatter(Formatter):
             etree.SubElement(content, "Stocks").text = ",".join(item["keywords"])
 
         #  IndexCodes are set here
-
+        
         self._format_category_index(content, item)
         self._format_genre(content, item)
         self._format_urgency(content, item.get("urgency"), item["language"])
@@ -298,12 +304,11 @@ class Jimi2Formatter(Formatter):
 
         if item.get("associations"):
             self._format_associations(content, item)
+        
 
     def get_item_id(self, item):
         if item.get("family_id"):
-            ingest_item = superdesk.get_resource_service("ingest").find_one(
-                req=None, _id=item["family_id"]
-            )
+            ingest_item = superdesk.get_resource_service("ingest").find_one(req=None, _id=item["family_id"])
             if ingest_item and ingest_item.get("unique_id"):
                 return ingest_item["unique_id"]
         return item["unique_id"]
@@ -397,14 +402,47 @@ class Jimi2Formatter(Formatter):
         else:
             etree.SubElement(content, "Placeline")
 
+    # Creating a new Method FOr adding Parents in Manually added Index Codes
+    def _add_parent_manual_tags(self, item):
+        cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id="subject_custom")
+        vocab_items = cv.get("items", [])
+        vocab_mapping = {v['qcode']: v for v in vocab_items}
+
+        def find_oldest_parent(qcode):
+            parent_qcode = vocab_mapping[qcode]['parent']
+            while parent_qcode:
+                if vocab_mapping[parent_qcode]['in_jimi'] and vocab_mapping[parent_qcode]['parent'] is None:
+                    return vocab_mapping[parent_qcode]
+                parent_qcode = vocab_mapping.get(parent_qcode, {}).get('parent', None)
+            return None
+
+        updated_subjects = item.get('subject', []).copy()  # Copy the current subjects to avoid direct modification
+
+        for subject in item.get('subject', []):
+            if 'qcode' in subject and subject['qcode'] in vocab_mapping:
+                oldest_parent = find_oldest_parent(subject['qcode'])
+                if oldest_parent and oldest_parent['qcode'] not in [s['qcode'] for s in updated_subjects]:
+                    # Add the entire oldest parent tag to the item's subjects
+                    updated_subjects.append(oldest_parent)
+
+        item['subject'] = updated_subjects
+        return item
+
+
+
+
+
     def _format_category_index(self, content, item):
         categories = self._get_categories(item)
         indexes = uniq(categories + self._get_indexes(item))
+
+        
 
         #  Add code here to remove the small case letters from here
         filtered_indexes = [index for index in indexes if not index[0].islower()]
         # Remove empty strings from the filtered list
         indexes = [index for index in filtered_indexes if index]
+        
 
         if categories:
             etree.SubElement(content, "Category").text = ",".join(categories)
@@ -425,21 +463,21 @@ class Jimi2Formatter(Formatter):
             return names
         for selected_item in selected_items:
             item = _find_qcode_item(selected_item["qcode"], filtered_items, jimi_only)
-
+            
             if item:
                 name = _get_name(item, language)
-
+                
             else:
                 name = None
 
             if name is not None and name not in names:
                 names.append(name)
-
+        
+        
         return names
+    
 
-    def _resolve_names_categories(
-        self, selected_items, language, cv_id, jimi_only=True
-    ):
+    def _resolve_names_categories(self, selected_items, language, cv_id, jimi_only=True):
         cv = superdesk.get_resource_service("vocabularies").find_one(
             req=None, _id=cv_id
         )
@@ -456,6 +494,8 @@ class Jimi2Formatter(Formatter):
             if name and name not in names:
                 names.append(name)
         return names
+    
+
 
     def _get_categories(self, item):
         if not item.get("anpa_category"):
@@ -473,11 +513,11 @@ class Jimi2Formatter(Formatter):
 
         SUBJECTS_ID_3 = "http://cv.iptc.org/newscodes/mediatopic/"
 
+
         subject = [
             s
             for s in item.get("subject", [])
-            if s.get("name")
-            and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
+            if s.get("name") and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
         ]
 
         return self._resolve_names(subject, item["language"], SUBJECTS_ID)
@@ -485,9 +525,7 @@ class Jimi2Formatter(Formatter):
     def _format_genre(self, content, item):
         version_type = etree.SubElement(content, "VersionType")
         if item.get("genre"):
-            names = self._resolve_names_categories(
-                item["genre"], item["language"], "genre", False
-            )
+            names = self._resolve_names_categories(item["genre"], item["language"], "genre", False)
             if names:
                 version_type.text = names[0]
 
@@ -498,9 +536,7 @@ class Jimi2Formatter(Formatter):
             ]
         except KeyError:
             return
-        names = self._resolve_names_categories(
-            services, item["language"], cp.DISTRIBUTION, False
-        )
+        names = self._resolve_names_categories(services, item["language"], cp.DISTRIBUTION, False)
         if names:
             etree.SubElement(root, "Services").text = names[0]
 
@@ -711,11 +747,7 @@ class Jimi2Formatter(Formatter):
                 elem.tag = "em"
 
             # Remove whitespace and empty tags
-            if (
-                elem.tag in INLINE_ELEMENTS
-                and elem.text is not None
-                and not elem.text.strip()
-            ):
+            if elem.tag in INLINE_ELEMENTS and elem.text is not None and not elem.text.strip():
                 elem.drop_tree()
 
         return sd_etree.to_string(tree, encoding="unicode", method="html")
@@ -736,44 +768,50 @@ def to_datetime(value):
         return arrow.get(value)
     return value
 
-
 def filter_items_by_jimi(items, jimi_only=True):
     """Filter items where 'in_jimi' is true."""
     if jimi_only:
         return [item for item in items if item.get("in_jimi", False)]
     return items
 
-
 def _find_qcode_item(code, items, jimi_only=True):
     for item in items:
         if item.get("qcode") == code:
-            if not jimi_only:
+            if not jimi_only:               
                 pass
             if item.get("in_jimi"):
+                
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
 
         elif item.get("semaphore_id") == code:
+            
             if not jimi_only:
                 pass
             if item.get("in_jimi"):
+                
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
 
 
+
 def _get_name(item, language):
+
+    
     lang = language.replace("_", "-")
     if "-CA" not in lang:
         lang = "{}-CA".format(lang)
     try:
+        
         return item["translations"]["name"][lang]
     except (KeyError,):
         pass
     try:
+        
         return item["translations"]["name"][lang.split("-")[0]]
     except (KeyError,):
         pass
