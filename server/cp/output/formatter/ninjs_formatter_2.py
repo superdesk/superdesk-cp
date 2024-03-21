@@ -180,7 +180,48 @@ class NINJSFormatter_2(Formatter):
         except Exception as ex:
             raise FormatterError.ninjsFormatterError(ex, subscriber)
 
+    # Adding a method to fetch Parents of Manual Tags
+
+    def _add_parent_manual_tags(self, item):
+        cv = superdesk.get_resource_service("vocabularies").find_one(
+            req=None, _id="subject_custom"
+        )
+        vocab_items = cv.get("items", [])
+        vocab_mapping = {v["qcode"]: v for v in vocab_items}
+
+        def find_oldest_parent(qcode):
+            parent_qcode = vocab_mapping[qcode]["parent"]
+            while parent_qcode:
+                if (
+                    vocab_mapping[parent_qcode]["in_jimi"]
+                    and vocab_mapping[parent_qcode]["parent"] is None
+                ):
+                    return vocab_mapping[parent_qcode]
+                parent_qcode = vocab_mapping.get(parent_qcode, {}).get("parent", None)
+            return None
+
+        updated_subjects = item.get(
+            "subject", []
+        ).copy()  # Copy the current subjects to avoid direct modification
+
+        for subject in item.get("subject", []):
+            if "qcode" in subject and subject["qcode"] in vocab_mapping:
+                oldest_parent = find_oldest_parent(subject["qcode"])
+                if oldest_parent and oldest_parent["qcode"] not in [
+                    s["qcode"] for s in updated_subjects
+                ]:
+                    # Add the entire oldest parent tag to the item's subjects
+                    updated_subjects.append(oldest_parent)
+
+        item["subject"] = updated_subjects
+        return item
+
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
+
+        # Using the method we created to fetch Parents of all Manual Tags
+
+        article = self._add_parent_manual_tags(article)
+
         ninjs = {
             "guid": article.get(GUID_FIELD, article.get("uri")),
             "version": str(article.get(config.VERSION, 1)),
@@ -616,6 +657,7 @@ class NINJSFormatter_2(Formatter):
                         "subject_custom"
                         if subject.get("scheme")
                         == "http://cv.iptc.org/newscodes/mediatopic/"
+                        or subject.get("scheme") is None
                         else subject.get("scheme")
                     ),
                 }

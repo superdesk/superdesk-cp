@@ -106,6 +106,7 @@ def is_french(item) -> bool:
 
 
 class Jimi2Formatter(Formatter):
+
     ENCODING = "utf-8"
 
     type = "jimi_2"
@@ -142,6 +143,11 @@ class Jimi2Formatter(Formatter):
                 etree.SubElement(root, elem).text = subj["qcode"]
 
     def _format_item(self, root, item, pub_seq_num, service, services) -> None:
+
+        # Added Fix here to fetch Parents of Manual Tags.
+
+        item = self._add_parent_manual_tags(item)
+
         if is_picture(item):
             D2P1 = "http://www.w3.org/2001/XMLSchema-instance"
             content = etree.SubElement(
@@ -396,6 +402,41 @@ class Jimi2Formatter(Formatter):
                 pass
         else:
             etree.SubElement(content, "Placeline")
+
+    # Creating a new Method FOr adding Parents in Manually added Index Codes
+    def _add_parent_manual_tags(self, item):
+        cv = superdesk.get_resource_service("vocabularies").find_one(
+            req=None, _id="subject_custom"
+        )
+        vocab_items = cv.get("items", [])
+        vocab_mapping = {v["qcode"]: v for v in vocab_items}
+
+        def find_oldest_parent(qcode):
+            parent_qcode = vocab_mapping[qcode]["parent"]
+            while parent_qcode:
+                if (
+                    vocab_mapping[parent_qcode]["in_jimi"]
+                    and vocab_mapping[parent_qcode]["parent"] is None
+                ):
+                    return vocab_mapping[parent_qcode]
+                parent_qcode = vocab_mapping.get(parent_qcode, {}).get("parent", None)
+            return None
+
+        updated_subjects = item.get(
+            "subject", []
+        ).copy()  # Copy the current subjects to avoid direct modification
+
+        for subject in item.get("subject", []):
+            if "qcode" in subject and subject["qcode"] in vocab_mapping:
+                oldest_parent = find_oldest_parent(subject["qcode"])
+                if oldest_parent and oldest_parent["qcode"] not in [
+                    s["qcode"] for s in updated_subjects
+                ]:
+                    # Add the entire oldest parent tag to the item's subjects
+                    updated_subjects.append(oldest_parent)
+
+        item["subject"] = updated_subjects
+        return item
 
     def _format_category_index(self, content, item):
         categories = self._get_categories(item)
@@ -750,15 +791,18 @@ def _find_qcode_item(code, items, jimi_only=True):
             if not jimi_only:
                 pass
             if item.get("in_jimi"):
+
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
             break
 
         elif item.get("semaphore_id") == code:
+
             if not jimi_only:
                 pass
             if item.get("in_jimi"):
+
                 return item
             elif item.get("parent"):
                 return _find_qcode_item(item["parent"], items, jimi_only)
@@ -766,14 +810,17 @@ def _find_qcode_item(code, items, jimi_only=True):
 
 
 def _get_name(item, language):
+
     lang = language.replace("_", "-")
     if "-CA" not in lang:
         lang = "{}-CA".format(lang)
     try:
+
         return item["translations"]["name"][lang]
     except (KeyError,):
         pass
     try:
+
         return item["translations"]["name"][lang.split("-")[0]]
     except (KeyError,):
         pass
