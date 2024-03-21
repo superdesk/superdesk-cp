@@ -16,9 +16,9 @@ class CPNewsMLG2Formatter(NewsMLG2Formatter):
         try:
             headline = article["extra"][cp.HEADLINE2]
             SubElement(content_meta, "headline").text = headline
-            SubElement(
-                content_meta, "headline", attrib={"role": "short"}
-            ).text = article.get("headline", "")
+            SubElement(content_meta, "headline", attrib={"role": "short"}).text = (
+                article.get("headline", "")
+            )
         except KeyError:
             super()._format_headline(article, content_meta)
 
