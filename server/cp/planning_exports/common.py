@@ -138,9 +138,9 @@ def set_item_location(item, event):
 
                 item["address"] = {
                     "country": address["country"] if address.get("country") else None,
-                    "locality": address["locality"]
-                    if address.get("locality")
-                    else None,
+                    "locality": (
+                        address["locality"] if address.get("locality") else None
+                    ),
                     "city": address["city"] if address.get("city") else "",
                     "state": address["state"] if address.get("state") else None,
                     "name": address.get("city") or address_item.get("name") or "",

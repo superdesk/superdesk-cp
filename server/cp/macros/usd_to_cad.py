@@ -70,15 +70,15 @@ def callback(item, **kwargs):
             fixed = _format.format(converted).replace(".00", "")
         # keep leeding whitespace so on client it won't
         # replace $500 in C$500
-        diff[
-            m.group(0).rstrip()
-        ] = "{whitespace} ({en_currency}{value}{mil}{fr_currency})".format(
-            whitespace=m.group(0).rstrip(),
-            en_currency="" if is_fr else "C$",
-            value=fixed if not is_fr else fixed.replace(",", " ").replace(".", ","),
-            mil=m.group("mil") or "",
-            fr_currency=" $ CAN" if is_fr else "",
-        ).rstrip()
+        diff[m.group(0).rstrip()] = (
+            "{whitespace} ({en_currency}{value}{mil}{fr_currency})".format(
+                whitespace=m.group(0).rstrip(),
+                en_currency="" if is_fr else "C$",
+                value=fixed if not is_fr else fixed.replace(",", " ").replace(".", ","),
+                mil=m.group("mil") or "",
+                fr_currency=" $ CAN" if is_fr else "",
+            ).rstrip()
+        )
 
     re.sub(CURRENCY_REGEX, repl, text)
     re.sub(CURRENCY_REGEX_FR, functools.partial(repl, is_fr=True), text)

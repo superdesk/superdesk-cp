@@ -5,7 +5,6 @@ import logging
 
 
 class UpdateEventTypesCommand(superdesk.Command):
-
     """Update event_types in Vocabularies"""
 
     """
@@ -48,9 +47,11 @@ class UpdateEventTypesCommand(superdesk.Command):
                         "qcode": name,
                         "is_active": True,
                         "subject": self.get_subject(event),
-                        "onclusive_ids": event["sourceMeta"][0]["key"]
-                        if event.get("sourceMeta")
-                        else None,
+                        "onclusive_ids": (
+                            event["sourceMeta"][0]["key"]
+                            if event.get("sourceMeta")
+                            else None
+                        ),
                     }
                     if type(event["name"]) is not str:
                         obj["translations"] = {
