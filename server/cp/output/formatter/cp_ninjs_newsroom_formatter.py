@@ -44,27 +44,25 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
             vocab_mapping_all = {}
 
             for item in vocab_items:
-                if item.get("in_jimi") is True:
-                    name_in_vocab = item.get("name")
-                    qcode = item.get("qcode")
-                    translated_name = (
-                        item.get("translations", {})
-                        .get("name", {})
-                        .get(language, name_in_vocab)
-                    )
-                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
-
-            for item in vocab_items:
                 name_in_vocab = item.get("name")
                 qcode = item.get("qcode")
+                # Prepare the translated name, defaulting to the original name if the translation is not available
                 translated_name = (
                     item.get("translations", {})
                     .get("name", {})
                     .get(language, name_in_vocab)
                 )
+
+                # Always populate vocab_mapping_all
                 vocab_mapping_all[name_in_vocab.lower()] = (qcode, translated_name)
 
+                # Only populate vocab_mapping if "in_jimi" is True
+                if item.get("in_jimi") is True:
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
             updated_subjects = list(ninjs["subject"])
+            # Setting a Pre defined Allowed Scheme Vocabulary Mapping
+
             allowed_schemes = [
                 "http://cv.iptc.org/newscodes/mediatopic/",
                 "subject_custom",
