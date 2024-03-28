@@ -33,6 +33,7 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
 
     def update_ninjs_subjects(self, ninjs, language="en-CA"):
         try:
+
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(
                 req=None, _id="subject_custom"
@@ -43,31 +44,37 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
             vocab_mapping_all = {}
 
             for item in vocab_items:
-                if item.get("in_jimi") is True:
-                    name_in_vocab = item.get("name")
-                    qcode = item.get("qcode")
-                    translated_name = (
-                        item.get("translations", {})
-                        .get("name", {})
-                        .get(language, name_in_vocab)
-                    )
-                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
-
-            for item in vocab_items:
                 name_in_vocab = item.get("name")
                 qcode = item.get("qcode")
+                # Prepare the translated name, defaulting to the original name if the translation is not available
                 translated_name = (
                     item.get("translations", {})
                     .get("name", {})
                     .get(language, name_in_vocab)
                 )
+
+                # Always populate vocab_mapping_all
                 vocab_mapping_all[name_in_vocab.lower()] = (qcode, translated_name)
 
+                # Only populate vocab_mapping if "in_jimi" is True
+                if item.get("in_jimi") is True:
+                    vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
+
             updated_subjects = list(ninjs["subject"])
+            # Setting a Pre defined Allowed Scheme Vocabulary Mapping
+
+            allowed_schemes = [
+                "http://cv.iptc.org/newscodes/mediatopic/",
+                "subject_custom",
+                "subject",
+                "http://cv.cp.org/cp-subject-legacy/",
+            ]
 
             for subject in ninjs["subject"]:
                 subject_name = subject.get("name").lower()
-                if subject_name in vocab_mapping:
+                subject_scheme = subject.get("scheme", "")
+
+                if subject_name in vocab_mapping and subject_scheme in allowed_schemes:
                     qcode, translated_name = vocab_mapping[subject_name]
                     updated_subjects.append(
                         {
@@ -77,7 +84,10 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
                         }
                     )
                 else:
-                    if subject_name in vocab_mapping_all:
+                    if (
+                        subject_name in vocab_mapping_all
+                        and subject_scheme in allowed_schemes
+                    ):
                         qcode, translated_name = vocab_mapping_all[subject_name]
                         updated_subjects.append(
                             {
@@ -115,7 +125,7 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
 
         except Exception as e:
             logger.error(
-                f"An error occurred. We are in CP NewsRoom Ninjs Formatter Ninjs Subjects exception:  {str(e)}"
+                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception:  {str(e)}"
             )
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
