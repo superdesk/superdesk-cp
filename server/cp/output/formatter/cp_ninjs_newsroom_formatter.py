@@ -125,7 +125,7 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
 
         except Exception as e:
             logger.error(
-                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception:  {str(e)}"
+                f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: {str(e)}"
             )
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):

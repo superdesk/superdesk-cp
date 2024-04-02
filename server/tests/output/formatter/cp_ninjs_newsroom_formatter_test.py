@@ -65,6 +65,6 @@ class TestCPNewsroomNinjsFormatter(unittest.TestCase):
             self.formatter.update_ninjs_subjects(ninjs, "en-CA")
 
         self.assertIn(
-            "An error occurred. We are in CP NewsRoom Ninjs Formatter Ninjs Subjects exception:  Test exception",
+            "An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: Test exception",
             cm.output[0],
         )
