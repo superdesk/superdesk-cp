@@ -189,14 +189,13 @@ class NINJSFormatter_2(Formatter):
         vocab_items = cv.get("items", [])
         vocab_mapping = {v["qcode"]: v for v in vocab_items}
 
-        def find_oldest_parent(qcode):
+        def find_youngest_parent(qcode):
             parent_qcode = vocab_mapping[qcode]["parent"]
             while parent_qcode:
-                if (
-                    vocab_mapping[parent_qcode]["in_jimi"]
-                    and vocab_mapping[parent_qcode]["parent"] is None
-                ):
-                    return vocab_mapping[parent_qcode]
+                if vocab_mapping[parent_qcode]["in_jimi"]:
+                    return vocab_mapping[
+                        parent_qcode
+                    ]  # Return the first parent where in_jimi is true
                 parent_qcode = vocab_mapping.get(parent_qcode, {}).get("parent", None)
             return None
 
@@ -206,18 +205,17 @@ class NINJSFormatter_2(Formatter):
 
         for subject in item.get("subject", []):
             if "qcode" in subject and subject["qcode"] in vocab_mapping:
-                oldest_parent = find_oldest_parent(subject["qcode"])
-                if oldest_parent and oldest_parent["qcode"] not in [
+                youngest_parent = find_youngest_parent(subject["qcode"])
+                if youngest_parent and youngest_parent["qcode"] not in [
                     s["qcode"] for s in updated_subjects
                 ]:
-                    # Add the entire oldest parent tag to the item's subjects
-                    updated_subjects.append(oldest_parent)
+                    # Add the first parent tag where in_jimi is true to the item's subjects
+                    updated_subjects.append(youngest_parent)
 
         item["subject"] = updated_subjects
         return item
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
-
         # Using the method we created to fetch Parents of all Manual Tags
 
         article = self._add_parent_manual_tags(article)
