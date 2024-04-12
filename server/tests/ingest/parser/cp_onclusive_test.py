@@ -14,7 +14,7 @@ from tests.mock import resources
 from unittest.mock import patch
 from superdesk import get_resource_service
 from superdesk.io.commands.update_ingest import ingest_item
-from superdesk.tests import TestCase as _TestCase
+from superdesk.tests import TestCase as _TestCase, setup
 
 
 with open(get_fixture_path("cp_onclusive.json", "cp_onclusive")) as fp:
@@ -31,9 +31,22 @@ class OnclusiveFeedParserTestCase(_TestCase):
 
     maxDiff = None
 
-    def tearDown(self):
-        if hasattr(self, "ctx"):
-            self.ctx.pop()
+    def setUpForChildren(self):
+        """Run this `setUp` stuff for each children.
+
+        Configure new `app` for each test.
+        """
+        setup.reset = True
+        setup(self)
+
+        self.ctx = self.app.app_context()
+        self.ctx.push()
+
+        def clean_ctx():
+            if self.ctx:
+                self.ctx.pop()
+
+        self.addCleanup(clean_ctx)
 
     def test_content(self):
         with patch.dict(superdesk.resources, resources):
