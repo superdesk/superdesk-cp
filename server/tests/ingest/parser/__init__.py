@@ -29,3 +29,7 @@ class ParserTestCase(unittest.TestCase):
         self.assertTrue(self.parser.can_parse(xml))
         with self.app.app_context():
             return self.parser.parse(xml)[0]
+
+    def tearDown(self):
+        if hasattr(self, "ctx"):
+            self.ctx.pop()

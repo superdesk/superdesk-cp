@@ -28,7 +28,6 @@ def qcode(subject):
 class OnclusiveFeedParserTestCase(_TestCase):
     parser = CPOnclusiveFeedParser()
     provider = "Test_CP_Onclusive"
-    app = flask.Flask(__name__)
 
     maxDiff = None
 
