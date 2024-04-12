@@ -106,5 +106,5 @@ resources = {
     "places_autocomplete": Resource(places_autocomplete_service),
     "events": Resource(event_service),
     "contacts": Resource(contacts_service),
-    "video_edit": Resource(contacts_service)
+    "video_edit": Resource(contacts_service),
 }

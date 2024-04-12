@@ -2,6 +2,7 @@ import json
 from cp.ingest.parser.cp_onclusive import CPOnclusiveFeedParser
 import datetime
 from dateutil.tz import tzutc
+from . import ParserTestCase
 from superdesk.metadata.item import (
     ITEM_TYPE,
     CONTENT_TYPE,
@@ -15,7 +16,6 @@ from unittest.mock import patch
 from superdesk import get_resource_service
 from superdesk.io.commands.update_ingest import ingest_item
 from superdesk.tests import TestCase as _TestCase
-from . import ParserTestCase
 
 
 with open(get_fixture_path("cp_onclusive.json", "cp_onclusive")) as fp:
@@ -29,10 +29,9 @@ def qcode(subject):
 class OnclusiveFeedParserTestCase(ParserTestCase):
     parser = CPOnclusiveFeedParser()
     provider = "Test_CP_Onclusive"
+    app = flask.Flask(__name__)
 
     maxDiff = None
-
-    app = flask.Flask(__name__)
 
     def test_content(self):
         with self.app.app_context(), patch.dict(superdesk.resources, resources):

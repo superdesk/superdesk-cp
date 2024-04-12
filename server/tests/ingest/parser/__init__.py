@@ -2,6 +2,7 @@ import os
 import flask
 import unittest
 import lxml.etree as etree
+
 from superdesk.io.feed_parsers import FeedParser
 
 
