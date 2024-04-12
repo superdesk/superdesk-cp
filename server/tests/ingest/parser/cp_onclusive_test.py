@@ -32,6 +32,10 @@ class OnclusiveFeedParserTestCase(_TestCase):
 
     maxDiff = None
 
+    def tearDown(self):
+        if hasattr(self, "ctx"):
+            self.ctx.pop()
+
     def test_content(self):
         with patch.dict(superdesk.resources, resources):
             item = self.parser.parse(data)[0]
