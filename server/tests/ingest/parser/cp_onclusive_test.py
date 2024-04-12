@@ -14,7 +14,8 @@ from tests.mock import resources
 from unittest.mock import patch
 from superdesk import get_resource_service
 from superdesk.io.commands.update_ingest import ingest_item
-from superdesk.tests import TestCase as _TestCase, setup
+from superdesk.tests import TestCase as _TestCase
+from . import ParserTestCase
 
 
 with open(get_fixture_path("cp_onclusive.json", "cp_onclusive")) as fp:
@@ -25,31 +26,16 @@ def qcode(subject):
     return "{}:{}".format(subject.get("scheme"), subject.get("qcode"))
 
 
-class OnclusiveFeedParserTestCase(_TestCase):
+class OnclusiveFeedParserTestCase(ParserTestCase):
     parser = CPOnclusiveFeedParser()
     provider = "Test_CP_Onclusive"
 
     maxDiff = None
 
-    def setUpForChildren(self):
-        """Run this `setUp` stuff for each children.
-
-        Configure new `app` for each test.
-        """
-        setup.reset = True
-        setup(self)
-
-        self.ctx = self.app.app_context()
-        self.ctx.push()
-
-        def clean_ctx():
-            if self.ctx:
-                self.ctx.pop()
-
-        self.addCleanup(clean_ctx)
+    app = flask.Flask(__name__)
 
     def test_content(self):
-        with patch.dict(superdesk.resources, resources):
+        with self.app.app_context(), patch.dict(superdesk.resources, resources):
             item = self.parser.parse(data)[0]
             expected_subjects = [
                 {
@@ -190,20 +176,29 @@ class OnclusiveFeedParserTestCase(_TestCase):
                 "One King West Hotel & Residence, 1 King St W, Toronto",
             )
 
+
+class UpdateItemOnIngestTestCases(_TestCase):
+    parser = CPOnclusiveFeedParser()
+
+    def setUpForChildren(self):
+        super().setUpForChildren()
+
     def test_item_update(self):
-        # add a user
         flask.g.user = {"_id": "current_user_id"}
         event_service = get_resource_service("events")
         provider = {
-            "_id": "abcd",
+            "_id": "asdnjsandkajsdnjkasnd",
             "source": "sf",
             "name": "CP_Onclusive",
+            "content_expiry": 525700,
         }
         source = self.parser.parse(data)[0]
 
+        # print(source)
         # Ingest first version
         ingested, ids = ingest_item(source, provider=provider, feeding_service={})
         self.assertTrue(ingested)
+        print(ids)
         self.assertIn(source["guid"], ids)
 
         dest = list(

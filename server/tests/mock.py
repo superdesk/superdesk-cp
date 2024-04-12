@@ -16,6 +16,7 @@ from superdesk.geonames import geonames_request, format_geoname_item
 from flask import current_app as app
 from planning.events.events import EventsService
 from apps.contacts import ContactsService
+from apps.video_edit import VideoEditService
 
 SEQUENCE_NUMBER = 100
 
@@ -93,6 +94,8 @@ event_service.find_one.return_value = None
 contacts_service = create_autospec(ContactsService)
 contacts_service.find_one.return_value = {"_id": bson.ObjectId()}
 
+video_edit_service = create_autospec(VideoEditService)
+
 resources = {
     "news": Resource(news_service),
     "ingest": Resource(ingest_service),
@@ -103,4 +106,5 @@ resources = {
     "places_autocomplete": Resource(places_autocomplete_service),
     "events": Resource(event_service),
     "contacts": Resource(contacts_service),
+    "video_edit": Resource(contacts_service)
 }

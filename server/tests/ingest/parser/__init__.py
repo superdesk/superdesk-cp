@@ -2,7 +2,6 @@ import os
 import flask
 import unittest
 import lxml.etree as etree
-
 from superdesk.io.feed_parsers import FeedParser
 
 
@@ -29,7 +28,3 @@ class ParserTestCase(unittest.TestCase):
         self.assertTrue(self.parser.can_parse(xml))
         with self.app.app_context():
             return self.parser.parse(xml)[0]
-
-    def tearDown(self):
-        if hasattr(self, "ctx"):
-            self.ctx.pop()
