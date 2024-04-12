@@ -1,5 +1,4 @@
 import itertools
-import logging
 from planning.feed_parsers.onclusive import OnclusiveFeedParser
 from typing import List
 from superdesk import get_resource_service
@@ -20,9 +19,6 @@ def item_value(subject):
         for k, v in subject.items()
         if k not in ("onclusive_ids", "subject", "is_active")
     }
-
-
-logger = logging.getLogger(__name__)
 
 
 class CPOnclusiveFeedParser(OnclusiveFeedParser):
@@ -57,44 +53,40 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
             if event and event.get("version_creator"):
                 # this event is edited by someone so we don't update it
                 continue
-            else:
-                category = []
-                if item.get("subject"):
-                    for subject in item["subject"]:
-                        if subject["scheme"] == "onclusive_categories":
-                            onclusive_category = self.find_cv_item(
-                                onclusive_cv_items, subject["qcode"]
-                            )
-                            if onclusive_category:
-                                anpa_category = self.find_cv_item(
-                                    anpa_categories, onclusive_category["cp_category"]
-                                )
-                                if anpa_category:
-                                    category.append(
-                                        {
-                                            "name": anpa_category["name"],
-                                            "qcode": anpa_category["qcode"],
-                                            "translations": anpa_category[
-                                                "translations"
-                                            ],
-                                        }
-                                    )
-                        if subject["scheme"] == "onclusive_event_types":
-                            event_type = self.find_event_type(
-                                event_types, subject["qcode"]
-                            )
-                            if event_type:
-                                item["subject"].append(item_value(event_type))
-                                if event_type.get("subject"):
-                                    for subject_name in event_type["subject"]:
-                                        subj = self.find_subject(subjects, subject_name)
-                                        if subj:
-                                            item["subject"].append(item_value(subj))
 
-                    # remove duplicates
-                    item["anpa_category"] = unique(category)
-                    item["subject"] = unique(item["subject"])
-                events.append(item)
+            category = []
+            if item.get("subject"):
+                for subject in item["subject"]:
+                    if subject["scheme"] == "onclusive_categories":
+                        onclusive_category = self.find_cv_item(
+                            onclusive_cv_items, subject["qcode"]
+                        )
+                        if onclusive_category:
+                            anpa_category = self.find_cv_item(
+                                anpa_categories, onclusive_category["cp_category"]
+                            )
+                            if anpa_category:
+                                category.append(
+                                    {
+                                        "name": anpa_category["name"],
+                                        "qcode": anpa_category["qcode"],
+                                        "translations": anpa_category["translations"],
+                                    }
+                                )
+                    if subject["scheme"] == "onclusive_event_types":
+                        event_type = self.find_event_type(event_types, subject["qcode"])
+                        if event_type:
+                            item["subject"].append(item_value(event_type))
+                            if event_type.get("subject"):
+                                for subject_name in event_type["subject"]:
+                                    subj = self.find_subject(subjects, subject_name)
+                                    if subj:
+                                        item["subject"].append(item_value(subj))
+
+                # remove duplicates
+                item["anpa_category"] = unique(category)
+                item["subject"] = unique(item["subject"])
+            events.append(item)
         return events
 
     def find_cv_item(self, cv_items, qcode):
