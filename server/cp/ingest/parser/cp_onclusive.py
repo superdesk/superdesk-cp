@@ -66,16 +66,25 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                                         "translations": anpa_category["translations"],
                                     }
                                 )
+                            if onclusive_category.get("cp_index"):
+                                subj = self.find_cv_item(
+                                    subjects, onclusive_category["cp_index"]
+                                )
+                            else:
+                                subj = {
+                                    "name": onclusive_category["name"],
+                                    "qcode": onclusive_category["qcode"].zfill(8),
+                                    "scheme": "subject_custom",
+                                    "translations": onclusive_category.get(
+                                        "translations"
+                                    ),
+                                }
+                            if subj:
+                                item["subject"].append(item_value(subj))
                     if subject["scheme"] == "onclusive_event_types":
                         event_type = self.find_event_type(event_types, subject["qcode"])
                         if event_type:
                             item["subject"].append(item_value(event_type))
-                            if event_type.get("subject"):
-                                for subject_name in event_type["subject"]:
-                                    subj = self.find_subject(subjects, subject_name)
-                                    if subj:
-                                        item["subject"].append(item_value(subj))
-
                 # remove duplicates
                 item["anpa_category"] = unique(category)
                 item["subject"] = unique(item["subject"])
