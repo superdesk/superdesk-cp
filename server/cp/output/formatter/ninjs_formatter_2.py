@@ -423,17 +423,14 @@ class NINJSFormatter_2(Formatter):
             return CONTENT_TYPE.TEXT
         return article[ITEM_TYPE]
 
-    # Added an updated _get_associations method
-
     # Updated _get_association to work with both Pictures and Text
-
     def _get_associations(self, article, subscriber):
         associations = {}
         article_type = self._get_type(article)
 
         if article_type == "text":
             for key, value in article.get("associations", {}).items():
-                if "_id" in value:
+                if value and "_id" in value:
                     associations[key] = {"guid": value["_id"]}
 
             return associations
