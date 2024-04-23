@@ -42,6 +42,7 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
         anpa_categories = self._get_cv_items("categories")
         event_types = self._get_cv_items("event_types")
         subjects = self._get_cv_items("subject_custom")
+        event_status = self._get_cv_items("eventoccurstatus")
 
         items = super().parse(content, provider)
         events = []
@@ -91,15 +92,9 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
 
                 # update event status SDCP-749
                 if item.get("is_provisional", False):
-                    eocstat_map = get_resource_service("vocabularies").find_one(
-                        req=None, _id="eventoccurstatus"
-                    )
                     item["occur_status"] = [
-                        x
-                        for x in eocstat_map.get("items", [])
-                        if x["qcode"] == "eocstat:eos3" and x.get("is_active", True)
+                        x for x in event_status if x["qcode"] == "eocstat:eos3"
                     ][0]
-                    item["occur_status"].pop("is_active", None)
 
             events.append(item)
         return events
