@@ -159,8 +159,6 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 self.assertEqual(item[ITEM_TYPE], CONTENT_TYPE.EVENT)
                 self.assertEqual(item["state"], CONTENT_STATE.INGESTED)
 
-                self.assertEqual(item["occur_status"]["qcode"], "eocstat:eos5")
-
                 self.assertIn(
                     "https://www.canadianinstitute.com/anti-money-laundering-financial-crime/",
                     item["links"],
@@ -185,3 +183,11 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     item["location"][0]["name"],
                     "One King West Hotel & Residence, 1 King St W, Toronto",
                 )
+
+                self.assertEqual(item["is_provisional"], False)
+                self.assertEqual(item["occur_status"]["qcode"], "eocstat:eos5")
+
+                data[0]["isProvisional"] = True
+                item = self.parser.parse(data)[0]
+                self.assertEqual(item["is_provisional"], True)
+                self.assertEqual(item["occur_status"]["qcode"], "eocstat:eos3")

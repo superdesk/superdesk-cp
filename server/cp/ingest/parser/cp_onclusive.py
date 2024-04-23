@@ -88,6 +88,19 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                 # remove duplicates
                 item["anpa_category"] = unique(category)
                 item["subject"] = unique(item["subject"])
+
+                # update event status SDCP-749
+                if item.get("is_provisional", False):
+                    eocstat_map = get_resource_service("vocabularies").find_one(
+                        req=None, _id="eventoccurstatus"
+                    )
+                    item["occur_status"] = [
+                        x
+                        for x in eocstat_map.get("items", [])
+                        if x["qcode"] == "eocstat:eos3" and x.get("is_active", True)
+                    ][0]
+                    item["occur_status"].pop("is_active", None)
+
             events.append(item)
         return events
 
