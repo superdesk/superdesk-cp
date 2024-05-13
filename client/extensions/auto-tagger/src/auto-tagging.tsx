@@ -3,7 +3,7 @@ import {OrderedMap, OrderedSet, Map} from 'immutable';
 import {Switch, Button, ButtonGroup, EmptyState, Autocomplete, Modal} from 'superdesk-ui-framework/react';
 import {ToggleBoxNext} from 'superdesk-ui-framework';
 
-import {IArticle, IAuthoringSideWidget, ISuperdesk} from 'superdesk-api';
+import {IArticle, IArticleSideWidget, ISuperdesk} from 'superdesk-api';
 
 import {getTagsListComponent} from './tag-list';
 import {getNewItemComponent} from './new-item';
@@ -35,7 +35,7 @@ interface IAutoTaggingSearchResult {
     };
 }
 
-type IProps = React.ComponentProps<IAuthoringSideWidget['component']>;
+type IProps = React.ComponentProps<IArticleSideWidget['component']>;
 
 interface ISemaphoreFields {
     [key: string]: {
@@ -141,12 +141,12 @@ function showAutoTaggerServiceErrorModal(superdesk: ISuperdesk, errors: Array<IT
     ));
 }
 
-export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IAuthoringSideWidget['component'] {
+export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IArticleSideWidget['component'] {
     const {preferences} = superdesk;
     const {httpRequestJsonLocal} = superdesk;
     const {gettext, gettextPlural} = superdesk.localization;
     const {memoize, generatePatch, arrayToTree} = superdesk.utilities;
-    const {WidgetHeading, Alert} = superdesk.components;
+    const {AuthoringWidgetHeading, Alert} = superdesk.components;
     const groupLabels = getGroups(superdesk);
 
     const TagListComponent = getTagsListComponent(superdesk);
@@ -462,7 +462,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                         })()
                     }
 
-                    <WidgetHeading
+                    <AuthoringWidgetHeading
                         widgetName={label}
                         editMode={dirty}
                     >
@@ -487,7 +487,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                     </div>
                                 )
                             }
-                    </WidgetHeading>
+                    </AuthoringWidgetHeading>
                     <div className="widget-content sd-padding-all--2">
                         <div>
                             {/* Run automatically button is hidden for the next release */}
