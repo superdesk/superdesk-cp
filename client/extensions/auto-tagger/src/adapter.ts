@@ -12,6 +12,8 @@ export interface ITagBase {
     altids: {[key: string]: string};
     aliases?: Array<string>;
     original_source?: string;
+    creator?: string;
+    relevance?: number;
 }
 
 export interface ISubjectTag extends ITagBase {
@@ -44,11 +46,11 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
     let tags = OrderedMap<string, ITagUi>();
 
     response.subject?.forEach((item) => {
-        const {name, description, qcode, source, altids, aliases, original_source, parent, scheme} = item;
+        const {name, description, qcode, source, altids, aliases, original_source, parent, scheme, relevance, creator} = item;
 
         // Checking if the item has original_source to filter auto tagger tags
         if (original_source != null) {
-            if(scheme === 'http://cv.iptc.org/newscodes/mediatopic/' || scheme === 'subject') {
+            if (scheme === 'http://cv.iptc.org/newscodes/mediatopic/' || scheme === 'subject') {
                 const tag: ITagUi = {
                     name,
                     description,
@@ -62,6 +64,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                         kind: 'scheme',
                         value: 'subject' || '',
                     },
+                    relevance,
+                    creator,
                 };
 
                 tags = tags.set(tag.qcode, tag);
@@ -79,6 +83,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                         kind: 'scheme',
                         value: item.scheme || '',
                     },
+                    relevance,
+                    creator,
                 };
 
                 tags = tags.set(tag.qcode, tag);
@@ -110,7 +116,7 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
 
     others.forEach(({group, items}) => {
         items.forEach((item) => {
-            const {name, description, qcode, source, altids, aliases, original_source, scheme} = item;
+            const {name, description, qcode, source, altids, aliases, original_source, scheme, relevance, creator} = item;
 
             const tag: ITagUi = {
                 name,
@@ -125,6 +131,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     kind: 'visual',
                     value: group,
                 },
+                relevance,
+                creator,
             };
 
             if (!tags.has(tag.name)) {
@@ -149,7 +157,7 @@ export function toServerFormat(items: OrderedMap<string, ITagUi>, superdesk: ISu
                 result.subject = [];
             }
 
-            const {name, description, qcode, source, altids, aliases, original_source, parent} = item;
+            const {name, description, qcode, source, altids, aliases, original_source, parent, relevance, creator} = item;
 
             const subjectTag: ISubjectTag = {
                 name,
@@ -161,6 +169,8 @@ export function toServerFormat(items: OrderedMap<string, ITagUi>, superdesk: ISu
                 scheme: item.group.value,
                 aliases,
                 original_source,
+                relevance,
+                creator,
             };
 
             result.subject.push(subjectTag);
@@ -171,7 +181,7 @@ export function toServerFormat(items: OrderedMap<string, ITagUi>, superdesk: ISu
                 result[groupValue] = [];
             }
 
-            const {name, description, qcode, source, altids, aliases, original_source, scheme} = item;
+            const {name, description, qcode, source, altids, aliases, original_source, scheme, relevance, creator} = item;
 
             const tagBase: ITagBase = {
                 name,
@@ -182,6 +192,8 @@ export function toServerFormat(items: OrderedMap<string, ITagUi>, superdesk: ISu
                 aliases,
                 original_source,
                 scheme,
+                relevance,
+                creator,
             };
 
             result[groupValue]!.push(tagBase);
