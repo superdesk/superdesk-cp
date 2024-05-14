@@ -23,6 +23,12 @@ session = requests.Session()
 TIMEOUT = (5, 30)
 
 
+def format_relevance(value: str) -> int:
+    if value:
+        return int(float(value) * 100)
+    return 100
+
+
 ResponseType = Mapping[str, Union[str, List[str]]]
 
 
@@ -121,7 +127,7 @@ class Semaphore(AIServiceBase):
                             {
                                 "name": field.get("NAME"),
                                 "qcode": field.get("ID"),
-                                "relevance": score,
+                                "relevance": format_relevance(score),
                                 "parent": None,  # Set to None initially
                             }
                         )
@@ -195,7 +201,7 @@ class Semaphore(AIServiceBase):
                         "qcode": item["id"],
                         "source": "Semaphore",
                         "creator": "Human",
-                        "relevance": score,
+                        "relevance": int(score),
                         "altids": {"source_name": "source_id"},
                         "original_source": "original_source_value",
                         "scheme": scheme_url,
@@ -238,7 +244,7 @@ class Semaphore(AIServiceBase):
                                 ),
                                 "creator": "Human",
                                 "source": "Semaphore",
-                                "relevance": "100",
+                                "relevance": format_relevance("100"),
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
@@ -553,7 +559,7 @@ class Semaphore(AIServiceBase):
                                     "qcode": meta_id if meta_id else "",
                                     "creator": "Machine",
                                     "source": "Semaphore",
-                                    "relevance": meta_score,
+                                    "relevance": format_relevance(meta_score),
                                     "altids": f'{{"{meta_value}": "{meta_id}"}}',
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
@@ -574,7 +580,7 @@ class Semaphore(AIServiceBase):
                             "parent": parent_qcode,
                             "source": "Semaphore",
                             "creator": "Machine",
-                            "relevance": score,
+                            "relevance": format_relevance(score),
                             "altids": {"source_name": "source_id"},
                             "original_source": "original_source_value",
                             "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
