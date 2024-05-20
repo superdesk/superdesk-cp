@@ -24,3 +24,13 @@ def test_subject_relevance(mock):
     ninjs = formatter._transform_to_ninjs(item, {})
     assert ninjs["subject"][0]["relevance"] == 54
     assert ninjs["subject"][0]["creator"] == "Machine"
+
+
+def test_author_email():
+    author_ref = {
+        "name": "John Doe",
+    }
+    user = {"email": "john@doe.com"}
+    formatter = CPNINJSFormatter()
+    author = formatter._format_author(author_ref, user, job_titles_map={})
+    assert author.get("email") == user["email"]
