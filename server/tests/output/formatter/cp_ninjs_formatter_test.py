@@ -1,4 +1,3 @@
-
 from unittest.mock import patch
 
 from cp.output.formatter.cp_ninjs_formatter import CPNINJSFormatter
