@@ -431,3 +431,9 @@ SEMAPHORE_GET_PARENT_URL = os.getenv("SEMAPHORE_GET_PARENT_URL")
 SEMAPHORE_CREATE_TAG_URL = os.getenv("SEMAPHORE_CREATE_TAG_URL")
 SEMAPHORE_CREATE_TAG_TASK = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 SEMAPHORE_CREATE_TAG_QUERY = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+
+PICTURE_METADATA_MAPPING = {
+    "slugline": "Title",
+    "extra.transref": "JobId",
+    "description_text": "Description",
+}

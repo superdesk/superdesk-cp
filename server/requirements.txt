@@ -192,6 +192,8 @@ pyasn1-modules==0.4.0
     # via oauth2client
 pycparser==2.22
     # via cffi
+pyexiv2==2.12.0
+    # via -r requirements.in
 pyjwt==2.4.0
     # via superdesk-core
 pymemcache==4.0.0
