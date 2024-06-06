@@ -434,6 +434,6 @@ SEMAPHORE_CREATE_TAG_QUERY = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
 
 PICTURE_METADATA_MAPPING = {
     "slugline": "Title",
-    "extra.transref": "JobId",
+    "extra.filename": "JobId",
     "description_text": "Description",
 }
