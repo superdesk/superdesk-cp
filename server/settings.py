@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "cp.ultrad",
     "cp.planning_exports",
     "cp.set_province_on_publish",
+    "cp.set_byline_on_publish",
     "cp.ai.semaphore",
 ]
 
