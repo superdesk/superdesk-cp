@@ -12,5 +12,5 @@ black~=24.0
 
 types-python-dateutil
 types-pytz
-types-requests<2.31.0.7  # https://github.com/python/typeshed/issues/10825
+types-requests<2.32.0.20240603  # https://github.com/python/typeshed/issues/10825
 types-six
