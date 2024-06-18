@@ -1,23 +1,6 @@
-from typing import Dict, Any, Optional
+from typing import Dict, Any
 
-from superdesk import get_resource_service
 from superdesk.io.feed_parsers.ninjs import NINJSFeedParser
-
-
-def get_previous_version(
-    original_ingest_id: str, version_number: int
-) -> Optional[Dict[str, Any]]:
-    while version_number >= 0:
-        ingest_id = f"{original_ingest_id}.{version_number}"
-        prev_item = get_resource_service("archive").find_one(
-            req=None, ingest_id=ingest_id
-        )
-
-        if prev_item is not None:
-            return prev_item
-        version_number -= 1
-
-    return None
 
 
 class CPTranscriptsFeedParser(NINJSFeedParser):
@@ -43,7 +26,8 @@ class CPTranscriptsFeedParser(NINJSFeedParser):
             )
         )
 
-        previous_item = get_previous_version(original_guid, version - 1)
-        if previous_item is not None:
-            item["rewrite_of"] = previous_item["ingest_id"]
+        if version > 0:
+            # set it as expected not based on what already arrived
+            item["rewrite_of"] = f"{original_guid}.{version-1}"
+
         return item
