@@ -18,9 +18,9 @@ babel==2.15.0
     # via flask-babel
 bcrypt==4.1.3
     # via superdesk-core
-billiard==3.6.4.0
+billiard==4.2.0
     # via celery
-blinker==1.7.0
+blinker==1.8.2
     # via
     #   elastic-apm
     #   flask-mail
@@ -34,7 +34,7 @@ botocore==1.34.128
     #   s3transfer
 cachetools==5.3.3
     # via flask-oidc-ex
-celery[redis]==5.2.7
+celery[redis]==5.4.0
     # via superdesk-core
 cerberus==1.3.5
     # via
@@ -77,7 +77,7 @@ deepdiff==7.0.1
     # via superdesk-planning
 docopt==0.6.2
     # via num2words
-draftjs-exporter[lxml]==2.1.7
+draftjs-exporter[lxml]==2.1.0
     # via superdesk-core
 ecs-logging==2.1.0
     # via elastic-apm
@@ -108,7 +108,7 @@ flask-babel==2.0.0
     # via superdesk-core
 flask-mail==0.10.0
     # via superdesk-core
-flask-oidc-ex==0.5.8
+flask-oidc-ex==0.6.2
     # via superdesk-core
 flask-script==2.0.6
     # via superdesk-core
@@ -118,7 +118,7 @@ gunicorn==22.0.0
     # via -r requirements.in
 hachoir==3.3.0
     # via superdesk-core
-hermescache==0.10.0
+hermescache==1.0.0
     # via superdesk-core
 honcho==1.1.0
     # via -r requirements.in
@@ -148,7 +148,7 @@ jwcrypto==1.5.6
     # via
     #   flask-oidc-ex
     #   python-jwt
-kombu==5.2.4
+kombu==5.3.7
     # via
     #   celery
     #   superdesk-core
@@ -197,7 +197,7 @@ pycparser==2.22
     # via cffi
 pyexiv2==2.12.0
     # via superdesk-core
-pyjwt==2.4.0
+pyjwt==2.8.0
     # via superdesk-core
 pymemcache==4.0.0
     # via superdesk-core
@@ -212,6 +212,7 @@ python-dateutil==2.9.0.post0
     # via
     #   arrow
     #   botocore
+    #   celery
     #   croniter
     #   icalendar
     #   superdesk-core
@@ -227,7 +228,6 @@ python3-saml==1.16.0
     # via -r requirements.in
 pytz==2024.1
     # via
-    #   celery
     #   croniter
     #   eve-elastic
     #   flask-babel
@@ -243,7 +243,7 @@ redis==5.0.6
     # via
     #   celery
     #   superdesk-core
-regex==2024.4.28
+regex==2024.5.15
     # via superdesk-core
 reportlab==3.6.13
     # via superdesk-core
@@ -276,15 +276,19 @@ superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@deve
     #   superdesk-core
 superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@release/2.7
     # via -r requirements.in
+types-python-dateutil==2.9.0.20240316
+    # via arrow
 typing-extensions==4.12.2
     # via
     #   jwcrypto
     #   superdesk-core
+tzdata==2024.1
+    # via celery
 tzlocal==2.1
     # via superdesk-core
 unidecode==1.3.8
     # via superdesk-core
-urllib3==1.26.18
+urllib3==1.26.19
     # via
     #   botocore
     #   elastic-apm
