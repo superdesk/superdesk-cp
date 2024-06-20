@@ -26315,15 +26315,15 @@
         "unique_field": "qcode",
         "items": [
             {
-                "name": "1H (Interims)",
-                "cp_type": "Corporate event",
-                "qcode": "1H (Interims)",
+                "name": "Conflict",
+                "cp_type": "Conflict",
+                "qcode": "148",
                 "is_active": true
             },
             {
                 "name": "Agency Meetings",
-                "cp_type": "Meeting",
-                "qcode": "Agency Meetings",
+                "cp_type": "",
+                "qcode": "228",
                 "is_active": true
             },
             {

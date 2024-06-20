@@ -87,15 +87,11 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_categories",
                     },
                     {
-                        "qcode": "Conference",
+                        "qcode": "Conflict",
                         "scheme": "event_types",
                     },
                     {
-                        "qcode": "Conference and trade show",
-                        "scheme": "event_types",
-                    },
-                    {
-                        "qcode": "Official visit",
+                        "qcode": "00000228",
                         "scheme": "event_types",
                     },
                     {
