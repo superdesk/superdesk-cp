@@ -82,7 +82,7 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
                             if subj:
                                 item["subject"].append(item_value(subj))
                     if subject["scheme"] == "onclusive_event_types":
-                        event_type = self.find_event_type(event_types, subject["qcode"])
+                        event_type = self.find_cv_item(event_types, subject["qcode"])
                         if event_type:
                             item["subject"].append(item_value(event_type))
                 # remove duplicates
@@ -98,45 +98,3 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
         for item in cv_items:
             if item["qcode"] == qcode:
                 return item
-
-    def parse_event_type(self, qcode, cp_event_types, events: list) -> List:
-        """
-        Find events types from the CV including it's parent item.
-        """
-        event_type = self.find_cv_item(cp_event_types, qcode)
-        if event_type:
-            events.append(
-                {
-                    "name": event_type["name"],
-                    "qcode": event_type["qcode"],
-                    "scheme": "event_types",
-                }
-            )
-        if event_type and event_type.get("parent"):
-            self.parse_event_type(event_type["parent"], cp_event_types, events)
-
-        return events
-
-    def find_event_type(self, event_types, qcode):
-        for event_type in event_types:
-            if (
-                event_type.get("onclusive_ids")
-                and str(qcode) in event_type["onclusive_ids"]
-            ):
-                return event_type
-
-    def find_subject(self, subjects, name):
-        for subject in subjects:
-            if (
-                subject.get("translations")
-                and subject["translations"].get("name")
-                and name.lower()
-                in [
-                    value.lower()
-                    for value in subject["translations"]["name"].values()
-                    if value
-                ]
-            ):
-                return subject
-            if subject["name"].lower() == name.lower():
-                return subject
