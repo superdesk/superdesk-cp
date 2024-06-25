@@ -25247,15 +25247,9 @@
             {
                 "name": "Conference",
                 "parent": null,
-                "qcode": "Conference",
+                "qcode": "148",
                 "is_active": true,
                 "subject": null,
-                "onclusive_ids": [
-                    "123",
-                    "134",
-                    "136",
-                    "148"
-                ],
                 "translations": {
                     "name": {
                         "en-CA": "Conference",
@@ -25961,14 +25955,11 @@
             {
                 "name": "Official visit",
                 "parent": "Political event",
-                "qcode": "Official visit",
+                "qcode": "129",
                 "is_active": true,
                 "subject": [
                     "international relations",
                     "Politics"
-                ],
-                "onclusive_ids": [
-                    "129"
                 ],
                 "translations": {
                     "name": {
