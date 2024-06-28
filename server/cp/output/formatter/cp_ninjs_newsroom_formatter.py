@@ -26,14 +26,12 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
     type = "cp newsroom ninjs"
 
     def __init__(self):
-        self.format_type = "cp newsroom ninjs"
         self.can_preview = False
         self.can_export = False
         self.internal_renditions = ["original", "viewImage", "baseImage"]
 
     def update_ninjs_subjects(self, ninjs, language="en-CA"):
         try:
-
             # Fetch the vocabulary
             cv = superdesk.get_resource_service("vocabularies").find_one(
                 req=None, _id="subject_custom"
