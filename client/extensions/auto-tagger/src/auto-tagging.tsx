@@ -2,9 +2,7 @@ import * as React from 'react';
 import {OrderedMap, OrderedSet, Map} from 'immutable';
 import {Switch, Button, ButtonGroup, EmptyState, Autocomplete, Modal} from 'superdesk-ui-framework/react';
 import {ToggleBoxNext} from 'superdesk-ui-framework';
-
-import {IArticle, IAuthoringSideWidget, ISuperdesk} from 'superdesk-api';
-
+import {IArticle, ISuperdesk} from 'superdesk-api';
 import {getTagsListComponent} from './tag-list';
 import {getNewItemComponent} from './new-item';
 import {ITagUi} from './types';
@@ -35,7 +33,11 @@ interface IAutoTaggingSearchResult {
     };
 }
 
-type IProps = React.ComponentProps<IAuthoringSideWidget['component']>;
+// type IProps = React.ComponentProps<IAuthoringSideWidget['component']>;
+
+interface IProps {
+    article: IArticle;
+}
 
 interface ISemaphoreFields {
     [key: string]: {
@@ -141,7 +143,9 @@ function showAutoTaggerServiceErrorModal(superdesk: ISuperdesk, errors: Array<IT
     ));
 }
 
-export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IAuthoringSideWidget['component'] {
+// export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IAuthoringSideWidget['component'] {
+
+export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string) {
     const {preferences} = superdesk;
     const {httpRequestJsonLocal} = superdesk;
     const {gettext, gettextPlural} = superdesk.localization;
