@@ -3,7 +3,7 @@ import {OrderedMap, OrderedSet, Map} from 'immutable';
 import {Switch, Button, ButtonGroup, EmptyState, Autocomplete, Modal} from 'superdesk-ui-framework/react';
 import {ToggleBoxNext} from 'superdesk-ui-framework';
 
-import {IArticle, IArticleSideWidget, ISuperdesk} from 'superdesk-api';
+import {IArticle, IAuthoringSideWidget, ISuperdesk} from 'superdesk-api';
 
 import {getTagsListComponent} from './tag-list';
 import {getNewItemComponent} from './new-item';
@@ -35,7 +35,7 @@ interface IAutoTaggingSearchResult {
     };
 }
 
-type IProps = React.ComponentProps<IArticleSideWidget['component']>;
+type IProps = React.ComponentProps<IAuthoringSideWidget['component']>;
 
 interface ISemaphoreFields {
     [key: string]: {
@@ -141,12 +141,12 @@ function showAutoTaggerServiceErrorModal(superdesk: ISuperdesk, errors: Array<IT
     ));
 }
 
-export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IArticleSideWidget['component'] {
+export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): IAuthoringSideWidget['component'] {
     const {preferences} = superdesk;
     const {httpRequestJsonLocal} = superdesk;
     const {gettext, gettextPlural} = superdesk.localization;
     const {memoize, generatePatch, arrayToTree} = superdesk.utilities;
-    const {AuthoringWidgetHeading, Alert} = superdesk.components;
+    const {WidgetHeading, Alert} = superdesk.components;
     const groupLabels = getGroups(superdesk);
 
     const TagListComponent = getTagsListComponent(superdesk);
@@ -156,6 +156,9 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
         private isDirty: (a: IAutoTaggingResponse, b: Partial<IAutoTaggingResponse>) => boolean;
         private _mounted: boolean;
         private semaphoreFields = superdesk.instance.config.semaphoreFields ?? {entities: {}, others: {}};
+        private replaceAmpersand(input: string) {
+            return input.replace(/&/g, 'and');
+        }
 
         constructor(props: IProps) {
             super(props);
@@ -185,7 +188,10 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
             const dataBeforeLoading = this.state.data;
 
             this.setState({data: 'loading'}, () => {
-                const {guid, language, headline, body_html, abstract, slugline} = this.props.article;
+                const {guid, language, headline, body_html, extra, slugline} = this.props.article;
+                // Apply the ampersand replacement
+                const safeHeadline = this.replaceAmpersand(headline);
+                const safeSlugline = this.replaceAmpersand(slugline);
 
                 httpRequestJsonLocal<{analysis: IServerResponse}>({
                     method: 'POST',
@@ -195,10 +201,10 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                         item: {
                             guid,
                             language,
-                            slugline,
-                            headline,
+                            slugline: safeSlugline,
+                            headline: safeHeadline,
                             body_html,
-                            abstract,
+                            headline_extended: extra ? extra.headline_extended : undefined,
                         },
                     },
                 }).then((res) => {
@@ -222,7 +228,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                         });
                     }
                 }).catch((error) => {
-                    console.error('Error during analysis. We are in runAnalysis:  ', error);
+                        console.error('Error during analysis. We are in runAnalysis:  ',error);   
 
                     if (this._mounted) {
                         this.setState({
@@ -285,13 +291,15 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 name: _title,
                 description: newItem.description,
                 source: 'manual',
+                creator: "Human",
+                score: "0.47",
                 altids: {},
                 group: {
                     ...newItem.group,
                     kind: groupKind
                 },
                 scheme: newItem.group.value,
-                original_source: 'human',
+                original_source: 'Human',
             };
 
             this.updateTags(
@@ -326,11 +334,23 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
 
             let result: OrderedMap<string, ITagUi> = data.changes.analysis;
 
+            
+
+            // Check if the tag.qcode already exists in the result
+            if (!result.has(tag.qcode)) {
+                // If it doesn't exist, add it to the result
             result = result.set(tag.qcode, tag);
+            }
+
 
             for (const parent of parentsForChosenTag) {
+                // Check if the parent.qcode already exists in the result
+                if (!result.has(parent.qcode)) {
+                    // If it doesn't exist, add it to the result
                 result = result.set(parent.qcode, parent);
             }
+            }
+
 
             this.updateTags(
                 result,
@@ -363,7 +383,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
             });
         }
         sendFeedback(article: IArticle, tags: IAutoTaggingResponse['analysis']): Promise<any> {
-            const {guid, language, headline, body_html, abstract} = article;
+            const {guid, language, headline, body_html, extra} = article;
 
             return httpRequestJsonLocal<{analysis: IServerResponse}>({
                 method: 'POST',
@@ -377,7 +397,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                             language,
                             headline,
                             body_html,
-                            abstract,
+                            headline_extended: extra ? extra.headline_extended : undefined,
                         },
                         tags: toServerFormat(tags, superdesk),
                     },
@@ -462,7 +482,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                         })()
                     }
 
-                    <AuthoringWidgetHeading
+                    <WidgetHeading
                         widgetName={label}
                         editMode={dirty}
                     >
@@ -487,7 +507,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                     </div>
                                 )
                             }
-                    </AuthoringWidgetHeading>
+                    </WidgetHeading>
                     <div className="widget-content sd-padding-all--2">
                         <div>
                             {/* Run automatically button is hidden for the next release */}
@@ -529,12 +549,13 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
 
                                                         httpRequestJsonLocal<IAutoTaggingSearchResult>({
                                                             method: 'POST',
-                                                            path: '/ai_data_op/',
+                                                            path: '/ai/',
                                                             payload: {
                                                                 service: 'semaphore',
                                                                 operation: 'search',
                                                                 data: {
                                                                     searchString,
+                                                                    language: this.props.article.language
                                                                 },
                                                             },
                                                         }).then((res) => {
@@ -574,18 +595,18 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                         const _item: ITagUi = __item.tag;
 
                                                         return (
-                                                            <div className="auto-tagging-widget__autocomplete-item">
+                                                            <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
                                                                 <b>{_item.name}</b>
 
                                                                 {
                                                                     _item?.group?.value == null ? null : (
-                                                                        <p>{_item.group.value}</p>
+                                                                        <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
                                                                     )
                                                                 }
 
                                                                 {
                                                                     _item?.description == null ? null : (
-                                                                        <p>{_item.description}</p>
+                                                                        <p aria-label={`Description: ${_item.description}`}>{_item.description}</p>
                                                                     )
                                                                 }
                                                             </div>
