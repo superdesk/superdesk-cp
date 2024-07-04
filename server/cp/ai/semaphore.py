@@ -1,3 +1,4 @@
+import os
 import logging
 import requests
 import xml.etree.ElementTree as ET
@@ -5,16 +6,7 @@ from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
 import superdesk
 import json
-from typing import (
-    Dict,
-    List,
-    Literal,
-    Mapping,
-    Optional,
-    TypedDict,
-    Union,
-    overload,
-)
+from typing import Any, Dict, List, Mapping, Optional, TypedDict, Union
 
 
 logger = logging.getLogger(__name__)
@@ -23,41 +15,16 @@ session = requests.Session()
 TIMEOUT = (5, 30)
 
 
-def format_relevance(value: str) -> int:
-    if value:
-        return int(float(value) * 100)
-    return 100
-
-
 ResponseType = Mapping[str, Union[str, List[str]]]
 
 
-class SearchData(TypedDict):
+class RequestType(TypedDict, total=False):
     searchString: str
+    data: Any
 
 
-class Item(TypedDict):
-    guid: str
-    abstract: str
-    body_html: str
-    headline: str
-    language: str
-    slugline: str
-
-
-class Tag(TypedDict):
-    altids: Dict[str, str]
-    description: str
-    name: str
-    original_source: str
-    qcode: str
-    scheme: str
-    source: str
-
-
-class FeedbackData(TypedDict):
-    item: Item
-    tags: Dict[str, List[Tag]]
+class OperationRequest(TypedDict):
+    item: RequestType
 
 
 class Semaphore(AIServiceBase):
@@ -70,35 +37,53 @@ class Semaphore(AIServiceBase):
     name = "semaphore"
     label = "Semaphore autotagging service"
 
-    def __init__(self, app):
+    def __init__(self, data):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
-        self.base_url = app.config.get("SEMAPHORE_BASE_URL")
+        self.base_url = os.getenv("SEMAPHORE_BASE_URL")
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = app.config.get("SEMAPHORE_ANALYZE_URL")
+        self.analyze_url = os.getenv("SEMAPHORE_ANALYZE_URL")
 
         #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = app.config.get("SEMAPHORE_API_KEY")
+        self.api_key = os.getenv("SEMAPHORE_API_KEY")
 
         #  SEMAPHORE_SEARCH_URL Goes Here
-        self.search_url = app.config.get("SEMAPHORE_SEARCH_URL")
+        self.search_url = os.getenv("SEMAPHORE_SEARCH_URL")
 
         #  SEMAPHORE_GET_PARENT_URL Goes Here
-        self.get_parent_url = app.config.get("SEMAPHORE_GET_PARENT_URL")
+        self.get_parent_url = os.getenv("SEMAPHORE_GET_PARENT_URL")
 
         #  SEMAPHORE_CREATE_TAG_URL Goes Here
-        self.create_tag_url = app.config.get("SEMAPHORE_CREATE_TAG_URL")
+        self.create_tag_url = os.getenv("SEMAPHORE_CREATE_TAG_URL")
 
         #  SEMAPHORE_CREATE_TAG_TASK Goes Here
-        self.create_tag_task = app.config.get("SEMAPHORE_CREATE_TAG_TASK")
+        self.create_tag_task = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
-        self.create_tag_query = app.config.get("SEMAPHORE_CREATE_TAG_QUERY")
+        self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+
+        self.output = self.analyze(data)
+
+    def convert_to_desired_format(input_data):
+        result = {
+            "result": {
+                "tags": {
+                    "subject": input_data["subject"],
+                    "organisation": input_data["organisation"],
+                    "person": input_data["person"],
+                    "event": input_data["event"],
+                    "place": input_data["place"],
+                    "object": [],  # Assuming no data for 'object'
+                },
+                "broader": {"subject": input_data["broader"]},
+            }
+        }
+
+        return result
 
     def get_access_token(self):
         """Get access token for Semaphore."""
         url = self.base_url
-        assert url
 
         payload = f"grant_type=apikey&key={self.api_key}"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
@@ -106,13 +91,14 @@ class Semaphore(AIServiceBase):
         response.raise_for_status()
         return response.json().get("access_token")
 
-    def fetch_parent_info(self, qcode):
+    def fetch_parent_info(self, qcode, article_language):
         headers = {"Authorization": f"Bearer {self.get_access_token()}"}
         try:
             frank = "?relationshipType=has%20broader"
 
             query = qcode
             parent_url = self.get_parent_url + query + frank
+            logger.warning("parent_url: %s", parent_url)
 
             response = session.get(parent_url, headers=headers)
             response.raise_for_status()
@@ -122,12 +108,13 @@ class Semaphore(AIServiceBase):
             if path is not None:
                 for field in path.findall("FIELD"):
                     if field.find("CLASS").get("NAME") == "Topic":
-                        score = field.get("score", "0")
+                        score = field.get("score", "0.47")
                         parent_info.append(
                             {
                                 "name": field.get("NAME"),
                                 "qcode": field.get("ID"),
-                                "relevance": format_relevance(score),
+                                "relevance": score,
+                                "creator": "Human",
                                 "parent": None,  # Set to None initially
                             }
                         )
@@ -138,7 +125,7 @@ class Semaphore(AIServiceBase):
             return []
 
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, data: SearchData) -> ResponseType:
+    def analyze_parent_info(self, html_content: RequestType) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -146,7 +133,18 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            query = data["searchString"]
+            query = html_content["searchString"]
+
+            # Extract the language from the html_content dictionary, default to "en_CA" if not present
+            article_language = html_content.get("language")
+
+            # If the language is French (fr-CA), replace "en" in the search_url and get_parent_url with "fr"
+            if article_language == "fr-CA":
+                self.search_url = self.search_url.replace("/en/", "/fr/")
+                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
+            elif article_language == "en-CA":
+                self.search_url = self.search_url.replace("/fr/", "/en/")
+                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
 
             new_url = self.search_url + query + ".json"
 
@@ -164,7 +162,7 @@ class Semaphore(AIServiceBase):
             root = response.text
 
             # def transform_xml_response(xml_data):
-            def transform_xml_response(api_response):
+            def transform_xml_response(api_response, article_language):
                 result = {
                     "subject": [],
                     "organisation": [],
@@ -195,13 +193,12 @@ class Semaphore(AIServiceBase):
                         category = "subject"
                         scheme_url = "http://cv.iptc.org/newscodes/mediatopic/"
 
-                    score = item.get("score", "100")
                     entry = {
                         "name": item["name"],
                         "qcode": item["id"],
                         "source": "Semaphore",
+                        "relevance": item.get("relevance", "0.47"),
                         "creator": "Human",
-                        "relevance": int(score),
                         "altids": {"source_name": "source_id"},
                         "original_source": "original_source_value",
                         "scheme": scheme_url,
@@ -220,7 +217,7 @@ class Semaphore(AIServiceBase):
                     else:
                         # Fetch parent info for each subject item
                         parent_info, reversed_parent_info = self.fetch_parent_info(
-                            item["id"]
+                            item["id"], article_language
                         )
 
                         # Assign the immediate parent to the subject item
@@ -244,7 +241,7 @@ class Semaphore(AIServiceBase):
                                 ),
                                 "creator": "Human",
                                 "source": "Semaphore",
-                                "relevance": format_relevance("100"),
+                                "relevance": "0.47",
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
@@ -256,38 +253,18 @@ class Semaphore(AIServiceBase):
             def convert_to_desired_format(input_data):
                 return {
                     "tags": {
-                        "subject": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["subject"]
-                        ],
-                        "organisation": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["organisation"]
-                        ],
-                        "person": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["person"]
-                        ],
-                        "event": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["event"]
-                        ],
-                        "place": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["place"]
-                        ],
+                        "subject": input_data["subject"],
+                        "organisation": input_data["organisation"],
+                        "person": input_data["person"],
+                        "event": input_data["event"],
+                        "place": input_data["place"],
                         "object": [],  # Assuming no data for 'object'
                     },
-                    "broader": {
-                        "subject": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["broader"]
-                        ]
-                    },
+                    "broader": {"subject": input_data["broader"]},
                 }
 
             root = json.loads(root)
-            json_response = transform_xml_response(root)
+            json_response = transform_xml_response(root, article_language)
 
             json_response = convert_to_desired_format(json_response)
 
@@ -300,7 +277,7 @@ class Semaphore(AIServiceBase):
             )
             return {}
 
-    def create_tag_in_semaphore(self, data: FeedbackData) -> ResponseType:
+    def create_tag_in_semaphore(self, html_content: RequestType) -> ResponseType:
         result_summary: Dict[str, List[str]] = {
             "created_tags": [],
             "failed_tags": [],
@@ -327,7 +304,7 @@ class Semaphore(AIServiceBase):
                 "Content-Type": "application/ld+json",
             }
 
-            manual_tags = extract_manual_tags(data)
+            manual_tags = extract_manual_tags(html_content["data"])
 
             for item in manual_tags:
                 # print(item)
@@ -390,38 +367,20 @@ class Semaphore(AIServiceBase):
 
         return result_summary
 
-    @overload
-    def data_operation(  # noqa: E704
-        self,
-        verb: str,
-        operation: Literal["feedback"],
-        name: Optional[str],
-        data: FeedbackData,
-    ) -> ResponseType: ...
-
-    @overload
-    def data_operation(  # noqa: E704
-        self,
-        verb: str,
-        operation: Literal["search"],
-        name: Optional[str],
-        data: SearchData,
-    ) -> ResponseType: ...
-
     def data_operation(
         self,
         verb: str,
-        operation: Literal["search", "feedback"],
+        operation: str,
         name: Optional[str],
-        data,
+        data: OperationRequest,
     ) -> ResponseType:
         if operation == "feedback":
-            return self.create_tag_in_semaphore(data)
+            return self.analyze(data["item"])
         if operation == "search":
             return self.search(data)
         return {}
 
-    def search(self, data: SearchData) -> ResponseType:
+    def search(self, data) -> ResponseType:
         try:
             print(
                 "----------------------------------------------------------------------"
@@ -446,7 +405,7 @@ class Semaphore(AIServiceBase):
             pass
         return {}
 
-    def analyze(self, item: Item, tags=None) -> ResponseType:
+    def analyze(self, html_content: RequestType, tags=None) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -455,7 +414,7 @@ class Semaphore(AIServiceBase):
                 return {}
 
             # Convert HTML to XML
-            xml_payload = self.html_to_xml(item)
+            xml_payload = self.html_to_xml(html_content)
 
             payload = {"XML_INPUT": xml_payload}
 
@@ -469,13 +428,22 @@ class Semaphore(AIServiceBase):
             except Exception as e:
                 traceback.print_exc()
                 logger.error(f"An error occurred while making the request: {str(e)}")
-                raise
 
             root = response.text
 
             def transform_xml_response(xml_data):
                 # Parse the XML data
                 root = ET.fromstring(xml_data)
+
+                # Find the ARTICLE element
+                article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
+
+                # Find all 'SYSTEM' child elements under 'ARTICLE'
+                system_elements = article_elements.findall("SYSTEM")
+
+                # Remove each 'SYSTEM' element
+                for system_element in system_elements:
+                    article_elements.remove(system_element)
 
                 # Initialize a dictionary to hold the transformed data
                 response_dict = {
@@ -508,12 +476,13 @@ class Semaphore(AIServiceBase):
                     return score
 
                 # Iterate through the XML elements and populate the dictionary
-                for element in root.iter():
+                for element in article_elements.iter():
                     if element.tag == "META":
                         meta_name = element.get("name")
                         meta_value = element.get("value")
                         meta_score = element.get("score", "0")
                         meta_id = element.get("id")
+                        logger.warning(f"FXA meta_score {meta_score}")
 
                         # Adjust score if necessary to avoid duplicates
                         if meta_name in [
@@ -559,16 +528,17 @@ class Semaphore(AIServiceBase):
                                     "qcode": meta_id if meta_id else "",
                                     "creator": "Machine",
                                     "source": "Semaphore",
-                                    "relevance": format_relevance(meta_score),
+                                    "relevance": meta_score,
                                     "altids": f'{{"{meta_value}": "{meta_id}"}}',
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
                                 }
+                                logger.warning(f"FXA tag_data {tag_data}")
                                 add_to_dict(group, tag_data)
 
                 # Match path labels with path GUIDs based on scores
-                for score, labels in path_labels.items():
-                    guids = path_guids.get(score, [])
+                for relevance, labels in path_labels.items():
+                    guids = path_guids.get(relevance, [])
                     if len(labels) != len(guids):
                         continue  # Skip if there's a mismatch in the number of labels and GUIDs
 
@@ -580,11 +550,12 @@ class Semaphore(AIServiceBase):
                             "parent": parent_qcode,
                             "source": "Semaphore",
                             "creator": "Machine",
-                            "relevance": format_relevance(score),
+                            "relevance": relevance,
                             "altids": {"source_name": "source_id"},
                             "original_source": "original_source_value",
                             "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                         }
+                        logger.warning(f"FXA tag_data subject {tag_data}")
                         add_to_dict("subject", tag_data)
                         parent_qcode = (
                             guid  # Update the parent qcode for the next iteration
@@ -617,7 +588,7 @@ class Semaphore(AIServiceBase):
             logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
             return {}
 
-    def html_to_xml(self, html_content: Item) -> str:
+    def html_to_xml(self, html_content) -> str:
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
@@ -638,6 +609,9 @@ class Semaphore(AIServiceBase):
                     &lt;headline_extended&gt;{}&lt;/headline_extended&gt;
                     &lt;body_html&gt;{}&lt;/body_html&gt;
                     &lt;slugline&gt;{}&lt;/slugline&gt;
+                    &lt;guid&gt;{}&lt;/guid&gt;
+                    &lt;env&gt;{}&lt;/env&gt;
+                    &lt;dateTime&gt;{}&lt;/dateTime&gt;
                 &lt;/story&gt;
                 </body>
                 </document>
@@ -646,20 +620,23 @@ class Semaphore(AIServiceBase):
 
         body_html = html_content["body_html"]
         headline = html_content["headline"]
-        headline_extended = html_content["abstract"]
+        headline_extended = html_content["headline_extended"]
         slugline = html_content["slugline"]
+        guid = html_content["guid"]
+        env = self.api_key[-4:]
+        dateTime = datetime.datetime.now().isoformat()
 
         # Embed the 'body_html' into the XML template
         xml_output = xml_template.format(
-            headline, headline_extended, body_html, slugline
+            headline, headline_extended, body_html, slugline, guid, env, dateTime
         )
         xml_output = clean_html_content(xml_output)
 
         return xml_output
 
 
-def extract_manual_tags(data: FeedbackData) -> List[Tag]:
-    manual_tags: List[Tag] = []
+def extract_manual_tags(data):
+    manual_tags = []
 
     if "tags" in data:
         # Loop through each tag type (like 'subject', 'person', etc.)
@@ -684,8 +661,7 @@ def capitalize_name_if_parent_none(tag):
 def capitalize_name_if_parent_none_for_analyze(response):
     for category in ["subject", "organisation", "person", "event", "place"]:
         for item in response.get(category, []):
-            if item.get("parent") is None:
-                item["name"] = item["name"].title()
+            item = capitalize_name_if_parent_none(item)
     return response
 
 
@@ -695,11 +671,7 @@ def replace_qcodes(output_data):
     )
 
     # Create a mapping from semaphore_id to qcode
-    semaphore_to_qcode = {
-        item["semaphore_id"]: item["qcode"]
-        for item in cv["items"]
-        if item.get("semaphore_id")
-    }
+    semaphore_to_qcode = {item["semaphore_id"]: item["qcode"] for item in cv["items"]}
 
     # Define a function to replace qcodes in a given list
     def replace_in_list(data_list):
