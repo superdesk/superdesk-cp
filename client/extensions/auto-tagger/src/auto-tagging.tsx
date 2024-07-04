@@ -292,7 +292,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 description: newItem.description,
                 source: 'manual',
                 creator: "Human",
-                relevance: "0.47",
+                relevance: 0.47,
                 altids: {},
                 group: {
                     ...newItem.group,
