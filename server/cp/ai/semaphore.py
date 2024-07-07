@@ -483,7 +483,7 @@ class Semaphore(AIServiceBase):
                         meta_value = element.get("value")
                         meta_score = element.get("score", "0")
                         meta_id = element.get("id")
-                        logger.warning(f"FXA meta_score {meta_score}")
+                        logger.warning(f"meta_score {meta_score}")
 
                         # Adjust score if necessary to avoid duplicates
                         if meta_name in [
@@ -534,7 +534,7 @@ class Semaphore(AIServiceBase):
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
                                 }
-                                logger.warning(f"FXA tag_data {tag_data}")
+                                logger.warning(f"tag_data {tag_data}")
                                 add_to_dict(group, tag_data)
 
                 # Match path labels with path GUIDs based on scores
@@ -556,7 +556,7 @@ class Semaphore(AIServiceBase):
                             "original_source": "original_source_value",
                             "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                         }
-                        logger.warning(f"FXA tag_data subject {tag_data}")
+                        logger.warning(f"tag_data subject {tag_data}")
                         add_to_dict("subject", tag_data)
                         parent_qcode = (
                             guid  # Update the parent qcode for the next iteration
