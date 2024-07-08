@@ -30,7 +30,7 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     """
 
     def _get_cv_items(self, _id: str) -> List:
-        if 'cache' not in g:
+        if "cache" not in g:
             g.cache = {}
         assert isinstance(g.cache, dict)
         cache_id = f"{_id}_cv_items"
