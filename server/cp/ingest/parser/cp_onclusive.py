@@ -2,6 +2,7 @@ import itertools
 from planning.feed_parsers.onclusive import OnclusiveFeedParser
 from typing import List
 from superdesk import get_resource_service
+from flask import g
 
 
 def unique(values):
@@ -28,14 +29,16 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     Feed Parser which can parse the Onclusive API Events
     """
 
-    _cv_items = {}
-
     def _get_cv_items(self, _id: str) -> List:
-        if _id not in self._cv_items:
-            self._cv_items[_id] = get_resource_service("vocabularies").get_items(
+        if "cache" not in g:
+            g.cache = {}
+        assert isinstance(g.cache, dict)
+        cache_id = f"{_id}_cv_items"
+        if cache_id not in g.cache:
+            g.cache[cache_id] = get_resource_service("vocabularies").get_items(
                 _id=_id, is_active=True
             )
-        return self._cv_items[_id]
+        return g.cache[cache_id]
 
     def parse(self, content, provider=None):
         onclusive_cv_items = self._get_cv_items("onclusive_ingest_categories")
