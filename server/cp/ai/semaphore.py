@@ -38,32 +38,31 @@ class Semaphore(AIServiceBase):
     name = "semaphore"
     label = "Semaphore autotagging service"
 
-    def __init__(self, data):
+    def __init__(self, app):
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
-        self.base_url = os.getenv("SEMAPHORE_BASE_URL")
+        self.base_url = app.config.get("SEMAPHORE_BASE_URL")
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
-        self.analyze_url = os.getenv("SEMAPHORE_ANALYZE_URL")
+        self.analyze_url = app.config.get("SEMAPHORE_ANALYZE_URL")
 
         #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = os.getenv("SEMAPHORE_API_KEY")
+        self.api_key = app.config.get("SEMAPHORE_API_KEY")
 
         #  SEMAPHORE_SEARCH_URL Goes Here
-        self.search_url = os.getenv("SEMAPHORE_SEARCH_URL")
+        self.search_url = app.config.get("SEMAPHORE_SEARCH_URL")
 
         #  SEMAPHORE_GET_PARENT_URL Goes Here
-        self.get_parent_url = os.getenv("SEMAPHORE_GET_PARENT_URL")
+        self.get_parent_url = app.config.get("SEMAPHORE_GET_PARENT_URL")
 
         #  SEMAPHORE_CREATE_TAG_URL Goes Here
-        self.create_tag_url = os.getenv("SEMAPHORE_CREATE_TAG_URL")
+        self.create_tag_url = app.config.get("SEMAPHORE_CREATE_TAG_URL")
 
         #  SEMAPHORE_CREATE_TAG_TASK Goes Here
-        self.create_tag_task = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
+        self.create_tag_task = app.config.get("SEMAPHORE_CREATE_TAG_TASK")
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
-        self.create_tag_query = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+        self.create_tag_query = app.config.get("SEMAPHORE_CREATE_TAG_QUERY")
 
-        self.output = self.analyze(data)
 
     def convert_to_desired_format(input_data):
         result = {
@@ -99,7 +98,6 @@ class Semaphore(AIServiceBase):
 
             query = qcode
             parent_url = self.get_parent_url + query + frank
-            logger.warning("parent_url: %s", parent_url)
 
             response = session.get(parent_url, headers=headers)
             response.raise_for_status()
@@ -376,7 +374,7 @@ class Semaphore(AIServiceBase):
         data: OperationRequest,
     ) -> ResponseType:
         if operation == "feedback":
-            return self.analyze(data["item"])
+            return self.create_tag_in_semaphore(data)
         if operation == "search":
             return self.search(data)
         return {}
