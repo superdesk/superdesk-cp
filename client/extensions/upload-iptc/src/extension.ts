@@ -1,4 +1,4 @@
-import {IExtension, IExtensionActivationResult, ISuperdesk, IArticle, ISubject} from 'superdesk-api';
+import {IExtension, IExtensionActivationResult, ISuperdesk, IArticle, ISubject, IVocabulary} from 'superdesk-api';
 
 const PHOTO_CAT_ID = 'photo_categories';
 const PHOTO_SUPPCAT_ID = 'photo_supplementalcategories';
@@ -51,7 +51,7 @@ const extension: IExtension = {
                 iptcMapping: (data, item: IArticle) => Promise.all([
                     superdesk.entities.vocabulary.getVocabulary(PHOTO_CAT_ID),
                     superdesk.entities.vocabulary.getVocabulary(PHOTO_SUPPCAT_ID),
-                ]).then(([categories, supp_categories]: [Array<ISubject>, Array<ISubject>]) => {
+                ]).then(([categories, supp_categories]: [IVocabulary, IVocabulary]) => {
                     Object.assign(item, {
                         slugline: toString(data.ObjectName),
                         byline: toString(data['By-line']),
@@ -65,10 +65,10 @@ const extension: IExtension = {
                         keywords: toArray(data.SubjectReference),
                         subject: (item.subject || []).concat(
                             data.Category != null ?
-                                categories.filter((subj) => subj.qcode === data.Category).map(copySubj(PHOTO_CAT_ID)) :
+                                categories.items.filter((subj) => subj.qcode === data.Category).map(copySubj(PHOTO_CAT_ID)) :
                                 [],
                             data.SupplementalCategories != null ?
-                                supp_categories.filter((subj) => subj.qcode === data.SupplementalCategories).map(copySubj(PHOTO_SUPPCAT_ID)) :
+                                supp_categories.items.filter((subj) => subj.qcode === data.SupplementalCategories).map(copySubj(PHOTO_SUPPCAT_ID)) :
                                 [],
                         ),
                         dateline: {
