@@ -123,9 +123,7 @@ class Semaphore(AIServiceBase):
 
         payload = f"grant_type=apikey&key={self.api_key}"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = session.post(
-            url, headers=headers, data=payload, timeout=TIMEOUT
-        )
+        response = session.post(url, headers=headers, data=payload, timeout=TIMEOUT)
         response.raise_for_status()
         return response.json().get("access_token")
 
@@ -177,14 +175,10 @@ class Semaphore(AIServiceBase):
 
             if article_language == "fr-CA":
                 self.search_url = self.search_url.replace("/en/", "/fr/")
-                self.get_parent_url = self.get_parent_url.replace(
-                    "/en/", "/fr/"
-                )
+                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
             elif article_language == "en-CA":
                 self.search_url = self.search_url.replace("/fr/", "/en/")
-                self.get_parent_url = self.get_parent_url.replace(
-                    "/en/", "/fr/"
-                )
+                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
 
             new_url = self.search_url + query + ".json"
 
@@ -197,9 +191,7 @@ class Semaphore(AIServiceBase):
                 response.raise_for_status()
             except Exception as e:
                 traceback.print_exc()
-                logger.error(
-                    f"An error occurred while making the request: {str(e)}"
-                )
+                logger.error(f"An error occurred while making the request: {str(e)}")
 
             root = response.text
 
@@ -258,8 +250,8 @@ class Semaphore(AIServiceBase):
                         result["place"].append(entry)
                     else:
                         # Fetch parent info for each subject item
-                        parent_info, reversed_parent_info = (
-                            self.fetch_parent_info(item["id"])
+                        parent_info, reversed_parent_info = self.fetch_parent_info(
+                            item["id"]
                         )
 
                         # Assign the immediate parent to the subject item
@@ -267,9 +259,7 @@ class Semaphore(AIServiceBase):
                             entry["parent"] = reversed_parent_info[0][
                                 "qcode"
                             ]  # Immediate parent is the first in the list
-                            entry["scheme"] = (
-                                "http://cv.iptc.org/newscodes/mediatopic/"
-                            )
+                            entry["scheme"] = "http://cv.iptc.org/newscodes/mediatopic/"
 
                         result["subject"].append(entry)
 
@@ -288,9 +278,7 @@ class Semaphore(AIServiceBase):
                                 "relevance": format_relevance("0.47"),
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
-                                "scheme": {
-                                    "http://cv.iptc.org/newscodes/mediatopic/"
-                                },
+                                "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
                             }
                             result["broader"].append(broader_entry)
 
@@ -361,29 +349,19 @@ class Semaphore(AIServiceBase):
                 scheme = item["scheme"]
 
                 if scheme == "subject":
-                    id_value = (
-                        "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
-                    )
+                    id_value = "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
 
                 elif scheme == "organization":
-                    id_value = (
-                        "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
-                    )
+                    id_value = "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
 
                 elif scheme == "places":
-                    id_value = (
-                        "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
-                    )
+                    id_value = "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
 
                 elif scheme == "person":
-                    id_value = (
-                        "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
-                    )
+                    id_value = "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
 
                 elif scheme == "event":
-                    id_value = (
-                        "http://cv.cp.org/3c493189-023f-4d14-a2f4-fc7b79735ffc"
-                    )
+                    id_value = "http://cv.cp.org/3c493189-023f-4d14-a2f4-fc7b79735ffc"
 
                 payload = json.dumps(
                     {
@@ -402,9 +380,7 @@ class Semaphore(AIServiceBase):
                 )
 
                 try:
-                    response = session.post(
-                        new_url, headers=headers, data=payload
-                    )
+                    response = session.post(new_url, headers=headers, data=payload)
 
                     if response.status_code == 409:
                         print(
@@ -498,16 +474,12 @@ class Semaphore(AIServiceBase):
             headers = {"Authorization": f"bearer {self.get_access_token()}"}
 
             try:
-                response = session.post(
-                    self.analyze_url, headers=headers, data=payload
-                )
+                response = session.post(self.analyze_url, headers=headers, data=payload)
 
                 response.raise_for_status()
             except Exception as e:
                 traceback.print_exc()
-                logger.error(
-                    f"An error occurred while making the request: {str(e)}"
-                )
+                logger.error(f"An error occurred while making the request: {str(e)}")
 
             root = response.text
 
@@ -541,10 +513,7 @@ class Semaphore(AIServiceBase):
                 # Helper function to add data to the dictionary
                 # if it's not a duplicate and has a qcode
                 def add_to_dict(group, tag_data):
-                    if (
-                        tag_data["qcode"]
-                        and tag_data not in response_dict[group]
-                    ):
+                    if tag_data["qcode"] and tag_data not in response_dict[group]:
                         response_dict[group].append(tag_data)
 
                 # Adjust score to avoid duplicate score entries
@@ -635,9 +604,7 @@ class Semaphore(AIServiceBase):
                             "relevance": format_relevance(relevance),
                             "altids": {"source_name": "source_id"},
                             "original_source": "original_source_value",
-                            "scheme": {
-                                "http://cv.iptc.org/newscodes/mediatopic/"
-                            },
+                            "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
                         }
                         logger.warning(f"tag_data subject {tag_data}")
                         add_to_dict("subject", tag_data)
@@ -647,9 +614,7 @@ class Semaphore(AIServiceBase):
 
             json_response = transform_xml_response(root)
 
-            json_response = capitalize_name_if_parent_none_for_analyze(
-                json_response
-            )
+            json_response = capitalize_name_if_parent_none_for_analyze(json_response)
 
             try:
                 updated_output = replace_qcodes(json_response)
@@ -670,9 +635,7 @@ class Semaphore(AIServiceBase):
 
         except Exception as e:
             traceback.print_exc()
-            logger.error(
-                f"An error occurred. We are in analyze exception: {str(e)}"
-            )
+            logger.error(f"An error occurred. We are in analyze exception: {str(e)}")
             return {}
 
     def html_to_xml(self, html_content: Item) -> str:
@@ -764,9 +727,7 @@ def replace_qcodes(output_data):
     )
 
     # Create a mapping from semaphore_id to qcode
-    semaphore_to_qcode = {
-        item["semaphore_id"]: item["qcode"] for item in cv["items"]
-    }
+    semaphore_to_qcode = {item["semaphore_id"]: item["qcode"] for item in cv["items"]}
 
     # Define a function to replace qcodes in a given list
     def replace_in_list(data_list):
