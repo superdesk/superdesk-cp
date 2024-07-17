@@ -348,7 +348,7 @@ class Semaphore(AIServiceBase):
                 "Content-Type": "application/ld+json",
             }
 
-            manual_tags = extract_manual_tags(data["data"])
+            manual_tags = extract_manual_tags(data)
 
             for item in manual_tags:
                 # print(item)
