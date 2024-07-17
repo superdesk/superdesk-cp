@@ -13,7 +13,7 @@ from typing import (
     Optional,
     TypedDict,
     Union,
-    overload
+    overload,
 )
 import datetime
 
@@ -23,13 +23,14 @@ session = requests.Session()
 
 TIMEOUT = (5, 30)
 
+
 def format_relevance(value: str) -> int:
-    
     int_value = int(float(value))
     # Adding check to see if the value is 100, if so, return 100
     if int_value != 100:
         return int_value * 100
     return int_value
+
 
 ResponseType = Mapping[str, Union[str, List[str]]]
 
@@ -38,6 +39,7 @@ class SearchData(TypedDict):
     searchString: str
     language: str
 
+
 class Item(TypedDict):
     guid: str
     headline_extended: str
@@ -45,6 +47,7 @@ class Item(TypedDict):
     headline: str
     language: str
     slugline: str
+
 
 class Tag(TypedDict):
     altids: Dict[str, str]
@@ -55,9 +58,11 @@ class Tag(TypedDict):
     scheme: str
     source: str
 
+
 class FeedbackData(TypedDict):
     item: Item
     tags: Dict[str, List[Tag]]
+
 
 class Semaphore(AIServiceBase):
     """Semaphore autotagging service
@@ -254,9 +259,7 @@ class Semaphore(AIServiceBase):
                     else:
                         # Fetch parent info for each subject item
                         parent_info, reversed_parent_info = (
-                            self.fetch_parent_info(
-                                item["id"]
-                            )
+                            self.fetch_parent_info(item["id"])
                         )
 
                         # Assign the immediate parent to the subject item
@@ -318,9 +321,7 @@ class Semaphore(AIServiceBase):
             )
             return {}
 
-    def create_tag_in_semaphore(
-        self, data: FeedbackData
-    ) -> ResponseType:
+    def create_tag_in_semaphore(self, data: FeedbackData) -> ResponseType:
         result_summary: Dict[str, List[str]] = {
             "created_tags": [],
             "failed_tags": [],
@@ -439,7 +440,7 @@ class Semaphore(AIServiceBase):
         name: Optional[str],
         data: SearchData,
     ) -> ResponseType: ...
-    
+
     def data_operation(
         self,
         verb: str,
