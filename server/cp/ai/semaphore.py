@@ -67,8 +67,9 @@ class FeedbackData(TypedDict):
 class Semaphore(AIServiceBase):
     """Semaphore autotagging service
 
-    Environment variables SEMAPHORE_BASE_URL, SEMAPHORE_ANALYZE_URL, SEMAPHORE_SEARCH_URL, SEMAPHORE_GET_PARENT_URL,
-    SEMAPHORE_CREATE_TAG_URL, SEMAPHORE_CREATE_TAG_TASK, SEMAPHORE_CREATE_TAG_QUERY, SEMAPHORE_API_KEY.
+    Environment variables SEMAPHORE_BASE_URL, SEMAPHORE_ANALYZE_URL,
+    SEMAPHORE_SEARCH_URL, SEMAPHORE_GET_PARENT_URL, SEMAPHORE_CREATE_TAG_URL,
+    SEMAPHORE_CREATE_TAG_TASK, SEMAPHORE_CREATE_TAG_QUERY, SEMAPHORE_API_KEY
     """
 
     name = "semaphore"
@@ -165,16 +166,15 @@ class Semaphore(AIServiceBase):
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
-                    "Semaphore Search is not configured properly, can't analyze content"
+                    "Semaphore Search is not configured properly, can't \
+                    analyze content"
                 )
                 return {}
 
             query = data["searchString"]
 
-            # Extract the language from the data dictionary, default to "en_CA" if not present
             article_language = data.get("language")
 
-            # If the language is French (fr-CA), replace "en" in the search_url and get_parent_url with "fr"
             if article_language == "fr-CA":
                 self.search_url = self.search_url.replace("/en/", "/fr/")
                 self.get_parent_url = self.get_parent_url.replace(
@@ -220,19 +220,19 @@ class Semaphore(AIServiceBase):
 
                     if "Organization" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Organizations/"
-                        category = "organisation"
+                        # category = "organisation"
                     elif "People" in item["classes"]:
                         scheme_url = "http://cv.cp.org/People/"
-                        category = "person"
+                        # category = "person"
                     elif "Event" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Events/"
-                        category = "event"
+                        # category = "event"
                     elif "Place" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Places/"
-                        category = "place"
+                        # category = "place"
                     else:
                         # For 'subject', a different scheme might be used
-                        category = "subject"
+                        # category = "subject"
                         scheme_url = "http://cv.iptc.org/newscodes/mediatopic/"
 
                     entry = {
@@ -288,7 +288,9 @@ class Semaphore(AIServiceBase):
                                 "relevance": format_relevance("0.47"),
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
-                                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                                "scheme": {
+                                    "http://cv.iptc.org/newscodes/mediatopic/"
+                                },
                             }
                             result["broader"].append(broader_entry)
 
@@ -317,7 +319,8 @@ class Semaphore(AIServiceBase):
         except requests.exceptions.RequestException as e:
             traceback.print_exc()
             logger.error(
-                f"Semaphore Search request failed. We are in analyze RequestError exception: {str(e)}"
+                f"Semaphore Search request failed. \
+                We are in analyze RequestError exception: {str(e)}"
             )
             return {}
 
@@ -330,7 +333,8 @@ class Semaphore(AIServiceBase):
         try:
             if not self.create_tag_url or not self.api_key:
                 logger.warning(
-                    "Semaphore Create is not configured properly, can't analyze content"
+                    "Semaphore Create is not configured properly, \
+                    can't analyze content"
                 )
                 return {}
 
@@ -404,7 +408,8 @@ class Semaphore(AIServiceBase):
 
                     if response.status_code == 409:
                         print(
-                            "Tag already exists in KMM. Response is 409 . The Tag is: "
+                            "Tag already exists in KMM. \
+                            Response is 409 . The Tag is: "
                             + concept_name
                         )
                         result_summary["existing_tags"].append(concept_name)
@@ -456,12 +461,7 @@ class Semaphore(AIServiceBase):
 
     def search(self, data: SearchData) -> ResponseType:
         try:
-            print(
-                "----------------------------------------------------------------------"
-            )
-            print(
-                "----------------------------------------------------------------------"
-            )
+            print("-------------------------------------------")
             print("Running for Search")
 
             self.output = self.analyze_parent_info(data)
@@ -471,7 +471,8 @@ class Semaphore(AIServiceBase):
                 return updated_output
             except Exception as e:
                 print(
-                    f"Error occurred in replace_qcodes while Analyzing Parent Info: {e}"
+                    f"Error occurred in replace_qcodes \
+                    while Analyzing Parent Info: {e}"
                 )
                 return self.output
         except Exception as e:
@@ -483,7 +484,8 @@ class Semaphore(AIServiceBase):
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
-                    "Semaphore is not configured properly, can't analyze content"
+                    "Semaphore is not configured properly, \
+                    can't analyze content"
                 )
                 return {}
 
@@ -536,7 +538,8 @@ class Semaphore(AIServiceBase):
                 path_labels = {}
                 path_guids = {}
 
-                # Helper function to add data to the dictionary if it's not a duplicate and has a qcode
+                # Helper function to add data to the dictionary
+                # if it's not a duplicate and has a qcode
                 def add_to_dict(group, tag_data):
                     if (
                         tag_data["qcode"]
@@ -544,7 +547,7 @@ class Semaphore(AIServiceBase):
                     ):
                         response_dict[group].append(tag_data)
 
-                # Function to adjust score to avoid duplicate score entries for different items
+                # Adjust score to avoid duplicate score entries
                 def adjust_score(score, existing_scores):
                     original_score = float(score)
                     while score in existing_scores:
@@ -584,8 +587,6 @@ class Semaphore(AIServiceBase):
                         elif meta_name == "Media Topic_PATH_GUID":
                             path_guids[meta_score] = meta_value.split("/")[1:]
 
-                        # Process 'Media Topic_PATH_LABEL' and 'Media Topic_PATH_GUID'
-
                         # Process other categories
                         else:
                             group = None
@@ -609,7 +610,8 @@ class Semaphore(AIServiceBase):
                                     "creator": "Machine",
                                     "source": "Semaphore",
                                     "relevance": format_relevance(meta_score),
-                                    "altids": f'{{"{meta_value}": "{meta_id}"}}',
+                                    "altids": f'{{"{meta_value}": \
+                                    "{meta_id}"}}',
                                     "original_source": "original_source_value",
                                     "scheme": scheme_url,
                                 }
@@ -620,7 +622,7 @@ class Semaphore(AIServiceBase):
                 for relevance, labels in path_labels.items():
                     guids = path_guids.get(relevance, [])
                     if len(labels) != len(guids):
-                        continue  # Skip if there's a mismatch in the number of labels and GUIDs
+                        continue
 
                     parent_qcode = None  # Track the parent qcode
                     for label, guid in zip(labels, guids):
@@ -633,11 +635,13 @@ class Semaphore(AIServiceBase):
                             "relevance": format_relevance(relevance),
                             "altids": {"source_name": "source_id"},
                             "original_source": "original_source_value",
-                            "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                            "scheme": {
+                                "http://cv.iptc.org/newscodes/mediatopic/"
+                            },
                         }
                         logger.warning(f"tag_data subject {tag_data}")
                         add_to_dict("subject", tag_data)
-                        parent_qcode = guid  # Update the parent qcode for the next iteration
+                        parent_qcode = guid
 
                 return response_dict
 
@@ -659,7 +663,8 @@ class Semaphore(AIServiceBase):
         except requests.exceptions.RequestException as e:
             traceback.print_exc()
             logger.error(
-                f"Semaphore request failed. We are in analyze RequestError exception: {str(e)}"
+                f"Semaphore request failed. \
+                We are in analyze RequestError exception: {str(e)}"
             )
             return {}
 
