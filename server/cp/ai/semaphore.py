@@ -667,10 +667,10 @@ class Semaphore(AIServiceBase):
                 </document>
                 </request>
                 """
-
+        logger.warning(f"html_content {html_content}")
         body_html = html_content["body_html"]
         headline = html_content["headline"]
-        headline_extended = html_content["headline_extended"]
+        headline_extended = html_content["abstract"] if abstract in html_content else ""
         slugline = html_content["slugline"]
         guid = html_content["guid"]
         env = self.api_key[-4:]
