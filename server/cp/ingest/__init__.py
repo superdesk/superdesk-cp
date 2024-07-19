@@ -6,6 +6,7 @@ from .parser.globenewswire import GlobeNewswireParser
 from .parser.cp_onclusive import CPOnclusiveFeedParser
 from .parser.cp_transcripts import CPTranscriptsFeedParser
 from .parser.weather_parser import WeatherParser
+from .parser.test_parser import TestParser
 
 
 def init_app(app):
@@ -14,6 +15,7 @@ def init_app(app):
     register_feed_parser(GlobeNewswireParser.NAME, GlobeNewswireParser())
     register_feed_parser(CPTranscriptsFeedParser.NAME, CPTranscriptsFeedParser())
     register_feed_parser(WeatherParser.NAME, WeatherParser())
+    register_feed_parser(TestParser.NAME, TestParser())
 
     # override core parsers
     registered_feed_parsers[CP_APMediaFeedParser.NAME] = CP_APMediaFeedParser()
