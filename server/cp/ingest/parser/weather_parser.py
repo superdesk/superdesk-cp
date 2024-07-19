@@ -3,6 +3,7 @@ from superdesk.io.feed_parsers.__init__ import FeedParser
 
 class WeatherParser(FeedParser):
     label = 'Weather Parser' 
+    SOURCE = 'Weather Parser' 
     NAME = label.lower() # Unique name under which to register the class.
 
 
