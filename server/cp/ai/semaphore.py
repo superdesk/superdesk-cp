@@ -19,6 +19,7 @@ import datetime
 
 
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 session = requests.Session()
 
 TIMEOUT = (5, 30)
@@ -457,7 +458,9 @@ class Semaphore(AIServiceBase):
         return {}
 
     def analyze(self, item: Item, tags=None) -> ResponseType:
+        logging.debug('Entering analyze method')
         try:
+            logging.debug('Checking base_url and api_key')
             if not self.base_url or not self.api_key:
                 logger.warning(
                     "Semaphore is not configured properly, \
@@ -465,17 +468,17 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            # Convert HTML to XML
+            logger.info(f"item: {item}")
+            logging.debug('Converting HTML to XML')
             xml_payload = self.html_to_xml(item)
-
+            logger.info(f"xml_payload: {xml_payload}")
             payload = {"XML_INPUT": xml_payload}
 
-            # Make a POST request using XML payload
+            logging.debug('Making a POST request using XML payload')
             headers = {"Authorization": f"bearer {self.get_access_token()}"}
 
             try:
                 response = session.post(self.analyze_url, headers=headers, data=payload)
-
                 response.raise_for_status()
             except Exception as e:
                 traceback.print_exc()
@@ -639,6 +642,7 @@ class Semaphore(AIServiceBase):
             return {}
 
     def html_to_xml(self, html_content: Item) -> str:
+        logging.debug('Entering html_to_xml method')
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
@@ -667,12 +671,21 @@ class Semaphore(AIServiceBase):
                 </document>
                 </request>
                 """
-        logger.warning(f"html_content {html_content}")
+
         body_html = html_content["body_html"]
+        logging.info(f'body_html: {body_html}')
+
         headline = html_content["headline"]
-        headline_extended = html_content["abstract"] if abstract in html_content else ""
+        logging.info(f'headline: {headline}')
+
+        headline_extended = html_content["abstract"] if "abstract" in html_content else ""
+        logging.info(f'headline_extended: {headline_extended}')
+
         slugline = html_content["slugline"]
+        logging.info(f'slugline: {slugline}')
+
         guid = html_content["guid"]
+        logging.info(f'guid: {guid}')
         env = self.api_key[-4:]
         dateTime = datetime.datetime.now().isoformat()
 
