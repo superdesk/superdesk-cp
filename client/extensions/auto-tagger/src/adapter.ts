@@ -50,7 +50,7 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
 
         // Checking if the item has original_source to filter auto tagger tags
         if (original_source != null) {
-            if (scheme === 'http://cv.iptc.org/newscodes/mediatopic/' || scheme === 'subject') {
+            if (scheme.includes('http://cv.iptc.org/newscodes/mediatopic/')) {
                 console.log('item is subject: ', item);
                 const tag: ITagUi = {
                     name,
