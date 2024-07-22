@@ -676,7 +676,9 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                 let allGrouped = OrderedMap<string, JSX.Element>();
 
                                 othersGrouped.forEach((tags, groupId) => {
+                                    console.log('Processing groupId:', groupId);
                                     if (tags != null && groupId != null) {
+                                        console.log('tags and groupId are not null');
                                         allGrouped = allGrouped.set(groupId,
                                             <ToggleBoxNext
                                                 key={groupId}
@@ -690,6 +692,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                     readOnly={readOnly}
                                                     // array of qcodes are ids of tags to remove
                                                     onRemove={(ids) => {
+                                                        console.log('Removing ids:', ids);
                                                         this.updateTags(
                                                             ids.reduce(
                                                                 (analysis, id) => analysis.remove(id),
@@ -701,6 +704,8 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                 />
                                             </ToggleBoxNext>,
                                         );
+                                    } else {
+                                        console.log('tags or groupId is null');
                                     }
                                 });
                                 //  renders the tags in the entities group in the widget window
