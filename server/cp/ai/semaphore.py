@@ -19,7 +19,6 @@ import datetime
 
 
 logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
 session = requests.Session()
 
 TIMEOUT = (5, 30)
@@ -43,7 +42,7 @@ class SearchData(TypedDict):
 
 class Item(TypedDict):
     guid: str
-    headline_extended: str
+    abstract: str
     body_html: str
     headline: str
     language: str
@@ -128,15 +127,29 @@ class Semaphore(AIServiceBase):
         response.raise_for_status()
         return response.json().get("access_token")
 
-    def fetch_parent_info(self, qcode):
+    def fetch_parent_info(self, qcode, article_language):
         headers = {"Authorization": f"Bearer {self.get_access_token()}"}
         try:
             frank = "?relationshipType=has%20broader"
+            # Change language based on article language
+            if article_language == "fr-CA":
+                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
+            elif article_language == "en-CA":
+                self.get_parent_url = self.get_parent_url.replace("/fr/", "/en/")
 
+            logging.info(f"article language {article_language}")
             query = qcode
             parent_url = self.get_parent_url + query + frank
+            logging.info(f"parent_url: {parent_url}")
+            
+            print(f"parent_url: {parent_url}")
 
             response = session.get(parent_url, headers=headers)
+            logging.info(f"Response text: {response.text}")
+            logging.info(f"Response status code: {response.status_code}")
+            if response.status_code != 200:
+                logging.error(f"Error response: {response.status_code} - {response.text}")
+                return []
             response.raise_for_status()
             root = ET.fromstring(response.text)
             path = root.find(".//PATH[@TYPE='Narrower Term']")
@@ -176,10 +189,8 @@ class Semaphore(AIServiceBase):
 
             if article_language == "fr-CA":
                 self.search_url = self.search_url.replace("/en/", "/fr/")
-                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
             elif article_language == "en-CA":
                 self.search_url = self.search_url.replace("/fr/", "/en/")
-                self.get_parent_url = self.get_parent_url.replace("/en/", "/fr/")
 
             new_url = self.search_url + query + ".json"
 
@@ -197,7 +208,7 @@ class Semaphore(AIServiceBase):
             root = response.text
 
             # def transform_xml_response(xml_data):
-            def transform_xml_response(api_response):
+            def transform_xml_response(api_response, article_language):
                 result = {
                     "subject": [],
                     "organisation": [],
@@ -252,7 +263,7 @@ class Semaphore(AIServiceBase):
                     else:
                         # Fetch parent info for each subject item
                         parent_info, reversed_parent_info = self.fetch_parent_info(
-                            item["id"]
+                            item["id"], article_language
                         )
 
                         # Assign the immediate parent to the subject item
@@ -299,7 +310,7 @@ class Semaphore(AIServiceBase):
                 }
 
             root = json.loads(root)
-            json_response = transform_xml_response(root)
+            json_response = transform_xml_response(root, article_language)
 
             json_response = convert_to_desired_format(json_response)
 
@@ -458,9 +469,7 @@ class Semaphore(AIServiceBase):
         return {}
 
     def analyze(self, item: Item, tags=None) -> ResponseType:
-        logging.debug('Entering analyze method')
         try:
-            logging.debug('Checking base_url and api_key')
             if not self.base_url or not self.api_key:
                 logger.warning(
                     "Semaphore is not configured properly, \
@@ -469,12 +478,10 @@ class Semaphore(AIServiceBase):
                 return {}
 
             logger.info(f"item: {item}")
-            logging.debug('Converting HTML to XML')
             xml_payload = self.html_to_xml(item)
             logger.info(f"xml_payload: {xml_payload}")
             payload = {"XML_INPUT": xml_payload}
 
-            logging.debug('Making a POST request using XML payload')
             headers = {"Authorization": f"bearer {self.get_access_token()}"}
 
             try:
@@ -642,7 +649,6 @@ class Semaphore(AIServiceBase):
             return {}
 
     def html_to_xml(self, html_content: Item) -> str:
-        logging.debug('Entering html_to_xml method')
         def clean_html_content(input_str):
             # Remove full HTML tags using regular expressions
             your_string = input_str.replace("<p>", "")
