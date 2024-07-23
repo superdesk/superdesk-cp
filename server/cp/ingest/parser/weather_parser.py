@@ -14,6 +14,7 @@ class WeatherParser(FeedParser):
         
         item = {}
         if self.can_parse(article):
+            '''
             paragraphs = article.split('\n\n')
 
             # Extract the slugline and the description
@@ -30,6 +31,11 @@ class WeatherParser(FeedParser):
             item['slugline'] = slugline
             item['description_text'] = description
             item['body_html'] = f"<p>{body}</p>"
+            item["source"] =  'Environment Canada'
+            '''
+            item['slugline'] = 'Test Slugline'
+            item['description_text'] =  'Test Description'
+            item['body_html'] =  'Test Body'
             item["source"] =  'Environment Canada'
 
         return item 
