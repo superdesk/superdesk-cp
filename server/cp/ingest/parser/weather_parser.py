@@ -87,13 +87,13 @@ class WeatherParser(FeedParser):
         # return False
 
     def parse(self, file_path, provider=None):
-        return [{
+        return {
             "guid": "77679c92-b840-4e8e-b601-e40223aa936e",
             "slugline": "Test Slugline 2",
             "body_html" =  'Test Body 2',
             "source" =  "Environment Canada",
             
-        }]
+        }
         
 
     
