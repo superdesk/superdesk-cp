@@ -37,6 +37,6 @@ class WeatherParser(FeedParser):
             item['description_text'] =  'Test Description 1'
             item['body_html'] =  'Test Body 1'
             item["source"] =  'Environment Canada'
-            item["guid"] =  '123'
+            
 
         return item 
