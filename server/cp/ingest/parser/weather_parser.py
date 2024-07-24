@@ -97,6 +97,3 @@ class WeatherParser(FeedParser):
         
 
     
-
-
-register_feed_parser(NINJSFeedParser.NAME, NINJSFeedParser())
