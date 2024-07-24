@@ -7,8 +7,8 @@ class WeatherParser(FeedParser):
     label = 'Weather Parser' 
     NAME = label.lower() # Unique name under which to register the class.
 
-    def __init__(self):
-        super().__init__()
+    # def __init__(self):
+    #     super().__init__()
             
         
     def can_parse(self, article):
