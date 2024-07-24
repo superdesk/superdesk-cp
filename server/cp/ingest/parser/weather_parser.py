@@ -1,4 +1,6 @@
 from superdesk.io.feed_parsers.__init__ import FeedParser
+from superdesk.io.registry import register_feed_parser
+
 SOURCE = 'Weather Parser' 
 class WeatherParser(FeedParser):
     label = 'Weather Parser' 
@@ -37,6 +39,10 @@ class WeatherParser(FeedParser):
             item["guid"] =  '123456789'
 
         return item 
+
+
+register_feed_parser(WeatherParser.NAME, WeatherParser())
+
 
 
 
