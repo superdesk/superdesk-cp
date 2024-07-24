@@ -37,6 +37,7 @@ class WeatherParser(FeedParser):
         '''
         item['slugline'] = 'This is a new slugline'
         item['description_text'] =  'Test Description3'
+        item['headline'] =  'Headline 3'
         item['body_html'] =  'Test Body3'
         item["source"] =  'Environment Canada'
         item["guid"] =  '123456789'
