@@ -35,7 +35,7 @@ class WeatherParser(FeedParser):
             item['body_html'] = f"<p>{body}</p>"
             item["source"] =  'Environment Canada'
         '''
-        item['slugline'] = 'Test Slugline3'
+        item['slugline'] = 'This is a new slugline'
         item['description_text'] =  'Test Description3'
         item['body_html'] =  'Test Body3'
         item["source"] =  'Environment Canada'
