@@ -1,7 +1,6 @@
 from superdesk.io.feed_parsers.__init__ import FeedParser
 
 SOURCE = 'Weather Parser' 
-logger = logging.getLogger(__name__)
 
 class WeatherParser(FeedParser):
     label = 'Weather Parser' 
@@ -40,8 +39,6 @@ class WeatherParser(FeedParser):
         item['headline'] =  'Headline 3'
         item['body_html'] =  'Body HTML 3'
         item["source"] =  'Environment Canada'
-
-       
 
         return item 
 
