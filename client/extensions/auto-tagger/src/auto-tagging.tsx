@@ -14,7 +14,7 @@ import { getAutoTaggingVocabularyLabels } from './common';
 import { getExistingTags, createTagsPatch } from './data-transformations';
 import { noop } from 'lodash';
 
-export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event', 'subject']);
+export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event',]);
 
 export type INewItem = Partial<ITagUi>;
 
