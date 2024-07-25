@@ -46,6 +46,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
     let tags = OrderedMap<string, ITagUi>();
 
     response.subject?.forEach((item) => {
+        console.log('Current item:', item); // Log the current item
+
         const {name, description, qcode, source, altids, aliases, original_source, parent, scheme, relevance, creator} = item;
 
         // Checking if the item has original_source to filter auto tagger tags
@@ -91,6 +93,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
 
                 tags = tags.set(tag.qcode, tag);
             }
+        } else {
+            console.log('Item does not have original_source:', item); // Log when item does not have original_source
         }
     });
 
