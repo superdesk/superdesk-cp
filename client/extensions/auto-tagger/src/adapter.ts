@@ -52,8 +52,7 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
 
         // Checking if the item has original_source to filter auto tagger tags
         if (original_source != null) {
-            if (scheme && scheme.includes('http://cv.iptc.org/newscodes/mediatopic/')) {
-                console.log('item is subject: ', item);
+            if (scheme && scheme === 'http://cv.iptc.org/newscodes/mediatopic/') {
                 const tag: ITagUi = {
                     name,
                     description,
@@ -70,10 +69,9 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-
+                console.log('item is subject: ', item);
                 tags = tags.set(tag.qcode, tag);
             } else {
-                console.log('item is not subject: ', item);
                 const tag: ITagUi = {
                     name,
                     description,
@@ -90,7 +88,7 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-
+                console.log('item is not subject: ', item);
                 tags = tags.set(tag.qcode, tag);
             }
         } else {
