@@ -25,11 +25,9 @@ TIMEOUT = (5, 30)
 
 
 def format_relevance(value: str) -> int:
-    int_value = int(float(value))
-    # Adding check to see if the value is 100, if so, return 100
-    if int_value != 100:
-        return int_value * 100
-    return int_value
+    float_value = float(value)
+    percentage = int(float_value * 100)
+    return min(percentage, 100)
 
 
 ResponseType = Mapping[str, Union[str, List[str]]]
@@ -540,7 +538,6 @@ class Semaphore(AIServiceBase):
 
                 # Iterate through the XML elements and populate the dictionary
                 for element in article_elements.iter():
-                    logger.warning(f"element: {element}")
                     if element.tag == "META":
                         meta_name = element.get("name")
                         meta_value = element.get("value")
