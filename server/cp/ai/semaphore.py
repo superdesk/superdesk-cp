@@ -615,7 +615,7 @@ class Semaphore(AIServiceBase):
                             "relevance": format_relevance(relevance),
                             "altids": {"source_name": "source_id"},
                             "original_source": "original_source_value",
-                            "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
+                            "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                         }
                         logger.warning(f"tag_data subject {tag_data}")
                         add_to_dict("subject", tag_data)
