@@ -89,6 +89,8 @@ def format_cv_item(item, language):
                 "code": item.get("qcode"),
                 "name": get_locale_name(item, language),
                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                "creator": item.get("creator", ""),
+                "relevance": item.get("relevance", 100),
             }
         )
     else:
@@ -97,6 +99,8 @@ def format_cv_item(item, language):
                 "code": item.get("qcode"),
                 "name": get_locale_name(item, language),
                 "scheme": item.get("scheme"),
+                "creator": item.get("creator", ""),
+                "relevance": item.get("relevance", 100),
             }
         )
 
@@ -617,6 +621,8 @@ class NINJSFormatter_2(Formatter):
                 if item.get("in_jimi") is True:
                     name_in_vocab = item.get("name")
                     qcode = item.get("qcode")
+                    creator = item.get("creator", "")
+                    relevance = item.get("relevance", 100)
                     translated_name = (
                         item.get("translations", {})
                         .get("name", {})
@@ -635,6 +641,8 @@ class NINJSFormatter_2(Formatter):
                             "code": qcode,
                             "name": translated_name,
                             "scheme": "http://cv.cp.org/cp-subject-legacy/",
+                            creator: creator,
+                            relevance: relevance,
                         }
                     )
 
