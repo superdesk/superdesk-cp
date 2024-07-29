@@ -55,6 +55,8 @@ class Tag(TypedDict):
     qcode: str
     scheme: str
     source: str
+    relevance: int
+    creator: str
 
 
 class FeedbackData(TypedDict):
