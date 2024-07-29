@@ -81,6 +81,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         aliases,
                         original_source,
                         parent,
+                        relevance,
+                        creator
                     } = subjectItem;
 
                     const subjectTag: ISubjectTag = {
@@ -93,6 +95,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         scheme,
                         aliases,
                         original_source,
+                        relevance,
+                        creator
                     };
 
                     return subjectTag;
