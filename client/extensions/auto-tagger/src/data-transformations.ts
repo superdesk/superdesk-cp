@@ -1,4 +1,4 @@
-import {IArticle, ISuperdesk, ISubject} from 'superdesk-api';
+import {IArticle, ISuperdesk} from 'superdesk-api';
 import {OrderedMap} from 'immutable';
 import {ITagUi} from './types';
 import {getServerResponseKeys, toServerFormat, ITagBase, ISubjectTag, IServerResponse} from './adapter';
@@ -12,12 +12,12 @@ export function createTagsPatch(
     const patch: Partial<IArticle> = {};
 
     getServerResponseKeys().forEach((key) => {
-        let oldValues = OrderedMap<string, ISubject>((article[key] || [])
+        let oldValues = OrderedMap<string, ISubjectTag>((article[key] || [])
             .filter((_item) => typeof _item.qcode === 'string')
             .map((_item) => [_item.qcode, _item]));
 
         const newValues = serverFormat[key];
-        let newValuesMap = OrderedMap<string, ISubject>();
+        let newValuesMap = OrderedMap<string, ISubjectTag>();
 
         // Preserve tags with specific schemes
         oldValues?.forEach((tag, _qcode) => {
@@ -35,7 +35,7 @@ export function createTagsPatch(
                 newValuesMap = newValuesMap.set(qcode, tag);
             }
         });
-        const wasRemoved = (tag: ISubject) => {
+        const wasRemoved = (tag: ISubjectTag) => {
             if (oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode)) {
                 return true;
             } else {
@@ -81,6 +81,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         aliases,
                         original_source,
                         parent,
+                        relevance,
+                        creator
                     } = subjectItem;
 
                     const subjectTag: ISubjectTag = {
@@ -93,6 +95,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         scheme,
                         aliases,
                         original_source,
+                        relevance,
+                        creator
                     };
 
                     return subjectTag;
@@ -110,6 +114,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                     aliases,
                     original_source,
                     parent,
+                    relevance,
+                    creator
                 } = entityItem;
 
                 const entityTag: ITagBase = {
@@ -122,6 +128,8 @@ export function getExistingTags(article: IArticle): IServerResponse {
                     scheme,
                     aliases,
                     original_source,
+                    relevance,
+                    creator
                 };
 
                 return entityTag;
