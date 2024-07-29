@@ -290,7 +290,7 @@ class Semaphore(AIServiceBase):
                                 "relevance": format_relevance("0.47"),
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
-                                "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
+                                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                             }
                             result["broader"].append(broader_entry)
 
@@ -540,6 +540,7 @@ class Semaphore(AIServiceBase):
 
                 # Iterate through the XML elements and populate the dictionary
                 for element in article_elements.iter():
+                    logger.warning(f"element: {element}")
                     if element.tag == "META":
                         meta_name = element.get("name")
                         meta_value = element.get("value")
