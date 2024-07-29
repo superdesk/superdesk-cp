@@ -1,6 +1,5 @@
-import {IArticle, ISuperdesk} from 'superdesk-api';
 import {OrderedMap} from 'immutable';
-import {ITagUi} from './types';
+import {ITagUi, IArticle, ISuperdesk} from './types';
 import {getServerResponseKeys, toServerFormat, ITagBase, ISubjectTag, IServerResponse} from './adapter';
 
 export function createTagsPatch(
