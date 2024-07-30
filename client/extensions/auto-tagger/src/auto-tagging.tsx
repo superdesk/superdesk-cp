@@ -608,8 +608,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                 }}>
                                                                     {_item.name}
                                                                 </b>
-                                                            </div>
-
                                                                 {
                                                                     _item?.group?.value == null ? null : (
                                                                         <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
