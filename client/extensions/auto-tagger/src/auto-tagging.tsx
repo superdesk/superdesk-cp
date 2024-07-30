@@ -589,8 +589,26 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                         const _item: ITagUi = __item.tag;
 
                                                         return (
-                                                            <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
-                                                                <b>{_item.name}</b>
+                                                            <div 
+                                                                className="auto-tagging-widget__autocomplete-item" 
+                                                                aria-label={`Item name ${_item.name}`}
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    flexDirection: 'column',
+                                                                    overflow: 'hidden',
+                                                                    width: '95%',
+                                                                }}
+                                                            >
+                                                                <b style={{
+                                                                    whiteSpace: 'normal',
+                                                                    width: '100%',
+                                                                    display: 'block',
+                                                                    verticalAlign: 'top',
+                                                                    wordWrap: 'break-word',
+                                                                }}>
+                                                                    {_item.name}
+                                                                </b>
+                                                            </div>
 
                                                                 {
                                                                     _item?.group?.value == null ? null : (
