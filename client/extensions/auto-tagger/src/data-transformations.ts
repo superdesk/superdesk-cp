@@ -1,4 +1,4 @@
-import {IArticle, ISuperdesk, ISubject} from 'superdesk-api';
+import {IArticle, ISuperdesk} from 'superdesk-api';
 import {OrderedMap} from 'immutable';
 import {ITagUi} from './types';
 import {getServerResponseKeys, toServerFormat, ITagBase, ISubjectTag, IServerResponse} from './adapter';
@@ -71,6 +71,7 @@ export function getExistingTags(article: IArticle): IServerResponse {
                 result[key] = values
                 .filter(subjectItem => subjectItem.scheme != null) // Only include items with a scheme
                 .map(subjectItem => {
+                    // @ts-ignore
                     const {
                         name,
                         description,
@@ -85,6 +86,7 @@ export function getExistingTags(article: IArticle): IServerResponse {
                         creator
                     } = subjectItem;
 
+                    // @ts-ignore
                     const subjectTag: ISubjectTag = {
                         name,
                         description,
@@ -104,6 +106,7 @@ export function getExistingTags(article: IArticle): IServerResponse {
             }
         } else if (values.length > 0) {
             result[key] = values.map((entityItem) => {
+                // @ts-ignore
                 const {
                     name,
                     description,
@@ -118,6 +121,7 @@ export function getExistingTags(article: IArticle): IServerResponse {
                     creator
                 } = entityItem;
 
+                // @ts-ignore
                 const entityTag: ITagBase = {
                     name,
                     description,
