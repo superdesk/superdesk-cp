@@ -69,7 +69,9 @@ export function getExistingTags(article: any): IServerResponse {
         if (key === 'subject') {
             if (values.length > 0) {
                 result[key] = values
+                // @ts-ignore
                 .filter(subjectItem => subjectItem.scheme != null) // Only include items with a scheme
+                // @ts-ignore
                 .map(subjectItem => {
                     // @ts-ignore
                     const {
@@ -105,6 +107,7 @@ export function getExistingTags(article: any): IServerResponse {
                 });
             }
         } else if (values.length > 0) {
+            // @ts-ignore
             result[key] = values.map((entityItem) => {
                 // @ts-ignore
                 const {
