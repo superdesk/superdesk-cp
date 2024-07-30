@@ -74,6 +74,7 @@ export function getExistingTags(article: any): IServerResponse {
                 // @ts-ignore
                 .map(subjectItem => {
                     // @ts-ignore
+                    console.log('subjectItem in getServerResponseKeys:', subjectItem);
                     const {
                         name,
                         description,
@@ -102,7 +103,7 @@ export function getExistingTags(article: any): IServerResponse {
                         relevance,
                         creator
                     };
-
+                    console.log('subjectTag in getServerResponseKeys:', subjectTag);
                     return subjectTag;
                 });
             }
@@ -110,6 +111,7 @@ export function getExistingTags(article: any): IServerResponse {
             // @ts-ignore
             result[key] = values.map((entityItem) => {
                 // @ts-ignore
+                console.log('entityItem in getServerResponseKeys:', entityItem);
                 const {
                     name,
                     description,
@@ -138,7 +140,7 @@ export function getExistingTags(article: any): IServerResponse {
                     relevance,
                     creator
                 };
-
+                console.log('entityTag in getServerResponseKeys:', entityTag);
                 return entityTag;
             });
         }
