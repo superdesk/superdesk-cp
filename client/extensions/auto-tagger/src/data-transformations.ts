@@ -1,5 +1,6 @@
+import {IArticle, ISuperdesk, ISubject} from 'superdesk-api';
 import {OrderedMap} from 'immutable';
-import {ITagUi, IArticle, ISuperdesk} from './types';
+import {ITagUi} from './types';
 import {getServerResponseKeys, toServerFormat, ITagBase, ISubjectTag, IServerResponse} from './adapter';
 
 export function createTagsPatch(
@@ -11,12 +12,12 @@ export function createTagsPatch(
     const patch: Partial<IArticle> = {};
 
     getServerResponseKeys().forEach((key) => {
-        let oldValues = OrderedMap<string, ISubjectTag>((article[key] || [])
+        let oldValues = OrderedMap<string, ISubject>((article[key] || [])
             .filter((_item) => typeof _item.qcode === 'string')
             .map((_item) => [_item.qcode, _item]));
 
         const newValues = serverFormat[key];
-        let newValuesMap = OrderedMap<string, ISubjectTag>();
+        let newValuesMap = OrderedMap<string, ISubject>();
 
         // Preserve tags with specific schemes
         oldValues?.forEach((tag, _qcode) => {
@@ -34,7 +35,7 @@ export function createTagsPatch(
                 newValuesMap = newValuesMap.set(qcode, tag);
             }
         });
-        const wasRemoved = (tag: ISubjectTag) => {
+        const wasRemoved = (tag: ISubject) => {
             if (oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode)) {
                 return true;
             } else {
