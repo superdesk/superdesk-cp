@@ -12,12 +12,12 @@ export function createTagsPatch(
     const patch: Partial<IArticle> = {};
 
     getServerResponseKeys().forEach((key) => {
-        let oldValues = OrderedMap<string, ISubject>((article[key] || [])
+        let oldValues = OrderedMap<string, any>((article[key] || [])
             .filter((_item) => typeof _item.qcode === 'string')
             .map((_item) => [_item.qcode, _item]));
 
         const newValues = serverFormat[key];
-        let newValuesMap = OrderedMap<string, ISubject>();
+        let newValuesMap = OrderedMap<string, any>();
 
         // Preserve tags with specific schemes
         oldValues?.forEach((tag, _qcode) => {
@@ -35,7 +35,7 @@ export function createTagsPatch(
                 newValuesMap = newValuesMap.set(qcode, tag);
             }
         });
-        const wasRemoved = (tag: ISubject) => {
+        const wasRemoved = (tag: any) => {
             if (oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode)) {
                 return true;
             } else {
