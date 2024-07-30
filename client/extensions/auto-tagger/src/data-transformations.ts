@@ -60,7 +60,7 @@ export function createTagsPatch(
     return patch;
 }
 
-export function getExistingTags(article: IArticle): IServerResponse {
+export function getExistingTags(article: any): IServerResponse {
     const result: IServerResponse = {};
 
     getServerResponseKeys().forEach((key) => {
