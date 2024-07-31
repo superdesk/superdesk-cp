@@ -30,14 +30,9 @@ export function getTagsListComponent(superdesk: ISuperdesk): React.ComponentType
             ).result;
 
             const tagListItem = (node: ITreeNode<ITagUi>) => {
-                console.log('node:', node);
-                // use this to debug the node
                 const isRootNodeWithChildren = node.parent == null && node.children != null;
-                // Entites don't have children and parent
                 const isNodeEntity = node.parent == null && node.children == null;
                 const item = node.value;
-                console.log('isRootNodeWithChildren:', isRootNodeWithChildren);
-                console.log('isNodeEntity:', isNodeEntity);
 
                 return (
                     <TagPopover
@@ -74,8 +69,6 @@ export function getTagsListComponent(superdesk: ISuperdesk): React.ComponentType
             };
 
             function renderTreeNode(treeNodes: Array<ITreeNode<ITagUi>>, level: number = 0): JSX.Element {
-                console.log('treeNodes:', treeNodes);
-                console.log('level:', level);
                 const treeNodesMap = treeNodes.map((node) => (
                     <div key={node.value.qcode} style={{paddingLeft: level * 14}}>
                         {tagListItem(node)}

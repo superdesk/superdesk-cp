@@ -46,7 +46,6 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
     let tags = OrderedMap<string, ITagUi>();
 
     response.subject?.forEach((item) => {
-        console.log('Current item:', item); // Log the current item
 
         const {name, description, qcode, source, altids, aliases, original_source, parent, scheme, relevance, creator} = item;
 
@@ -69,7 +68,6 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-                console.log('item is subject: ', item);
                 tags = tags.set(tag.qcode, tag);
             } else {
                 const tag: ITagUi = {
@@ -88,11 +86,8 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-                console.log('item is not subject: ', item);
                 tags = tags.set(tag.qcode, tag);
             }
-        } else {
-            console.log('Item does not have original_source:', item); // Log when item does not have original_source
         }
     });
 

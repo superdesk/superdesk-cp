@@ -188,7 +188,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
             const dataBeforeLoading = this.state.data;
 
             this.setState({ data: 'loading' }, () => {
-                console.log('Article properties:', this.props.article);
                 const { guid, language, headline, body_html, extra, slugline } = this.props.article;
                 // Apply the ampersand replacement
                 const safeHeadline = this.replaceAmpersand(headline);
@@ -243,7 +242,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
         initializeData(preload: boolean) {
             try {
                 const existingTags = getExistingTags(this.props.article);
-                console.log("existingTags", existingTags);
                 // Check if existingTags.subject has any object with scheme value of subject or if organisation or person or event or place or object exists
                 // Added check because of destinations and distribution scheme values are present in subject array which causes the empty data to be shown
                 if (Object.keys(existingTags).length > 0 &&
@@ -254,7 +252,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                     (Array.isArray(existingTags.place) && existingTags.place.length > 0) ||
                     (Array.isArray(existingTags.object) && existingTags.object.length > 0)) {
                     const resClient = toClientFormat(existingTags);
-                    console.log("resClient", resClient);
                     this.setState({
                         data: { original: { analysis: resClient }, changes: { analysis: resClient } },
                     });
@@ -692,9 +689,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                 let allGrouped = OrderedMap<string, JSX.Element>();
 
                                 othersGrouped.forEach((tags, groupId) => {
-                                    console.log('Processing groupId:', groupId);
                                     if (tags != null && groupId != null) {
-                                        console.log('tags and groupId are not null');
                                         allGrouped = allGrouped.set(groupId,
                                             <ToggleBoxNext
                                                 key={groupId}
@@ -708,7 +703,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                     readOnly={readOnly}
                                                     // array of qcodes are ids of tags to remove
                                                     onRemove={(ids) => {
-                                                        console.log('Removing ids:', ids);
                                                         this.updateTags(
                                                             ids.reduce(
                                                                 (analysis, id) => analysis.remove(id),
@@ -720,8 +714,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                 />
                                             </ToggleBoxNext>,
                                         );
-                                    } else {
-                                        console.log('tags or groupId is null');
                                     }
                                 });
                                 //  renders the tags in the entities group in the widget window
