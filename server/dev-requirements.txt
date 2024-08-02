@@ -4,7 +4,7 @@ pep8
 pytest
 flake8
 nose
-mypy<=1.9.0
+mypy<=1.11.0
 httmock==1.4.0
 wooper==0.4.4
 requests_mock

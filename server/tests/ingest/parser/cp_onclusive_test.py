@@ -87,27 +87,35 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                         "scheme": "onclusive_categories",
                     },
                     {
-                        "qcode": "Conference",
+                        "qcode": "148",
                         "scheme": "event_types",
                     },
                     {
-                        "qcode": "Conference and trade show",
+                        "qcode": "129",
                         "scheme": "event_types",
                     },
                     {
-                        "qcode": "Official visit",
-                        "scheme": "event_types",
-                    },
-                    {
-                        "qcode": "04000000",
+                        "qcode": "00000035",
                         "scheme": "subject_custom",
                     },
                     {
-                        "qcode": "20000638",
+                        "qcode": "00000050",
                         "scheme": "subject_custom",
                     },
                     {
-                        "qcode": "11000000",
+                        "qcode": "00000097",
+                        "scheme": "subject_custom",
+                    },
+                    {
+                        "qcode": "00000133",
+                        "scheme": "subject_custom",
+                    },
+                    {
+                        "qcode": "00000159",
+                        "scheme": "subject_custom",
+                    },
+                    {
+                        "qcode": "02000000",  # mapped via cp_index
                         "scheme": "subject_custom",
                     },
                 ]

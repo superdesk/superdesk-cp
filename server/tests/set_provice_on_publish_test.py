@@ -16,7 +16,12 @@ class PublishSignalTestCase(unittest.TestCase):
                 "DEFAULT_LANGUAGE": "en",
             }
         )
-        self.app.app_context().push()
+        self.ctx = self.app.app_context()
+        self.ctx.push()
+
+    def tearDown(self) -> None:
+        super().tearDown()
+        self.ctx.pop()
 
     def test_publish_signal(self):
         with patch.dict(superdesk.resources, resources):

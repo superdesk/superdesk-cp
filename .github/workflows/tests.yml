@@ -8,6 +8,7 @@ jobs:
   server:
 
     runs-on: ubuntu-22.04
+ 
     defaults:
       run:
         working-directory: server

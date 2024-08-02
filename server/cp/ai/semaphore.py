@@ -46,7 +46,6 @@ class Item(TypedDict):
     language: str
     slugline: str
 
-
 class Tag(TypedDict):
     altids: Dict[str, str]
     description: str
@@ -57,6 +56,16 @@ class Tag(TypedDict):
     source: str
     relevance: int
     creator: str
+
+
+class Tag(TypedDict):
+    altids: Dict[str, str]
+    description: str
+    name: str
+    original_source: str
+    qcode: str
+    scheme: str
+    source: str
 
 
 class FeedbackData(TypedDict):
@@ -279,7 +288,7 @@ class Semaphore(AIServiceBase):
                                 "relevance": 47,
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
-                                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                                "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
                             }
                             result["broader"].append(broader_entry)
 
@@ -618,7 +627,6 @@ class Semaphore(AIServiceBase):
             assign_parents(response_dict, media_topic_labels, media_topic_guids)
 
             return response_dict
-
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(

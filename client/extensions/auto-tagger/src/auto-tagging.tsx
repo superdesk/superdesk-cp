@@ -206,6 +206,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                             headline: safeHeadline,
                             body_html,
                             abstract: safeHeadlineExtended,
+                            headline_extended: extra ? extra.headline_extended : undefined,
                         },
                     },
                 }).then((res) => {
@@ -605,6 +606,8 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                 }}>
                                                                     {_item.name}
                                                                 </b>
+                                                            <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
+                                                                <b>{_item.name}</b>
                                                                 {
                                                                     _item?.group?.value == null ? null : (
                                                                         <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>

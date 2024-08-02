@@ -68,8 +68,7 @@ class OrangelogicTestCase(unittest.TestCase):
         self.ctx.push()
 
     def tearDown(self):
-        if hasattr(self, "ctx"):
-            self.ctx.pop()
+        self.ctx.pop()
 
     def test_instance(self):
         OrangelogicSearchProvider(self.provider)

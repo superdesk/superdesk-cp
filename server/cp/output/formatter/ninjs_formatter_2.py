@@ -163,7 +163,6 @@ class NINJSFormatter_2(Formatter):
     )
 
     def __init__(self):
-        self.format_type = "ninjs"
         self.can_preview = True
         self.can_export = True
         self.internal_renditions = ["original"]
@@ -418,9 +417,6 @@ class NINJSFormatter_2(Formatter):
         if "thumbnail" in article:
             renditions["thumbnail"] = {"href": article["thumbnail"]}
         return renditions
-
-    def can_format(self, format_type, article):
-        return format_type == self.format_type
 
     def _get_type(self, article):
         if article[ITEM_TYPE] == CONTENT_TYPE.PREFORMATTED:
@@ -924,13 +920,6 @@ class NINJSFormatter_2(Formatter):
             scheme=SCHEME_MAP.get(scheme) or scheme,
         )
 
-    def export(self, item):
-        if self.can_format(self.format_type, item):
-            sequence, formatted_doc = self.format(item, {"_id": "0"}, None)[0]
-            return formatted_doc.replace("''", "'")
-        else:
-            raise Exception()
-
 
 class NINJS2Formatter(NINJSFormatter_2):
     """NINJS formatter v2
@@ -954,10 +943,6 @@ class NINJS2Formatter(NINJSFormatter_2):
         "rewrite_sequence",
         "rewrite_of",
     )
-
-    def __init__(self):
-        super().__init__()
-        self.format_type = "ninjs3"
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
         ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
