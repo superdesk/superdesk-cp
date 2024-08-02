@@ -142,7 +142,9 @@ class Semaphore(AIServiceBase):
 
             response = session.get(parent_url, headers=headers)
             if response.status_code != 200:
-                logging.error(f"Error response: {response.status_code} - {response.text}")
+                logging.error(
+                    f"Error response: {response.status_code} - {response.text}"
+                )
                 return []
             response.raise_for_status()
             root = ET.fromstring(response.text)
@@ -471,13 +473,17 @@ class Semaphore(AIServiceBase):
 
                 # Map each label path to its corresponding GUID path
                 for guid_path in media_topic_guids.keys():
-                    guid_parts = guid_path.split('/')
+                    guid_parts = guid_path.split("/")
                     for label_path in media_topic_labels.keys():
-                        label_parts = label_path.split('/')
+                        label_parts = label_path.split("/")
                         if len(guid_parts) == len(label_parts):
                             last_guid_part = guid_parts[-1]
                             last_label_part = label_parts[-1]
-                            if any(subject['qcode'] == last_guid_part and subject['name'] == last_label_part for subject in response_dict['subject']):
+                            if any(
+                                subject["qcode"] == last_guid_part
+                                and subject["name"] == last_label_part
+                                for subject in response_dict["subject"]
+                            ):
                                 label_to_guid_map[label_path] = guid_path
                                 break
 
@@ -486,18 +492,24 @@ class Semaphore(AIServiceBase):
 
                 # Iterate over the mapped label and GUID paths
                 for label_path, guid_path in label_to_guid_map.items():
-                    label_parts = label_path.split('/')
-                    guid_parts = guid_path.split('/')
+                    label_parts = label_path.split("/")
+                    guid_parts = guid_path.split("/")
                     for i in range(len(label_parts)):
                         name = label_parts[i]
                         qcode = guid_parts[i]
-                        parent_qcode = guid_parts[i-1] if i > 0 else None
+                        parent_qcode = guid_parts[i - 1] if i > 0 else None
                         relevance = format_relevance(media_topic_labels[label_path])
-                        
-                        if qcode not in max_relevance or max_relevance[qcode] < relevance:
+
+                        if (
+                            qcode not in max_relevance
+                            or max_relevance[qcode] < relevance
+                        ):
                             max_relevance[qcode] = relevance
 
-                        if not any(subject['qcode'] == qcode for subject in response_dict['subject']):
+                        if not any(
+                            subject["qcode"] == qcode
+                            for subject in response_dict["subject"]
+                        ):
                             subject_data = {
                                 "name": name,
                                 "qcode": qcode,
@@ -509,19 +521,19 @@ class Semaphore(AIServiceBase):
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                             }
-                            add_to_dict('subject', subject_data)
+                            add_to_dict("subject", subject_data)
                         else:
-                            for subject in response_dict['subject']:
-                                if subject['qcode'] == qcode:
-                                    subject['parent'] = parent_qcode
+                            for subject in response_dict["subject"]:
+                                if subject["qcode"] == qcode:
+                                    subject["parent"] = parent_qcode
                                     break
 
                 # Propagate the highest relevance score upwards
                 for label_path, guid_path in label_to_guid_map.items():
-                    guid_parts = guid_path.split('/')
-                    for i in range(len(guid_parts)-1, 0, -1):
+                    guid_parts = guid_path.split("/")
+                    for i in range(len(guid_parts) - 1, 0, -1):
                         child_qcode = guid_parts[i]
-                        parent_qcode = guid_parts[i-1]
+                        parent_qcode = guid_parts[i - 1]
                         child_relevance = max_relevance[child_qcode]
                         if parent_qcode in max_relevance:
                             if max_relevance[parent_qcode] < child_relevance:
@@ -530,11 +542,10 @@ class Semaphore(AIServiceBase):
                             max_relevance[parent_qcode] = child_relevance
 
                 # Update relevance scores in response_dict
-                for subject in response_dict['subject']:
-                    if subject['qcode'] in max_relevance:
-                        subject['relevance'] = max_relevance[subject['qcode']]
+                for subject in response_dict["subject"]:
+                    if subject["qcode"] in max_relevance:
+                        subject["relevance"] = max_relevance[subject["qcode"]]
 
-            
             # Helper function to add data to the dictionary
             def add_to_dict(group, tag_data):
                 if tag_data["qcode"] and tag_data not in response_dict[group]:
@@ -542,9 +553,9 @@ class Semaphore(AIServiceBase):
 
             # Helper function to remove the first index from a string
             def remove_first_index(value: str) -> str:
-                parts = value.split('/')
-                return '/'.join(parts[1:]) if parts else value
-            
+                parts = value.split("/")
+                return "/".join(parts[1:]) if parts else value
+
             def add_tag(name, value, id, score):
                 for tag, scheme in SCHEMES.items():
                     if tag in name:
@@ -556,27 +567,27 @@ class Semaphore(AIServiceBase):
                             "relevance": format_relevance(score),
                             "altids": json.dumps({value: id}),
                             "original_source": "original_source_value",
-                            "scheme": scheme
+                            "scheme": scheme,
                         }
                         add_to_dict(tag.lower(), tag_data)
                         break
-            
+
             root = ET.fromstring(xml_data)
             article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
             system_elements = article_elements.findall("SYSTEM")
             for system_element in system_elements:
                 article_elements.remove(system_element)
-            
+
             for elem in article_elements:
-                name = elem.get('name')
-                value = elem.get('value')
-                score = elem.get('score', 0)
+                name = elem.get("name")
+                value = elem.get("value")
+                score = elem.get("score", 0)
                 id = elem.get("id")
-                
+
                 if name in ["Organization", "Person", "Place", "Event"]:
                     add_tag(name, value, id, score)
-                elif name == 'Media Topic':
-                    qcode = elem.get('id')
+                elif name == "Media Topic":
+                    qcode = elem.get("id")
                     tag_data = {
                         "name": value,
                         "qcode": qcode,
@@ -588,23 +599,23 @@ class Semaphore(AIServiceBase):
                         "original_source": "original_source_value",
                         "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                     }
-                    add_to_dict('subject', tag_data)
-                elif name == 'Media Topic_PATH_LABEL':
-                    phrases = value.split('/')
+                    add_to_dict("subject", tag_data)
+                elif name == "Media Topic_PATH_LABEL":
+                    phrases = value.split("/")
                     # Added check to avoid duplicate CP vocabulary values
-                    if phrases[0] == 'CP vocabulary':
+                    if phrases[0] == "CP vocabulary":
                         pass
                     else:
                         value = remove_first_index(value)
                         media_topic_labels[value] = score
-                elif name == 'Media Topic_PATH_GUID':
+                elif name == "Media Topic_PATH_GUID":
                     value = remove_first_index(value)
-                    last_value = value.split('/')[-1]
+                    last_value = value.split("/")[-1]
                     # Added check to avoid duplicate CP vocabulary values
                     if last_value not in processed_values:
                         media_topic_guids[value] = score
                         processed_values.add(last_value)
-            
+
             assign_parents(response_dict, media_topic_labels, media_topic_guids)
 
             return response_dict
@@ -617,7 +628,6 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            
             xml_payload = self.html_to_xml(item)
             payload = {"XML_INPUT": xml_payload}
 
@@ -689,7 +699,9 @@ class Semaphore(AIServiceBase):
 
         body_html = html_content["body_html"]
         headline = html_content["headline"]
-        headline_extended = html_content["abstract"] if "abstract" in html_content else ""
+        headline_extended = (
+            html_content["abstract"] if "abstract" in html_content else ""
+        )
         slugline = html_content["slugline"]
         guid = html_content["guid"]
         env = self.api_key[-4:]
