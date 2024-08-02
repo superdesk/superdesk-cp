@@ -481,6 +481,9 @@ class Semaphore(AIServiceBase):
                                 label_to_guid_map[label_path] = guid_path
                                 break
 
+                # Track the maximum relevance score for each parent tag
+                max_relevance = {}
+
                 # Iterate over the mapped label and GUID paths
                 for label_path, guid_path in label_to_guid_map.items():
                     label_parts = label_path.split('/')
@@ -489,7 +492,11 @@ class Semaphore(AIServiceBase):
                         name = label_parts[i]
                         qcode = guid_parts[i]
                         parent_qcode = guid_parts[i-1] if i > 0 else None
+                        relevance = format_relevance(media_topic_labels[label_path])
                         
+                        if qcode not in max_relevance or max_relevance[qcode] < relevance:
+                            max_relevance[qcode] = relevance
+
                         if not any(subject['qcode'] == qcode for subject in response_dict['subject']):
                             subject_data = {
                                 "name": name,
@@ -497,7 +504,7 @@ class Semaphore(AIServiceBase):
                                 "parent": parent_qcode if parent_qcode else None,
                                 "source": "Semaphore",
                                 "creator": "Machine",
-                                "relevance": format_relevance(media_topic_labels[label_path]),
+                                "relevance": relevance,
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
@@ -508,6 +515,25 @@ class Semaphore(AIServiceBase):
                                 if subject['qcode'] == qcode:
                                     subject['parent'] = parent_qcode
                                     break
+
+                # Propagate the highest relevance score upwards
+                for label_path, guid_path in label_to_guid_map.items():
+                    guid_parts = guid_path.split('/')
+                    for i in range(len(guid_parts)-1, 0, -1):
+                        child_qcode = guid_parts[i]
+                        parent_qcode = guid_parts[i-1]
+                        child_relevance = max_relevance[child_qcode]
+                        if parent_qcode in max_relevance:
+                            if max_relevance[parent_qcode] < child_relevance:
+                                max_relevance[parent_qcode] = child_relevance
+                        else:
+                            max_relevance[parent_qcode] = child_relevance
+
+                # Update relevance scores in response_dict
+                for subject in response_dict['subject']:
+                    if subject['qcode'] in max_relevance:
+                        subject['relevance'] = max_relevance[subject['qcode']]
+
             
             # Helper function to add data to the dictionary
             def add_to_dict(group, tag_data):
