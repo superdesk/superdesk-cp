@@ -13,7 +13,6 @@ def init_app(app):
     register_feed_parser(BusinessWireParser.NAME, BusinessWireParser())
     register_feed_parser(GlobeNewswireParser.NAME, GlobeNewswireParser())
     register_feed_parser(CPTranscriptsFeedParser.NAME, CPTranscriptsFeedParser())
-    register_feed_parser(WeatherParser.NAME, WeatherParser())
 
     # override core parsers
     registered_feed_parsers[CP_APMediaFeedParser.NAME] = CP_APMediaFeedParser()
