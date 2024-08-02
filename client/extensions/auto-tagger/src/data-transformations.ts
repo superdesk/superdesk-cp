@@ -1,4 +1,4 @@
-import {IArticle, ISuperdesk} from 'superdesk-api';
+import {IArticle, ISuperdesk, ISubject} from 'superdesk-api';
 import {OrderedMap} from 'immutable';
 import {ITagUi} from './types';
 import {getServerResponseKeys, toServerFormat, ITagBase, ISubjectTag, IServerResponse} from './adapter';
@@ -12,12 +12,12 @@ export function createTagsPatch(
     const patch: Partial<IArticle> = {};
 
     getServerResponseKeys().forEach((key) => {
-        let oldValues = OrderedMap<string, any>((article[key] || [])
+        let oldValues = OrderedMap<string, ISubject>((article[key] || [])
             .filter((_item) => typeof _item.qcode === 'string')
             .map((_item) => [_item.qcode, _item]));
 
         const newValues = serverFormat[key];
-        let newValuesMap = OrderedMap<string, any>();
+        let newValuesMap = OrderedMap<string, ISubject>();
 
         // Preserve tags with specific schemes
         oldValues?.forEach((tag, _qcode) => {
@@ -35,7 +35,7 @@ export function createTagsPatch(
                 newValuesMap = newValuesMap.set(qcode, tag);
             }
         });
-        const wasRemoved = (tag: any) => {
+        const wasRemoved = (tag: ISubject) => {
             if (oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode)) {
                 return true;
             } else {
@@ -60,7 +60,7 @@ export function createTagsPatch(
     return patch;
 }
 
-export function getExistingTags(article: any): IServerResponse {
+export function getExistingTags(article: IArticle): IServerResponse {
     const result: IServerResponse = {};
 
     getServerResponseKeys().forEach((key) => {
@@ -69,11 +69,8 @@ export function getExistingTags(article: any): IServerResponse {
         if (key === 'subject') {
             if (values.length > 0) {
                 result[key] = values
-                // @ts-ignore
                 .filter(subjectItem => subjectItem.scheme != null) // Only include items with a scheme
-                // @ts-ignore
                 .map(subjectItem => {
-                    // @ts-ignore
                     const {
                         name,
                         description,
@@ -88,7 +85,6 @@ export function getExistingTags(article: any): IServerResponse {
                         creator
                     } = subjectItem;
 
-                    // @ts-ignore
                     const subjectTag: ISubjectTag = {
                         name,
                         description,
@@ -106,9 +102,7 @@ export function getExistingTags(article: any): IServerResponse {
                 });
             }
         } else if (values.length > 0) {
-            // @ts-ignore
             result[key] = values.map((entityItem) => {
-                // @ts-ignore
                 const {
                     name,
                     description,
@@ -123,7 +117,6 @@ export function getExistingTags(article: any): IServerResponse {
                     creator
                 } = entityItem;
 
-                // @ts-ignore
                 const entityTag: ITagBase = {
                     name,
                     description,
