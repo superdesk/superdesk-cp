@@ -137,16 +137,10 @@ class Semaphore(AIServiceBase):
             elif article_language == "en-CA":
                 self.get_parent_url = self.get_parent_url.replace("/fr/", "/en/")
 
-            logging.info(f"article language {article_language}")
             query = qcode
             parent_url = self.get_parent_url + query + frank
-            logging.info(f"parent_url: {parent_url}")
-            
-            print(f"parent_url: {parent_url}")
 
             response = session.get(parent_url, headers=headers)
-            logging.info(f"Response text: {response.text}")
-            logging.info(f"Response status code: {response.status_code}")
             if response.status_code != 200:
                 logging.error(f"Error response: {response.status_code} - {response.text}")
                 return []
@@ -224,19 +218,13 @@ class Semaphore(AIServiceBase):
 
                     if "Organization" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Organizations/"
-                        # category = "organisation"
                     elif "People" in item["classes"]:
                         scheme_url = "http://cv.cp.org/People/"
-                        # category = "person"
                     elif "Event" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Events/"
-                        # category = "event"
                     elif "Place" in item["classes"]:
                         scheme_url = "http://cv.cp.org/Places/"
-                        # category = "place"
                     else:
-                        # For 'subject', a different scheme might be used
-                        # category = "subject"
                         scheme_url = "http://cv.iptc.org/newscodes/mediatopic/"
 
                     entry = {
@@ -287,7 +275,7 @@ class Semaphore(AIServiceBase):
                                 ),
                                 "creator": "Human",
                                 "source": "Semaphore",
-                                "relevance": format_relevance("0.47"),
+                                "relevance": format_relevance("47"),
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
@@ -355,23 +343,17 @@ class Semaphore(AIServiceBase):
             manual_tags = extract_manual_tags(data)
 
             for item in manual_tags:
-                # print(item)
-
                 concept_name = item["name"]
                 scheme = item["scheme"]
 
                 if scheme == "subject":
                     id_value = "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
-
                 elif scheme == "organization":
                     id_value = "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
-
                 elif scheme == "places":
                     id_value = "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
-
                 elif scheme == "person":
                     id_value = "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
-
                 elif scheme == "event":
                     id_value = "http://cv.cp.org/3c493189-023f-4d14-a2f4-fc7b79735ffc"
 
@@ -449,11 +431,7 @@ class Semaphore(AIServiceBase):
 
     def search(self, data: SearchData) -> ResponseType:
         try:
-            print("-------------------------------------------")
-            print("Running for Search")
-
             self.output = self.analyze_parent_info(data)
-
             try:
                 updated_output = replace_qcodes(self.output)
                 return updated_output
@@ -469,6 +447,142 @@ class Semaphore(AIServiceBase):
         return {}
 
     def analyze(self, item: Item, tags=None) -> ResponseType:
+        def transform_xml_response(xml_data):
+            response_dict = {
+                "subject": [],
+                "organisation": [],
+                "person": [],
+                "event": [],
+                "place": [],
+            }
+            SCHEMES = {
+                "Place": "http://cv.cp.org/Places/",
+                "Organization": "http://cv.cp.org/Organizations/",
+                "Person": "http://cv.cp.org/Person/",
+                "Event": "http://cv.cp.org/Events/",
+            }
+            media_topic_labels = {}
+            media_topic_guids = {}
+            processed_values = set()
+
+            # Function to assign parents to the subjects
+            def assign_parents(response_dict, media_topic_labels, media_topic_guids):
+                label_to_guid_map = {}
+
+                # Map each label path to its corresponding GUID path
+                for guid_path in media_topic_guids.keys():
+                    guid_parts = guid_path.split('/')
+                    for label_path in media_topic_labels.keys():
+                        label_parts = label_path.split('/')
+                        if len(guid_parts) == len(label_parts):
+                            last_guid_part = guid_parts[-1]
+                            last_label_part = label_parts[-1]
+                            if any(subject['qcode'] == last_guid_part and subject['name'] == last_label_part for subject in response_dict['subject']):
+                                label_to_guid_map[label_path] = guid_path
+                                break
+
+                # Iterate over the mapped label and GUID paths
+                for label_path, guid_path in label_to_guid_map.items():
+                    label_parts = label_path.split('/')
+                    guid_parts = guid_path.split('/')
+                    for i in range(len(label_parts)):
+                        name = label_parts[i]
+                        qcode = guid_parts[i]
+                        parent_qcode = guid_parts[i-1] if i > 0 else None
+                        
+                        if not any(subject['qcode'] == qcode for subject in response_dict['subject']):
+                            subject_data = {
+                                "name": name,
+                                "qcode": qcode,
+                                "parent": parent_qcode if parent_qcode else None,
+                                "source": "Semaphore",
+                                "creator": "Machine",
+                                "relevance": format_relevance(media_topic_labels[label_path]),
+                                "altids": {"source_name": "source_id"},
+                                "original_source": "original_source_value",
+                                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                            }
+                            add_to_dict('subject', subject_data)
+                        else:
+                            for subject in response_dict['subject']:
+                                if subject['qcode'] == qcode:
+                                    subject['parent'] = parent_qcode
+                                    break
+            
+            # Helper function to add data to the dictionary
+            def add_to_dict(group, tag_data):
+                if tag_data["qcode"] and tag_data not in response_dict[group]:
+                    response_dict[group].append(tag_data)
+
+            # Helper function to remove the first index from a string
+            def remove_first_index(value: str) -> str:
+                parts = value.split('/')
+                return '/'.join(parts[1:]) if parts else value
+            
+            def add_tag(name, value, id, score):
+                for tag, scheme in SCHEMES.items():
+                    if tag in name:
+                        tag_data = {
+                            "name": value,
+                            "qcode": id if id else "",
+                            "creator": "Machine",
+                            "source": "Semaphore",
+                            "relevance": format_relevance(score),
+                            "altids": json.dumps({value: id}),
+                            "original_source": "original_source_value",
+                            "scheme": scheme
+                        }
+                        add_to_dict(tag.lower(), tag_data)
+                        break
+            
+            root = ET.fromstring(xml_data)
+            article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
+            system_elements = article_elements.findall("SYSTEM")
+            for system_element in system_elements:
+                article_elements.remove(system_element)
+            
+            for elem in article_elements:
+                name = elem.get('name')
+                value = elem.get('value')
+                score = elem.get('score', 0)
+                id = elem.get("id")
+                
+                if name in ["Organization", "Person", "Place", "Event"]:
+                    add_tag(name, value, id, score)
+                elif name == 'Media Topic':
+                    qcode = elem.get('id')
+                    tag_data = {
+                        "name": value,
+                        "qcode": qcode,
+                        "parent": "",
+                        "source": "Semaphore",
+                        "creator": "Machine",
+                        "relevance": format_relevance(score),
+                        "altids": {"source_name": "source_id"},
+                        "original_source": "original_source_value",
+                        "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                    }
+                    add_to_dict('subject', tag_data)
+                elif name == 'Media Topic_PATH_LABEL':
+                    phrases = value.split('/')
+                    # Added check to avoid duplicate CP vocabulary values
+                    if phrases[0] == 'CP vocabulary':
+                        pass
+                    else:
+                        value = remove_first_index(value)
+                        media_topic_labels[value] = score
+                elif name == 'Media Topic_PATH_GUID':
+                    value = remove_first_index(value)
+                    last_value = value.split('/')[-1]
+                    # Added check to avoid duplicate CP vocabulary values
+                    if last_value not in processed_values:
+                        media_topic_guids[value] = score
+                        processed_values.add(last_value)
+            
+            assign_parents(response_dict, media_topic_labels, media_topic_guids)
+
+            return response_dict
+
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -477,9 +591,8 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            logger.info(f"item: {item}")
+            
             xml_payload = self.html_to_xml(item)
-            logger.info(f"xml_payload: {xml_payload}")
             payload = {"XML_INPUT": xml_payload}
 
             headers = {"Authorization": f"bearer {self.get_access_token()}"}
@@ -492,136 +605,6 @@ class Semaphore(AIServiceBase):
                 logger.error(f"An error occurred while making the request: {str(e)}")
 
             root = response.text
-
-            def transform_xml_response(xml_data):
-                # Parse the XML data
-                root = ET.fromstring(xml_data)
-
-                # Find the ARTICLE element
-                article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
-
-                # Find all 'SYSTEM' child elements under 'ARTICLE'
-                system_elements = article_elements.findall("SYSTEM")
-
-                # Remove each 'SYSTEM' element
-                for system_element in system_elements:
-                    article_elements.remove(system_element)
-
-                # Initialize a dictionary to hold the transformed data
-                response_dict = {
-                    "subject": [],
-                    "organisation": [],
-                    "person": [],
-                    "event": [],
-                    "place": [],
-                }
-
-                # Temporary storage for path labels and GUIDs
-                path_labels = {}
-                path_guids = {}
-
-                # Helper function to add data to the dictionary
-                # if it's not a duplicate and has a qcode
-                def add_to_dict(group, tag_data):
-                    if tag_data["qcode"] and tag_data not in response_dict[group]:
-                        response_dict[group].append(tag_data)
-
-                # Adjust score to avoid duplicate score entries
-                def adjust_score(score, existing_scores):
-                    original_score = float(score)
-                    while score in existing_scores:
-                        original_score += (
-                            0.001  # Increment by the smallest possible amount
-                        )
-                        score = "{:.3f}".format(
-                            original_score
-                        )  # Keep score to three decimal places
-                    return score
-
-                # Iterate through the XML elements and populate the dictionary
-                for element in article_elements.iter():
-                    if element.tag == "META":
-                        meta_name = element.get("name")
-                        meta_value = element.get("value")
-                        meta_score = element.get("score", "0")
-                        meta_id = element.get("id")
-
-                        # Adjust score if necessary to avoid duplicates
-                        if meta_name in [
-                            "Media Topic_PATH_LABEL",
-                            "Media Topic_PATH_GUID",
-                        ]:
-                            meta_score = adjust_score(
-                                meta_score,
-                                (
-                                    path_labels.keys()
-                                    if meta_name == "Media Topic_PATH_LABEL"
-                                    else path_guids.keys()
-                                ),
-                            )
-
-                        # Split and process path labels or GUIDs
-                        if meta_name == "Media Topic_PATH_LABEL":
-                            path_labels[meta_score] = meta_value.split("/")[1:]
-                        elif meta_name == "Media Topic_PATH_GUID":
-                            path_guids[meta_score] = meta_value.split("/")[1:]
-
-                        # Process other categories
-                        else:
-                            group = None
-                            if "Organization" in meta_name:
-                                group = "organisation"
-                                scheme_url = "http://cv.cp.org/Organizations/"
-                            elif "Person" in meta_name:
-                                group = "person"
-                                scheme_url = "http://cv.cp.org/People/"
-                            elif "Event" in meta_name:
-                                group = "event"
-                                scheme_url = "http://cv.cp.org/Events/"
-                            elif "Place" in meta_name:
-                                group = "place"
-                                scheme_url = "http://cv.cp.org/Places/"
-
-                            if group:
-                                tag_data = {
-                                    "name": meta_value,
-                                    "qcode": meta_id if meta_id else "",
-                                    "creator": "Machine",
-                                    "source": "Semaphore",
-                                    "relevance": format_relevance(meta_score),
-                                    "altids": f'{{"{meta_value}": \
-                                    "{meta_id}"}}',
-                                    "original_source": "original_source_value",
-                                    "scheme": scheme_url,
-                                }
-                                logger.warning(f"tag_data {tag_data}")
-                                add_to_dict(group, tag_data)
-
-                # Match path labels with path GUIDs based on scores
-                for relevance, labels in path_labels.items():
-                    guids = path_guids.get(relevance, [])
-                    if len(labels) != len(guids):
-                        continue
-
-                    parent_qcode = None  # Track the parent qcode
-                    for label, guid in zip(labels, guids):
-                        tag_data = {
-                            "name": label,
-                            "qcode": guid,
-                            "parent": parent_qcode,
-                            "source": "Semaphore",
-                            "creator": "Machine",
-                            "relevance": format_relevance(relevance),
-                            "altids": {"source_name": "source_id"},
-                            "original_source": "original_source_value",
-                            "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
-                        }
-                        logger.warning(f"tag_data subject {tag_data}")
-                        add_to_dict("subject", tag_data)
-                        parent_qcode = guid
-
-                return response_dict
-
             json_response = transform_xml_response(root)
 
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
@@ -679,19 +662,10 @@ class Semaphore(AIServiceBase):
                 """
 
         body_html = html_content["body_html"]
-        logging.info(f'body_html: {body_html}')
-
         headline = html_content["headline"]
-        logging.info(f'headline: {headline}')
-
         headline_extended = html_content["abstract"] if "abstract" in html_content else ""
-        logging.info(f'headline_extended: {headline_extended}')
-
         slugline = html_content["slugline"]
-        logging.info(f'slugline: {slugline}')
-
         guid = html_content["guid"]
-        logging.info(f'guid: {guid}')
         env = self.api_key[-4:]
         dateTime = datetime.datetime.now().isoformat()
 
