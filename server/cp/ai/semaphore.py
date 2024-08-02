@@ -153,12 +153,11 @@ class Semaphore(AIServiceBase):
             if path is not None:
                 for field in path.findall("FIELD"):
                     if field.find("CLASS").get("NAME") == "Topic":
-                        score = field.get("score", "47")
                         parent_info.append(
                             {
                                 "name": field.get("NAME"),
                                 "qcode": field.get("ID"),
-                                "relevance": format_relevance(score),
+                                "relevance": 47,
                                 "creator": "Human",
                                 "parent": None,  # Set to None initially
                             }
@@ -277,7 +276,7 @@ class Semaphore(AIServiceBase):
                                 ),
                                 "creator": "Human",
                                 "source": "Semaphore",
-                                "relevance": format_relevance("47"),
+                                "relevance": 47,
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
                                 "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
