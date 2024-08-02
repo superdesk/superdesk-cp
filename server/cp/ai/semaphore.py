@@ -452,7 +452,7 @@ class Semaphore(AIServiceBase):
         def transform_xml_response(xml_data):
             response_dict = {
                 "subject": [],
-                "organisation": [],
+                "organization": [],
                 "person": [],
                 "event": [],
                 "place": [],
