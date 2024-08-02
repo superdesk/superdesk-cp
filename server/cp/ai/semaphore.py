@@ -153,7 +153,7 @@ class Semaphore(AIServiceBase):
             if path is not None:
                 for field in path.findall("FIELD"):
                     if field.find("CLASS").get("NAME") == "Topic":
-                        score = field.get("score", "0.47")
+                        score = field.get("score", "47")
                         parent_info.append(
                             {
                                 "name": field.get("NAME"),
@@ -233,7 +233,7 @@ class Semaphore(AIServiceBase):
                         "name": item["name"],
                         "qcode": item["id"],
                         "source": "Semaphore",
-                        "relevance": item.get("relevance", 0.47),
+                        "relevance": item.get("relevance", 47),
                         "creator": "Human",
                         "altids": {"source_name": "source_id"},
                         "original_source": "original_source_value",
