@@ -5,7 +5,6 @@ from .parser.businesswire import BusinessWireParser
 from .parser.globenewswire import GlobeNewswireParser
 from .parser.cp_onclusive import CPOnclusiveFeedParser
 from .parser.cp_transcripts import CPTranscriptsFeedParser
-from .parser.weather_parser import WeatherParser
 
 
 def init_app(app):
