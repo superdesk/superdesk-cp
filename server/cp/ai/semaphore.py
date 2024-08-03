@@ -47,7 +47,6 @@ class Item(TypedDict):
     slugline: str
 
 
-
 class Tag(TypedDict):
     altids: Dict[str, str]
     description: str
@@ -58,7 +57,6 @@ class Tag(TypedDict):
     source: str
     relevance: int
     creator: str
-
 
 
 class FeedbackData(TypedDict):
@@ -620,6 +618,7 @@ class Semaphore(AIServiceBase):
             assign_parents(response_dict, media_topic_labels, media_topic_guids)
 
             return response_dict
+
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
