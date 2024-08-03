@@ -47,6 +47,7 @@ class Item(TypedDict):
     slugline: str
 
 
+
 class Tag(TypedDict):
     altids: Dict[str, str]
     description: str
