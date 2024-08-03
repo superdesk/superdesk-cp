@@ -606,19 +606,20 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                 }}>
                                                                     {_item.name}
                                                                 </b>
-                                                            <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
-                                                                <b>{_item.name}</b>
-                                                                {
-                                                                    _item?.group?.value == null ? null : (
-                                                                        <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
-                                                                    )
-                                                                }
+                                                                <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
+                                                                    <b>{_item.name}</b>
+                                                                    {
+                                                                        _item?.group?.value == null ? null : (
+                                                                            <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
+                                                                        )
+                                                                    }
 
-                                                                {
-                                                                    _item?.description == null ? null : (
-                                                                        <p aria-label={`Description: ${_item.description}`}>{_item.description}</p>
-                                                                    )
-                                                                }
+                                                                    {
+                                                                        _item?.description == null ? null : (
+                                                                            <p aria-label={`Description: ${_item.description}`}>{_item.description}</p>
+                                                                        )
+                                                                    }
+                                                                </div>
                                                             </div>
                                                         );
                                                     }}
