@@ -54,6 +54,6 @@ jobs:
       with:
         node-version: '14.x'
 
-    - run: npm ci
+    - run: npm ci --verbose
 
     - run: npm run build
