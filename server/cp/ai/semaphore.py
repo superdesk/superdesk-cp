@@ -46,6 +46,7 @@ class Item(TypedDict):
     language: str
     slugline: str
 
+
 class Tag(TypedDict):
     altids: Dict[str, str]
     description: str
@@ -57,15 +58,6 @@ class Tag(TypedDict):
     relevance: int
     creator: str
 
-
-class Tag(TypedDict):
-    altids: Dict[str, str]
-    description: str
-    name: str
-    original_source: str
-    qcode: str
-    scheme: str
-    source: str
 
 
 class FeedbackData(TypedDict):
