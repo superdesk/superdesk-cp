@@ -597,17 +597,16 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                     width: '95%',
                                                                 }}
                                                             >
-                                                                <b style={{
-                                                                    whiteSpace: 'normal',
-                                                                    width: '100%',
-                                                                    display: 'block',
-                                                                    verticalAlign: 'top',
-                                                                    wordWrap: 'break-word',
-                                                                }}>
-                                                                    {_item.name}
-                                                                </b>
                                                                 <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
-                                                                    <b>{_item.name}</b>
+                                                                    <b style={{
+                                                                        whiteSpace: 'normal',
+                                                                        width: '100%',
+                                                                        display: 'block',
+                                                                        verticalAlign: 'top',
+                                                                        wordWrap: 'break-word',
+                                                                    }}>
+                                                                        {_item.name}
+                                                                    </b>
                                                                     {
                                                                         _item?.group?.value == null ? null : (
                                                                             <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
