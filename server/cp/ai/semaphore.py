@@ -328,14 +328,10 @@ class Semaphore(AIServiceBase):
                 return {}
 
             url = self.create_tag_url
-
             task = self.create_tag_task
-
             query_string = self.create_tag_query
-
             new_url = url + task + query_string
 
-            # Make a POST request using XML payload
             headers = {
                 "Authorization": f"bearer {self.get_access_token()}",
                 "Content-Type": "application/ld+json",
@@ -347,9 +343,10 @@ class Semaphore(AIServiceBase):
                 concept_name = item["name"]
                 scheme = item["scheme"]
 
+                id_value = None
                 if scheme == "subject":
                     id_value = "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
-                elif scheme == "organization":
+                elif scheme == "organisation":
                     id_value = "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
                 elif scheme == "places":
                     id_value = "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
@@ -357,6 +354,11 @@ class Semaphore(AIServiceBase):
                     id_value = "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
                 elif scheme == "event":
                     id_value = "http://cv.cp.org/3c493189-023f-4d14-a2f4-fc7b79735ffc"
+
+                if id_value is None:
+                    print(f"Unsupported scheme: {scheme}")
+                    result_summary["failed_tags"].append(concept_name)
+                    continue
 
                 payload = json.dumps(
                     {
@@ -379,15 +381,12 @@ class Semaphore(AIServiceBase):
 
                     if response.status_code == 409:
                         print(
-                            "Tag already exists in KMM. \
-                            Response is 409 . The Tag is: "
-                            + concept_name
+                            f"Tag already exists in KMM. Response is 409. The Tag is: {concept_name}"
                         )
                         result_summary["existing_tags"].append(concept_name)
-
                     else:
                         response.raise_for_status()
-                        print("Tag Got Created is: " + concept_name)
+                        print(f"Tag Got Created is: {concept_name}")
                         result_summary["created_tags"].append(concept_name)
                 except Exception as e:
                     print(f"Failed to create tag: {concept_name}, Error: {e}")
@@ -451,14 +450,14 @@ class Semaphore(AIServiceBase):
         def transform_xml_response(xml_data):
             response_dict = {
                 "subject": [],
-                "organization": [],
+                "organisation": [],
                 "person": [],
                 "event": [],
                 "place": [],
             }
             SCHEMES = {
                 "Place": "http://cv.cp.org/Places/",
-                "Organization": "http://cv.cp.org/Organizations/",
+                "Organisation": "http://cv.cp.org/Organizations/",
                 "Person": "http://cv.cp.org/Person/",
                 "Event": "http://cv.cp.org/Events/",
             }
@@ -583,7 +582,7 @@ class Semaphore(AIServiceBase):
                 score = elem.get("score", 0)
                 id = elem.get("id")
 
-                if name in ["Organization", "Person", "Place", "Event"]:
+                if name in ["Organisation", "Person", "Place", "Event"]:
                     add_tag(name, value, id, score)
                 elif name == "Media Topic":
                     qcode = elem.get("id")
