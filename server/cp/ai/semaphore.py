@@ -285,17 +285,38 @@ class Semaphore(AIServiceBase):
 
                 return result
 
+
             def convert_to_desired_format(input_data):
                 return {
                     "tags": {
-                        "subject": input_data["subject"],
-                        "organisation": input_data["organisation"],
-                        "person": input_data["person"],
-                        "event": input_data["event"],
-                        "place": input_data["place"],
-                        "object": [],  # Assuming no data for 'object'
+                        "subject": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["subject"]
+                        ],
+                        "organisation": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["organisation"]
+                        ],
+                        "person": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["person"]
+                        ],
+                        "event": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["event"]
+                        ],
+                        "place": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["place"]
+                        ],
+                        "object": [],
                     },
-                    "broader": {"subject": input_data["broader"]},
+                    "broader": {
+                        "subject": [
+                            capitalize_name_if_parent_none(tag)
+                            for tag in input_data["broader"]
+                        ]
+                    },
                 }
 
             root = json.loads(root)
