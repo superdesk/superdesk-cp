@@ -279,7 +279,7 @@ class Semaphore(AIServiceBase):
                                 "relevance": 47,
                                 "altids": {"source_name": "source_id"},
                                 "original_source": "original_source_value",
-                                "scheme": {"http://cv.iptc.org/newscodes/mediatopic/"},
+                                "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
                             }
                             result["broader"].append(broader_entry)
 
