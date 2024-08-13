@@ -285,7 +285,6 @@ class Semaphore(AIServiceBase):
 
                 return result
 
-
             def convert_to_desired_format(input_data):
                 return {
                     "tags": {
