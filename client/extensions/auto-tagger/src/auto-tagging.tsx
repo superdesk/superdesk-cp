@@ -503,7 +503,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                     <div className="widget-content sd-padding-all--2">
                         <div>
                             {/* Run automatically button is hidden for the next release */}
-                            <div className="form__row form__row--flex sd-padding-b--1">
+                            <div className="form__row form__row--flex sd-padding-b--1" style={{ display: 'none' }}>
                                 <ButtonGroup align="start">
                                     <Switch
                                         value={runAutomaticallyPreference}
