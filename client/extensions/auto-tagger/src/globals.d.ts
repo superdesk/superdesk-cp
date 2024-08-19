@@ -19,7 +19,7 @@ declare module 'superdesk-api' {
     }
 
     interface ISubject {
-        creator: string;
-        relevance: number;
+        creator?: string;
+        relevance?: number;
     }
 }
