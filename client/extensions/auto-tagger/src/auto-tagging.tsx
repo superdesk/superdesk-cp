@@ -14,7 +14,7 @@ import { getAutoTaggingVocabularyLabels } from './common';
 import { getExistingTags, createTagsPatch } from './data-transformations';
 import { noop } from 'lodash';
 
-export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event', 'subject']);
+export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event',]);
 
 export type INewItem = Partial<ITagUi>;
 
@@ -192,6 +192,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 // Apply the ampersand replacement
                 const safeHeadline = this.replaceAmpersand(headline);
                 const safeSlugline = this.replaceAmpersand(slugline);
+                const safeHeadlineExtended = extra ? this.replaceAmpersand(extra.headline_extended) : undefined;
 
                 httpRequestJsonLocal<{ analysis: IServerResponse }>({
                     method: 'POST',
@@ -204,6 +205,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                             slugline: safeSlugline,
                             headline: safeHeadline,
                             body_html,
+                            abstract: safeHeadlineExtended,
                             headline_extended: extra ? extra.headline_extended : undefined,
                         },
                     },
@@ -241,7 +243,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
         initializeData(preload: boolean) {
             try {
                 const existingTags = getExistingTags(this.props.article);
-                console.log("existingTags", existingTags);
                 // Check if existingTags.subject has any object with scheme value of subject or if organisation or person or event or place or object exists
                 // Added check because of destinations and distribution scheme values are present in subject array which causes the empty data to be shown
                 if (Object.keys(existingTags).length > 0 &&
@@ -252,7 +253,6 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                     (Array.isArray(existingTags.place) && existingTags.place.length > 0) ||
                     (Array.isArray(existingTags.object) && existingTags.object.length > 0)) {
                     const resClient = toClientFormat(existingTags);
-                    console.log("resClient", resClient);
                     this.setState({
                         data: { original: { analysis: resClient }, changes: { analysis: resClient } },
                     });
@@ -292,7 +292,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                 description: newItem.description,
                 source: 'manual',
                 creator: "Human",
-                relevance: 0.47,
+                relevance: 47,
                 altids: {},
                 group: {
                     ...newItem.group,
@@ -587,20 +587,38 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                         const _item: ITagUi = __item.tag;
 
                                                         return (
-                                                            <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
-                                                                <b>{_item.name}</b>
+                                                            <div 
+                                                                className="auto-tagging-widget__autocomplete-item" 
+                                                                aria-label={`Item name ${_item.name}`}
+                                                                style={{
+                                                                    display: 'flex',
+                                                                    flexDirection: 'column',
+                                                                    overflow: 'hidden',
+                                                                    width: '95%',
+                                                                }}
+                                                            >
+                                                                <div className="auto-tagging-widget__autocomplete-item" aria-label={`Item name ${_item.name}`}>
+                                                                    <b style={{
+                                                                        whiteSpace: 'normal',
+                                                                        width: '100%',
+                                                                        display: 'block',
+                                                                        verticalAlign: 'top',
+                                                                        wordWrap: 'break-word',
+                                                                    }}>
+                                                                        {_item.name}
+                                                                    </b>
+                                                                    {
+                                                                        _item?.group?.value == null ? null : (
+                                                                            <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
+                                                                        )
+                                                                    }
 
-                                                                {
-                                                                    _item?.group?.value == null ? null : (
-                                                                        <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
-                                                                    )
-                                                                }
-
-                                                                {
-                                                                    _item?.description == null ? null : (
-                                                                        <p aria-label={`Description: ${_item.description}`}>{_item.description}</p>
-                                                                    )
-                                                                }
+                                                                    {
+                                                                        _item?.description == null ? null : (
+                                                                            <p aria-label={`Description: ${_item.description}`}>{_item.description}</p>
+                                                                        )
+                                                                    }
+                                                                </div>
                                                             </div>
                                                         );
                                                     }}
