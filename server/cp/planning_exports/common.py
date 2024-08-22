@@ -225,12 +225,20 @@ def get_event_formatted_dates(event: Dict[str, Any]) -> str:
     tz = pytz.timezone(tz_name)
 
     if all_day:
-        # all day
-        return date_short(start)
+        # All day event
+        return (
+            date_short(start)
+            if start.date() == end.date()
+            else "{} - {}".format(date_short(start), date_short(end))
+        )
 
     if no_end_time:
-        # no end time
-        return "{} {}".format(time_short(start, tz), date_short(start, tz))
+        # no end time event
+        return (
+            "{} {}".format(time_short(start, tz), date_short(start, tz))
+            if start.date() == end.date()
+            else "{} - {}".format(date_short(start, tz), date_short(end, tz))
+        )
 
     if start + timedelta(minutes=DAY_IN_MINUTES) < end:
         # Multi day event
@@ -245,7 +253,6 @@ def get_event_formatted_dates(event: Dict[str, Any]) -> str:
         # start and end dates are the same
         return "{} {}".format(time_short(start, tz), date_short(start, tz))
 
-    # Default
     return "{} - {}, {}".format(
         time_short(start, tz), time_short(end, tz), date_short(start, tz)
     )
