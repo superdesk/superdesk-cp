@@ -439,5 +439,5 @@ PICTURE_METADATA_MAPPING = {
     "description_text": "Description",
 }
 
-TIME_FORMAT_SHORT = "%H:%M"
-DATE_FORMAT_SHORT = "%d/%m/%Y"
+TIME_FORMAT_SHORT = "%I:%M %p"
+DATE_FORMAT_SHORT = "%Y-%m-%d"

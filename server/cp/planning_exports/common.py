@@ -200,7 +200,8 @@ def time_short(datetime: datetime, tz=None):
         formatted_datetime = (
             parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
         )
-        return formatted_datetime.strftime("%I:%M %p")
+        
+        return formatted_datetime.strftime(app.config.get("TIME_FORMAT_SHORT", "%I:%M %p"))
 
 
 def date_short(datetime: datetime, tz=None):
@@ -208,7 +209,7 @@ def date_short(datetime: datetime, tz=None):
         formatted_datetime = (
             parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
         )
-        return formatted_datetime.strftime("%Y-%m-%d")
+        return formatted_datetime.strftime(app.config.get("DATE_FORMAT_SHORT","%Y-%m-%d"))
 
 
 def get_event_formatted_dates(event: Dict[str, Any]) -> str:
