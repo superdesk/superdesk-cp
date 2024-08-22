@@ -30,9 +30,7 @@ export function getTagsListComponent(superdesk: ISuperdesk): React.ComponentType
             ).result;
 
             const tagListItem = (node: ITreeNode<ITagUi>) => {
-                // use this to debug the node
                 const isRootNodeWithChildren = node.parent == null && node.children != null;
-                // Entites don't have children and parent
                 const isNodeEntity = node.parent == null && node.children == null;
                 const item = node.value;
 

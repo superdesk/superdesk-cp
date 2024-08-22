@@ -46,10 +46,12 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
     let tags = OrderedMap<string, ITagUi>();
 
     response.subject?.forEach((item) => {
+
         const {name, description, qcode, source, altids, aliases, original_source, parent, scheme, relevance, creator} = item;
 
         // Checking if the item has original_source to filter auto tagger tags
         if (original_source != null) {
+
             if (scheme === 'http://cv.iptc.org/newscodes/mediatopic/' || scheme === 'subject') {
                 const tag: ITagUi = {
                     name,
@@ -67,7 +69,6 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-
                 tags = tags.set(tag.qcode, tag);
             } else {
                 const tag: ITagUi = {
@@ -86,7 +87,6 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     relevance,
                     creator,
                 };
-
                 tags = tags.set(tag.qcode, tag);
             }
         }
