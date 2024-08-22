@@ -1,7 +1,15 @@
 from flask import current_app as app
+from typing import Union, Dict, Any
+from datetime import datetime
+import pytz
+from eve.utils import str_to_date
+import arrow
 
 from superdesk import get_resource_service
 from superdesk.utc import utc_to_local
+
+MULTI_DAY_SECONDS = 24 * 60 * 60  # Number of seconds for an multi-day event
+ALL_DAY_SECONDS = MULTI_DAY_SECONDS - 1  # Number of seconds for an all-day event
 
 
 def get_sort_date(item):
@@ -18,6 +26,7 @@ def set_item_metadata(item):
     set_item_dates(item, event)
     set_item_location(item, event)
     set_item_coverages(item)
+    item["formatted_time"] = get_event_formatted_dates(item)
 
 
 def set_item_title(item, event):
@@ -175,3 +184,67 @@ def set_item_coverages(item):
     coverage_types = ", ".join(item.get("coverages") or [])
     if coverage_types:
         item["coverage_types"] = f"<br>Coverage: {coverage_types}"
+
+
+def parse_date(datetime: Union[str, datetime]) -> datetime:
+    """Return datetime instance for datetime."""
+    if isinstance(datetime, str):
+        try:
+            return str_to_date(datetime)
+        except ValueError:
+            return arrow.get(datetime).datetime
+    return datetime
+
+
+def time_short(datetime: datetime, tz: pytz.BaseTzInfo):
+    if datetime:
+        return (
+            parse_date(datetime)
+            .astimezone(tz)
+            .strftime(app.config.get("TIME_FORMAT_SHORT", "%H:%M"))
+        )
+
+
+def date_short(datetime: datetime, tz: pytz.BaseTzInfo):
+    if datetime:
+        return (
+            parse_date(datetime)
+            .astimezone(tz)
+            .strftime(app.config.get("DATE_FORMAT_SHORT", "%d/%m/%Y"))
+        )
+
+
+def get_event_formatted_dates(event: Dict[str, Any]) -> str:
+    start = event.get("dates", {}).get("start")
+    end = event.get("dates", {}).get("end")
+    all_day = event.get("dates", {}).get("all_day", False)
+    tz_name: str = event.get("dates", {}).get("tz", app.config.get("DEFAULT_TIMEZONE"))
+    tz = pytz.timezone(tz_name)
+
+    duration_seconds = int((end - start).total_seconds())
+
+    if all_day and duration_seconds == ALL_DAY_SECONDS:
+        # All day event
+        return "{}".format(date_short(start, tz))
+
+    if duration_seconds >= MULTI_DAY_SECONDS:
+        # Multi day event
+        return "{} {} - {} {}".format(
+            time_short(start, tz),
+            date_short(start, tz),
+            time_short(end, tz),
+            date_short(end, tz),
+        )
+
+    if start == end:
+        # start and end are the same
+
+        if all_day:
+            # all_day true
+            return "{}".format(date_short(start, tz))
+    
+        return "{} {}".format(time_short(start, tz), date_short(start, tz))
+
+    return "{} - {}, {}".format(
+        time_short(start, tz), time_short(end, tz), date_short(start, tz)
+    )
