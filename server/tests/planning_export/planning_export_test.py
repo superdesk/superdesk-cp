@@ -60,11 +60,11 @@ class ParserTestCase(unittest.TestCase):
                 "news_events_list_export.html", items=events, app=self.app
             )
         self.assertIn(
-            "<p>First<br> _ 06:30 P 2024-04-22 - 11:30 P 2024-04-24</p>",
+            "<p>First<br> _ 06:30 AM 2024-04-22 - 11:30 AM 2024-04-24</p>",
             template_data,
         )
         self.assertIn(
-            "<p>third<br> _ 08:00 P 2024-07-19</p>",
+            "<p>third<br> _ 08:00 PM 2024-07-19</p>",
             template_data,
         )
         self.assertIn(

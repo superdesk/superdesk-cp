@@ -200,7 +200,7 @@ def time_short(datetime: datetime, tz=None):
         formatted_datetime = (
             parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
         )
-        return formatted_datetime.strftime("%I:%M %P")
+        return formatted_datetime.strftime("%I:%M %p")
 
 
 def date_short(datetime: datetime, tz=None):
