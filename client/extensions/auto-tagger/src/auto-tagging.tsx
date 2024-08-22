@@ -477,6 +477,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                     <AuthoringWidgetHeading
                         widgetName={label}
                         editMode={dirty}
+                        widgetId='auto-tagger'
                     >
                         {
                             data === 'loading' || data === 'not-initialized' || !dirty ? null : (
