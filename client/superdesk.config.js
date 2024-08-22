@@ -6,10 +6,6 @@
  */
 module.exports = function(grunt) {
     return {
-        server: {
-            "url": 'https://scp-uat.test.superdesk.org/api',
-            "ws": 'ws://scp-uat.test.superdesk.org//ws',
-        },
         apps: [
             'superdesk.analytics',
             'superdesk-planning',
