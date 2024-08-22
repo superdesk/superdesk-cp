@@ -6,6 +6,10 @@
  */
 module.exports = function(grunt) {
     return {
+        server: {
+            "url": 'https://scp-uat.test.superdesk.org/api',
+            "ws": 'ws://scp-uat.test.superdesk.org//ws',
+        },
         apps: [
             'superdesk.analytics',
             'superdesk-planning',
@@ -25,7 +29,7 @@ module.exports = function(grunt) {
         },
 
         editor3: { browserSpellCheck: true, },
-        
+
         langOverride: {
             'en': {
                 'Dateline': 'Placeline',
@@ -73,7 +77,7 @@ module.exports = function(grunt) {
                 '18th update': '18e Lead',
                 '19th update': '19e Lead',
                 '20th update': '20e Lead'
-            }      
+            }
         },
 
         features: {
@@ -97,7 +101,7 @@ module.exports = function(grunt) {
             noPublishOnAuthoringDesk: true,
             autorefreshContent: true,
         },
-        
+
         item_profile: {
             change_profile: 1
         },
@@ -107,7 +111,7 @@ module.exports = function(grunt) {
             planning: true,
             assignments: true,
         },
-        
+
         search_cvs: [
             {id: 'categories', name:'Wire', field: 'anpa_category', list: 'categories'},
             {id: 'subject_custom', name:'Index', field: 'subject', list: 'subject_custom'},
@@ -115,7 +119,7 @@ module.exports = function(grunt) {
             {id: 'language', name:'Language', field: 'language', list: 'languages'},
             {id: 'tag', name:'Tag', field: 'subject', list: 'tag'}
         ],
-        
+
         search: {
             'slugline': 1,
             'headline': 1,
@@ -131,13 +135,13 @@ module.exports = function(grunt) {
             'marked_desks': 1,
             'scheduled': 1
         },
-        
+
         list: {
             priority: [
                 'urgency'
             ],
             firstLine: [
-                'slugline',  
+                'slugline',
                 'takekey',
                 'highlights',
                 'markedDesks',
@@ -163,7 +167,7 @@ module.exports = function(grunt) {
                 'associatedItems',
                 'used'
             ]
-        },        
+        },
 
         monitoring: {
             scheduled: {
@@ -172,6 +176,6 @@ module.exports = function(grunt) {
                     allowed_fields_to_sort: [ 'publish_schedule' ]
                 }
             },
-        }        
+        }
     };
 };
