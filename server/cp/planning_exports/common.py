@@ -1,6 +1,6 @@
 from flask import current_app as app
 from typing import Union, Dict, Any
-from datetime import datetime
+from datetime import datetime, timedelta
 import pytz
 from eve.utils import str_to_date
 import arrow
@@ -8,8 +8,7 @@ import arrow
 from superdesk import get_resource_service
 from superdesk.utc import utc_to_local
 
-MULTI_DAY_SECONDS = 24 * 60 * 60  # Number of seconds for an multi-day event
-ALL_DAY_SECONDS = MULTI_DAY_SECONDS - 1  # Number of seconds for an all-day event
+DAY_IN_MINUTES = 24 * 60 - 1  # Number of minutes in a Day
 
 
 def get_sort_date(item):
@@ -196,38 +195,39 @@ def parse_date(datetime: Union[str, datetime]) -> datetime:
     return datetime
 
 
-def time_short(datetime: datetime, tz: pytz.BaseTzInfo):
+def time_short(datetime: datetime, tz=None):
     if datetime:
-        return (
-            parse_date(datetime)
-            .astimezone(tz)
-            .strftime(app.config.get("TIME_FORMAT_SHORT", "%H:%M"))
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
         )
+        return formatted_datetime.strftime("%I:%M %P")
 
 
-def date_short(datetime: datetime, tz: pytz.BaseTzInfo):
+def date_short(datetime: datetime, tz=None):
     if datetime:
-        return (
-            parse_date(datetime)
-            .astimezone(tz)
-            .strftime(app.config.get("DATE_FORMAT_SHORT", "%d/%m/%Y"))
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
         )
+        return formatted_datetime.strftime("%Y-%m-%d")
 
 
 def get_event_formatted_dates(event: Dict[str, Any]) -> str:
     start = event.get("dates", {}).get("start")
     end = event.get("dates", {}).get("end")
     all_day = event.get("dates", {}).get("all_day", False)
+    no_end_time = event.get("dates", {}).get("no_end_time", False)
     tz_name: str = event.get("dates", {}).get("tz", app.config.get("DEFAULT_TIMEZONE"))
     tz = pytz.timezone(tz_name)
 
-    duration_seconds = int((end - start).total_seconds())
+    if all_day:
+        # all day
+        return date_short(start)
 
-    if all_day and duration_seconds == ALL_DAY_SECONDS:
-        # All day event
-        return "{}".format(date_short(start, tz))
+    if no_end_time:
+        # no end time
+        return "{} {}".format(time_short(start, tz), date_short(start, tz))
 
-    if duration_seconds >= MULTI_DAY_SECONDS:
+    if start + timedelta(minutes=DAY_IN_MINUTES) < end:
         # Multi day event
         return "{} {} - {} {}".format(
             time_short(start, tz),
@@ -237,12 +237,7 @@ def get_event_formatted_dates(event: Dict[str, Any]) -> str:
         )
 
     if start == end:
-        # start and end are the same
-
-        if all_day:
-            # all_day true
-            return "{}".format(date_short(start, tz))
-
+        # start and end dates are the same
         return "{} {}".format(time_short(start, tz), date_short(start, tz))
 
     return "{} - {}, {}".format(
