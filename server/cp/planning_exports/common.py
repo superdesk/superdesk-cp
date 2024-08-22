@@ -242,7 +242,7 @@ def get_event_formatted_dates(event: Dict[str, Any]) -> str:
         if all_day:
             # all_day true
             return "{}".format(date_short(start, tz))
-    
+
         return "{} {}".format(time_short(start, tz), date_short(start, tz))
 
     return "{} - {}, {}".format(
