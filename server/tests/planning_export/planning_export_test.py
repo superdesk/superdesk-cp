@@ -47,6 +47,36 @@ events = [
             ),
         },
     },
+    {
+        "type": "event",
+        "calendars": [{"is_active": True, "name": "Sport", "qcode": "sport"}],
+        "language": "en",
+        "name": "fourth",
+        "dates": {
+            "start": datetime.datetime(
+                2024, 4, 22, 10, 30, 55, tzinfo=datetime.timezone.utc
+            ),
+            "end": datetime.datetime(
+                2024, 4, 24, 15, 30, 59, tzinfo=datetime.timezone.utc
+            ),
+            "no_end_time": True,
+        },
+    },
+    {
+        "type": "event",
+        "calendars": [{"is_active": True, "name": "Sport", "qcode": "sport"}],
+        "language": "en",
+        "name": "fifth",
+        "dates": {
+            "start": datetime.datetime(
+                2024, 4, 22, 10, 30, 55, tzinfo=datetime.timezone.utc
+            ),
+            "end": datetime.datetime(
+                2024, 4, 22, 15, 30, 59, tzinfo=datetime.timezone.utc
+            ),
+            "no_end_time": True,
+        },
+    },
 ]
 
 
@@ -69,5 +99,13 @@ class ParserTestCase(unittest.TestCase):
         )
         self.assertIn(
             "<p>second<br> _ 2024-07-20</p>",
+            template_data,
+        )
+        self.assertIn(
+            "<p>fourth<br> _ 06:30 AM 2024-04-22 - 2024-04-24</p>",
+            template_data,
+        )
+        self.assertIn(
+            "<p>fifth<br> _ 06:30 AM 2024-04-22</p>",
             template_data,
         )

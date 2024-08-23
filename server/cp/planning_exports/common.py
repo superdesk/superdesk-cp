@@ -216,6 +216,16 @@ def date_short(datetime: datetime, tz=None):
         )
 
 
+def format_datetime(datetime: datetime, tz=None):
+    if datetime:
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
+        )
+        return formatted_datetime.strftime(
+            app.config.get("DATETIME_FORMAT", "%I:%M %p %Y-%m-%d")
+        )
+
+
 def get_event_formatted_dates(event: Dict[str, Any]) -> str:
     start = event.get("dates", {}).get("start")
     end = event.get("dates", {}).get("end")
@@ -233,25 +243,20 @@ def get_event_formatted_dates(event: Dict[str, Any]) -> str:
         )
 
     if no_end_time:
-        # no end time event
+        # No end time event (only show start date-time and end date)
         return (
-            "{} {}".format(time_short(start, tz), date_short(start, tz))
+            format_datetime(start, tz)
             if start.date() == end.date()
-            else "{} - {}".format(date_short(start, tz), date_short(end, tz))
+            else "{} - {}".format(format_datetime(start, tz), date_short(end))
         )
 
     if start + timedelta(minutes=DAY_IN_MINUTES) < end:
         # Multi day event
-        return "{} {} - {} {}".format(
-            time_short(start, tz),
-            date_short(start, tz),
-            time_short(end, tz),
-            date_short(end, tz),
-        )
+        return "{} - {}".format(format_datetime(start, tz), format_datetime(end, tz))
 
     if start == end:
         # start and end dates are the same
-        return "{} {}".format(time_short(start, tz), date_short(start, tz))
+        return "{}".format(format_datetime(start, tz))
 
     return "{} - {}, {}".format(
         time_short(start, tz), time_short(end, tz), date_short(start, tz)
