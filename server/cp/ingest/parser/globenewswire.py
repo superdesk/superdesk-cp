@@ -11,13 +11,13 @@ SOURCE = "Globenewswire"
 KEYWORD_ROLE = "MWKeyRole:Ticker"
 
 DESCRIPTION = {
-    "en": "Press Release",
-    "fr": "Communiqué",
+    "en-CA": "Press Release",
+    "fr-CA": "Communiqué",
 }
 
 BODY_FOOTER = {
-    "en": "NEWS RELEASE TRANSMITTED BY Globe Newswire",
-    "fr": "COMMUNIQUE DE PRESSE TRANSMIS PAR Globe Newswire",
+    "en-CA": "NEWS RELEASE TRANSMITTED BY Globe Newswire",
+    "fr-CA": "COMMUNIQUE DE PRESSE TRANSMIS PAR Globe Newswire",
 }
 
 NS = {
@@ -80,11 +80,11 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
     def parse_content_meta(self, tree, item):
         meta = super().parse_content_meta(tree, item)
 
-        item["language"] = item["language"].split("-")[0]
+        item["language"] = "{}-CA".format(item["language"].split("-")[0])
         item["description_text"] = DESCRIPTION[item["language"]]
 
         item["slugline"] = "GNW-{lang}-{time}--{symbols}".format(
-            lang=item["language"],
+            lang=item["language"].split("-")[0],
             time=meta.find(self.qname("contentCreated")).text[17:19],
             symbols="-".join(self._get_stock_symbols(tree)),
         )

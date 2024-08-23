@@ -19,7 +19,7 @@ class GlobeNewswireParserTestCase(ParserTestCase):
         self.assertIsNotNone(item)
 
         self.assertIsNone(item.get("byline"))
-        self.assertEqual("en", item["language"])
+        self.assertEqual("en-CA", item["language"])
         self.assertEqual("usable", item["pubstatus"])
         self.assertEqual("GNW-en-10--AXL", item["slugline"])
         self.assertEqual(["TSX VENTURE:AXL", "OTC:NTGSF"], item["keywords"])
@@ -63,7 +63,7 @@ class GlobeNewswireParserTestCase(ParserTestCase):
     def test_fr(self):
         item = self.parse("fr.xml")
         self.assertIsNotNone(item)
-        self.assertEqual("fr", item["language"])
+        self.assertEqual("fr-CA", item["language"])
         self.assertEqual("Communiqué", item["description_text"])
 
         item["unique_id"] = 1
