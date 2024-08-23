@@ -1,7 +1,14 @@
 from flask import current_app as app
+from typing import Union, Dict, Any
+from datetime import datetime, timedelta
+import pytz
+from eve.utils import str_to_date
+import arrow
 
 from superdesk import get_resource_service
 from superdesk.utc import utc_to_local
+
+DAY_IN_MINUTES = 24 * 60 - 1  # Number of minutes in a Day
 
 
 def get_sort_date(item):
@@ -18,6 +25,7 @@ def set_item_metadata(item):
     set_item_dates(item, event)
     set_item_location(item, event)
     set_item_coverages(item)
+    item["formatted_time"] = get_event_formatted_dates(item)
 
 
 def set_item_title(item, event):
@@ -175,3 +183,81 @@ def set_item_coverages(item):
     coverage_types = ", ".join(item.get("coverages") or [])
     if coverage_types:
         item["coverage_types"] = f"<br>Coverage: {coverage_types}"
+
+
+def parse_date(datetime: Union[str, datetime]) -> datetime:
+    """Return datetime instance for datetime."""
+    if isinstance(datetime, str):
+        try:
+            return str_to_date(datetime)
+        except ValueError:
+            return arrow.get(datetime).datetime
+    return datetime
+
+
+def time_short(datetime: datetime, tz=None):
+    if datetime:
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
+        )
+
+        return formatted_datetime.strftime(
+            app.config.get("TIME_FORMAT_SHORT", "%I:%M %p")
+        )
+
+
+def date_short(datetime: datetime, tz=None):
+    if datetime:
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
+        )
+        return formatted_datetime.strftime(
+            app.config.get("DATE_FORMAT_SHORT", "%Y-%m-%d")
+        )
+
+
+def format_datetime(datetime: datetime, tz=None):
+    if datetime:
+        formatted_datetime = (
+            parse_date(datetime) if not tz else parse_date(datetime).astimezone(tz)
+        )
+        return formatted_datetime.strftime(
+            app.config.get("DATETIME_FORMAT", "%I:%M %p %Y-%m-%d")
+        )
+
+
+def get_event_formatted_dates(event: Dict[str, Any]) -> str:
+    start = event.get("dates", {}).get("start")
+    end = event.get("dates", {}).get("end")
+    all_day = event.get("dates", {}).get("all_day", False)
+    no_end_time = event.get("dates", {}).get("no_end_time", False)
+    tz_name: str = event.get("dates", {}).get("tz", app.config.get("DEFAULT_TIMEZONE"))
+    tz = pytz.timezone(tz_name)
+
+    if all_day:
+        # All day event
+        return (
+            date_short(start)
+            if start.date() == end.date()
+            else "{} - {}".format(date_short(start), date_short(end))
+        )
+
+    if no_end_time:
+        # No end time event (only show start date-time and end date)
+        return (
+            format_datetime(start, tz)
+            if start.date() == end.date()
+            else "{} - {}".format(format_datetime(start, tz), date_short(end))
+        )
+
+    if start + timedelta(minutes=DAY_IN_MINUTES) < end:
+        # Multi day event
+        return "{} - {}".format(format_datetime(start, tz), format_datetime(end, tz))
+
+    if start == end:
+        # start and end dates are the same
+        return "{}".format(format_datetime(start, tz))
+
+    return "{} - {}, {}".format(
+        time_short(start, tz), time_short(end, tz), date_short(start, tz)
+    )

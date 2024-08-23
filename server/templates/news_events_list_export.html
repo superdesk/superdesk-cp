@@ -4,7 +4,7 @@
 {% if items %}
 <p><b>{{ group }}</b></p>
 {% for item in items %}
-<p>{{ item.title }}<br>{{ item.address.name }} _ {{ item.description }}{{ item.local_time }}{{ item.address.full }}{{ item.coverage_types }}</p>
+<p>{{ item.title }}<br>{{ item.address.name }} {{ item.description }}{{ item.formatted_time }}{{ item.address.full }}{{ item.coverage_types }}</p>
 {% endfor %}
 {% endif %}
 {% endfor %}

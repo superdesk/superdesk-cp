@@ -438,3 +438,7 @@ PICTURE_METADATA_MAPPING = {
     "extra.filename": "JobId",
     "description_text": "Description",
 }
+
+TIME_FORMAT_SHORT = "%I:%M %p"
+DATE_FORMAT_SHORT = "%Y-%m-%d"
+DATETIME_FORMAT = "%I:%M %p %Y-%m-%d"
