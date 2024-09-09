@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "cp.ultrad",
     "cp.planning_exports",
     "cp.set_province_on_publish",
+    "cp.set_byline_on_publish",
     "cp.ai.semaphore",
 ]
 
@@ -431,3 +432,13 @@ SEMAPHORE_GET_PARENT_URL = os.getenv("SEMAPHORE_GET_PARENT_URL")
 SEMAPHORE_CREATE_TAG_URL = os.getenv("SEMAPHORE_CREATE_TAG_URL")
 SEMAPHORE_CREATE_TAG_TASK = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 SEMAPHORE_CREATE_TAG_QUERY = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+
+PICTURE_METADATA_MAPPING = {
+    "slugline": "Title",
+    "extra.filename": "JobId",
+    "description_text": "Description",
+}
+
+TIME_FORMAT_SHORT = "%I:%M %p"
+DATE_FORMAT_SHORT = "%Y-%m-%d"
+DATETIME_FORMAT = "%I:%M %p %Y-%m-%d"

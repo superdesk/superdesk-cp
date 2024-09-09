@@ -4,7 +4,7 @@ pep8
 pytest
 flake8
 nose
-mypy<=1.10.0
+mypy<=1.11.2
 httmock==1.4.0
 wooper==0.4.4
 requests_mock
@@ -12,5 +12,5 @@ black~=24.0
 
 types-python-dateutil
 types-pytz
-types-requests
+types-requests<2.32.0.20240906  # https://github.com/python/typeshed/issues/10825
 types-six

@@ -191,7 +191,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                 "keywords": ["TSX VENTURE:AXL", "OTC:NTGSF"],
                 "anpa_category": [
                     {
-                        "name": globenewswire.DESCRIPTION["en"],
+                        "name": globenewswire.DESCRIPTION["en-CA"],
                         "qcode": "p",
                     }
                 ],
