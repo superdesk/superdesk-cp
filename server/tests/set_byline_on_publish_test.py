@@ -13,3 +13,20 @@ def test_set_byline_on_publish():
     set_byline_on_publish(None, item, updates)
     assert item["byline"] == "foo"
     assert "byline" not in updates
+
+    item = {
+        "authors": [
+            {
+                "_id": ["64d13ff3446949ccb5348bdc", "writer"],
+                "role": "writer",
+                "name": "Writer",
+                "parent": "64d13ff3446949ccb5348bdc",
+                "sub_label": "foo bar",
+            }
+        ]
+    }
+
+    updates = {}
+    set_byline_on_publish(None, item, updates)
+    assert item["byline"] == "foo bar"
+    assert updates["byline"] == item["byline"]
