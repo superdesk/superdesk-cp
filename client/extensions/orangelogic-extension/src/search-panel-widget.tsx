@@ -51,13 +51,15 @@ export const searchPanelWidgetFactory = (
 
             return (
                 <fieldset>
-                    <div className="field">
-                        <label className="search-label"></label>
+                    <div className="field flex-grid flex-grid--boxed-small flex-grid--small-2 sd-margin-t--2">
                         {mediaTypes.map((type) => (
-                            <button key={type.type}
-                                className={'btn btn--primary' + (this.isActive(type.type) ? ' btn--active' : '')}
+                            <button
+                                key={type.type}
+                                className={'toggle-button' + (this.isActive(type.type) ? ' toggle-button--active' : '')}
                                 onClick={() => this.toggleMediaType(type.type)}
-                            >{type.label}</button>
+                            >
+                                {type.label}
+                            </button>
                         ))}
                     </div>
                     <div className="field">
