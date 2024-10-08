@@ -26,9 +26,9 @@ blinker==1.8.2
     #   flask-mail
     #   raven
     #   superdesk-core
-boto3==1.35.30
+boto3==1.35.35
     # via superdesk-core
-botocore==1.35.30
+botocore==1.35.35
     # via
     #   boto3
     #   s3transfer
@@ -130,7 +130,7 @@ icalendar==5.0.13
     # via superdesk-planning
 idna==3.10
     # via requests
-isodate==0.6.1
+isodate==0.7.0
     # via python3-saml
 itsdangerous==1.1.0
     # via
@@ -247,7 +247,7 @@ redis==5.0.8
     #   superdesk-core
 regex==2024.7.24
     # via superdesk-core
-reportlab==4.2.4
+reportlab==4.2.5
     # via superdesk-core
 requests==2.32.3
     # via
@@ -267,12 +267,11 @@ simplejson==3.19.3
 six==1.16.0
     # via
     #   flask-oidc-ex
-    #   isodate
     #   oauth2client
     #   python-dateutil
 superdesk-analytics @ git+https://github.com/superdesk/superdesk-analytics.git@v2.8.0
     # via -r requirements.in
-superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v2.8.0
+superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v2.8.1
     # via
     #   -r requirements.in
     #   superdesk-core
