@@ -4,7 +4,8 @@
     "dependencies": {
         "superdesk-analytics": "github:superdesk/superdesk-analytics#v2.8.0",
         "superdesk-core": "github:superdesk/superdesk-client-core#v2.8.0",
-        "superdesk-planning": "github:superdesk/superdesk-planning#v2.8.0"
+        "superdesk-planning": "github:superdesk/superdesk-planning#v2.8.0",
+        "superdesk-ui-framework": "^3.1.22"
     },
     "devDependencies": {
         "@superdesk/build-tools": "^1.0.19"
