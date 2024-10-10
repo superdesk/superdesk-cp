@@ -26,9 +26,9 @@ blinker==1.8.2
     #   flask-mail
     #   raven
     #   superdesk-core
-boto3==1.35.30
+boto3==1.35.36
     # via superdesk-core
-botocore==1.35.30
+botocore==1.35.36
     # via
     #   boto3
     #   s3transfer
@@ -51,7 +51,7 @@ chardet==5.2.0
     # via
     #   reportlab
     #   superdesk-core
-charset-normalizer==3.3.2
+charset-normalizer==3.4.0
     # via requests
 ciso8601==2.3.1
     # via eve-elastic
@@ -122,7 +122,7 @@ hachoir==3.3.0
     # via superdesk-core
 hermescache==1.0.0
     # via superdesk-core
-honcho==1.1.0
+honcho==2.0.0
     # via -r requirements.in
 httplib2==0.22.0
     # via oauth2client
@@ -130,7 +130,7 @@ icalendar==5.0.13
     # via superdesk-planning
 idna==3.10
     # via requests
-isodate==0.6.1
+isodate==0.7.2
     # via python3-saml
 itsdangerous==1.1.0
     # via
@@ -247,7 +247,7 @@ redis==5.0.8
     #   superdesk-core
 regex==2024.7.24
     # via superdesk-core
-reportlab==4.2.4
+reportlab==4.2.5
     # via superdesk-core
 requests==2.32.3
     # via
@@ -258,7 +258,7 @@ requests-oauthlib==2.0.0
     # via python-twitter
 rsa==4.9
     # via oauth2client
-s3transfer==0.10.2
+s3transfer==0.10.3
     # via boto3
 sgmllib3k==1.0.0
     # via feedparser
@@ -267,18 +267,17 @@ simplejson==3.19.3
 six==1.16.0
     # via
     #   flask-oidc-ex
-    #   isodate
     #   oauth2client
     #   python-dateutil
 superdesk-analytics @ git+https://github.com/superdesk/superdesk-analytics.git@v2.8.0
     # via -r requirements.in
-superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v2.8.0
+superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.8
     # via
     #   -r requirements.in
     #   superdesk-core
 superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@v2.8.0
     # via -r requirements.in
-types-python-dateutil==2.9.0.20240906
+types-python-dateutil==2.9.0.20241003
     # via arrow
 typing-extensions==4.12.2
     # via
