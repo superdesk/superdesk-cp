@@ -26,9 +26,9 @@ blinker==1.8.2
     #   flask-mail
     #   raven
     #   superdesk-core
-boto3==1.35.36
+boto3==1.35.42
     # via superdesk-core
-botocore==1.35.36
+botocore==1.35.42
     # via
     #   boto3
     #   s3transfer
@@ -208,7 +208,7 @@ pymongo==3.11.4
     #   eve
     #   mongolock
     #   superdesk-core
-pyparsing==3.1.4
+pyparsing==3.2.0
     # via httplib2
 python-dateutil==2.9.0.post0
     # via
