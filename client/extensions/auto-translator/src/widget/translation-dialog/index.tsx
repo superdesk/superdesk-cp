@@ -31,6 +31,7 @@ import {
   getObjectKeys,
   isArticle,
   isNotEmptyObject,
+  TRANSLATION_LANGUAGES,
   TRANSLATION_TYPES,
 } from "../../utilities";
 import { Footer } from "./footer";
@@ -50,6 +51,8 @@ type FormInputProps = Record<TranslationFields, string> & {
 type TranslationDialogFormProps = {
   writethru: string;
   translationType: TranslationType;
+  translateFrom: keyof typeof TRANSLATION_LANGUAGES;
+  translateTo: keyof typeof TRANSLATION_LANGUAGES;
   translations: {
     [key: string]: {
       original: FormInputProps;
@@ -94,6 +97,8 @@ const getTranslationDialogFormInitialValues = (
   return {
     writethru: "original" as const,
     translationType: "basic",
+    translateFrom: workingArticle?.language ?? "en",
+    translateTo: "fr",
     translations: {
       original: {
         original: {
@@ -279,8 +284,8 @@ export const TranslationDialog = ({
           {}
         ),
       },
-      target_language: "fr",
-      source_language: "en",
+      target_language: values.translateTo,
+      source_language: values.translateFrom,
       translation_type: values.translationType,
     } as const;
 
@@ -350,6 +355,24 @@ export const TranslationDialog = ({
                     {label}
                   </option>
                 ))}
+              </FormSelect>
+              <FormSelect name="translateFrom" label="Translate From">
+                {getObjectEntries(TRANSLATION_LANGUAGES).map(
+                  ([value, label]) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  )
+                )}
+              </FormSelect>
+              <FormSelect name="translateTo" label="Translate To">
+                {getObjectEntries(TRANSLATION_LANGUAGES).map(
+                  ([value, label]) => (
+                    <option value={value} key={value}>
+                      {label}
+                    </option>
+                  )
+                )}
               </FormSelect>
               <Container className="items-end">
                 <Button

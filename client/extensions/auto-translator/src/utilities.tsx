@@ -9,6 +9,11 @@ export const TRANSLATION_TYPES = {
   deepl: "DeepL",
 } as const;
 
+export const TRANSLATION_LANGUAGES = {
+  en: "English",
+  fr: "French",
+};
+
 export const isArticle = (
   article: IArticle | IRelatedArticle
   // @ts-ignore superdesk type can't be narrowed from IRelatedArticle
