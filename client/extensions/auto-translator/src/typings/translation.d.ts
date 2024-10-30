@@ -1,12 +1,16 @@
-import { TRANSLATION_METHODS } from "../utilities";
+import { TRANSLATION_TYPES } from "../utilities";
+
+type TranslationImageField = `media-gallery--${number}`;
 
 type TranslationFields = "headline" | "headline_extended" | "body_html";
 
-type TranslationType = keyof typeof TRANSLATION_METHODS;
+type TranslationType = keyof typeof TRANSLATION_TYPES;
 
 export type TranslationPayload = {
   body_html: "";
-  payload: Record<TranslationFields, string>;
+  payload: Record<TranslationFields, string> & {
+    images?: Record<TranslationImageField, string>;
+  };
   target_language: string;
   source_language: string;
   translation_type: TranslationType;
@@ -17,9 +21,13 @@ export type TranslationResponse = {
   _created: string;
   _etag: string;
   analysis: {
-    translated_payload: Record<TranslationFields, string>;
+    translated_payload: Record<TranslationFields, string> & {
+      images?: Record<TranslationImageField, string>;
+    };
     body_html: "";
-    payload: Record<TranslationFields, string>;
+    payload: Record<TranslationFields, string> & {
+      images?: Record<TranslationImageField, string>;
+    };
     target_language: string;
     source_language: string;
     translation_type: TranslationType;
