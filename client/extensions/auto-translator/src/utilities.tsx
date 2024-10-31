@@ -17,7 +17,7 @@ export const TRANSLATION_LANGUAGES = {
 export const isArticle = (
   article: IArticle | IRelatedArticle
   // @ts-ignore superdesk type can't be narrowed from IRelatedArticle
-): article is IArticle => Boolean(article?.unique_id);
+): article is IArticle => Boolean(article?.guid);
 
 export const isNotEmptyObject = (value: any): value is Record<string, any> =>
   typeof value === "object" && value !== null && Object.keys(value).length > 0;
