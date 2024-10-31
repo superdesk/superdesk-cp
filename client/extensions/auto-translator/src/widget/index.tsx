@@ -1,13 +1,13 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
 import { IArticleSideWidgetComponentType } from "superdesk-api";
-import { WIDGET_ID } from "../utilities";
-import { superdesk } from "../superdesk";
-import { TranslationDialog } from "./translation-dialog";
 import {
   IllustrationButton,
   SvgIconIllustration,
 } from "superdesk-ui-framework/react";
+import { superdesk } from "../superdesk";
+import { WIDGET_ID } from "../utilities";
+import { TranslationDialog } from "./translation-dialog";
 
 type AutoTranslatorWidgetProps = { isTranslationOpen: boolean };
 

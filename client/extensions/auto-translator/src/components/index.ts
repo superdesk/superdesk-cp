@@ -6,9 +6,9 @@ import { FormTextInput, TextInput } from "./text-input";
 export {
   Button,
   FormSelect,
-  Select,
   FormTextEditorInput,
-  TextEditorInput,
   FormTextInput,
+  Select,
+  TextEditorInput,
   TextInput,
 };

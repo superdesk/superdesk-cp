@@ -1,10 +1,10 @@
 import {
+  IArticle,
   IExtension,
   IExtensionActivationResult,
-  IArticle,
 } from "superdesk-api";
-import { AutoTranslatorWidget } from "./widget";
 import { WIDGET_ID } from "./utilities";
+import { AutoTranslatorWidget } from "./widget";
 
 // TODO: add localization
 const extension: IExtension = {

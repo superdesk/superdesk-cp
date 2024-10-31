@@ -1,7 +1,7 @@
+import { useField } from "formik";
 import * as React from "react";
 import { InputWrapper } from "superdesk-ui-framework/react";
 import { superdesk } from "../superdesk";
-import { useField } from "formik";
 
 type TextEditorInputProps = {
   label: string;
