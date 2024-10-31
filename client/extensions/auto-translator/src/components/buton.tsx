@@ -1,5 +1,8 @@
 import * as React from "react";
-import { Button as SuperdeskButton } from "superdesk-ui-framework/react";
+import {
+  Spinner,
+  Button as SuperdeskButton,
+} from "superdesk-ui-framework/react";
 
 type SuperdeskButtonProps = React.ComponentProps<typeof SuperdeskButton>;
 
@@ -45,6 +48,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 export const Button = ({
   label,
   superdeskButtonProps,
+  className,
   ...props
 }: ButtonProps) => {
   const classes = ["btn"];
@@ -65,9 +69,18 @@ export const Button = ({
   if (superdeskButtonProps?.shape === "round" && superdeskButtonProps.iconOnly)
     classes.push(superdeskButtonClasses.iconOnlyCircle);
 
+  if (className) classes.push(className);
+
   return (
-    <button type="button" className={classes.join(" ")} {...props}>
-      {label}
+    <button
+      type="button"
+      className={classes.join(" ")}
+      disabled={
+        superdeskButtonProps?.disabled || superdeskButtonProps?.isLoading
+      }
+      {...props}
+    >
+      {superdeskButtonProps?.isLoading ? <Spinner size="mini" /> : label}
     </button>
   );
 };
