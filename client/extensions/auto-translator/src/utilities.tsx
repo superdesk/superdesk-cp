@@ -12,7 +12,33 @@ export const TRANSLATION_TYPES = {
 export const TRANSLATION_LANGUAGES = {
   en: "English",
   fr: "French",
-};
+} as const;
+
+export const TRANSLATION_VERSIONS = {
+  original: "Original",
+  aiTranslation: "AI Translation",
+  manualTranslation: "Manual Translation",
+} as const;
+
+// https://www.andiamo.co.uk/resources/iso-language-codes/
+export const TRANSLATION_LANGUAGES_CODES_MAP = {
+  en: "en",
+  "en-au": "en",
+  "en-bz": "en",
+  "en-ca": "en",
+  "en-ie": "en",
+  "en-jm": "en",
+  "en-nz": "en",
+  "en-za": "en",
+  "en-tt": "en",
+  "en-gb": "en",
+  "en-us": "en",
+  fr: "fr",
+  "fr-be": "fr",
+  "fr-ca": "fr",
+  "fr-lu": "fr",
+  "fr-ch": "fr",
+} as const;
 
 export const isArticle = (
   article: IArticle | IRelatedArticle
@@ -34,4 +60,9 @@ export const getObjectEntries = <T extends object>(
   obj: T
 ): [keyof T, T[keyof T]][] => {
   return Object.entries(obj) as [keyof T, T[keyof T]][];
+};
+
+export const capitalize = (str: string) => {
+  if (!str) return str;
+  return str.charAt(0).toUpperCase() + str.slice(1);
 };
