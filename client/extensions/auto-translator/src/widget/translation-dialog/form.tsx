@@ -250,7 +250,11 @@ const TranslationFormEntry = ({
   );
 };
 
-export const TranslationForm = () => {
+export const TranslationForm = ({
+  currentVersion,
+}: {
+  currentVersion: IArticle["_current_version"];
+}) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const { values, setFieldValue } =
     useFormikContext<TranslationDialogFormProps>();
@@ -338,7 +342,9 @@ export const TranslationForm = () => {
         <FormSelect name="writethru" label="Writethru/Version">
           {getObjectKeys(values.translations).map((versionId) => (
             <option value={versionId} key={`version${versionId}`}>
-              {`Version ${capitalize(versionId)}`}
+              {`${currentVersion}` === versionId
+                ? `${capitalize(versionId)} (Current)`
+                : capitalize(versionId)}
             </option>
           ))}
         </FormSelect>

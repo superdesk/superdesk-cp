@@ -24,7 +24,7 @@ export const TranslationDialog = ({
   workingArticle,
   closeDialog,
 }: TranslationDialogProps) => {
-  const { _id: articleId } = workingArticle;
+  const { _id: articleId, _current_version: currentVersion } = workingArticle;
 
   console.log({ workingArticle });
 
@@ -115,7 +115,11 @@ export const TranslationDialog = ({
               onHide={closeDialog}
               footerTemplate={<Footer closeDialog={closeDialog} />}
             >
-              {isLoading ? <Loader /> : <TranslationForm />}
+              {isLoading ? (
+                <Loader />
+              ) : (
+                <TranslationForm currentVersion={currentVersion} />
+              )}
             </Modal>
           </form>
         );
