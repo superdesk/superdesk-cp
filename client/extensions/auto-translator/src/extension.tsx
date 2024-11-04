@@ -4,18 +4,22 @@ import {
   IExtensionActivationResult,
 } from "superdesk-api";
 import { WIDGET_ID } from "./constants";
+import { superdesk } from "./superdesk";
+import { capitalize } from "./utilities";
 import { AutoTranslatorWidget } from "./widget";
 
-// TODO: add localization
 const extension: IExtension = {
   activate: () => {
-    // const { gettext } = superdesk.localization;
+    const { gettext } = superdesk.localization;
+
     const result: IExtensionActivationResult = {
       contributions: {
         authoringSideWidgets: [
           {
             _id: WIDGET_ID,
-            label: "Auto Translate",
+            label: `${capitalize(gettext("auto"))} ${capitalize(
+              gettext("translate")
+            )}`,
             icon: "multiedit",
             order: 1,
             component: AutoTranslatorWidget,

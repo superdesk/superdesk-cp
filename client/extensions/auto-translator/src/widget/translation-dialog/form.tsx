@@ -185,6 +185,7 @@ const TranslationFormEntry = ({
 }: {
   initialVersion: keyof TranslationEntry;
 }) => {
+  const { gettext } = superdesk.localization;
   const [version, setVersion] =
     React.useState<keyof TranslationEntry>(initialVersion);
   const { values } = useFormikContext<TranslationDialogFormProps>();
@@ -196,7 +197,7 @@ const TranslationFormEntry = ({
     <>
       <Select
         value={version}
-        label="Version"
+        label={capitalize(gettext("version"))}
         onChange={(event) => {
           // @ts-ignore
           setVersion(event.currentTarget.value);
@@ -204,29 +205,29 @@ const TranslationFormEntry = ({
       >
         {getObjectEntries(TRANSLATION_VERSIONS).map(([value, label]) => (
           <option value={value} key={value}>
-            {label}
+            {capitalize(gettext(label))}
           </option>
         ))}
       </Select>
       <FormTextInput
         name={`translations.${values.writethru}.${version}.headline`}
-        label="Headline"
+        label={capitalize(gettext("headline"))}
         readOnly={version !== "manualTranslation"}
       />
       <FormTextInput
         name={`translations.${values.writethru}.${version}.headline_extended`}
-        label="Extended Headline"
+        label={capitalize(gettext("extended headline"))}
         readOnly={version !== "manualTranslation"}
       />
       <FormTextEditorInput
         name={`translations.${values.writethru}.${version}.body_html`}
-        label="Body HTML"
+        label={capitalize(gettext("body HTML"))}
         readOnly={version !== "manualTranslation"}
       />
       {images.length > 0 && (
         <>
           <ContentDivider align="left" margin="none">
-            Photos
+            {capitalize(gettext("photos"))}
           </ContentDivider>
           <GridList margin="1">
             {images.map(([key, image]) => {
@@ -238,7 +239,7 @@ const TranslationFormEntry = ({
                   <GridItemContent>
                     <FormTextInput
                       name={`translations.${values.writethru}.${version}.images.${key}.description`}
-                      label="Caption"
+                      label={capitalize(gettext("caption"))}
                       readOnly={version !== "manualTranslation"}
                     />
                   </GridItemContent>
@@ -257,6 +258,7 @@ export const TranslationForm = ({
 }: {
   currentVersion: IArticle["_current_version"];
 }) => {
+  const { gettext } = superdesk.localization;
   const [isLoading, setIsLoading] = React.useState(false);
   const { values, setFieldValue } =
     useFormikContext<TranslationDialogFormProps>();
@@ -341,39 +343,59 @@ export const TranslationForm = ({
   return (
     <>
       <GridList margin="0">
-        <FormSelect name="writethru" label="Writethru/Version">
+        <FormSelect
+          name="writethru"
+          label={`${capitalize(gettext("writethru"))}/${capitalize(
+            gettext("version")
+          )}`}
+        >
           {getObjectKeys(values.translations).map((versionId) => (
             <option value={versionId} key={`version${versionId}`}>
               {`${currentVersion}` === versionId
-                ? `${capitalize(versionId)} (Current)`
+                ? `${capitalize(versionId)} (${capitalize(gettext("current"))})`
                 : capitalize(versionId)}
             </option>
           ))}
         </FormSelect>
-        <FormSelect name="translationType" label="Translation Type">
+        <FormSelect
+          name="translationType"
+          label={`${capitalize(gettext("translation"))} ${capitalize(
+            gettext("type")
+          )}`}
+        >
           {getObjectEntries(TRANSLATION_TYPES).map(([value, label]) => (
             <option value={value} key={value}>
               {label}
             </option>
           ))}
         </FormSelect>
-        <FormSelect name="translateFrom" label="Translate From">
+        <FormSelect
+          name="translateFrom"
+          label={`${capitalize(gettext("translate"))} ${capitalize(
+            gettext("from")
+          )}`}
+        >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
             <option value={value} key={value}>
-              {label}
+              {capitalize(gettext(label))}
             </option>
           ))}
         </FormSelect>
-        <FormSelect name="translateTo" label="Translate To">
+        <FormSelect
+          name="translateTo"
+          label={`${capitalize(gettext("translate"))} ${capitalize(
+            gettext("to")
+          )}`}
+        >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
             <option value={value} key={value}>
-              {label}
+              {capitalize(gettext(label))}
             </option>
           ))}
         </FormSelect>
         <Button
-          label="Translate"
-          aria-label="Translate"
+          label={capitalize(gettext("translate"))}
+          aria-label={capitalize(gettext("translate"))}
           className="self-end"
           superdeskButtonProps={{
             type: "primary",

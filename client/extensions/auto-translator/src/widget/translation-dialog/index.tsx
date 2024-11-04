@@ -3,7 +3,7 @@ import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Loader, Modal } from "superdesk-ui-framework/react";
 import { superdesk } from "../../superdesk";
-import { getObjectEntries } from "../../utilities";
+import { capitalize, getObjectEntries } from "../../utilities";
 import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
@@ -24,6 +24,7 @@ export const TranslationDialog = ({
   workingArticle,
   closeDialog,
 }: TranslationDialogProps) => {
+  const { gettext } = superdesk.localization;
   const { _id: articleId, _current_version: currentVersion } = workingArticle;
 
   console.log({ workingArticle });
@@ -108,7 +109,7 @@ export const TranslationDialog = ({
         return (
           <form onSubmit={handleSubmit}>
             <Modal
-              headerTemplate="Translate"
+              headerTemplate={capitalize(gettext("translation"))}
               className="d-flex flex-auto flex-col self-stretch"
               visible
               size="x-large"

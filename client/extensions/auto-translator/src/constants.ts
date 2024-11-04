@@ -8,14 +8,14 @@ const TRANSLATION_TYPES = {
 } as const;
 
 const TRANSLATION_LANGUAGES = {
-  en: "English",
-  fr: "French",
+  en: "english",
+  fr: "french",
 } as const;
 
 const TRANSLATION_VERSIONS = {
-  original: "Original",
-  aiTranslation: "AI Translation",
-  manualTranslation: "Manual Translation",
+  original: "original",
+  aiTranslation: "ai translation",
+  manualTranslation: "manual translation",
 } as const;
 
 // https://www.andiamo.co.uk/resources/iso-language-codes/

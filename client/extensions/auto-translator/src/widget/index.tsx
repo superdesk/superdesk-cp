@@ -5,8 +5,9 @@ import {
   IllustrationButton,
   SvgIconIllustration,
 } from "superdesk-ui-framework/react";
-import { superdesk } from "../superdesk";
 import { WIDGET_ID } from "../constants";
+import { superdesk } from "../superdesk";
+import { capitalize } from "../utilities";
 import { TranslationDialog } from "./translation-dialog";
 
 type AutoTranslatorWidgetProps = { isTranslationOpen: boolean };
@@ -18,6 +19,7 @@ export class AutoTranslatorWidget extends React.Component<
   state = { isTranslationOpen: false };
 
   render() {
+    const { gettext } = superdesk.localization;
     const { AuthoringWidgetLayout, AuthoringWidgetHeading, Spacer } =
       superdesk.components;
 
@@ -32,8 +34,9 @@ export class AutoTranslatorWidget extends React.Component<
             <Spacer v gap="0" alignItems="center">
               <AuthoringWidgetHeading
                 widgetId={WIDGET_ID}
-                // TODO: add localization
-                widgetName={"Auto Translate"}
+                widgetName={`${capitalize(gettext("auto"))} ${capitalize(
+                  gettext("translate")
+                )}`}
                 editMode={false}
               />
               <></>
@@ -63,9 +66,14 @@ export class AutoTranslatorWidget extends React.Component<
 type MenuProps = { openTranslationDialog: () => void };
 
 const Menu = ({ openTranslationDialog }: MenuProps) => {
+  const { gettext } = superdesk.localization;
+
   return (
     <div className="sd-grid-list sd-grid-list--xx-small sd-grid-list--gap-s sd-grid-list--no-margin">
-      <IllustrationButton text="Translate" onClick={openTranslationDialog}>
+      <IllustrationButton
+        text={capitalize(gettext("translate"))}
+        onClick={openTranslationDialog}
+      >
         <SvgIconIllustration illustration="translate" />
       </IllustrationButton>
     </div>
