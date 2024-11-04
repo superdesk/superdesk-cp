@@ -3,7 +3,7 @@ import {
   IExtension,
   IExtensionActivationResult,
 } from "superdesk-api";
-import { WIDGET_ID } from "./utilities";
+import { WIDGET_ID } from "./constants";
 import { AutoTranslatorWidget } from "./widget";
 
 // TODO: add localization

@@ -6,7 +6,7 @@ import {
   SvgIconIllustration,
 } from "superdesk-ui-framework/react";
 import { superdesk } from "../superdesk";
-import { WIDGET_ID } from "../utilities";
+import { WIDGET_ID } from "../constants";
 import { TranslationDialog } from "./translation-dialog";
 
 type AutoTranslatorWidgetProps = { isTranslationOpen: boolean };

@@ -1,4 +1,4 @@
-import { TRANSLATION_TYPES } from "../utilities";
+import { TRANSLATION_TYPES } from "../constants";
 
 type TranslationImageField = `media-gallery--${number}`;
 

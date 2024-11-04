@@ -17,6 +17,12 @@ import {
   FormTextInput,
   Select,
 } from "../../components";
+import {
+  TRANSLATION_LANGUAGES,
+  TRANSLATION_LANGUAGES_CODES_MAP,
+  TRANSLATION_TYPES,
+  TRANSLATION_VERSIONS,
+} from "../../constants";
 import { superdesk } from "../../superdesk";
 import {
   TranslationFields,
@@ -31,10 +37,6 @@ import {
   getObjectKeys,
   isArticle,
   isNotEmptyObject,
-  TRANSLATION_LANGUAGES,
-  TRANSLATION_LANGUAGES_CODES_MAP,
-  TRANSLATION_TYPES,
-  TRANSLATION_VERSIONS,
 } from "../../utilities";
 
 const { httpRequestJsonLocal } = superdesk;
