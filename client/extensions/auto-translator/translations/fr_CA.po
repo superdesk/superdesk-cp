@@ -1,0 +1,66 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "translate"
+msgstr "traduire"
+
+msgid "auto"
+msgstr "automatique"
+
+msgid "cancel"
+msgstr "annuler"
+
+msgid "apply"
+msgstr "appliquer"
+
+msgid "translation"
+msgstr "traduction"
+
+msgid "version"
+msgstr "version"
+
+msgid "original"
+msgstr "originale"
+
+msgid "ai translation"
+msgstr "ai traduction"
+
+msgid "manual translation"
+msgstr "traduction manuelle"
+
+msgid "headline"
+msgstr "titre"
+
+msgid "extended headline"
+msgstr "titre étendu"
+
+msgid "body HTML"
+msgstr "corps HTML"
+
+msgid "photos"
+msgstr "des photos"
+
+msgid "caption"
+msgstr "légende"
+
+msgid "writethru"
+msgstr "lead"
+
+msgid "current"
+msgstr "actuel"
+
+msgid "type"
+msgstr "type"
+
+msgid "from"
+msgstr "de"
+
+msgid "to"
+msgstr "en"
+
+msgid "english"
+msgstr "anglais"
+
+msgid "french"
+msgstr "français"
