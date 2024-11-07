@@ -25,7 +25,7 @@ export const TranslationDialog = ({
   closeDialog,
 }: TranslationDialogProps) => {
   const { gettext } = superdesk.localization;
-  const { _id: articleId, anpa_take_key: writethru } = workingArticle;
+  const { _id: articleId } = workingArticle;
 
   console.log({ workingArticle });
 
@@ -118,11 +118,7 @@ export const TranslationDialog = ({
                 <Footer isLoading={isLoading} closeDialog={closeDialog} />
               }
             >
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <TranslationForm currentWritethru={writethru} />
-              )}
+              {isLoading ? <Loader /> : <TranslationForm />}
             </Modal>
           </form>
         );

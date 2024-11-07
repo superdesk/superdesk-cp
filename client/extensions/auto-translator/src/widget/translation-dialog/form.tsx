@@ -166,7 +166,12 @@ export const getTranslationDialogFormValues = (
 
           return translations;
         },
-        {}
+        {
+          current: getTranslationEntryFormValues(
+            workingArticle,
+            getImagesFormValues(workingArticle)
+          ),
+        }
       )
     : {
         current: getTranslationEntryFormValues(
@@ -266,11 +271,7 @@ const TranslationFormEntry = ({
   );
 };
 
-export const TranslationForm = ({
-  currentWritethru,
-}: {
-  currentWritethru: IArticle["anpa_take_key"];
-}) => {
+export const TranslationForm = () => {
   const { gettext } = superdesk.localization;
   const [isLoading, setIsLoading] = React.useState(false);
   const { values, setFieldValue } =
@@ -362,9 +363,7 @@ export const TranslationForm = ({
         >
           {getObjectKeys(values.translations).map((writethru) => (
             <option value={writethru} key={`writethru-${writethru}`}>
-              {`${currentWritethru}` === writethru
-                ? `${capitalize(writethru)} (${capitalize(gettext("current"))})`
-                : capitalize(writethru)}
+              {capitalize(writethru)}
             </option>
           ))}
         </FormSelect>
