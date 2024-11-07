@@ -114,7 +114,9 @@ export const TranslationDialog = ({
               visible
               size="x-large"
               onHide={closeDialog}
-              footerTemplate={<Footer closeDialog={closeDialog} />}
+              footerTemplate={
+                <Footer isLoading={isLoading} closeDialog={closeDialog} />
+              }
             >
               {isLoading ? (
                 <Loader />
