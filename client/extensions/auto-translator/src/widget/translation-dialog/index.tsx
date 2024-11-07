@@ -3,7 +3,7 @@ import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Loader, Modal } from "superdesk-ui-framework/react";
 import { superdesk } from "../../superdesk";
-import { capitalize, getObjectEntries } from "../../utilities";
+import { capitalize } from "../../utilities";
 import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
@@ -53,22 +53,6 @@ export const TranslationDialog = ({
       key: "body_html",
       value: values.translations[values.writethru].manualTranslation.body_html,
     });
-
-    for (const [key, image] of getObjectEntries(
-      values.translations[values.writethru].manualTranslation.images
-    )) {
-      const prevImage = workingArticle?.associations?.[key];
-
-      if (!prevImage) continue;
-
-      applyFieldChangesToEditor(articleId, {
-        key: "associations",
-        value: {
-          ...workingArticle.associations,
-          [key]: { ...prevImage, description_text: image.description },
-        },
-      });
-    }
 
     closeDialog();
   };

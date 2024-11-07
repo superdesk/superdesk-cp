@@ -4,9 +4,6 @@ import { IArticle } from "superdesk-api";
 import {
   Container,
   ContentDivider,
-  GridItem,
-  GridItemContent,
-  GridItemMedia,
   GridList,
   ResizablePanels,
 } from "superdesk-ui-framework/react";
@@ -207,9 +204,6 @@ const TranslationFormEntry = ({
   const [version, setVersion] =
     React.useState<keyof TranslationEntry>(initialVersion);
   const { values } = useFormikContext<TranslationDialogFormProps>();
-  const images = getObjectEntries(
-    values.translations[values.writethru][version].images
-  );
 
   return (
     <>
@@ -242,31 +236,6 @@ const TranslationFormEntry = ({
         label={capitalize(gettext("body HTML"))}
         readOnly={version !== "manualTranslation"}
       />
-      {images.length > 0 && (
-        <>
-          <ContentDivider align="left" margin="none">
-            {capitalize(gettext("photos"))}
-          </ContentDivider>
-          <GridList margin="1">
-            {images.map(([key, image]) => {
-              return (
-                <GridItem key={key} itemtype="photo">
-                  <GridItemMedia>
-                    <img src={image.href} alt={image.description} />
-                  </GridItemMedia>
-                  <GridItemContent>
-                    <FormTextInput
-                      name={`translations.${values.writethru}.${version}.images.${key}.description`}
-                      label={capitalize(gettext("caption"))}
-                      readOnly={version !== "manualTranslation"}
-                    />
-                  </GridItemContent>
-                </GridItem>
-              );
-            })}
-          </GridList>
-        </>
-      )}
     </>
   );
 };
@@ -287,13 +256,6 @@ export const TranslationForm = () => {
   const translateArticle = () => {
     console.log({ values });
 
-    const images = getObjectEntries(
-      values.translations[values.writethru].original.images
-    ).reduce<Record<TranslationImageField, string>>((images, [key, image]) => {
-      Object.assign(images, { [key]: image.description });
-      return images;
-    }, {});
-
     const payload = {
       body_html: "",
       payload: {
@@ -301,7 +263,6 @@ export const TranslationForm = () => {
         headline_extended:
           values.translations[values.writethru].original.headline_extended,
         body_html: values.translations[values.writethru].original.body_html,
-        ...(isNotEmptyObject(images) && { images }),
       },
       target_language: values.translateTo,
       source_language: values.translateFrom,
@@ -329,21 +290,6 @@ export const TranslationForm = () => {
             `translations.${values.writethru}.${version}.body_html`,
             res.analysis.translated_payload.body_html
           );
-
-          if (
-            isNotEmptyObject(
-              values.translations[values.writethru].original.images
-            ) &&
-            isNotEmptyObject(res.analysis.translated_payload?.images)
-          ) {
-            for (const key of getObjectKeys(
-              values.translations[values.writethru].original.images
-            ))
-              setFieldValue(
-                `translations.${values.writethru}.${version}.images.${key}.description`,
-                res.analysis.translated_payload.images[key]
-              );
-          }
         }
       })
       .catch((err) => {
