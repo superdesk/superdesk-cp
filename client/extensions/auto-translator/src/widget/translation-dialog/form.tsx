@@ -4,9 +4,6 @@ import { IArticle } from "superdesk-api";
 import {
   Container,
   ContentDivider,
-  GridItem,
-  GridItemContent,
-  GridItemMedia,
   GridList,
   ResizablePanels,
 } from "superdesk-ui-framework/react";
@@ -58,8 +55,8 @@ export type TranslationDialogFormProps = {
   translations: Record<string, TranslationEntry>;
 };
 
-const getImagesFormValues = (workingArticle: IArticle) =>
-  getObjectEntries(workingArticle?.associations || {}).reduce<
+const getImagesFormValues = (article: IArticle) =>
+  getObjectEntries(article?.associations || {}).reduce<
     Record<keyof TranslationEntry, FormInputProps["images"]>
   >(
     (images, [key, article]) => {
@@ -86,13 +83,13 @@ const getImagesFormValues = (workingArticle: IArticle) =>
   );
 
 const getTranslationEntryFormValues = (
-  workingArticle: IArticle,
+  article: IArticle,
   images: ReturnType<typeof getImagesFormValues>
 ): TranslationEntry => ({
   original: {
-    headline: workingArticle.headline ?? "",
-    headline_extended: workingArticle?.extra?.headline_extended ?? "",
-    body_html: workingArticle.body_html ?? "",
+    headline: article.headline ?? "",
+    headline_extended: article?.extra?.headline_extended ?? "",
+    body_html: article.body_html ?? "",
     images: isNotEmptyObject(images.original) ? images.original : {},
   },
   aiTranslation: {
@@ -142,29 +139,47 @@ export const getTranslationDialogFormInitialValues = () =>
   } as const);
 
 export const getTranslationDialogFormValues = (
-  workingArticle: IArticle,
+  currentArticle: IArticle,
   articleVersions: IArticle[]
 ): TranslationDialogFormProps => {
-  const translations = articleVersions
+  const writethrus = articleVersions
     // version 0 is the initial object (contains no metadata)
-    .filter((article) => article._current_version !== 0)
-    .reduce<TranslationDialogFormProps["translations"]>(
-      (translations, article) => {
-        const images = getImagesFormValues(article);
-        const translationEntry = getTranslationEntryFormValues(article, images);
-
-        Object.assign(translations, {
-          [`${article._current_version}`]: translationEntry,
-        });
-
-        return translations;
-      },
-      {}
+    .filter(
+      (article) => article._current_version !== 0 && article.anpa_take_key
     );
+
+  const translations = writethrus.length
+    ? writethrus.reduce<TranslationDialogFormProps["translations"]>(
+        (translations, article) => {
+          const images = getImagesFormValues(article);
+          const translationEntry = getTranslationEntryFormValues(
+            article,
+            images
+          );
+
+          Object.assign(translations, {
+            [`${article.anpa_take_key}`]: translationEntry,
+          });
+
+          return translations;
+        },
+        {
+          current: getTranslationEntryFormValues(
+            currentArticle,
+            getImagesFormValues(currentArticle)
+          ),
+        }
+      )
+    : {
+        current: getTranslationEntryFormValues(
+          currentArticle,
+          getImagesFormValues(currentArticle)
+        ),
+      };
 
   const translateTo =
     TRANSLATION_LANGUAGES_CODES_MAP?.[
-      workingArticle.language?.toLowerCase?.() as keyof typeof TRANSLATION_LANGUAGES_CODES_MAP
+      currentArticle.language?.toLowerCase?.() as keyof typeof TRANSLATION_LANGUAGES_CODES_MAP
     ];
   const translateFrom =
     translateTo === TRANSLATION_LANGUAGES_CODES_MAP.en
@@ -172,7 +187,7 @@ export const getTranslationDialogFormValues = (
       : TRANSLATION_LANGUAGES_CODES_MAP.en;
 
   return {
-    writethru: Object.keys(translations)[0],
+    writethru: getObjectKeys(translations)[0],
     translationType: "basic",
     translateFrom,
     translateTo,
@@ -189,9 +204,6 @@ const TranslationFormEntry = ({
   const [version, setVersion] =
     React.useState<keyof TranslationEntry>(initialVersion);
   const { values } = useFormikContext<TranslationDialogFormProps>();
-  const images = getObjectEntries(
-    values.translations[values.writethru][version].images
-  );
 
   return (
     <>
@@ -204,7 +216,7 @@ const TranslationFormEntry = ({
         }}
       >
         {getObjectEntries(TRANSLATION_VERSIONS).map(([value, label]) => (
-          <option value={value} key={value}>
+          <option value={value} key={`version-${value}`}>
             {capitalize(gettext(label))}
           </option>
         ))}
@@ -224,40 +236,11 @@ const TranslationFormEntry = ({
         label={capitalize(gettext("body HTML"))}
         readOnly={version !== "manualTranslation"}
       />
-      {images.length > 0 && (
-        <>
-          <ContentDivider align="left" margin="none">
-            {capitalize(gettext("photos"))}
-          </ContentDivider>
-          <GridList margin="1">
-            {images.map(([key, image]) => {
-              return (
-                <GridItem key={key} itemtype="photo">
-                  <GridItemMedia>
-                    <img src={image.href} alt={image.description} />
-                  </GridItemMedia>
-                  <GridItemContent>
-                    <FormTextInput
-                      name={`translations.${values.writethru}.${version}.images.${key}.description`}
-                      label={capitalize(gettext("caption"))}
-                      readOnly={version !== "manualTranslation"}
-                    />
-                  </GridItemContent>
-                </GridItem>
-              );
-            })}
-          </GridList>
-        </>
-      )}
     </>
   );
 };
 
-export const TranslationForm = ({
-  currentVersion,
-}: {
-  currentVersion: IArticle["_current_version"];
-}) => {
+export const TranslationForm = () => {
   const { gettext } = superdesk.localization;
   const [isLoading, setIsLoading] = React.useState(false);
   const { values, setFieldValue } =
@@ -273,13 +256,6 @@ export const TranslationForm = ({
   const translateArticle = () => {
     console.log({ values });
 
-    const images = getObjectEntries(
-      values.translations[values.writethru].original.images
-    ).reduce<Record<TranslationImageField, string>>((images, [key, image]) => {
-      Object.assign(images, { [key]: image.description });
-      return images;
-    }, {});
-
     const payload = {
       body_html: "",
       payload: {
@@ -287,7 +263,6 @@ export const TranslationForm = ({
         headline_extended:
           values.translations[values.writethru].original.headline_extended,
         body_html: values.translations[values.writethru].original.body_html,
-        ...(isNotEmptyObject(images) && { images }),
       },
       target_language: values.translateTo,
       source_language: values.translateFrom,
@@ -315,21 +290,6 @@ export const TranslationForm = ({
             `translations.${values.writethru}.${version}.body_html`,
             res.analysis.translated_payload.body_html
           );
-
-          if (
-            isNotEmptyObject(
-              values.translations[values.writethru].original.images
-            ) &&
-            isNotEmptyObject(res.analysis.translated_payload?.images)
-          ) {
-            for (const key of getObjectKeys(
-              values.translations[values.writethru].original.images
-            ))
-              setFieldValue(
-                `translations.${values.writethru}.${version}.images.${key}.description`,
-                res.analysis.translated_payload.images[key]
-              );
-          }
         }
       })
       .catch((err) => {
@@ -345,15 +305,11 @@ export const TranslationForm = ({
       <GridList margin="0">
         <FormSelect
           name="writethru"
-          label={`${capitalize(gettext("writethru"))}/${capitalize(
-            gettext("version")
-          )}`}
+          label={`${capitalize(gettext("writethru"))}`}
         >
-          {getObjectKeys(values.translations).map((versionId) => (
-            <option value={versionId} key={`version${versionId}`}>
-              {`${currentVersion}` === versionId
-                ? `${capitalize(versionId)} (${capitalize(gettext("current"))})`
-                : capitalize(versionId)}
+          {getObjectKeys(values.translations).map((writethru) => (
+            <option value={writethru} key={`writethru-${writethru}`}>
+              {capitalize(writethru)}
             </option>
           ))}
         </FormSelect>
@@ -364,7 +320,7 @@ export const TranslationForm = ({
           )}`}
         >
           {getObjectEntries(TRANSLATION_TYPES).map(([value, label]) => (
-            <option value={value} key={value}>
+            <option value={value} key={`translationType-${value}`}>
               {label}
             </option>
           ))}
@@ -376,7 +332,7 @@ export const TranslationForm = ({
           )}`}
         >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
-            <option value={value} key={value}>
+            <option value={value} key={`translateFrom-${value}`}>
               {capitalize(gettext(label))}
             </option>
           ))}
@@ -388,7 +344,7 @@ export const TranslationForm = ({
           )}`}
         >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
-            <option value={value} key={value}>
+            <option value={value} key={`translateTo${value}`}>
               {capitalize(gettext(label))}
             </option>
           ))}

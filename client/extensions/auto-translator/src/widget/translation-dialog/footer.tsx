@@ -4,9 +4,9 @@ import { Button } from "../../components";
 import { superdesk } from "../../superdesk";
 import { capitalize } from "../../utilities";
 
-type FooterProps = { closeDialog: () => void };
+type FooterProps = { isLoading: boolean; closeDialog: () => void };
 
-export const Footer = ({ closeDialog }: FooterProps) => {
+export const Footer = ({ isLoading, closeDialog }: FooterProps) => {
   const { gettext } = superdesk.localization;
 
   return (
@@ -30,6 +30,7 @@ export const Footer = ({ closeDialog }: FooterProps) => {
         superdeskButtonProps={{
           type: "primary",
           style: "hollow",
+          disabled: isLoading,
         }}
       />
     </ButtonGroup>

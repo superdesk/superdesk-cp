@@ -3,7 +3,7 @@ import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Loader, Modal } from "superdesk-ui-framework/react";
 import { superdesk } from "../../superdesk";
-import { capitalize, getObjectEntries } from "../../utilities";
+import { capitalize } from "../../utilities";
 import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
@@ -16,18 +16,18 @@ const { httpRequestJsonLocal } = superdesk;
 const { applyFieldChangesToEditor } = superdesk.ui.article;
 
 type TranslationDialogProps = {
-  workingArticle: IArticle;
+  currentArticle: IArticle;
   closeDialog: () => void;
 };
 
 export const TranslationDialog = ({
-  workingArticle,
+  currentArticle,
   closeDialog,
 }: TranslationDialogProps) => {
   const { gettext } = superdesk.localization;
-  const { _id: articleId, _current_version: currentVersion } = workingArticle;
+  const { _id: articleId } = currentArticle;
 
-  console.log({ workingArticle });
+  console.log({ currentArticle });
 
   const onSubmit: FormikConfig<TranslationDialogFormProps>["onSubmit"] = (
     values,
@@ -43,7 +43,7 @@ export const TranslationDialog = ({
     applyFieldChangesToEditor(articleId, {
       key: "extra",
       value: {
-        ...workingArticle?.extra,
+        ...currentArticle?.extra,
         headline_extended:
           values.translations[values.writethru].manualTranslation
             .headline_extended,
@@ -53,22 +53,6 @@ export const TranslationDialog = ({
       key: "body_html",
       value: values.translations[values.writethru].manualTranslation.body_html,
     });
-
-    for (const [key, image] of getObjectEntries(
-      values.translations[values.writethru].manualTranslation.images
-    )) {
-      const prevImage = workingArticle?.associations?.[key];
-
-      if (!prevImage) continue;
-
-      applyFieldChangesToEditor(articleId, {
-        key: "associations",
-        value: {
-          ...workingArticle.associations,
-          [key]: { ...prevImage, description_text: image.description },
-        },
-      });
-    }
 
     closeDialog();
   };
@@ -96,7 +80,7 @@ export const TranslationDialog = ({
 
           getVersions()
             .then(({ _items }) => {
-              setValues(getTranslationDialogFormValues(workingArticle, _items));
+              setValues(getTranslationDialogFormValues(currentArticle, _items));
             })
             .catch((err) => {
               console.error({ err });
@@ -114,13 +98,11 @@ export const TranslationDialog = ({
               visible
               size="x-large"
               onHide={closeDialog}
-              footerTemplate={<Footer closeDialog={closeDialog} />}
+              footerTemplate={
+                <Footer isLoading={isLoading} closeDialog={closeDialog} />
+              }
             >
-              {isLoading ? (
-                <Loader />
-              ) : (
-                <TranslationForm currentVersion={currentVersion} />
-              )}
+              {isLoading ? <Loader /> : <TranslationForm />}
             </Modal>
           </form>
         );
