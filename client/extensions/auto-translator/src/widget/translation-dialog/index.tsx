@@ -8,9 +8,9 @@ import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
   getTranslationDialogFormValues,
-  TranslationDialogFormProps,
   TranslationForm,
 } from "./form";
+import { TranslationDialogFormProps } from "./helpers";
 
 const { httpRequestJsonLocal } = superdesk;
 const { applyFieldChangesToEditor } = superdesk.ui.article;
@@ -25,9 +25,9 @@ export const TranslationDialog = ({
   closeDialog,
 }: TranslationDialogProps) => {
   const { gettext } = superdesk.localization;
-  const { _id: articleId } = currentArticle;
+  const { _id: articleId, original_id: writethruId } = currentArticle;
 
-  console.log({ currentArticle });
+  console.log({ currentArticle, articleId, writethruId });
 
   const onSubmit: FormikConfig<TranslationDialogFormProps>["onSubmit"] = (
     values,

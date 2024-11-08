@@ -64,3 +64,9 @@ msgstr "anglais"
 
 msgid "french"
 msgstr "français"
+
+msgid "compare"
+msgstr "comparer"
+
+msgid "diff"
+msgstr "diff"
