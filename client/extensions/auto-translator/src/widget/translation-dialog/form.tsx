@@ -128,11 +128,7 @@ export const getTranslationDialogFormValues = (
   currentArticle: IArticle,
   articleVersions: IArticle[]
 ): TranslationDialogFormProps => {
-  const writethrus = articleVersions
-    // version 0 is the initial object (contains no metadata)
-    .filter(
-      (article) => article._current_version !== 0 && article.anpa_take_key
-    );
+  const writethrus = articleVersions.filter((article) => article.anpa_take_key);
 
   const translations = writethrus.length
     ? writethrus.reduce<TranslationDialogFormProps["translations"]>(
