@@ -7,17 +7,17 @@ import { superdesk } from "../../../superdesk";
 import { capitalize, getObjectKeys } from "../../../utilities";
 import { TranslationDialogFormProps } from "../helpers";
 
-const COMPARE_VERIONS = ["left", "right", "diff"] as const;
+const COMPARE_VERSIONS = ["ls", "rs", "diff"] as const;
 
 const CompareContent = ({
   headline,
   headline_extended,
   body_html,
-  index,
+  version,
 }: Pick<
   TranslationDialogFormProps["translations"][string]["original"],
   "headline" | "headline_extended" | "body_html"
-> & { index: number }) => {
+> & { version: (typeof COMPARE_VERSIONS)[number] }) => {
   const { gettext } = superdesk.localization;
 
   return (
@@ -25,13 +25,13 @@ const CompareContent = ({
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
         <span
           className="sd-input__label sd-input__label--boxed"
-          id={`compare-headline-${index}-label`}
+          id={`compare-headline-${version}-label`}
         >
           {capitalize(gettext("headline"))}
         </span>
         <div className="sd-input__input-container">
           <p
-            aria-labelledby={`compare-headline-${index}-label`}
+            aria-labelledby={`compare-headline-${version}-label`}
             className="m-0"
             dangerouslySetInnerHTML={{ __html: headline }}
           ></p>
@@ -40,13 +40,13 @@ const CompareContent = ({
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
         <span
           className="sd-input__label sd-input__label--boxed"
-          id={`compare-extended-headline-${index}-label`}
+          id={`compare-extended-headline-${version}-label`}
         >
           {capitalize(gettext("extended headline"))}
         </span>
         <div className="sd-input__input-container">
           <p
-            aria-labelledby={`compare-extended-headline-${index}-label`}
+            aria-labelledby={`compare-extended-headline-${version}-label`}
             className="m-0"
             dangerouslySetInnerHTML={{ __html: headline_extended }}
           ></p>
@@ -55,13 +55,13 @@ const CompareContent = ({
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
         <span
           className="sd-input__label sd-input__label--boxed"
-          id={`compare-body-html-${index}-label`}
+          id={`compare-body-html-${version}-label`}
         >
           {capitalize(gettext("body HTML"))}
         </span>
         <div className="sd-input__input-container">
           <div
-            aria-labelledby={`compare-body-html-${index}-label`}
+            aria-labelledby={`compare-body-html-${version}-label`}
             dangerouslySetInnerHTML={{ __html: body_html }}
           ></div>
         </div>
@@ -135,7 +135,7 @@ export const CompareAccordion = () => {
                 className="sd-grid-list sd-grid-list--large sd-grid-list--gap-small sd-margin--0"
                 style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
               >
-                {COMPARE_VERIONS.map((writethru, index) => {
+                {COMPARE_VERSIONS.map((version, index) => {
                   let header = `${capitalize(gettext("writethru"))} ${
                     index + 1
                   }`;
@@ -143,8 +143,8 @@ export const CompareAccordion = () => {
                     headline_extended: string,
                     body_html: string;
 
-                  switch (writethru) {
-                    case "left":
+                  switch (version) {
+                    case "ls":
                       headline =
                         values.translations[compareLeft].original.headline;
                       headline_extended =
@@ -153,7 +153,7 @@ export const CompareAccordion = () => {
                       body_html =
                         values.translations[compareLeft].original.body_html;
                       break;
-                    case "right":
+                    case "rs":
                       headline =
                         values.translations[compareRight].original.headline;
                       headline_extended =
@@ -199,11 +199,7 @@ export const CompareAccordion = () => {
                   }
 
                   return (
-                    <Container
-                      key={`${writethru}-${index}`}
-                      gap="large"
-                      direction="column"
-                    >
+                    <Container key={version} gap="large" direction="column">
                       <p className="text-md font-medium self-center m-0">
                         {header}
                       </p>
@@ -211,7 +207,7 @@ export const CompareAccordion = () => {
                         headline={headline}
                         headline_extended={headline_extended}
                         body_html={body_html}
-                        index={index}
+                        version={version}
                       />
                     </Container>
                   );
