@@ -53,7 +53,7 @@ export class AutoTranslatorWidget extends React.Component<
         {this.state.isTranslationOpen &&
           createPortal(
             <TranslationDialog
-              workingArticle={this.props.article}
+              currentArticle={this.props.article}
               closeDialog={closeTranslationDialog}
             />,
             document.body

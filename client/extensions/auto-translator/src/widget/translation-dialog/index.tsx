@@ -16,18 +16,18 @@ const { httpRequestJsonLocal } = superdesk;
 const { applyFieldChangesToEditor } = superdesk.ui.article;
 
 type TranslationDialogProps = {
-  workingArticle: IArticle;
+  currentArticle: IArticle;
   closeDialog: () => void;
 };
 
 export const TranslationDialog = ({
-  workingArticle,
+  currentArticle,
   closeDialog,
 }: TranslationDialogProps) => {
   const { gettext } = superdesk.localization;
-  const { _id: articleId } = workingArticle;
+  const { _id: articleId } = currentArticle;
 
-  console.log({ workingArticle });
+  console.log({ currentArticle });
 
   const onSubmit: FormikConfig<TranslationDialogFormProps>["onSubmit"] = (
     values,
@@ -43,7 +43,7 @@ export const TranslationDialog = ({
     applyFieldChangesToEditor(articleId, {
       key: "extra",
       value: {
-        ...workingArticle?.extra,
+        ...currentArticle?.extra,
         headline_extended:
           values.translations[values.writethru].manualTranslation
             .headline_extended,
@@ -80,7 +80,7 @@ export const TranslationDialog = ({
 
           getVersions()
             .then(({ _items }) => {
-              setValues(getTranslationDialogFormValues(workingArticle, _items));
+              setValues(getTranslationDialogFormValues(currentArticle, _items));
             })
             .catch((err) => {
               console.error({ err });

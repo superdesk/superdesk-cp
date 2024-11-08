@@ -55,8 +55,8 @@ export type TranslationDialogFormProps = {
   translations: Record<string, TranslationEntry>;
 };
 
-const getImagesFormValues = (workingArticle: IArticle) =>
-  getObjectEntries(workingArticle?.associations || {}).reduce<
+const getImagesFormValues = (article: IArticle) =>
+  getObjectEntries(article?.associations || {}).reduce<
     Record<keyof TranslationEntry, FormInputProps["images"]>
   >(
     (images, [key, article]) => {
@@ -83,13 +83,13 @@ const getImagesFormValues = (workingArticle: IArticle) =>
   );
 
 const getTranslationEntryFormValues = (
-  workingArticle: IArticle,
+  article: IArticle,
   images: ReturnType<typeof getImagesFormValues>
 ): TranslationEntry => ({
   original: {
-    headline: workingArticle.headline ?? "",
-    headline_extended: workingArticle?.extra?.headline_extended ?? "",
-    body_html: workingArticle.body_html ?? "",
+    headline: article.headline ?? "",
+    headline_extended: article?.extra?.headline_extended ?? "",
+    body_html: article.body_html ?? "",
     images: isNotEmptyObject(images.original) ? images.original : {},
   },
   aiTranslation: {
@@ -139,7 +139,7 @@ export const getTranslationDialogFormInitialValues = () =>
   } as const);
 
 export const getTranslationDialogFormValues = (
-  workingArticle: IArticle,
+  currentArticle: IArticle,
   articleVersions: IArticle[]
 ): TranslationDialogFormProps => {
   const writethrus = articleVersions
@@ -165,21 +165,21 @@ export const getTranslationDialogFormValues = (
         },
         {
           current: getTranslationEntryFormValues(
-            workingArticle,
-            getImagesFormValues(workingArticle)
+            currentArticle,
+            getImagesFormValues(currentArticle)
           ),
         }
       )
     : {
         current: getTranslationEntryFormValues(
-          workingArticle,
-          getImagesFormValues(workingArticle)
+          currentArticle,
+          getImagesFormValues(currentArticle)
         ),
       };
 
   const translateTo =
     TRANSLATION_LANGUAGES_CODES_MAP?.[
-      workingArticle.language?.toLowerCase?.() as keyof typeof TRANSLATION_LANGUAGES_CODES_MAP
+      currentArticle.language?.toLowerCase?.() as keyof typeof TRANSLATION_LANGUAGES_CODES_MAP
     ];
   const translateFrom =
     translateTo === TRANSLATION_LANGUAGES_CODES_MAP.en
