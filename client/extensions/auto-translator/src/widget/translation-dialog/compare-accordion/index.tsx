@@ -6,6 +6,7 @@ import { Select } from "../../../components";
 import { superdesk } from "../../../superdesk";
 import { capitalize, getObjectKeys } from "../../../utilities";
 import { TranslationDialogFormProps } from "../helpers";
+import { getPrettyDiffHtml, sanitizeHtml } from "./helpers";
 
 const COMPARE_VERSIONS = ["ls", "rs", "diff"] as const;
 
@@ -145,57 +146,73 @@ export const CompareAccordion = () => {
 
                   switch (version) {
                     case "ls":
-                      headline =
-                        values.translations[compareLeft].original.headline;
-                      headline_extended =
+                      headline = sanitizeHtml(
+                        values.translations[compareLeft].original.headline
+                      );
+                      headline_extended = sanitizeHtml(
                         values.translations[compareLeft].original
-                          .headline_extended;
-                      body_html =
-                        values.translations[compareLeft].original.body_html;
+                          .headline_extended
+                      );
+                      body_html = sanitizeHtml(
+                        values.translations[compareLeft].original.body_html
+                      );
                       break;
                     case "rs":
-                      headline =
-                        values.translations[compareRight].original.headline;
-                      headline_extended =
+                      headline = sanitizeHtml(
+                        values.translations[compareRight].original.headline
+                      );
+                      headline_extended = sanitizeHtml(
                         values.translations[compareRight].original
-                          .headline_extended;
-                      body_html =
-                        values.translations[compareRight].original.body_html;
+                          .headline_extended
+                      );
+                      body_html = sanitizeHtml(
+                        values.translations[compareRight].original.body_html
+                      );
                       break;
                     case "diff":
                       header = capitalize(gettext("diff"));
 
                       const diffHeadline = dmp.diff_main(
-                        values.translations[compareLeft].original.headline,
-                        values.translations[compareRight].original.headline
+                        sanitizeHtml(
+                          values.translations[compareLeft].original.headline
+                        ),
+                        sanitizeHtml(
+                          values.translations[compareRight].original.headline
+                        )
                       );
                       const diffHeadline_extended = dmp.diff_main(
-                        values.translations[compareLeft].original
-                          .headline_extended,
-                        values.translations[compareRight].original
-                          .headline_extended
+                        sanitizeHtml(
+                          values.translations[compareLeft].original
+                            .headline_extended
+                        ),
+                        sanitizeHtml(
+                          values.translations[compareRight].original
+                            .headline_extended
+                        )
                       );
                       const diffBody_html = dmp.diff_main(
-                        values.translations[compareLeft].original.body_html,
-                        values.translations[compareRight].original.body_html
+                        sanitizeHtml(
+                          values.translations[compareLeft].original.body_html
+                        ),
+                        sanitizeHtml(
+                          values.translations[compareRight].original.body_html
+                        )
                       );
+
+                      headline = getPrettyDiffHtml(diffHeadline);
+                      headline_extended = getPrettyDiffHtml(
+                        diffHeadline_extended
+                      );
+                      body_html = getPrettyDiffHtml(diffBody_html);
 
                       console.log({
                         diffHeadline,
                         diffHeadline_extended,
                         diffBody_html,
-                        prettyHeadline: dmp.diff_prettyHtml(diffHeadline),
-                        prettyHeadline_extended: dmp.diff_prettyHtml(
-                          diffHeadline_extended
-                        ),
-                        prettyBody_html: dmp.diff_prettyHtml(diffBody_html),
+                        headline,
+                        headline_extended,
+                        body_html,
                       });
-
-                      headline = dmp.diff_prettyHtml(diffHeadline);
-                      headline_extended = dmp.diff_prettyHtml(
-                        diffHeadline_extended
-                      );
-                      body_html = dmp.diff_prettyHtml(diffBody_html);
                   }
 
                   return (
