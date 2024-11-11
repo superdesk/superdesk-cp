@@ -70,3 +70,9 @@ msgstr "comparer"
 
 msgid "diff"
 msgstr "diff"
+
+msgid "inserted"
+msgstr "inséré"
+
+msgid "deleted"
+msgstr "supprimé"

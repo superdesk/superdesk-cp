@@ -4,10 +4,18 @@ import diff_match_patch, {
   DIFF_INSERT,
 } from "diff-match-patch";
 import DOMPurify from "dompurify";
+import { ISuperdesk } from "superdesk-api";
+import { capitalize } from "../../../utilities";
 
 export const sanitizeHtml = (html: string | Node) => DOMPurify.sanitize(html);
 
-export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
+export const getPrettyDiffHtml = ({
+  diffs,
+  gettext,
+}: {
+  diffs: diff_match_patch.Diff[];
+  gettext: ISuperdesk["localization"]["gettext"];
+}) => {
   let html = [];
   const patternPara = /\n/g;
   const tempDiv = document.createElement("div");
@@ -24,8 +32,12 @@ export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
         if (element.innerHTML)
           elements += `<${tag}>${
             type === "ins"
-              ? `<ins style="background:#e6ffe6;">${element.innerHTML}</ins>`
-              : `<del style="background:#ffe6e6;">${element.innerHTML}</del>`
+              ? `<ins style="background:#e6ffe6;" aria-label=${capitalize(
+                  gettext("inserted")
+                )}>${element.innerHTML}</ins>`
+              : `<del style="background:#ffe6e6;" aria-label=${capitalize(
+                  gettext("deleted")
+                )}>${element.innerHTML}</del>`
           }</${tag}>`;
       } else if (node.nodeType === Node.TEXT_NODE) {
         const element = node as Text;
@@ -33,8 +45,12 @@ export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
         if (element.textContent)
           elements +=
             type === "ins"
-              ? `<ins style="background:#e6ffe6;">${element.textContent}</ins>`
-              : `<del style="background:#ffe6e6;">${element.textContent}</del>`;
+              ? `<ins style="background:#e6ffe6;" aria-label=${capitalize(
+                  gettext("inserted")
+                )}>${element.textContent}</ins>`
+              : `<del style="background:#ffe6e6;" aria-label=${capitalize(
+                  gettext("deleted")
+                )}>${element.textContent}</del>`;
       }
     });
 

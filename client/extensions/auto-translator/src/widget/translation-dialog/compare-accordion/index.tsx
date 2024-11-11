@@ -129,9 +129,12 @@ export const CompareAccordion = () => {
           sanitizeHtml(values.translations[compareLeft].original.body_html),
           sanitizeHtml(values.translations[compareRight].original.body_html)
         );
-        headline = getPrettyDiffHtml(diffHeadline);
-        headline_extended = getPrettyDiffHtml(diffHeadline_extended);
-        body_html = getPrettyDiffHtml(diffBody_html);
+        headline = getPrettyDiffHtml({ diffs: diffHeadline, gettext });
+        headline_extended = getPrettyDiffHtml({
+          diffs: diffHeadline_extended,
+          gettext,
+        });
+        body_html = getPrettyDiffHtml({ diffs: diffBody_html, gettext });
 
         console.log({
           diffHeadline,
@@ -196,7 +199,12 @@ export const CompareAccordion = () => {
             </GridList>
           </div>
           {compareLeft && compareRight && (
-            <div style={{ width: "100%" }}>
+            <div
+              style={{ width: "100%" }}
+              role="document"
+              tabIndex={0}
+              aria-label="Compare Writethrus"
+            >
               <div
                 className="sd-grid-list sd-grid-list--large sd-grid-list--gap-small sd-margin--0"
                 style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
