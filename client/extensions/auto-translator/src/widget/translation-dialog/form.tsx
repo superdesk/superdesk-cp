@@ -22,11 +22,8 @@ import {
 } from "../../constants";
 import { superdesk } from "../../superdesk";
 import {
-  TranslationFields,
-  TranslationImageField,
   TranslationPayload,
   TranslationResponse,
-  TranslationType,
 } from "../../typings/translation";
 import {
   capitalize,
@@ -35,28 +32,17 @@ import {
   isArticle,
   isNotEmptyObject,
 } from "../../utilities";
+import { CompareAccordion } from "./compare-accordion";
+import {
+  FormInputProps,
+  TranslationDialogFormProps,
+  TranslationEntry,
+} from "./helpers";
 
 const { httpRequestJsonLocal } = superdesk;
 
-type FormInputProps = Record<TranslationFields, string> & {
-  images: Record<TranslationImageField, { description: string; href: string }>;
-};
-
-type TranslationEntry = Record<
-  keyof typeof TRANSLATION_VERSIONS,
-  FormInputProps
->;
-
-export type TranslationDialogFormProps = {
-  writethru: string;
-  translationType: TranslationType;
-  translateFrom: (typeof TRANSLATION_LANGUAGES_CODES_MAP)[keyof typeof TRANSLATION_LANGUAGES_CODES_MAP];
-  translateTo: (typeof TRANSLATION_LANGUAGES_CODES_MAP)[keyof typeof TRANSLATION_LANGUAGES_CODES_MAP];
-  translations: Record<string, TranslationEntry>;
-};
-
-const getImagesFormValues = (article: IArticle) =>
-  getObjectEntries(article?.associations || {}).reduce<
+const getImagesFormValues = (workingArticle: IArticle) =>
+  getObjectEntries(workingArticle?.associations || {}).reduce<
     Record<keyof TranslationEntry, FormInputProps["images"]>
   >(
     (images, [key, article]) => {
@@ -142,11 +128,7 @@ export const getTranslationDialogFormValues = (
   currentArticle: IArticle,
   articleVersions: IArticle[]
 ): TranslationDialogFormProps => {
-  const writethrus = articleVersions
-    // version 0 is the initial object (contains no metadata)
-    .filter(
-      (article) => article._current_version !== 0 && article.anpa_take_key
-    );
+  const writethrus = articleVersions.filter((article) => article.anpa_take_key);
 
   const translations = writethrus.length
     ? writethrus.reduce<TranslationDialogFormProps["translations"]>(
@@ -364,6 +346,8 @@ export const TranslationForm = () => {
           }}
         />
       </GridList>
+      <ContentDivider margin="small" />
+      <CompareAccordion />
       <ContentDivider margin="small" />
       <Container className="flex-grow">
         <ResizablePanels

@@ -8,9 +8,9 @@ import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
   getTranslationDialogFormValues,
-  TranslationDialogFormProps,
   TranslationForm,
 } from "./form";
+import { TranslationDialogFormProps } from "./helpers";
 
 const { httpRequestJsonLocal } = superdesk;
 const { applyFieldChangesToEditor } = superdesk.ui.article;
@@ -25,7 +25,7 @@ export const TranslationDialog = ({
   closeDialog,
 }: TranslationDialogProps) => {
   const { gettext } = superdesk.localization;
-  const { _id: articleId } = currentArticle;
+  const { _id: articleId, event_id } = currentArticle;
 
   console.log({ currentArticle });
 
@@ -67,18 +67,36 @@ export const TranslationDialog = ({
         const [isLoading, setIsLoading] = React.useState(true);
 
         React.useEffect(() => {
-          const getVersions = () =>
+          const getWritethrus = () =>
             httpRequestJsonLocal<{ _items: IArticle[] }>({
               method: "GET",
-              path: `/archive/${articleId}`,
+              path: "/search",
               urlParams: {
-                embedded: { user: 1 },
-                max_results: 200,
-                version: "all",
+                repo: "archive,published",
+                source: {
+                  query: {
+                    filtered: {
+                      filter: {
+                        and: [
+                          { not: { term: { state: "spiked" } } },
+                          {
+                            term: {
+                              event_id,
+                            },
+                          },
+                          { not: { term: { type: "composite" } } },
+                        ],
+                      },
+                    },
+                  },
+                  size: 200,
+                  from: 0,
+                  sort: { versioncreated: "asc" },
+                },
               },
             });
 
-          getVersions()
+          getWritethrus()
             .then(({ _items }) => {
               setValues(getTranslationDialogFormValues(currentArticle, _items));
             })
