@@ -109,7 +109,7 @@ export const CompareAccordion = () => {
               >
                 <option value="" hidden></option>
                 {getObjectKeys(values.translations).map((writethru) => (
-                  <option value={writethru} key={`writethru-${writethru}`}>
+                  <option value={writethru} key={`left-writethru-${writethru}`}>
                     {capitalize(writethru)}
                   </option>
                 ))}
@@ -123,7 +123,10 @@ export const CompareAccordion = () => {
               >
                 <option value="" hidden></option>
                 {getObjectKeys(values.translations).map((writethru) => (
-                  <option value={writethru} key={`writethru-${writethru}`}>
+                  <option
+                    value={writethru}
+                    key={`right-writethru-${writethru}`}
+                  >
                     {capitalize(writethru)}
                   </option>
                 ))}
