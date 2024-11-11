@@ -24,7 +24,7 @@ export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
         const element = node as Element;
         const tag = element.nodeName.toLowerCase();
-        console.log({ innerHTML: element.innerHTML });
+
         if (element.innerHTML)
           elements += `<${tag}>${
             type === "ins"
@@ -33,7 +33,7 @@ export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
           }</${tag}>`;
       } else if (node.nodeType === Node.TEXT_NODE) {
         const element = node as Text;
-        console.log({ text: element.textContent });
+
         if (element.textContent)
           elements +=
             type === "ins"
