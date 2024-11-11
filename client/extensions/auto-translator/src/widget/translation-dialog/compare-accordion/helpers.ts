@@ -5,15 +5,11 @@ import diff_match_patch, {
 } from "diff-match-patch";
 import DOMPurify from "dompurify";
 
-export const sanitizeHtml = (html: string | Node) => {
-  const clean = DOMPurify.sanitize(html);
-
-  return clean;
-};
+export const sanitizeHtml = (html: string | Node) => DOMPurify.sanitize(html);
 
 export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
   let html = [];
-  const pattern_para = /\n/g;
+  const patternPara = /\n/g;
   const tempDiv = document.createElement("div");
 
   const getFormattedElements = (text: string, type: "ins" | "del") => {
@@ -48,7 +44,7 @@ export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
   for (let x = 0; x < diffs.length; x++) {
     let op = diffs[x][0];
     let data = diffs[x][1];
-    let text = data.replace(pattern_para, "");
+    let text = data.replace(patternPara, "");
     tempDiv.innerHTML = text;
 
     switch (op) {
