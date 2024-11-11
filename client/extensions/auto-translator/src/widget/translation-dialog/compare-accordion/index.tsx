@@ -74,7 +74,6 @@ const CompareContent = ({
 export const CompareAccordion = () => {
   const { gettext } = superdesk.localization;
   const { values } = useFormikContext<TranslationDialogFormProps>();
-  const dmp = new DiffMatchPatch();
 
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
   const [compareLeft, setCompareLeft] = React.useState<
@@ -83,6 +82,69 @@ export const CompareAccordion = () => {
   const [compareRight, setCompareRight] = React.useState<
     TranslationDialogFormProps["writethru"]
   >(getObjectKeys(values.translations)?.[0] ?? "");
+
+  const getCompareContentValues = (
+    version: (typeof COMPARE_VERSIONS)[number]
+  ) => {
+    const dmp = new DiffMatchPatch();
+    let headline: string, headline_extended: string, body_html: string;
+
+    switch (version) {
+      case "ls":
+        headline = sanitizeHtml(
+          values.translations[compareLeft].original.headline
+        );
+        headline_extended = sanitizeHtml(
+          values.translations[compareLeft].original.headline_extended
+        );
+        body_html = sanitizeHtml(
+          values.translations[compareLeft].original.body_html
+        );
+        break;
+      case "rs":
+        headline = sanitizeHtml(
+          values.translations[compareRight].original.headline
+        );
+        headline_extended = sanitizeHtml(
+          values.translations[compareRight].original.headline_extended
+        );
+        body_html = sanitizeHtml(
+          values.translations[compareRight].original.body_html
+        );
+        break;
+      case "diff":
+        const diffHeadline = dmp.diff_main(
+          sanitizeHtml(values.translations[compareLeft].original.headline),
+          sanitizeHtml(values.translations[compareRight].original.headline)
+        );
+        const diffHeadline_extended = dmp.diff_main(
+          sanitizeHtml(
+            values.translations[compareLeft].original.headline_extended
+          ),
+          sanitizeHtml(
+            values.translations[compareRight].original.headline_extended
+          )
+        );
+        const diffBody_html = dmp.diff_main(
+          sanitizeHtml(values.translations[compareLeft].original.body_html),
+          sanitizeHtml(values.translations[compareRight].original.body_html)
+        );
+        headline = getPrettyDiffHtml(diffHeadline);
+        headline_extended = getPrettyDiffHtml(diffHeadline_extended);
+        body_html = getPrettyDiffHtml(diffBody_html);
+
+        console.log({
+          diffHeadline,
+          diffHeadline_extended,
+          diffBody_html,
+          headline,
+          headline_extended,
+          body_html,
+        });
+    }
+
+    return { headline, headline_extended, body_html };
+  };
 
   return (
     <ToggleBox
@@ -140,83 +202,10 @@ export const CompareAccordion = () => {
                 style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
               >
                 {COMPARE_VERSIONS.map((version, index) => {
-                  let header = `${capitalize(gettext("writethru"))} ${
-                    index + 1
-                  }`;
-                  let headline: string,
-                    headline_extended: string,
-                    body_html: string;
-
-                  switch (version) {
-                    case "ls":
-                      headline = sanitizeHtml(
-                        values.translations[compareLeft].original.headline
-                      );
-                      headline_extended = sanitizeHtml(
-                        values.translations[compareLeft].original
-                          .headline_extended
-                      );
-                      body_html = sanitizeHtml(
-                        values.translations[compareLeft].original.body_html
-                      );
-                      break;
-                    case "rs":
-                      headline = sanitizeHtml(
-                        values.translations[compareRight].original.headline
-                      );
-                      headline_extended = sanitizeHtml(
-                        values.translations[compareRight].original
-                          .headline_extended
-                      );
-                      body_html = sanitizeHtml(
-                        values.translations[compareRight].original.body_html
-                      );
-                      break;
-                    case "diff":
-                      header = capitalize(gettext("diff"));
-
-                      const diffHeadline = dmp.diff_main(
-                        sanitizeHtml(
-                          values.translations[compareLeft].original.headline
-                        ),
-                        sanitizeHtml(
-                          values.translations[compareRight].original.headline
-                        )
-                      );
-                      const diffHeadline_extended = dmp.diff_main(
-                        sanitizeHtml(
-                          values.translations[compareLeft].original
-                            .headline_extended
-                        ),
-                        sanitizeHtml(
-                          values.translations[compareRight].original
-                            .headline_extended
-                        )
-                      );
-                      const diffBody_html = dmp.diff_main(
-                        sanitizeHtml(
-                          values.translations[compareLeft].original.body_html
-                        ),
-                        sanitizeHtml(
-                          values.translations[compareRight].original.body_html
-                        )
-                      );
-
-                      headline = getPrettyDiffHtml(diffHeadline);
-                      headline_extended = getPrettyDiffHtml(
-                        diffHeadline_extended
-                      );
-                      body_html = getPrettyDiffHtml(diffBody_html);
-
-                      console.log({
-                        diffHeadline,
-                        diffHeadline_extended,
-                        diffBody_html,
-                        headline,
-                        headline_extended,
-                        body_html,
-                      });
-                  }
+                  const header =
+                    version === "diff"
+                      ? capitalize(gettext("diff"))
+                      : `${capitalize(gettext("writethru"))} ${index + 1}`;
 
                   return (
                     <Container key={version} gap="large" direction="column">
@@ -224,10 +213,8 @@ export const CompareAccordion = () => {
                         {header}
                       </p>
                       <CompareContent
-                        headline={headline}
-                        headline_extended={headline_extended}
-                        body_html={body_html}
                         version={version}
+                        {...getCompareContentValues(version)}
                       />
                     </Container>
                   );
