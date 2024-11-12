@@ -14,57 +14,39 @@ const CompareContent = ({
   headline,
   headline_extended,
   body_html,
-  version,
 }: Pick<
   TranslationDialogFormProps["translations"][string]["original"],
   "headline" | "headline_extended" | "body_html"
-> & { version: (typeof COMPARE_VERSIONS)[number] }) => {
+>) => {
   const { gettext } = superdesk.localization;
 
   return (
     <>
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span
-          className="sd-input__label sd-input__label--boxed"
-          id={`compare-headline-${version}-label`}
-        >
+        <span className="sd-input__label sd-input__label--boxed">
           {capitalize(gettext("headline"))}
         </span>
         <div className="sd-input__input-container">
-          <p
-            aria-labelledby={`compare-headline-${version}-label`}
-            className="m-0"
-            dangerouslySetInnerHTML={{ __html: headline }}
-          ></p>
+          <p className="m-0" dangerouslySetInnerHTML={{ __html: headline }}></p>
         </div>
       </div>
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span
-          className="sd-input__label sd-input__label--boxed"
-          id={`compare-extended-headline-${version}-label`}
-        >
+        <span className="sd-input__label sd-input__label--boxed">
           {capitalize(gettext("extended headline"))}
         </span>
         <div className="sd-input__input-container">
           <p
-            aria-labelledby={`compare-extended-headline-${version}-label`}
             className="m-0"
             dangerouslySetInnerHTML={{ __html: headline_extended }}
           ></p>
         </div>
       </div>
       <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span
-          className="sd-input__label sd-input__label--boxed"
-          id={`compare-body-html-${version}-label`}
-        >
+        <span className="sd-input__label sd-input__label--boxed">
           {capitalize(gettext("body HTML"))}
         </span>
         <div className="sd-input__input-container">
-          <div
-            aria-labelledby={`compare-body-html-${version}-label`}
-            dangerouslySetInnerHTML={{ __html: body_html }}
-          ></div>
+          <div dangerouslySetInnerHTML={{ __html: body_html }}></div>
         </div>
       </div>
     </>
@@ -199,11 +181,12 @@ export const CompareAccordion = () => {
             </GridList>
           </div>
           {compareLeft && compareRight && (
-            <div
+            <article
               style={{ width: "100%" }}
-              role="document"
               tabIndex={0}
-              aria-label="Compare Writethrus"
+              aria-label={`${capitalize(gettext("compare"))} ${capitalize(
+                gettext("writethru")
+              )} ${capitalize(gettext("diff"))}`}
             >
               <div
                 className="sd-grid-list sd-grid-list--large sd-grid-list--gap-small sd-margin--0"
@@ -220,15 +203,12 @@ export const CompareAccordion = () => {
                       <p className="text-md font-medium self-center m-0">
                         {header}
                       </p>
-                      <CompareContent
-                        version={version}
-                        {...getCompareContentValues(version)}
-                      />
+                      <CompareContent {...getCompareContentValues(version)} />
                     </Container>
                   );
                 })}
               </div>
-            </div>
+            </article>
           )}
         </Container>
       )}
