@@ -54,7 +54,6 @@ RENDITIONS = {
         "thumbnail": {"width": 220, "height": 120},
         "viewImage": {"width": 640, "height": 640},
         "baseImage": {"width": 1400, "height": 1400},
-        "square": {"width": 800, "height": 800},
     },
     "avatar": {
         "thumbnail": {"width": 60, "height": 60},
