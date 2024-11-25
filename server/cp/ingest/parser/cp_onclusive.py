@@ -104,6 +104,9 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
 
     def parse_address(self, event) -> Dict[str, str]:
         try:
-            return {"country": event["countryName"], "state": event["stateName"]}
+            address = {"country": event["countryName"]}
+            if event.get("stateName"):
+                address["state"] = event["stateName"]
+            return address
         except KeyError:
             return {}

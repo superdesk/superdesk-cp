@@ -186,3 +186,14 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                     item["location"][0]["address"],
                     {"country": "Canada", "state": "British Columbia"},
                 )
+
+                item2 = self.parser.parse(data)[1]
+
+                self.assertEqual(
+                    item2["location"][0]["name"],
+                    "Canada",
+                )
+                self.assertEqual(
+                    item2["location"][0]["address"],
+                    {"country": "Canada"},
+                )
