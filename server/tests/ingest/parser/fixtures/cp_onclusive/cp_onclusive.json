@@ -36,6 +36,8 @@
     },
     "eventConfirmed": false,
     "isAnnual": true,
+    "stateId": 58,
+    "stateName": "British Columbia",
     "isHeadline": false,
     "isTopStory": false,
     "isLive": true,

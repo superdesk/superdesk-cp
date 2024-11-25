@@ -32,6 +32,7 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
     maxDiff = None
 
     def test_content(self):
+
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
                 item = self.parser.parse(data)[0]
@@ -180,4 +181,8 @@ class OnclusiveFeedParserTestCase(ParserTestCase):
                 self.assertEqual(
                     item["location"][0]["name"],
                     "One King West Hotel & Residence, 1 King St W, Toronto",
+                )
+                self.assertEqual(
+                    item["location"][0]["address"],
+                    {"country": "Canada", "state": "British Columbia"},
                 )
