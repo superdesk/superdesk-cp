@@ -277,7 +277,7 @@ superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@rele
     #   superdesk-core
 superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@release/2.8
     # via -r requirements.in
-types-python-dateutil==2.9.0.20241003
+types-python-dateutil==2.9.0.20241206
     # via arrow
 typing-extensions==4.12.2
     # via
