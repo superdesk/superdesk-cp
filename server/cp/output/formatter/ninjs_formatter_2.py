@@ -94,18 +94,28 @@ def format_cv_item(item, language):
         scheme = "http://cv.cp.org/Organizations/"
     elif scheme == "place":
         scheme = "http://cv.cp.org/Places/"
-    
+
     formatted_item = {
         "code": item.get("qcode"),
         "name": get_locale_name(item, language),
         "scheme": scheme,
     }
-    if scheme in ["http://cv.iptc.org/newscodes/mediatopic/", "http://cv.cp.org/People/", "http://cv.cp.org/Places/", "http://cv.cp.org/Organizations/", "http://cv.cp.org/Events/", "subject_custom",]:
-        formatted_item.update({
-            "creator": item.get("creator", ""),
-            "relevance": item.get("relevance", 47),
-        })
+    if scheme in [
+        "http://cv.iptc.org/newscodes/mediatopic/",
+        "http://cv.cp.org/People/",
+        "http://cv.cp.org/Places/",
+        "http://cv.cp.org/Organizations/",
+        "http://cv.cp.org/Events/",
+        "subject_custom",
+    ]:
+        formatted_item.update(
+            {
+                "creator": item.get("creator", ""),
+                "relevance": item.get("relevance", 47),
+            }
+        )
     return filter_empty_vals(formatted_item)
+
 
 class NINJSFormatter_2(Formatter):
     """
@@ -222,7 +232,7 @@ class NINJSFormatter_2(Formatter):
 
     def _transform_to_ninjs(self, article, subscriber, recursive=True):
         # Using the method we created to fetch Parents of all Manual Tags
-
+        article = self._filter_out_region_subjects(article)
         article = self._add_parent_manual_tags(article)
 
         ninjs = {
@@ -407,6 +417,19 @@ class NINJSFormatter_2(Formatter):
         self.update_ninjs_subjects(ninjs, language="en-CA")
 
         return ninjs
+
+    def _filter_out_region_subjects(self, article):
+        """Remove region subjects that are automatically added by dateline."""
+        if not article or "subject" not in article:
+            return article
+
+        filtered_article = article.copy()
+        filtered_article["subject"] = [
+            subject
+            for subject in article["subject"]
+            if subject.get("scheme") != "regions"
+        ]
+        return filtered_article
 
     def _generate_renditions(self, article):
         """
