@@ -520,7 +520,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                 this.runAnalysis();
                                             }
                                         }}
-                                        aria-label="Run automatically"
+                                        aria-label={gettext('Run automatically')}
                                         label={{ content: gettext('Run automatically') }}
                                     />
                                 </ButtonGroup>
@@ -536,7 +536,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                     key={this.state.forceRenderKey}
                                                     keyValue="keyValue"
                                                     items={[]}
-                                                    placeholder="Search for an entity or subject"
+                                                    placeholder={gettext("Search for an entity or subject")}
                                                     search={(searchString, callback) => {
                                                         let cancelled = false;
 
@@ -813,7 +813,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                     } else if (data === 'not-initialized') {
                                         return (
                                             <Button
-                                                aria-label="Run"
+                                                aria-label={gettext('Run')}
                                                 type="primary"
                                                 text={gettext('Run')}
                                                 expand={true}
