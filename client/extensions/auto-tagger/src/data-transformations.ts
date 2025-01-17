@@ -11,52 +11,61 @@ export function createTagsPatch(
     const serverFormat = toServerFormat(tags, superdesk);
     const patch: Partial<IArticle> = {};
 
+    // Helper functions
+    const isValidTag = (tag: ISubject | undefined, qcode: string | undefined): tag is ISubject => {
+        return !!tag && !!qcode && typeof tag.qcode === 'string';
+    };
+
+    const isPreservedScheme = (scheme: string | undefined): boolean => {
+        const preservedSchemes = ['subject_custom', 'destinations', 'distribution'];
+        return preservedSchemes.includes(scheme ?? '');
+    };
+
+    // Create a duplicate tag for the index field by:
+    // Overriding the scheme to 'subject_custom' to make it appear in the index field
+    // Using the same qcode ensures we can track and update the same tag in both places
+    const createIndexTag = (tag: ISubject): ISubject => ({
+        ...tag,
+        scheme: 'subject_custom',
+    });
+
     getServerResponseKeys().forEach((key) => {
-        let oldValues = OrderedMap<string, ISubject>((article[key] || [])
-            .filter((_item) => typeof _item.qcode === 'string')
-            .map((_item) => [_item.qcode, _item]));
-
-        const newValues = serverFormat[key];
+        // Initialize maps
+        let oldValues = OrderedMap<string, ISubject>(
+            (article[key] || [])
+                .filter((_item) => typeof _item.qcode === 'string')
+                .map((_item) => [_item.qcode, _item])
+        );
         let newValuesMap = OrderedMap<string, ISubject>();
+        const newValues = serverFormat[key];
+        // Check if a tag should be removed
+        const wasRemoved = (tag: ISubject) => 
+            oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode);
 
-        // Preserve tags with specific schemes
-        oldValues?.forEach((tag, _qcode) => {
-            // casting due to issue with immutable types
-            const qcode = _qcode as string;
-
-            if (
-                tag
-                && (
-                    tag.scheme === 'subject_custom'
-                    || tag.scheme === 'destinations'
-                    || tag.scheme === 'distribution'
-                )
-            ) {
-                newValuesMap = newValuesMap.set(qcode, tag);
+        // Preserve existing tags with special schemes
+        oldValues?.forEach((tag, qcode) => {
+            if (isValidTag(tag, qcode) && isPreservedScheme(tag.scheme) && !wasRemoved(tag)) {
+                newValuesMap = newValuesMap.set(qcode as string, tag);
             }
         });
-        const wasRemoved = (tag: ISubject) => {
-            if (oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode)) {
-                return true;
-            } else {
-                return false;
-            }
-        };
 
-        // Add new values to the map, ensuring tag is defined and has a qcode
+        // Add new tags and their index versions
         newValues?.forEach((tag) => {
-            if (tag && tag.qcode) {
+            if (isValidTag(tag, tag.qcode)) {
+                // Add original tag
                 newValuesMap = newValuesMap.set(tag.qcode, tag);
+                // Add index tag
+                newValuesMap = newValuesMap.set(tag.qcode, createIndexTag(tag));
             }
         });
 
-        // Has to be executed even if newValuesMap is empty in order
-        // for removed groups to be included in the patch.
+        // Create final array of tags
         patch[key] = oldValues
             .merge(newValuesMap)
-            .filter((tag) => wasRemoved(tag) !== true)
+            .filter((tag) => !wasRemoved(tag))
             .toArray();
     });
+
     return patch;
 }
 
