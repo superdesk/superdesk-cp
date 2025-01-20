@@ -17,17 +17,14 @@ export function createTagsPatch(
     };
 
     const isPreservedScheme = (scheme: string | undefined): boolean => {
-        const preservedSchemes = ['subject_custom', 'destinations', 'distribution'];
+        const preservedSchemes = ['destinations', 'distribution'];
         return preservedSchemes.includes(scheme ?? '');
     };
 
     // Create a duplicate tag for the index field by:
     // Overriding the scheme to 'subject_custom' to make it appear in the index field
     // Using the same qcode ensures we can track and update the same tag in both places
-    const createIndexTag = (tag: ISubject): ISubject => ({
-        ...tag,
-        scheme: 'subject_custom',
-    });
+    const createIndexTag = (tag: ISubject): ISubject => ({ ...tag, scheme: 'subject_custom' });
 
     getServerResponseKeys().forEach((key) => {
         // Initialize maps
@@ -39,12 +36,11 @@ export function createTagsPatch(
         let newValuesMap = OrderedMap<string, ISubject>();
         const newValues = serverFormat[key];
         // Check if a tag should be removed
-        const wasRemoved = (tag: ISubject) => 
-            oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode);
+        const wasRemoved = (tag: ISubject) => oldValues.has(tag.qcode) && !newValuesMap.has(tag.qcode);
 
         // Preserve existing tags with special schemes
         oldValues?.forEach((tag, qcode) => {
-            if (isValidTag(tag, qcode) && isPreservedScheme(tag.scheme) && !wasRemoved(tag)) {
+            if (isValidTag(tag, qcode) && isPreservedScheme(tag.scheme)) {
                 newValuesMap = newValuesMap.set(qcode as string, tag);
             }
         });
