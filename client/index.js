@@ -30,26 +30,6 @@ setTimeout(() => {
                 id: 'auto-translator',
                 load: () => import('./extensions/auto-translator')
             },
-            {
-                id: 'ai-widget',
-                load: () => import('superdesk-core/scripts/extensions/ai-widget').then((widget) => {
-                    widget.configure((superdesk) => ({
-                        translations: {
-                            translateActionIntegration: true,
-                            generateTranslations: (article, language) => {
-                                return new Promise(resolve => resolve(["TEST TRANSLATE BODY"]))
-                            },
-                        },
-                        generateHeadlines: (article) => {
-                            return new Promise(resolve => resolve(["TEST TRANSLATE HEADLINES"]))
-                        },
-                        generateSummary: (article) => {
-                            return new Promise(resolve => resolve(["TEST TRANSLATE SUMMARY"]))
-                        }
-                    }))
-                    return widget
-                }),
-            }
         ],
         {},
     );
