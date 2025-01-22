@@ -248,7 +248,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
 
                 // Check if any array in existingTags contains items with scheme === 'subject_custom'
                 const hasValidTags = Object.values(existingTags).some(tagArray => 
-                    Array.isArray(tagArray) && tagArray.some(tag => tag.scheme === 'subject_custom')
+                    Array.isArray(tagArray) && tagArray.some(tag => tag.scheme === 'subject_custom' || tag.scheme === 'subject')
                 );
 
                 if (hasValidTags) {
@@ -638,7 +638,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                         </div>
                                         <div className="form__row form__row--flex" style={{ alignItems: 'center' }}>
                                             <Button
-                                                aria-label="Add a tag"
+                                                aria-label={gettext('Add a tag')}
                                                 type="primary"
                                                 size="small"
                                                 shape="round"
