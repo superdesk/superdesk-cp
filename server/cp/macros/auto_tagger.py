@@ -1,6 +1,7 @@
 from flask_babel import lazy_gettext
 from flask import current_app as app
 from cp.ai.semaphore import Semaphore
+from xml.etree import ElementTree as ET
 
 import logging
 
@@ -17,17 +18,9 @@ def update_tag_relevance(existing_tag, new_tag):
         existing_tag["relevance"] = new_tag["relevance"]
 
 
-def replace_ampersands(item):
-    """Replace ampersands with 'and' in the item's content."""
-    if item.get("headline"):
-        item["headline"] = item["headline"].replace("&", "and")
-    return item
-
-
 def callback(item, **kwargs):
     """This macro will tag the item using the AutoTagging service based on the item's content."""
     semaphore = Semaphore(app)
-    item = replace_ampersands(item)
     tags = semaphore.analyze(item)
 
     if tags:
