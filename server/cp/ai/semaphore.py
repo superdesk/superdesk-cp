@@ -584,47 +584,49 @@ class Semaphore(AIServiceBase):
 
             root = ET.fromstring(xml_data)
             article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
-            system_elements = article_elements.findall("SYSTEM")
-            for system_element in system_elements:
-                article_elements.remove(system_element)
+            if article_elements is not None:
+                system_elements = article_elements.findall("SYSTEM")
+                if system_elements:
+                    for system_element in system_elements:
+                        article_elements.remove(system_element)
 
-            for elem in article_elements:
-                name = elem.get("name")
-                value = elem.get("value")
-                score = elem.get("score", 0)
-                id = elem.get("id")
+                for elem in article_elements:
+                    name = elem.get("name")
+                    value = elem.get("value")
+                    score = elem.get("score", 0)
+                    id = elem.get("id")
 
-                if name in ["Organization", "Person", "Place", "Event"]:
-                    add_tag(name, value, id, score)
-                elif name == "Media Topic":
-                    qcode = elem.get("id")
-                    tag_data = {
-                        "name": value,
-                        "qcode": qcode,
-                        "parent": "",
-                        "source": "Semaphore",
-                        "creator": "Machine",
-                        "relevance": format_relevance(score),
-                        "altids": {"source_name": "source_id"},
-                        "original_source": "original_source_value",
-                        "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
-                    }
-                    add_to_dict("subject", tag_data)
-                elif name == "Media Topic_PATH_LABEL":
-                    phrases = value.split("/")
-                    # Added check to avoid duplicate CP vocabulary values
-                    if phrases[0] == "CP vocabulary":
-                        pass
-                    else:
+                    if name in ["Organization", "Person", "Place", "Event"]:
+                        add_tag(name, value, id, score)
+                    elif name == "Media Topic":
+                        qcode = elem.get("id")
+                        tag_data = {
+                            "name": value,
+                            "qcode": qcode,
+                            "parent": "",
+                            "source": "Semaphore",
+                            "creator": "Machine",
+                            "relevance": format_relevance(score),
+                            "altids": {"source_name": "source_id"},
+                            "original_source": "original_source_value",
+                            "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                        }
+                        add_to_dict("subject", tag_data)
+                    elif name == "Media Topic_PATH_LABEL":
+                        phrases = value.split("/")
+                        # Added check to avoid duplicate CP vocabulary values
+                        if phrases[0] == "CP vocabulary":
+                            pass
+                        else:
+                            value = remove_first_index(value)
+                            media_topic_labels[value] = score
+                    elif name == "Media Topic_PATH_GUID":
                         value = remove_first_index(value)
-                        media_topic_labels[value] = score
-                elif name == "Media Topic_PATH_GUID":
-                    value = remove_first_index(value)
-                    last_value = value.split("/")[-1]
-                    # Added check to avoid duplicate CP vocabulary values
-                    if last_value not in processed_values:
-                        media_topic_guids[value] = score
-                        processed_values.add(last_value)
+                        last_value = value.split("/")[-1]
+                        # Added check to avoid duplicate CP vocabulary values
+                        if last_value not in processed_values:
+                            media_topic_guids[value] = score
+                            processed_values.add(last_value)
 
             assign_parents(response_dict, media_topic_labels, media_topic_guids)
 
@@ -685,6 +687,7 @@ class Semaphore(AIServiceBase):
             your_string = your_string.replace("<br>", "")
             your_string = your_string.replace("&nbsp;", "")
             your_string = your_string.replace("&amp;", "")
+            your_string = your_string.replace("&", "")
             your_string = your_string.replace("&lt;&gt;", "")
 
             return your_string
