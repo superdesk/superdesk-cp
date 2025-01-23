@@ -1,7 +1,6 @@
 from flask_babel import lazy_gettext
 from flask import current_app as app
 from cp.ai.semaphore import Semaphore
-from xml.etree import ElementTree as ET
 
 import logging
 
