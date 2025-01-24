@@ -13,7 +13,7 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
     if not updated.get("authors"):
         language = updated.get("language", "en-CA")
         default_author_username = (
-            DEFAULT_AUTHOR_EN if language == "en-CA" else DEFAULT_AUTHOR_FR
+            DEFAULT_AUTHOR_EN if language.startswith("en") else DEFAULT_AUTHOR_FR
         )
 
         users_service = superdesk.get_resource_service("users")
@@ -26,14 +26,16 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
                 f"Default user '{default_author_username}' not found in the database."
             )
 
-        byline = default_user.get("username", "Unknown User")
-        default_email = default_user.get("email", "contact@cp.ca")
+        first_name = default_user.get("first_name", "")
+        last_name = default_user.get("last_name", "")
+        byline = f"{first_name} {last_name}".strip()
 
         item["byline"] = updates["byline"] = byline
+
         item["authors"] = updates["authors"] = [
             {
                 "name": byline,
-                "email": default_email,
+                "user": default_user,
             }
         ]
         return
@@ -43,23 +45,9 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
     )
     item["byline"] = updates["byline"] = byline
 
-    for author in updated.get("authors", []):
-        author["email"] = fetch_author_email(author)
-
 
 def get_author_name(author) -> str:
     return author.get("sub_label") or author.get("name")
-
-
-def fetch_author_email(author):
-    """
-    Fetch the email for the author.
-    """
-    if "user" in author:
-        user_info = author["user"]
-        if isinstance(user_info, dict) and "email" in user_info:
-            return user_info["email"]
-    return author.get("email", "")
 
 
 def init_app(app):
