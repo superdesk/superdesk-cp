@@ -245,13 +245,15 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
         initializeData(preload: boolean) {
             try {
                 const existingTags = getExistingTags(this.props.article);
-
-                // Check if any array in existingTags contains items with scheme === 'subject_custom'
-                const hasValidTags = Object.values(existingTags).some(tagArray => 
-                    Array.isArray(tagArray) && tagArray.some(tag => tag.scheme === 'subject_custom' || tag.scheme === 'subject')
-                );
-
-                if (hasValidTags) {
+                // Check if existingTags.subject has any object with scheme value of subject or if organisation or person or event or place or object exists
+                // Added check because of destinations and distribution scheme values are present in subject array which causes the empty data to be shown
+                if (Object.keys(existingTags).length > 0 &&
+                    (existingTags.subject && existingTags.subject.some(s => s.scheme === 'subject')) ||
+                    (Array.isArray(existingTags.organisation) && existingTags.organisation.length > 0) ||
+                    (Array.isArray(existingTags.person) && existingTags.person.length > 0) ||
+                    (Array.isArray(existingTags.event) && existingTags.event.length > 0) ||
+                    (Array.isArray(existingTags.place) && existingTags.place.length > 0) ||
+                    (Array.isArray(existingTags.object) && existingTags.object.length > 0)) {
                     const resClient = toClientFormat(existingTags);
                     this.setState({
                         data: { original: { analysis: resClient }, changes: { analysis: resClient } },
@@ -607,9 +609,9 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
                                                                         {_item.name}
                                                                     </b>
                                                                     {
-                                                                        _item?.group?.value === 'subject_custom' 
-                                                                            ? <p aria-label="Group: Subject">Subject</p>
-                                                                            : <p aria-label={`Group: ${_item?.group?.value}`}>{_item?.group?.value}</p>
+                                                                        _item?.group?.value == null ? null : (
+                                                                            <p aria-label={`Group: ${_item.group.value}`}>{_item.group.value}</p>
+                                                                        )
                                                                     }
 
                                                                     {

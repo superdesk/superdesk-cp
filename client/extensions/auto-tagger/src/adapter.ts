@@ -64,7 +64,7 @@ export function toClientFormat(response: IServerResponse): OrderedMap<string, IT
                     parent,
                     group: {
                         kind: 'scheme',
-                        value: 'subject_custom'
+                        value: 'subject' || '',
                     },
                     relevance,
                     creator,
