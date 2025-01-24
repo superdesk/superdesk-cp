@@ -632,6 +632,12 @@ class Semaphore(AIServiceBase):
 
             return response_dict
 
+        def escape_ampersands_in_item(item):
+            item["headline"] = item["headline"].replace("&", "&amp;")
+            item["abstract"] = item["abstract"].replace("&", "&amp;")
+            item["body_html"] = item["body_html"].replace("&", "&amp;")
+            return item
+
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -640,6 +646,7 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
+            item = escape_ampersands_in_item(item)
             xml_payload = self.html_to_xml(item)
             payload = {"XML_INPUT": xml_payload}
 
@@ -687,7 +694,6 @@ class Semaphore(AIServiceBase):
             your_string = your_string.replace("<br>", "")
             your_string = your_string.replace("&nbsp;", "")
             your_string = your_string.replace("&amp;", "")
-            your_string = your_string.replace("&", "")
             your_string = your_string.replace("&lt;&gt;", "")
 
             return your_string
