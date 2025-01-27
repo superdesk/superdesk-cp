@@ -1,6 +1,9 @@
 from superdesk.signals import item_publish
 from settings import DEFAULT_AUTHOR_EN, DEFAULT_AUTHOR_FR
 import superdesk
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 def set_byline_on_publish(sender, item, updates, **kwargs):
@@ -22,23 +25,19 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
         )
 
         if not default_user:
-            raise ValueError(
+            logger.warning(
                 f"Default user '{default_author_username}' not found in the database."
             )
-
-        first_name = default_user.get("first_name", "")
-        last_name = default_user.get("last_name", "")
-        byline = f"{first_name} {last_name}".strip()
-
-        item["byline"] = updates["byline"] = byline
-
-        item["authors"] = updates["authors"] = [
-            {
-                "name": byline,
-                "user": default_user,
+        else:
+            user_name = f"{default_user.get('first_name', '')} {default_user.get('last_name', '')}".strip()
+            author = {
+                "_id": str(default_user["_id"]),
+                "role": "author",
+                "sub_label": user_name,
+                "parent": str(default_user["_id"]),
+                "name": user_name,
             }
-        ]
-        return
+            updated.setdefault("authors", []).append(author)
 
     byline = ", ".join(
         [get_author_name(author) for author in updated.get("authors", [])]

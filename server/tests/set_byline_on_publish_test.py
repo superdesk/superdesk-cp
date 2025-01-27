@@ -53,6 +53,7 @@ def test_set_byline_on_publish_with_existing_byline():
 def test_set_byline_with_no_authors(mock_get_resource_service):
     mock_user_service = MagicMock()
     mock_default_user = {
+        "_id": "64d13ff3446949ccb5348bdc",
         "username": "cpdefaultauthor",
         "first_name": "Default",
         "last_name": "Author",
