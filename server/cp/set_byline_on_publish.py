@@ -28,6 +28,7 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
             logger.warning(
                 f"Default user '{default_author_username}' not found in the database."
             )
+            return
         else:
             user_name = f"{default_user.get('first_name', '')} {default_user.get('last_name', '')}".strip()
             author = {
