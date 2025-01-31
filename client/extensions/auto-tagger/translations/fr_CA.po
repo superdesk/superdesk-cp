@@ -191,3 +191,9 @@ msgstr "Le type est requis."
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:649
 msgid "Unable to use Autotagger service"
 msgstr "Erreur du service d'étiquetage automatique"
+
+msgid: "Click "Run" to test Autotagger"
+msgstr: "Cliquez sur Exécuter pour tester l'Étiquetage automatique"
+
+msgid: "Search for an entity or subject"
+msgstr: "Rechercher une entité ou un sujet"
