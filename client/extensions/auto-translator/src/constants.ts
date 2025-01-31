@@ -3,7 +3,7 @@ const WIDGET_ID = "auto-translator-widget" as const;
 const TRANSLATION_TYPES = {
   basic: "Google Basic",
   advanced_nmt: "Google NMT",
-  advanced_llm: "Google LLM",
+  // advanced_llm: "Google LLM",
   deepl: "DeepL",
 } as const;
 
