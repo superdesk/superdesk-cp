@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "auto-translator",
+  "version": "1.0.0",
+  "description": "Translation Widget",
+  "main": "dist/src/extension.js",
+  "scripts": {
+    "compile": "tsc -p src",
+    "compile-e2e": "echo 'No end-to-end tests defined'",
+    "watch": "tsc -watch -p src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/diff-match-patch": "1.0.36",
+    "@types/dompurify": "3.0.5",
+    "superdesk-code-style": "1.3.0",
+    "typescript": "4.9.5"
+  },
+  "dependencies": {
+    "diff-match-patch": "1.0.5",
+    "formik": "2.4.6",
+    "superdesk-ui-framework": "3.1.18"
+  },
+  "superdeskExtension": {
+    "translations-extract-paths": [
+      "./src"
+    ],
+    "translations-directory": "translations"
+  }
+}

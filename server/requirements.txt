@@ -32,7 +32,6 @@ botocore==1.35.15
     # via
     #   boto3
     #   s3transfer
-cachetools==5.5.0
     # via flask-oidc-ex
 celery[redis]==5.4.0
     # via superdesk-core
@@ -41,6 +40,7 @@ cerberus==1.3.5
     #   eve
     #   superdesk-core
 certifi==2024.8.30
+cachetools>=2.0.0,<5.0.0
     # via
     #   elastic-apm
     #   elasticsearch
@@ -197,8 +197,6 @@ pyasn1-modules==0.4.0
     # via oauth2client
 pycparser==2.22
     # via cffi
-pyexiv2==2.12.0
-    # via superdesk-core
 pyjwt==2.8.0
     # via superdesk-core
 pymemcache==4.0.0
@@ -272,7 +270,7 @@ six==1.16.0
     #   python-dateutil
 superdesk-analytics @ git+https://github.com/superdesk/superdesk-analytics.git@release/2.8
     # via -r requirements.in
-superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.8
+superdesk-core @ git+https://github.com/superdesk/superdesk-core.git@release/2.8
     # via
     #   -r requirements.in
     #   superdesk-core
@@ -316,3 +314,7 @@ xmlsec==1.3.14
     # via
     #   python3-saml
     #   superdesk-core
+google-auth==2.3.3
+google-cloud-translate==3.7.4
+deepl==1.14.0
+python-dotenv==0.21.1

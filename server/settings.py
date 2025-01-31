@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "cp.set_province_on_publish",
     "cp.set_byline_on_publish",
     "cp.ai.semaphore",
+    "cp.ai.translate"
 ]
 
 MACROS_MODULE = "cp.macros"
@@ -432,6 +433,16 @@ SEMAPHORE_GET_PARENT_URL = os.getenv("SEMAPHORE_GET_PARENT_URL")
 SEMAPHORE_CREATE_TAG_URL = os.getenv("SEMAPHORE_CREATE_TAG_URL")
 SEMAPHORE_CREATE_TAG_TASK = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 SEMAPHORE_CREATE_TAG_QUERY = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
+
+
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")    
+GOOGLE_API_URL = os.getenv("GOOGLE_API_URL")
+GOOGLE_PROJECT_ID = os.getenv("GOOGLE_PROJECT_ID")
+GOOGLE_PROJECT_LOCATION = os.getenv("GOOGLE_PROJECT_LOCATION")
+DEEPL_AUTH_KEY = os.getenv("DEEPL_AUTH_KEY")
+DEEPL_API_URL = os.getenv("DEEPL_API_URL")
+GOOGLE_SERVICE_ACCOUNT_PATH = os.getenv("GOOGLE_SERVICE_ACCOUNT_PATH")
+GOOGLE_SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
 
 PICTURE_METADATA_MAPPING = {
     "slugline": "Title",
