@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {ISearchPanelWidgetProps, ISuperdesk} from 'superdesk-api';
+import {CheckboxButton, Spacer} from 'superdesk-ui-framework/react';
 
 type IMediaType = 'Image' | 'Video';
 
@@ -51,15 +52,13 @@ export const searchPanelWidgetFactory = (
 
             return (
                 <fieldset>
-                    <div className="field">
-                        <label className="search-label"></label>
-                        {mediaTypes.map((type) => (
-                            <button key={type.type}
-                                className={'btn btn--primary' + (this.isActive(type.type) ? ' btn--active' : '')}
-                                onClick={() => this.toggleMediaType(type.type)}
-                            >{type.label}</button>
-                        ))}
-                    </div>
+                    <div className="field sd-margin-t--2">
+                        <Spacer h gap={'4'}>
+                            {mediaTypes.map((type, i) => (
+                                <CheckboxButton key={i} checked={this.isActive(type.type)} label={{text: type.label}} onChange={() => this.toggleMediaType(type.type)} />
+                            ))}
+                        </Spacer>
+                    </div>                 
                     <div className="field">
                         <label className="search-label">{gettext('From')}</label>
                         <input type="date" value={params.from || ''}
