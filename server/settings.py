@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     "cp.set_province_on_publish",
     "cp.set_byline_on_publish",
     "cp.ai.semaphore",
-    "cp.ai.translate"
+    "cp.ai.translate",
 ]
 
 MACROS_MODULE = "cp.macros"
@@ -447,7 +447,7 @@ SEMAPHORE_CREATE_TAG_TASK = os.getenv("SEMAPHORE_CREATE_TAG_TASK")
 SEMAPHORE_CREATE_TAG_QUERY = os.getenv("SEMAPHORE_CREATE_TAG_QUERY")
 
 
-GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")    
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 GOOGLE_API_URL = os.getenv("GOOGLE_API_URL")
 GOOGLE_PROJECT_ID = os.getenv("GOOGLE_PROJECT_ID")
 GOOGLE_PROJECT_LOCATION = os.getenv("GOOGLE_PROJECT_LOCATION")
