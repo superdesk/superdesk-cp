@@ -267,16 +267,6 @@ class Translate(AIServiceBase):
         else:
             raise ValueError("Invalid translation type for advanced translation")
 
-    @overload
-    def data_operation(
-        self,
-        verb: str,
-        operation: Literal["translate"],
-        name: Optional[str],
-        data: TranslateData,
-    ) -> ResponseType: 
-        ...
-
     def data_operation(
         self,
         verb: str,
