@@ -7,14 +7,14 @@
         {%- if items -%}
             <p><b>{{ group }}</b></p>
             {%- for item in items -%}
-                <p><b>{{ item.title }}</b><br>
+                <p><b>{{ item.title }}<br></b>
                 {%- if item.coverage_types -%}
                     COUVERTURE: {{ item.coverage_types }}.<br>
                 {%- endif -%}
                 {%- if item.address.city -%}
-                    {{ item.address.city }} - {{ item.local_time }}. {{ item.address.short }}.
+                    {{ item.address.city }} - {{ item.local_time }}. {{ item.address.short }}.<br>
                 {%- else -%}
-                    {{ item.local_time }}.
+                    {{ item.local_time }}.<br>
                 {%- endif -%}
                 {%- if item.description_short -%}
                     <br>{{ item.description_short }}

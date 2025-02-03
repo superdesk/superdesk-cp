@@ -20,6 +20,7 @@ from superdesk.default_settings import (
     SERVER_URL,
     CORE_APPS as _core_apps,
     CELERY_BEAT_SCHEDULE,
+    NINJS_COMMON_RENDITIONS,
     timedelta,
 )
 
@@ -60,6 +61,17 @@ RENDITIONS = {
         "viewImage": {"width": 200, "height": 200},
     },
 }
+
+if strtobool(env("EXTRA_RENDITIONS", "true")):
+    RENDITIONS["picture"].update(
+        {
+            "SVGA": {"width": 800, "height": 600},
+            "XGA": {"width": 1024, "height": 768},
+            "HD 1080p": {"width": 1920, "height": 1080},
+        }
+    )
+
+NINJS_COMMON_RENDITIONS = list(RENDITIONS["picture"].keys())
 
 WS_HOST = env("WSHOST", "0.0.0.0")
 WS_PORT = env("WSPORT", "5100")
@@ -455,3 +467,9 @@ DATE_FORMAT_SHORT = "%Y-%m-%d"
 DATETIME_FORMAT = "%I:%M %p %Y-%m-%d"
 
 PLANNING_DUPLICATE_RETAIN_ASSIGNEE_DETAILS = True
+
+ASSIGNMENT_MANUAL_REASSIGNMENT_ONLY = True
+
+DEFAULT_AUTHOR_EN = "cpdefaultauthor"
+
+DEFAULT_AUTHOR_FR = "cpdefaultauthorfr"

@@ -477,7 +477,7 @@ class Semaphore(AIServiceBase):
             }
             SCHEMES = {
                 "Place": "http://cv.cp.org/Places/",
-                "Organisation": "http://cv.cp.org/Organizations/",
+                "Organization": "http://cv.cp.org/Organizations/",
                 "Person": "http://cv.cp.org/Person/",
                 "Event": "http://cv.cp.org/Events/",
             }
@@ -587,7 +587,11 @@ class Semaphore(AIServiceBase):
                             "original_source": "original_source_value",
                             "scheme": scheme,
                         }
-                        add_to_dict(tag.lower(), tag_data)
+                        # Convert 'Organization' to 'organisation' for response_dict
+                        if tag == "Organization":
+                            add_to_dict("organisation", tag_data)
+                        else:
+                            add_to_dict(tag.lower(), tag_data)
                         break
 
             root = ET.fromstring(xml_data)
@@ -602,7 +606,7 @@ class Semaphore(AIServiceBase):
                 score = elem.get("score", 0)
                 id = elem.get("id")
 
-                if name in ["Organisation", "Person", "Place", "Event"]:
+                if name in ["Organization", "Person", "Place", "Event"]:
                     add_tag(name, value, id, score)
                 elif name == "Media Topic":
                     qcode = elem.get("id")
