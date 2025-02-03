@@ -1,6 +1,6 @@
 import itertools
 from planning.feed_parsers.onclusive import OnclusiveFeedParser
-from typing import List
+from typing import List, Dict
 from superdesk import get_resource_service
 from flask import g
 
@@ -101,3 +101,12 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
         for item in cv_items:
             if item["qcode"] == qcode:
                 return item
+
+    def parse_address(self, event) -> Dict[str, str]:
+        try:
+            address = {"country": event["countryName"]}
+            if event.get("stateName"):
+                address["state"] = event["stateName"]
+            return address
+        except KeyError:
+            return {}

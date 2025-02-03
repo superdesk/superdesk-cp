@@ -36,6 +36,8 @@
     },
     "eventConfirmed": false,
     "isAnnual": true,
+    "stateId": 58,
+    "stateName": "British Columbia",
     "isHeadline": false,
     "isTopStory": false,
     "isLive": true,
@@ -142,6 +144,100 @@
             "tagId": 129,
             "tagName": "Testing2",
             "tagTypeId": 9
+        }
+    ],
+    "influencers": [],
+    "country": {
+        "countryId": 38,
+        "countryName": "Canada",
+        "region": "CANADA",
+        "countryCode": "CA"
+    },
+    "order": 0,
+    "primaryCategory": {
+        "categoryId": 88,
+        "categoryName": "Law & Order",
+        "categoryOrder": 60,
+        "categoryTypeId": 18,
+        "categoryTypeName": null
+    }
+},
+{
+    "itemId": 4112035,
+    "summary": "",
+    "description": "Country only Event",
+    "startDate": "2022-06-15T00:00:00",
+    "endDate": "2022-06-16T00:00:00",
+    "time": "",
+    "tbcTime": false,
+    "embargoTime": null,
+    "timezone": {
+        "timezoneID": 8,
+        "timezoneAbbreviation": "EDT",
+        "timezoneName": "(EDT) Eastern Daylight Savings Time",
+        "timezoneOffset": -4.00
+    },
+    "organisationId": 22426,
+    "organisationName": "American Conference Institute",
+    "organisation": {
+        "organisationID": 22426,
+        "organisationName": "American Conference Institute",
+        "baseWebsite": "http://www.americanconference.com",
+        "corporateWebsite": "",
+        "irWebsite": "",
+        "isin": "",
+        "centralIndexKey": null,
+        "twitterWebsite": "ACILegal"
+    },
+    "eventConfirmed": false,
+    "plannedBy": [
+        4708
+    ],
+    "createdDate": "2021-05-04T21:19:10.2",
+    "createdDateUtc": "2021-05-04T19:19:10.2",
+    "lastEditDate": "2022-05-10T13:14:34.873",
+    "lastEditDateUtc": "2022-05-10T11:14:34.873",
+    "deleted": false,
+    "deletionDate": null,
+    "website": "https://www.canadianinstitute.com/anti-money-laundering-financial-crime/",
+    "website2": "",
+    "twitterWebsite": "CI_Financial",
+    "twitterHashTag": "",
+    "facebookPage": "",
+    "linkedInPage": "",
+    "regionId": 0,
+    "countryId": 38,
+    "countryName": "Canada",
+    "indicator": null,
+    "period": null,
+    "pressContacts": [
+        {
+            "pressContactID": 28871,
+            "organisationID": 22426,
+            "pressContactName": "",
+            "pressContactOffice": "American Conference Institute",
+            "pressContactTelephone": "1 212 352 3220",
+            "pressContactMobile": "",
+            "pressContactEmail": "customerservice@americanconference.com",
+            "pressContactTwitter": "",
+            "pressContactLinkedIn": null
+        }
+    ],
+    "categories": [
+        {
+            "categoryId": 88,
+            "categoryName": "Law & Order",
+            "categoryOrder": 60,
+            "categoryTypeId": 18,
+            "categoryTypeName": null
+        }
+    ],
+    "eventTypes": [
+        {
+            "tagId": 148,
+            "tagName": "UK Regional Elections",
+            "tagTypeId": 7,
+            "tagTypeName": null
         }
     ],
     "influencers": [],

@@ -3,6 +3,7 @@ import datetime
 from flask import render_template
 from app import get_app
 
+
 events = [
     {
         "type": "event",
@@ -90,22 +91,22 @@ class ParserTestCase(unittest.TestCase):
                 "news_events_list_export.html", items=events, app=self.app
             )
         self.assertIn(
-            "<p>First<br> 06:30 AM 2024-04-22 - 11:30 AM 2024-04-24</p>",
+            "<p>First<br>06:30 AM 2024-04-22 - 11:30 AM 2024-04-24<br></p>",
             template_data,
         )
         self.assertIn(
-            "<p>third<br> 08:00 PM 2024-07-19</p>",
+            "<p>third<br>08:00 PM 2024-07-19<br></p>",
             template_data,
         )
         self.assertIn(
-            "<p>second<br> 2024-07-20</p>",
+            "<p>second<br>2024-07-20<br></p>",
             template_data,
         )
         self.assertIn(
-            "<p>fourth<br> 06:30 AM 2024-04-22 - 2024-04-24</p>",
+            "<p>fourth<br>06:30 AM 2024-04-22 - 2024-04-24<br></p>",
             template_data,
         )
         self.assertIn(
-            "<p>fifth<br> 06:30 AM 2024-04-22</p>",
+            "<p>fifth<br>06:30 AM 2024-04-22<br></p>",
             template_data,
         )
