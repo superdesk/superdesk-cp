@@ -745,7 +745,7 @@ class Semaphore(AIServiceBase):
 
 
 def extract_manual_tags(data):
-    manual_tags: List[Tag] = []
+    manual_tags = []
 
     if "tags" in data:
         # Loop through each tag type (like 'subject', 'person', etc.)
