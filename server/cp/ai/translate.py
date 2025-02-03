@@ -14,6 +14,7 @@ load_dotenv()
 logger = logging.getLogger(__name__)
 ResponseType = Mapping[str, Union[str, List[str]]]
 
+
 class TranslateData(TypedDict):
     guid: str
     source_language: str
@@ -95,20 +96,22 @@ class Translate(AIServiceBase):
     def translate_basic(self, item: TranslateData) -> ResponseType:
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
-            
+
             sanitized_texts = []
             for text in texts:
                 if not isinstance(text, str):
-                    logger.warning(f"Non-string text found: {text}, converting to string")
+                    logger.warning(
+                        f"Non-string text found: {text}, converting to string"
+                    )
                     text = str(text)
                 sanitized_texts.append(text)
-            
+
             if not sanitized_texts:
                 return {"translated_payload": item["payload"], **item}
-            
+
             if self.credentials.expired or self.credentials.token is None:
                 self.credentials.refresh(Request())
-            
+
             url = f"{self.GOOGLE_API_URL}/v2"
             headers = {
                 "Content-Type": "application/json",
@@ -119,15 +122,19 @@ class Translate(AIServiceBase):
                 "q": sanitized_texts,
                 "target": item["target_language"],
                 "source": item["source_language"],
-                "format": "html" if any("<" in text for text in sanitized_texts) else "text",
+                "format": (
+                    "html" if any("<" in text for text in sanitized_texts) else "text"
+                ),
             }
-            
+
             response = requests.post(url, headers=headers, json=payload)
-            
+
             if not response.ok:
-                logger.error(f"Translation API error: Status {response.status_code}, Response: {response.text}")
+                logger.error(
+                    f"Translation API error: Status {response.status_code}, Response: {response.text}"
+                )
             response.raise_for_status()
-            
+
             response_data = response.json()
 
             return self._prepare_translated_payload(
@@ -172,33 +179,33 @@ class Translate(AIServiceBase):
 
     def translate_deepl(self, item: TranslateData) -> ResponseType:
         texts, self.paths = self._extract_texts_to_translate(item)
-        
+
         if not texts:
             logger.warning("No texts to translate")
             return {"translated_payload": item["payload"], **item}
-        
+
         try:
 
             separator = "|||||"
             joined_texts = separator.join(texts)
-            
+
             headers = {
                 "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
                 "Content-Type": "application/json",
                 "User-Agent": "YourApp/1.2.3",
             }
-            
+
             payload = {
                 "text": [joined_texts],
                 "target_lang": item["target_language"],
                 "source_lang": item["source_language"],
             }
-            
+
             response = requests.post(self.DEEPL_API_URL, headers=headers, json=payload)
             response.raise_for_status()
             response_data = response.json()
             return self._prepare_translated_payload_deepl(item, response_data)
-            
+
         except Exception as e:
             logger.error(f"DeepL translation failed: {str(e)}", exc_info=True)
             raise Exception(f"DeepL translation failed: {str(e)}")
@@ -213,7 +220,7 @@ class Translate(AIServiceBase):
             translations = result["translations"][0]["text"]
             translations = translations.split(separator)
             result = {}
-        
+
             def build_nested_dict(path_parts, value, target_dict):
                 current = target_dict
                 for i, part in enumerate(path_parts[:-1]):
@@ -221,17 +228,19 @@ class Translate(AIServiceBase):
                         current[part] = {}
                     current = current[part]
                 current[path_parts[-1]] = value
-            
+
             for path, translation in zip(self.paths, translations):
                 build_nested_dict(path, translation, result)
-            
+
             return {"translated_payload": result, **data}
         except Exception as e:
             raise Exception(f"Error preparing translated payload: {str(e)}")
-        
-    def _prepare_translated_payload(self, data, translations, translation_key="translatedText"):
+
+    def _prepare_translated_payload(
+        self, data, translations, translation_key="translatedText"
+    ):
         result = {}
-        
+
         def build_nested_dict(path_parts, value, target_dict):
             current = target_dict
             for i, part in enumerate(path_parts[:-1]):
@@ -239,7 +248,7 @@ class Translate(AIServiceBase):
                     current[part] = {}
                 current = current[part]
             current[path_parts[-1]] = value
-        
+
         for path, translation in zip(self.paths, translations):
             translated_text = html.unescape(
                 getattr(translation, translation_key)
@@ -247,7 +256,7 @@ class Translate(AIServiceBase):
                 else translation[translation_key]
             )
             build_nested_dict(path, translated_text, result)
-        
+
         return {"translated_payload": result, **data}
 
     def _get_model_path(self, translation_type):
@@ -308,7 +317,7 @@ class Translate(AIServiceBase):
     def _extract_texts_to_translate(self, item: TranslateData) -> List[str]:
         texts = []
         paths = []
-        
+
         def extract_strings(obj, current_path=[]):
             if isinstance(obj, str):
                 if obj.strip():  # Only include non-empty strings
@@ -320,11 +329,9 @@ class Translate(AIServiceBase):
             elif isinstance(obj, list):
                 for i, value in enumerate(value):
                     extract_strings(value, current_path + [str(i)])
-        
+
         extract_strings(item["payload"])
         return texts, paths
-
-
 
     def deepl_create_glossary(
         self, name: str, source_lang: str, target_lang: str, entries: List[str]
