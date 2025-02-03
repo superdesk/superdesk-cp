@@ -274,7 +274,8 @@ class Translate(AIServiceBase):
         operation: Literal["translate"],
         name: Optional[str],
         data: TranslateData,
-    ) -> ResponseType: ...
+    ) -> ResponseType:
+        ...
 
     def data_operation(
         self,
