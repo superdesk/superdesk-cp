@@ -1,6 +1,16 @@
 import logging
 import json
-from typing import Dict, List, Literal, Mapping, Optional, TypedDict, Union, overload
+from typing import (
+    Dict,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    TypedDict,
+    Union,
+    overload,
+    Tuple,
+)
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import requests
@@ -66,7 +76,7 @@ class Translate(AIServiceBase):
             translator = self.get_translator(translation_type)
             return translator(item)
         except Exception as e:
-            self.handle_error(e, "Translation")
+            return self.handle_error(e, "Translation")
 
     def analyze(self, item: TranslateData, *args) -> ResponseType:
         try:
@@ -93,7 +103,7 @@ class Translate(AIServiceBase):
         else:
             return self.translate_basic
 
-    def translate_basic(self, item: TranslateData) -> ResponseType:
+    def translate_basic(self, item: TranslateData):
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
 
@@ -146,7 +156,7 @@ class Translate(AIServiceBase):
             logger.error(f"Translation error details: {str(e)}", exc_info=True)
             return self.handle_error(e, "Basic translation")
 
-    def translate_advanced(self, item: TranslateData) -> ResponseType:
+    def translate_advanced(self, item: TranslateData):
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
             if self.credentials.expired or self.credentials.token is None:
@@ -172,12 +182,12 @@ class Translate(AIServiceBase):
                 item, translations, translation_key="translatedText"
             )
         except Exception as e:
-            self.handle_error(e, "Advanced translation")
+            return self.handle_error(e, "Advanced translation")
 
     def translate_adaptive(self, item: TranslateData) -> ResponseType:
-        return "Not implemented"
+        return {"error": "Not implemented"}
 
-    def translate_deepl(self, item: TranslateData) -> ResponseType:
+    def translate_deepl(self, item: TranslateData):
         texts, self.paths = self._extract_texts_to_translate(item)
 
         if not texts:
@@ -212,7 +222,7 @@ class Translate(AIServiceBase):
 
     def handle_error(self, e: Exception, context: str):
         logger.error(f"{context} failed: {str(e)}")
-        return f"{context} failed: {str(e)}"
+        return {"error": f"{context} failed: {str(e)}"}
 
     def _prepare_translated_payload_deepl(self, data, result):
         try:
@@ -267,16 +277,6 @@ class Translate(AIServiceBase):
         else:
             raise ValueError("Invalid translation type for advanced translation")
 
-    @overload
-    def data_operation(
-        self,
-        verb: str,
-        operation: Literal["translate"],
-        name: Optional[str],
-        data: TranslateData,
-    ) -> ResponseType:
-        ...
-
     def data_operation(
         self,
         verb: str,
@@ -315,9 +315,11 @@ class Translate(AIServiceBase):
         if not translate_fields:
             raise Exception("No fields to translate inside payload")
 
-    def _extract_texts_to_translate(self, item: TranslateData) -> List[str]:
-        texts = []
-        paths = []
+    def _extract_texts_to_translate(
+        self, item: TranslateData
+    ) -> Tuple[List[str], List[List[str]]]:
+        texts: List[str] = []
+        paths: List[List[str]] = []
 
         def extract_strings(obj, current_path=[]):
             if isinstance(obj, str):
@@ -356,7 +358,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            self.handle_error(e, "Creating glossary")
+            return self.handle_error(e, "Creating glossary")
 
     def deepl_list_glossaries(self) -> List[dict]:
         url = f"{self.DEEPL_API_URL}/v2/glossaries"
@@ -368,7 +370,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json().get("glossaries", [])
         except Exception as e:
-            self.handle_error(e, "Listing glossaries")
+            return self.handle_error(e, "Listing glossaries")
 
     def deepl_retrieve_glossary(self, glossary_id: str) -> dict:
         url = f"{self.DEEPL_API_URL}/v2/glossaries/{glossary_id}"
@@ -380,7 +382,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            self.handle_error(e, "Retrieving glossary details")
+            return self.handle_error(e, "Retrieving glossary details")
 
     def deepl_retrieve_glossary_entries_by_name(self, glossary_name: str) -> List[str]:
         try:
@@ -402,7 +404,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.text.splitlines()  # Assuming TSV format
         except Exception as e:
-            self.handle_error(e, "Retrieving glossary entries")
+            return self.handle_error(e, "Retrieving glossary entries")
 
     def deepl_delete_glossary(self, glossary_id: str) -> dict:
         """Delete a specific glossary."""
@@ -415,7 +417,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return {"message": "Glossary deleted successfully"}
         except Exception as e:
-            self.handle_error(e, "Deleting glossary")
+            return self.handle_error(e, "Deleting glossary")
 
     def deepl_add_entries_to_glossary(self, name: str, new_entries: List[str]) -> dict:
         try:
