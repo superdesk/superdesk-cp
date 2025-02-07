@@ -292,22 +292,10 @@ class Semaphore(AIServiceBase):
                             capitalize_name_if_parent_none(tag)
                             for tag in input_data["subject"]
                         ],
-                        "organisation": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["organisation"]
-                        ],
-                        "person": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["person"]
-                        ],
-                        "event": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["event"]
-                        ],
-                        "place": [
-                            capitalize_name_if_parent_none(tag)
-                            for tag in input_data["place"]
-                        ],
+                        "organisation": input_data["organisation"],
+                        "person": input_data["person"],
+                        "event": input_data["event"],
+                        "place": input_data["place"],
                         "object": [],
                     },
                     "broader": {
@@ -368,7 +356,7 @@ class Semaphore(AIServiceBase):
                     id_value = "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
                 elif scheme == "organisation":
                     id_value = "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
-                elif scheme == "places":
+                elif scheme == "place":
                     id_value = "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
                 elif scheme == "person":
                     id_value = "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
@@ -478,7 +466,7 @@ class Semaphore(AIServiceBase):
             SCHEMES = {
                 "Place": "http://cv.cp.org/Places/",
                 "Organization": "http://cv.cp.org/Organizations/",
-                "Person": "http://cv.cp.org/Person/",
+                "Person": "http://cv.cp.org/People/",
                 "Event": "http://cv.cp.org/Events/",
             }
             media_topic_labels = {}
@@ -596,51 +584,59 @@ class Semaphore(AIServiceBase):
 
             root = ET.fromstring(xml_data)
             article_elements = root.find("STRUCTUREDDOCUMENT/ARTICLE")
-            system_elements = article_elements.findall("SYSTEM")
-            for system_element in system_elements:
-                article_elements.remove(system_element)
+            if article_elements is not None:
+                system_elements = article_elements.findall("SYSTEM")
+                if system_elements:
+                    for system_element in system_elements:
+                        article_elements.remove(system_element)
 
-            for elem in article_elements:
-                name = elem.get("name")
-                value = elem.get("value")
-                score = elem.get("score", 0)
-                id = elem.get("id")
+                for elem in article_elements:
+                    name = elem.get("name")
+                    value = elem.get("value")
+                    score = elem.get("score", 0)
+                    id = elem.get("id")
 
-                if name in ["Organization", "Person", "Place", "Event"]:
-                    add_tag(name, value, id, score)
-                elif name == "Media Topic":
-                    qcode = elem.get("id")
-                    tag_data = {
-                        "name": value,
-                        "qcode": qcode,
-                        "parent": "",
-                        "source": "Semaphore",
-                        "creator": "Machine",
-                        "relevance": format_relevance(score),
-                        "altids": {"source_name": "source_id"},
-                        "original_source": "original_source_value",
-                        "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
-                    }
-                    add_to_dict("subject", tag_data)
-                elif name == "Media Topic_PATH_LABEL":
-                    phrases = value.split("/")
-                    # Added check to avoid duplicate CP vocabulary values
-                    if phrases[0] == "CP vocabulary":
-                        pass
-                    else:
+                    if name in ["Organization", "Person", "Place", "Event"]:
+                        add_tag(name, value, id, score)
+                    elif name == "Media Topic":
+                        qcode = elem.get("id")
+                        tag_data = {
+                            "name": value,
+                            "qcode": qcode,
+                            "parent": "",
+                            "source": "Semaphore",
+                            "creator": "Machine",
+                            "relevance": format_relevance(score),
+                            "altids": {"source_name": "source_id"},
+                            "original_source": "original_source_value",
+                            "scheme": "http://cv.iptc.org/newscodes/mediatopic/",
+                        }
+                        add_to_dict("subject", tag_data)
+                    elif name == "Media Topic_PATH_LABEL":
+                        phrases = value.split("/")
+                        # Added check to avoid duplicate CP vocabulary values
+                        if phrases[0] == "CP vocabulary":
+                            pass
+                        else:
+                            value = remove_first_index(value)
+                            media_topic_labels[value] = score
+                    elif name == "Media Topic_PATH_GUID":
                         value = remove_first_index(value)
-                        media_topic_labels[value] = score
-                elif name == "Media Topic_PATH_GUID":
-                    value = remove_first_index(value)
-                    last_value = value.split("/")[-1]
-                    # Added check to avoid duplicate CP vocabulary values
-                    if last_value not in processed_values:
-                        media_topic_guids[value] = score
-                        processed_values.add(last_value)
+                        last_value = value.split("/")[-1]
+                        # Added check to avoid duplicate CP vocabulary values
+                        if last_value not in processed_values:
+                            media_topic_guids[value] = score
+                            processed_values.add(last_value)
 
             assign_parents(response_dict, media_topic_labels, media_topic_guids)
 
             return response_dict
+
+        def escape_ampersands_in_item(item):
+            item["headline"] = item["headline"].replace("&", "&amp;")
+            item["abstract"] = item["abstract"].replace("&", "&amp;")
+            item["body_html"] = item["body_html"].replace("&", "&amp;")
+            return item
 
         try:
             if not self.base_url or not self.api_key:
@@ -650,6 +646,7 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
+            item = escape_ampersands_in_item(item)
             xml_payload = self.html_to_xml(item)
             payload = {"XML_INPUT": xml_payload}
 
@@ -768,9 +765,8 @@ def capitalize_name_if_parent_none(tag):
 
 
 def capitalize_name_if_parent_none_for_analyze(response):
-    for category in ["subject", "organisation", "person", "event", "place"]:
-        for item in response.get(category, []):
-            item = capitalize_name_if_parent_none(item)
+    for item in response.get("subject", []):
+        item = capitalize_name_if_parent_none(item)
     return response
 
 
