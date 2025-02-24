@@ -1,14 +1,14 @@
 import { useFormikContext } from "formik";
 import * as React from "react";
-import { IArticle } from "superdesk-api";
+import { IArticle, ISuperdesk } from "superdesk-api";
 import {
+  Button,
   Container,
   ContentDivider,
-  GridList,
+  Option,
   ResizablePanels,
 } from "superdesk-ui-framework/react";
 import {
-  Button,
   FormSelect,
   FormTextEditorInput,
   FormTextInput,
@@ -19,7 +19,9 @@ import {
   TRANSLATION_LANGUAGES_CODES_MAP,
   TRANSLATION_TYPES,
   TRANSLATION_VERSIONS,
+  WIDGET_ID,
 } from "../../constants";
+import { typedSetFieldValue } from "../../formik-utilties";
 import { superdesk } from "../../superdesk";
 import {
   TranslationPayload,
@@ -35,6 +37,8 @@ import {
 import { CompareAccordion } from "./compare-accordion";
 import {
   FormInputProps,
+  isLanguageCode,
+  isTranslationVersion,
   TranslationDialogFormProps,
   TranslationEntry,
 } from "./helpers";
@@ -159,10 +163,15 @@ export const getTranslationDialogFormValues = (
         ),
       };
 
+  const currentArticleLanguage =
+    typeof currentArticle.language === "string"
+      ? currentArticle.language.toLowerCase()
+      : undefined;
+
   const translateTo =
-    TRANSLATION_LANGUAGES_CODES_MAP?.[
-      currentArticle.language?.toLowerCase?.() as keyof typeof TRANSLATION_LANGUAGES_CODES_MAP
-    ];
+    currentArticleLanguage && isLanguageCode(currentArticleLanguage)
+      ? TRANSLATION_LANGUAGES_CODES_MAP[currentArticleLanguage]
+      : TRANSLATION_LANGUAGES_CODES_MAP.en;
   const translateFrom =
     translateTo === TRANSLATION_LANGUAGES_CODES_MAP.en
       ? TRANSLATION_LANGUAGES_CODES_MAP.fr
@@ -176,6 +185,36 @@ export const getTranslationDialogFormValues = (
     translations,
   };
 };
+
+const getTranslation = (payload: TranslationPayload) =>
+  httpRequestJsonLocal<TranslationResponse>({
+    method: "POST",
+    path: "/ai",
+    payload: { service: "translate", item: payload },
+  });
+
+const getFormFields = (
+  writethru: TranslationDialogFormProps["writethru"],
+  version: keyof TranslationEntry,
+  gettext: ISuperdesk["localization"]["gettext"]
+) =>
+  [
+    {
+      type: "text",
+      name: `translations.${writethru}.${version}.headline`,
+      label: gettext("Headline"),
+    },
+    {
+      type: "text",
+      name: `translations.${writethru}.${version}.headline_extended`,
+      label: gettext("Extended Headline"),
+    },
+    {
+      type: "textEditor",
+      name: `translations.${writethru}.${version}.body_html`,
+      label: gettext("body HTML"),
+    },
+  ] as const;
 
 const TranslationFormEntry = ({
   initialVersion,
@@ -191,33 +230,39 @@ const TranslationFormEntry = ({
     <>
       <Select
         value={version}
-        label={capitalize(gettext("version"))}
-        onChange={(event) => {
-          // @ts-ignore
-          setVersion(event.currentTarget.value);
+        label={gettext("Version")}
+        onChange={(newValue) => {
+          if (isTranslationVersion(newValue)) setVersion(newValue);
         }}
       >
-        {getObjectEntries(TRANSLATION_VERSIONS).map(([value, label]) => (
-          <option value={value} key={`version-${value}`}>
-            {capitalize(gettext(label))}
-          </option>
+        {getObjectEntries(TRANSLATION_VERSIONS).map(([key, value]) => (
+          <Option value={value.value} key={`version-${key}`}>
+            {value.getLabel(gettext)}
+          </Option>
         ))}
       </Select>
-      <FormTextInput
-        name={`translations.${values.writethru}.${version}.headline`}
-        label={capitalize(gettext("headline"))}
-        readOnly={version !== "manualTranslation"}
-      />
-      <FormTextInput
-        name={`translations.${values.writethru}.${version}.headline_extended`}
-        label={capitalize(gettext("extended headline"))}
-        readOnly={version !== "manualTranslation"}
-      />
-      <FormTextEditorInput
-        name={`translations.${values.writethru}.${version}.body_html`}
-        label={capitalize(gettext("body HTML"))}
-        readOnly={version !== "manualTranslation"}
-      />
+      {getFormFields(values.writethru, version, gettext).map((field) => {
+        switch (field.type) {
+          case "textEditor":
+            return (
+              <FormTextEditorInput<TranslationDialogFormProps>
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                readOnly={version !== "manualTranslation"}
+              />
+            );
+          default:
+            return (
+              <FormTextInput<TranslationDialogFormProps>
+                key={field.name}
+                name={field.name}
+                label={field.label}
+                readonly={version !== "manualTranslation"}
+              />
+            );
+        }
+      })}
     </>
   );
 };
@@ -225,19 +270,12 @@ const TranslationFormEntry = ({
 export const TranslationForm = () => {
   const { gettext } = superdesk.localization;
   const [isLoading, setIsLoading] = React.useState(false);
-  const { values, setFieldValue } =
+  const { values, setFieldValue: formikSetFieldValue } =
     useFormikContext<TranslationDialogFormProps>();
-
-  const getTranslation = (payload: TranslationPayload) =>
-    httpRequestJsonLocal<TranslationResponse>({
-      method: "POST",
-      path: "/ai",
-      payload: { service: "translate", item: payload },
-    });
+  const setFieldValue =
+    typedSetFieldValue<TranslationDialogFormProps>(formikSetFieldValue);
 
   const translateArticle = () => {
-    console.log({ values });
-
     const payload = {
       body_html: "",
       payload: {
@@ -255,7 +293,10 @@ export const TranslationForm = () => {
 
     getTranslation(payload)
       .then((res) => {
-        console.log({ res });
+        if ("error" in res.analysis) {
+          console.error(res.analysis.error);
+          return;
+        }
 
         const versions = ["aiTranslation", "manualTranslation"] as const;
 
@@ -284,68 +325,59 @@ export const TranslationForm = () => {
 
   return (
     <>
-      <GridList margin="0">
-        <FormSelect
+      <div
+        className={`${WIDGET_ID}__translation-form-settings-container d-grid gap-2 items-end`}
+      >
+        <FormSelect<TranslationDialogFormProps>
           name="writethru"
-          label={`${capitalize(gettext("writethru"))}`}
+          label={gettext("Writethru")}
         >
           {getObjectKeys(values.translations).map((writethru) => (
-            <option value={writethru} key={`writethru-${writethru}`}>
+            <Option value={writethru} key={`writethru-${writethru}`}>
               {capitalize(writethru)}
-            </option>
+            </Option>
           ))}
         </FormSelect>
-        <FormSelect
+        <FormSelect<TranslationDialogFormProps>
           name="translationType"
-          label={`${capitalize(gettext("translation"))} ${capitalize(
-            gettext("type")
-          )}`}
+          label={gettext("Translation Type")}
         >
           {getObjectEntries(TRANSLATION_TYPES).map(([value, label]) => (
-            <option value={value} key={`translationType-${value}`}>
+            <Option value={value} key={`translationType-${value}`}>
               {label}
-            </option>
+            </Option>
           ))}
         </FormSelect>
-        <FormSelect
+        <FormSelect<TranslationDialogFormProps>
           name="translateFrom"
-          label={`${capitalize(gettext("translate"))} ${capitalize(
-            gettext("from")
-          )}`}
+          label={gettext("Translate From")}
         >
-          {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
-            <option value={value} key={`translateFrom-${value}`}>
-              {capitalize(gettext(label))}
-            </option>
+          {getObjectEntries(TRANSLATION_LANGUAGES).map(([key, value]) => (
+            <Option value={value.value} key={`translateFrom-${key}`}>
+              {value.getLabel(gettext)}
+            </Option>
           ))}
         </FormSelect>
-        <FormSelect
+        <FormSelect<TranslationDialogFormProps>
           name="translateTo"
-          label={`${capitalize(gettext("translate"))} ${capitalize(
-            gettext("to")
-          )}`}
+          label={gettext("Translate To")}
         >
-          {getObjectEntries(TRANSLATION_LANGUAGES).map(([value, label]) => (
-            <option value={value} key={`translateTo${value}`}>
-              {capitalize(gettext(label))}
-            </option>
+          {getObjectEntries(TRANSLATION_LANGUAGES).map(([key, value]) => (
+            <Option value={value.value} key={`translateTo-${key}`}>
+              {value.getLabel(gettext)}
+            </Option>
           ))}
         </FormSelect>
         <Button
-          label={capitalize(gettext("translate"))}
-          aria-label={capitalize(gettext("translate"))}
-          className="self-end"
-          superdeskButtonProps={{
-            type: "primary",
-            disabled: isLoading,
-            isLoading,
-          }}
-          // @ts-ignore
+          text={gettext("Translate")}
+          type="primary"
+          isLoading={isLoading}
           onClick={(event) => {
+            event.preventDefault();
             translateArticle();
           }}
         />
-      </GridList>
+      </div>
       <ContentDivider margin="small" />
       <CompareAccordion />
       <ContentDivider margin="small" />

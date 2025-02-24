@@ -1,3 +1,4 @@
+import { IBaseRestApiResponse } from "superdesk-api";
 import { TRANSLATION_TYPES } from "../constants";
 
 type TranslationImageField = `media-gallery--${number}`;
@@ -16,28 +17,20 @@ export type TranslationPayload = {
   translation_type: TranslationType;
 };
 
-export type TranslationResponse = {
-  _updated: string;
-  _created: string;
-  _etag: string;
-  analysis: {
-    translated_payload: Record<TranslationFields, string> & {
-      images?: Record<TranslationImageField, string>;
-    };
-    body_html: "";
-    payload: Record<TranslationFields, string> & {
-      images?: Record<TranslationImageField, string>;
-    };
-    target_language: string;
-    source_language: string;
-    translation_type: TranslationType;
-  };
+export type TranslationResponse = IBaseRestApiResponse & {
   _id: number;
-  _links: {
-    self: {
-      title: string;
-      href: string;
-    };
-  };
-  _status: string;
+  analysis:
+    | { error: string }
+    | {
+        translated_payload: Record<TranslationFields, string> & {
+          images?: Record<TranslationImageField, string>;
+        };
+        body_html: "";
+        payload: Record<TranslationFields, string> & {
+          images?: Record<TranslationImageField, string>;
+        };
+        target_language: string;
+        source_language: string;
+        translation_type: TranslationType;
+      };
 };

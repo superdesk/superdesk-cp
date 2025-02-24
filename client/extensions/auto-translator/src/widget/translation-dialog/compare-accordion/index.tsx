@@ -1,14 +1,64 @@
 import DiffMatchPatch from "diff-match-patch";
 import { useFormikContext } from "formik";
 import * as React from "react";
-import { Container, GridList, ToggleBox } from "superdesk-ui-framework/react";
+import {
+  Container,
+  Label,
+  Option,
+  ToggleBox,
+} from "superdesk-ui-framework/react";
 import { Select } from "../../../components";
+import { WIDGET_ID } from "../../../constants";
 import { superdesk } from "../../../superdesk";
 import { capitalize, getObjectKeys } from "../../../utilities";
 import { TranslationDialogFormProps } from "../helpers";
 import { getPrettyDiffHtml, sanitizeHtml } from "./helpers";
 
 const COMPARE_VERSIONS = ["ls", "rs", "diff"] as const;
+
+const getCompareContentValues = (
+  ls: TranslationDialogFormProps["translations"][string],
+  rs: TranslationDialogFormProps["translations"][string],
+  version: (typeof COMPARE_VERSIONS)[number]
+) => {
+  const { gettext } = superdesk.localization;
+  const dmp = new DiffMatchPatch();
+  let headline: string, headline_extended: string, body_html: string;
+
+  switch (version) {
+    case "ls":
+      headline = sanitizeHtml(ls.original.headline);
+      headline_extended = sanitizeHtml(ls.original.headline_extended);
+      body_html = sanitizeHtml(ls.original.body_html);
+      break;
+    case "rs":
+      headline = sanitizeHtml(rs.original.headline);
+      headline_extended = sanitizeHtml(rs.original.headline_extended);
+      body_html = sanitizeHtml(rs.original.body_html);
+      break;
+    case "diff":
+      const diffHeadline = dmp.diff_main(
+        sanitizeHtml(ls.original.headline),
+        sanitizeHtml(rs.original.headline)
+      );
+      const diffHeadline_extended = dmp.diff_main(
+        sanitizeHtml(ls.original.headline_extended),
+        sanitizeHtml(rs.original.headline_extended)
+      );
+      const diffBody_html = dmp.diff_main(
+        sanitizeHtml(ls.original.body_html),
+        sanitizeHtml(rs.original.body_html)
+      );
+      headline = getPrettyDiffHtml({ diffs: diffHeadline, gettext });
+      headline_extended = getPrettyDiffHtml({
+        diffs: diffHeadline_extended,
+        gettext,
+      });
+      body_html = getPrettyDiffHtml({ diffs: diffBody_html, gettext });
+  }
+
+  return { headline, headline_extended, body_html };
+};
 
 const CompareContent = ({
   headline,
@@ -21,35 +71,32 @@ const CompareContent = ({
   const { gettext } = superdesk.localization;
 
   return (
-    <>
-      <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span className="sd-input__label sd-input__label--boxed">
-          {capitalize(gettext("headline"))}
-        </span>
-        <div className="sd-input__input-container">
-          <p className="m-0" dangerouslySetInnerHTML={{ __html: headline }}></p>
-        </div>
+    <div className="d-flex flex-col items-stretch content-stretch gap-2">
+      <div className="d-flex flex-wrap items-stretch content-stretch gap-1">
+        <Label text={gettext("Headline")} style="hollow" />
+        <p
+          className="m-0"
+          style={{ width: "100%" }}
+          dangerouslySetInnerHTML={{ __html: headline }}
+        ></p>
       </div>
-      <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span className="sd-input__label sd-input__label--boxed">
-          {capitalize(gettext("extended headline"))}
-        </span>
-        <div className="sd-input__input-container">
-          <p
-            className="m-0"
-            dangerouslySetInnerHTML={{ __html: headline_extended }}
-          ></p>
-        </div>
+      <div className="d-flex flex-wrap items-stretch content-stretch gap-1">
+        <Label text={gettext("Extended Headline")} style="hollow" />
+        <p
+          className="m-0"
+          style={{ width: "100%" }}
+          dangerouslySetInnerHTML={{ __html: headline_extended }}
+        ></p>
       </div>
-      <div className="sd-input sd-input--medium sd-input--boxed-style sd-input--boxed-label">
-        <span className="sd-input__label sd-input__label--boxed">
-          {capitalize(gettext("body HTML"))}
-        </span>
-        <div className="sd-input__input-container">
-          <div dangerouslySetInnerHTML={{ __html: body_html }}></div>
-        </div>
+      <div className="d-flex flex-wrap items-stretch content-stretch gap-1">
+        <Label text={gettext("body HTML")} style="hollow" />
+        <p
+          className="m-0"
+          style={{ width: "100%" }}
+          dangerouslySetInnerHTML={{ __html: body_html }}
+        ></p>
       </div>
-    </>
+    </div>
   );
 };
 
@@ -65,76 +112,10 @@ export const CompareAccordion = () => {
     TranslationDialogFormProps["writethru"]
   >(getObjectKeys(values.translations)?.[0] ?? "");
 
-  const getCompareContentValues = (
-    version: (typeof COMPARE_VERSIONS)[number]
-  ) => {
-    const dmp = new DiffMatchPatch();
-    let headline: string, headline_extended: string, body_html: string;
-
-    switch (version) {
-      case "ls":
-        headline = sanitizeHtml(
-          values.translations[compareLeft].original.headline
-        );
-        headline_extended = sanitizeHtml(
-          values.translations[compareLeft].original.headline_extended
-        );
-        body_html = sanitizeHtml(
-          values.translations[compareLeft].original.body_html
-        );
-        break;
-      case "rs":
-        headline = sanitizeHtml(
-          values.translations[compareRight].original.headline
-        );
-        headline_extended = sanitizeHtml(
-          values.translations[compareRight].original.headline_extended
-        );
-        body_html = sanitizeHtml(
-          values.translations[compareRight].original.body_html
-        );
-        break;
-      case "diff":
-        const diffHeadline = dmp.diff_main(
-          sanitizeHtml(values.translations[compareLeft].original.headline),
-          sanitizeHtml(values.translations[compareRight].original.headline)
-        );
-        const diffHeadline_extended = dmp.diff_main(
-          sanitizeHtml(
-            values.translations[compareLeft].original.headline_extended
-          ),
-          sanitizeHtml(
-            values.translations[compareRight].original.headline_extended
-          )
-        );
-        const diffBody_html = dmp.diff_main(
-          sanitizeHtml(values.translations[compareLeft].original.body_html),
-          sanitizeHtml(values.translations[compareRight].original.body_html)
-        );
-        headline = getPrettyDiffHtml({ diffs: diffHeadline, gettext });
-        headline_extended = getPrettyDiffHtml({
-          diffs: diffHeadline_extended,
-          gettext,
-        });
-        body_html = getPrettyDiffHtml({ diffs: diffBody_html, gettext });
-
-        console.log({
-          diffHeadline,
-          diffHeadline_extended,
-          diffBody_html,
-          headline,
-          headline_extended,
-          body_html,
-        });
-    }
-
-    return { headline, headline_extended, body_html };
-  };
-
   return (
     <ToggleBox
       variant="simple"
-      title={capitalize(gettext("Compare"))}
+      title={gettext("Compare")}
       margin="none"
       onOpen={() => {
         setIsOpen(true);
@@ -145,69 +126,63 @@ export const CompareAccordion = () => {
     >
       {isOpen && (
         <Container gap="large" direction="column" className="mx-2">
-          <div style={{ width: "100%" }}>
-            <GridList margin="0">
-              <Select
-                value={compareLeft}
-                onChange={(e) => {
-                  setCompareLeft(e.target.value);
-                }}
-                label={`${capitalize(gettext("writethru"))} 1`}
-              >
-                <option value="" hidden></option>
-                {getObjectKeys(values.translations).map((writethru) => (
-                  <option value={writethru} key={`left-writethru-${writethru}`}>
-                    {capitalize(writethru)}
-                  </option>
-                ))}
-              </Select>
-              <Select
-                value={compareRight}
-                onChange={(e) => {
-                  setCompareRight(e.target.value);
-                }}
-                label={`${capitalize(gettext("writethru"))} 2`}
-              >
-                <option value="" hidden></option>
-                {getObjectKeys(values.translations).map((writethru) => (
-                  <option
-                    value={writethru}
-                    key={`right-writethru-${writethru}`}
-                  >
-                    {capitalize(writethru)}
-                  </option>
-                ))}
-              </Select>
-            </GridList>
+          <div
+            className={`${WIDGET_ID}__compare-accordion-settings-container d-grid gap-2`}
+          >
+            <Select
+              value={compareLeft}
+              onChange={(newValue) => {
+                setCompareLeft(newValue);
+              }}
+              label={gettext("Writethru 1")}
+            >
+              {getObjectKeys(values.translations).map((writethru) => (
+                <Option value={writethru} key={`left-writethru-${writethru}`}>
+                  {capitalize(writethru)}
+                </Option>
+              ))}
+            </Select>
+            <Select
+              value={compareRight}
+              onChange={(newValue) => {
+                setCompareRight(newValue);
+              }}
+              label={gettext("Writethru 2")}
+            >
+              {getObjectKeys(values.translations).map((writethru) => (
+                <Option value={writethru} key={`right-writethru-${writethru}`}>
+                  {capitalize(writethru)}
+                </Option>
+              ))}
+            </Select>
           </div>
           {compareLeft && compareRight && (
             <article
-              style={{ width: "100%" }}
+              className={`${WIDGET_ID}__compare-accordion-content-container d-grid gap-2`}
               tabIndex={0}
-              aria-label={`${capitalize(gettext("compare"))} ${capitalize(
-                gettext("writethru")
-              )} ${capitalize(gettext("diff"))}`}
+              aria-label={gettext("Compare Writethru Diff")}
             >
-              <div
-                className="sd-grid-list sd-grid-list--large sd-grid-list--gap-small sd-margin--0"
-                style={{ gridTemplateColumns: "repeat(3, 1fr)" }}
-              >
-                {COMPARE_VERSIONS.map((version, index) => {
-                  const header =
-                    version === "diff"
-                      ? capitalize(gettext("diff"))
-                      : `${capitalize(gettext("writethru"))} ${index + 1}`;
+              {COMPARE_VERSIONS.map((version, index) => {
+                const header =
+                  version === "diff"
+                    ? gettext("Diff")
+                    : `${gettext("Writethru")} ${index + 1}`;
 
-                  return (
-                    <Container key={version} gap="large" direction="column">
-                      <p className="text-md font-medium self-center m-0">
-                        {header}
-                      </p>
-                      <CompareContent {...getCompareContentValues(version)} />
-                    </Container>
-                  );
-                })}
-              </div>
+                return (
+                  <Container key={version} gap="large" direction="column">
+                    <p className="text-md font-medium self-center m-0">
+                      {header}
+                    </p>
+                    <CompareContent
+                      {...getCompareContentValues(
+                        values.translations[compareLeft],
+                        values.translations[compareRight],
+                        version
+                      )}
+                    />
+                  </Container>
+                );
+              })}
             </article>
           )}
         </Container>

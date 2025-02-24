@@ -5,7 +5,6 @@ import {
 } from "superdesk-api";
 import { WIDGET_ID } from "./constants";
 import { superdesk } from "./superdesk";
-import { capitalize } from "./utilities";
 import { AutoTranslatorWidget } from "./widget";
 
 const extension: IExtension = {
@@ -17,9 +16,7 @@ const extension: IExtension = {
         authoringSideWidgets: [
           {
             _id: WIDGET_ID,
-            label: `${capitalize(gettext("auto"))} ${capitalize(
-              gettext("translate")
-            )}`,
+            label: gettext("Auto Translate"),
             icon: "multiedit",
             order: 1,
             component: AutoTranslatorWidget,
