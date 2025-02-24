@@ -3,7 +3,6 @@ import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Loader, Modal } from "superdesk-ui-framework/react";
 import { superdesk } from "../../superdesk";
-import { capitalize } from "../../utilities";
 import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
@@ -13,11 +12,31 @@ import {
 import { TranslationDialogFormProps } from "./helpers";
 
 const { httpRequestJsonLocal } = superdesk;
+const { prepareSuperdeskQuery } = superdesk.helpers;
 const { applyFieldChangesToEditor } = superdesk.ui.article;
 
 type TranslationDialogProps = {
   currentArticle: IArticle;
   closeDialog: () => void;
+};
+
+const getWritethrus = (event_id: IArticle["event_id"]) => {
+  const query = prepareSuperdeskQuery("/search", {
+    filter: {
+      $and: [
+        { state: { $ne: "spiked" } },
+        { event_id: { $eq: event_id } },
+        { type: { $ne: "composite" } },
+      ],
+    },
+    sort: [{ versioncreated: "asc" }],
+    page: 1,
+    max_results: 50,
+  });
+  return httpRequestJsonLocal<{ _items: IArticle[] }>({
+    ...query,
+    urlParams: { ...query?.urlParams, repo: "archive,published" },
+  });
 };
 
 export const TranslationDialog = ({
@@ -27,12 +46,9 @@ export const TranslationDialog = ({
   const { gettext } = superdesk.localization;
   const { _id: articleId, event_id } = currentArticle;
 
-  console.log({ currentArticle });
-
   const onSubmit: FormikConfig<TranslationDialogFormProps>["onSubmit"] = (
     values,
-    // @ts-ignore
-    formikHelpers
+    _formikHelpers
   ) => {
     if (!articleId) return;
 
@@ -67,36 +83,7 @@ export const TranslationDialog = ({
         const [isLoading, setIsLoading] = React.useState(true);
 
         React.useEffect(() => {
-          const getWritethrus = () =>
-            httpRequestJsonLocal<{ _items: IArticle[] }>({
-              method: "GET",
-              path: "/search",
-              urlParams: {
-                repo: "archive,published",
-                source: {
-                  query: {
-                    filtered: {
-                      filter: {
-                        and: [
-                          { not: { term: { state: "spiked" } } },
-                          {
-                            term: {
-                              event_id,
-                            },
-                          },
-                          { not: { term: { type: "composite" } } },
-                        ],
-                      },
-                    },
-                  },
-                  size: 200,
-                  from: 0,
-                  sort: { versioncreated: "asc" },
-                },
-              },
-            });
-
-          getWritethrus()
+          getWritethrus(event_id)
             .then(({ _items }) => {
               setValues(getTranslationDialogFormValues(currentArticle, _items));
             })
@@ -111,7 +98,7 @@ export const TranslationDialog = ({
         return (
           <form onSubmit={handleSubmit}>
             <Modal
-              headerTemplate={capitalize(gettext("translation"))}
+              headerTemplate={gettext("Translation")}
               className="d-flex flex-auto flex-col self-stretch"
               visible
               size="x-large"

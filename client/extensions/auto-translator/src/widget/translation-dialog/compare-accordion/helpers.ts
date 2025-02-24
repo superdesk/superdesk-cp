@@ -5,7 +5,6 @@ import diff_match_patch, {
 } from "diff-match-patch";
 import DOMPurify from "dompurify";
 import { ISuperdesk } from "superdesk-api";
-import { capitalize } from "../../../utilities";
 
 export const sanitizeHtml = (html: string | Node) => DOMPurify.sanitize(html);
 
@@ -32,11 +31,11 @@ export const getPrettyDiffHtml = ({
         if (element.innerHTML)
           elements += `<${tag}>${
             type === "ins"
-              ? `<ins style="background:#e6ffe6;" aria-label=${capitalize(
-                  gettext("inserted")
+              ? `<ins style="background:#e6ffe6;" aria-label=${gettext(
+                  "Inserted"
                 )}>${element.innerHTML}</ins>`
-              : `<del style="background:#ffe6e6;" aria-label=${capitalize(
-                  gettext("deleted")
+              : `<del style="background:#ffe6e6;" aria-label=${gettext(
+                  "Deleted"
                 )}>${element.innerHTML}</del>`
           }</${tag}>`;
       } else if (node.nodeType === Node.TEXT_NODE) {
@@ -45,11 +44,11 @@ export const getPrettyDiffHtml = ({
         if (element.textContent)
           elements +=
             type === "ins"
-              ? `<ins style="background:#e6ffe6;" aria-label=${capitalize(
-                  gettext("inserted")
+              ? `<ins style="background:#e6ffe6;" aria-label=${gettext(
+                  "Inserted"
                 )}>${element.textContent}</ins>`
-              : `<del style="background:#ffe6e6;" aria-label=${capitalize(
-                  gettext("deleted")
+              : `<del style="background:#ffe6e6;" aria-label=${gettext(
+                  "Deleted"
                 )}>${element.textContent}</del>`;
       }
     });

@@ -2,77 +2,77 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 
-msgid "translate"
-msgstr "traduire"
+msgid "Translate"
+msgstr "Traduire"
 
-msgid "auto"
-msgstr "automatique"
+msgid "Auto"
+msgstr "Automatique"
 
-msgid "cancel"
+msgid "Cancel"
 msgstr "annuler"
 
-msgid "apply"
+msgid "Apply"
 msgstr "appliquer"
 
-msgid "translation"
+msgid "Translation"
 msgstr "traduction"
 
-msgid "version"
+msgid "Version"
 msgstr "version"
 
-msgid "original"
+msgid "Original"
 msgstr "originale"
 
-msgid "ai translation"
-msgstr "ai traduction"
+msgid "AI Translation"
+msgstr "AI Traduction"
 
-msgid "manual translation"
-msgstr "traduction manuelle"
+msgid "Manual Translation"
+msgstr "Traduction Manuelle"
 
-msgid "headline"
-msgstr "titre"
+msgid "Headline"
+msgstr "Titre"
 
-msgid "extended headline"
-msgstr "titre étendu"
+msgid "Extended Headline"
+msgstr "Titre Étendu"
 
 msgid "body HTML"
 msgstr "corps HTML"
 
-msgid "photos"
-msgstr "des photos"
+msgid "Photos"
+msgstr "Des Photos"
 
-msgid "caption"
-msgstr "légende"
+msgid "Caption"
+msgstr "Légende"
 
-msgid "writethru"
-msgstr "lead"
+msgid "Writethru"
+msgstr "Lead"
 
-msgid "current"
-msgstr "actuel"
+msgid "Current"
+msgstr "Actuel"
 
-msgid "type"
-msgstr "type"
+msgid "Type"
+msgstr "Type"
 
-msgid "from"
-msgstr "de"
+msgid "From"
+msgstr "De"
 
-msgid "to"
-msgstr "en"
+msgid "To"
+msgstr "En"
 
-msgid "english"
-msgstr "anglais"
+msgid "English"
+msgstr "Anglais"
 
-msgid "french"
-msgstr "français"
+msgid "French"
+msgstr "Français"
 
-msgid "compare"
-msgstr "comparer"
+msgid "Compare"
+msgstr "Comparer"
 
-msgid "diff"
-msgstr "diff"
+msgid "Diff"
+msgstr "Diff"
 
-msgid "inserted"
-msgstr "inséré"
+msgid "Inserted"
+msgstr "Inséré"
 
-msgid "deleted"
-msgstr "supprimé"
+msgid "Deleted"
+msgstr "Supprimé"

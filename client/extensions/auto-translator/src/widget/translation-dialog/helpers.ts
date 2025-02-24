@@ -24,3 +24,13 @@ export type TranslationDialogFormProps = {
   translateTo: (typeof TRANSLATION_LANGUAGES_CODES_MAP)[keyof typeof TRANSLATION_LANGUAGES_CODES_MAP];
   translations: Record<string, TranslationEntry>;
 };
+
+export const isTranslationVersion = (
+  value: string
+): value is keyof TranslationEntry =>
+  Object.keys(TRANSLATION_VERSIONS).includes(value);
+
+export const isLanguageCode = (
+  value: string
+): value is keyof typeof TRANSLATION_LANGUAGES_CODES_MAP =>
+  value in TRANSLATION_LANGUAGES_CODES_MAP;

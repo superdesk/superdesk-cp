@@ -1,0 +1,13 @@
+.translation-form-settings-container {
+  grid-template-columns: repeat(8, 1fr);
+}
+
+.compare-accordion-settings-container {
+  grid-template-columns: repeat(8, 1fr);
+  width: 100%;
+}
+
+.compare-accordion-content-container {
+  grid-template-columns: repeat(3, 1fr);
+  width: 100%;
+}
