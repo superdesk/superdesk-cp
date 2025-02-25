@@ -168,12 +168,12 @@ export const getTranslationDialogFormValues = (
       ? currentArticle.language.toLowerCase()
       : undefined;
 
-  const translateTo =
+  const translateFrom =
     currentArticleLanguage && isLanguageCode(currentArticleLanguage)
       ? TRANSLATION_LANGUAGES_CODES_MAP[currentArticleLanguage]
       : TRANSLATION_LANGUAGES_CODES_MAP.en;
-  const translateFrom =
-    translateTo === TRANSLATION_LANGUAGES_CODES_MAP.en
+  const translateTo =
+    translateFrom === TRANSLATION_LANGUAGES_CODES_MAP.en
       ? TRANSLATION_LANGUAGES_CODES_MAP.fr
       : TRANSLATION_LANGUAGES_CODES_MAP.en;
 
