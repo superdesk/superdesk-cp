@@ -3,13 +3,14 @@ import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Loader, Modal } from "superdesk-ui-framework/react";
 import { superdesk } from "../../superdesk";
+import { getObjectValues } from "../../utilities";
 import { Footer } from "./footer";
 import {
   getTranslationDialogFormInitialValues,
   getTranslationDialogFormValues,
   TranslationForm,
 } from "./form";
-import { TranslationDialogFormProps } from "./helpers";
+import { FORM_FIELDS, TranslationDialogFormProps } from "./helpers";
 
 const { httpRequestJsonLocal } = superdesk;
 const { prepareSuperdeskQuery } = superdesk.helpers;
@@ -52,23 +53,12 @@ export const TranslationDialog = ({
   ) => {
     if (!articleId) return;
 
-    applyFieldChangesToEditor(articleId, {
-      key: "headline",
-      value: values.translations[values.writethru].manualTranslation.headline,
-    });
-    applyFieldChangesToEditor(articleId, {
-      key: "extra",
-      value: {
-        ...currentArticle?.extra,
-        headline_extended:
-          values.translations[values.writethru].manualTranslation
-            .headline_extended,
-      },
-    });
-    applyFieldChangesToEditor(articleId, {
-      key: "body_html",
-      value: values.translations[values.writethru].manualTranslation.body_html,
-    });
+    for (const value of getObjectValues(FORM_FIELDS)) {
+      applyFieldChangesToEditor(
+        articleId,
+        value.setEditorValue(values, { currentArticle })
+      );
+    }
 
     closeDialog();
   };
@@ -99,7 +89,6 @@ export const TranslationDialog = ({
           <form onSubmit={handleSubmit}>
             <Modal
               headerTemplate={gettext("Translation")}
-              className="d-flex flex-auto flex-col self-stretch"
               visible
               size="x-large"
               onHide={closeDialog}
