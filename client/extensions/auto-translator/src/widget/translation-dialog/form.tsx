@@ -1,6 +1,6 @@
 import { useFormikContext } from "formik";
 import * as React from "react";
-import { IArticle, ISuperdesk } from "superdesk-api";
+import { IArticle } from "superdesk-api";
 import {
   Button,
   Container,
@@ -19,7 +19,6 @@ import {
   TRANSLATION_LANGUAGES_CODES_MAP,
   TRANSLATION_TYPES,
   TRANSLATION_VERSIONS,
-  WIDGET_ID,
 } from "../../constants";
 import { typedSetFieldValue } from "../../formik-utilties";
 import { superdesk } from "../../superdesk";
@@ -31,11 +30,13 @@ import {
   capitalize,
   getObjectEntries,
   getObjectKeys,
+  getObjectValues,
   isArticle,
   isNotEmptyObject,
 } from "../../utilities";
 import { CompareAccordion } from "./compare-accordion";
 import {
+  FORM_FIELDS,
   FormInputProps,
   isLanguageCode,
   isTranslationVersion,
@@ -57,15 +58,11 @@ const getImagesFormValues = (workingArticle: IArticle) =>
 
       if (!thumbnailHref) return images;
 
-      Object.assign(images.original, {
-        [key]: { description: description ?? "", href: thumbnailHref },
-      });
-      Object.assign(images.aiTranslation, {
-        [key]: { description: "", href: thumbnailHref },
-      });
-      Object.assign(images.manualTranslation, {
-        [key]: { description: "", href: thumbnailHref },
-      });
+      for (const version of getObjectKeys(TRANSLATION_VERSIONS)) {
+        Object.assign(images[version], {
+          [key]: { description: description ?? "", href: thumbnailHref },
+        });
+      }
 
       return images;
     },
@@ -75,28 +72,50 @@ const getImagesFormValues = (workingArticle: IArticle) =>
 const getTranslationEntryFormValues = (
   article: IArticle,
   images: ReturnType<typeof getImagesFormValues>
-): TranslationEntry => ({
-  original: {
-    headline: article.headline ?? "",
-    headline_extended: article?.extra?.headline_extended ?? "",
-    body_html: article.body_html ?? "",
-    images: isNotEmptyObject(images.original) ? images.original : {},
-  },
-  aiTranslation: {
-    headline: "",
-    headline_extended: "",
-    body_html: "",
-    images: isNotEmptyObject(images.aiTranslation) ? images.aiTranslation : {},
-  },
-  manualTranslation: {
-    headline: "",
-    headline_extended: "",
-    body_html: "",
-    images: isNotEmptyObject(images.manualTranslation)
-      ? images.manualTranslation
-      : {},
-  },
-});
+) =>
+  getObjectKeys(TRANSLATION_VERSIONS).reduce<TranslationEntry>(
+    (formValues, version) => {
+      if (version === "original") {
+        formValues[version] = {
+          ...getObjectEntries(FORM_FIELDS).reduce<
+            Omit<FormInputProps, "images">
+          >(
+            (formValues, [key, value]) => {
+              formValues[key] = value.getFormValue(article);
+              return formValues;
+            },
+            { headline: "", headline_extended: "", body_html: "" }
+          ),
+          images: {},
+        };
+      }
+      formValues[version]["images"] = isNotEmptyObject(images[version])
+        ? images[version]
+        : {};
+
+      return formValues;
+    },
+    {
+      original: {
+        headline: "",
+        headline_extended: "",
+        body_html: "",
+        images: {},
+      },
+      aiTranslation: {
+        headline: "",
+        headline_extended: "",
+        body_html: "",
+        images: {},
+      },
+      manualTranslation: {
+        headline: "",
+        headline_extended: "",
+        body_html: "",
+        images: {},
+      },
+    }
+  );
 
 export const getTranslationDialogFormInitialValues = () =>
   ({
@@ -193,29 +212,6 @@ const getTranslation = (payload: TranslationPayload) =>
     payload: { service: "translate", item: payload },
   });
 
-const getFormFields = (
-  writethru: TranslationDialogFormProps["writethru"],
-  version: keyof TranslationEntry,
-  gettext: ISuperdesk["localization"]["gettext"]
-) =>
-  [
-    {
-      type: "text",
-      name: `translations.${writethru}.${version}.headline`,
-      label: gettext("Headline"),
-    },
-    {
-      type: "text",
-      name: `translations.${writethru}.${version}.headline_extended`,
-      label: gettext("Extended Headline"),
-    },
-    {
-      type: "textEditor",
-      name: `translations.${writethru}.${version}.body_html`,
-      label: gettext("body HTML"),
-    },
-  ] as const;
-
 const TranslationFormEntry = ({
   initialVersion,
 }: {
@@ -237,27 +233,29 @@ const TranslationFormEntry = ({
       >
         {getObjectEntries(TRANSLATION_VERSIONS).map(([key, value]) => (
           <Option value={value.value} key={`version-${key}`}>
-            {value.getLabel(gettext)}
+            {value.label}
           </Option>
         ))}
       </Select>
-      {getFormFields(values.writethru, version, gettext).map((field) => {
-        switch (field.type) {
+      {getObjectValues(FORM_FIELDS).map((value) => {
+        const name = value.getName(values.writethru, version);
+
+        switch (value.type) {
           case "textEditor":
             return (
               <FormTextEditorInput<TranslationDialogFormProps>
-                key={field.name}
-                name={field.name}
-                label={field.label}
+                key={name}
+                name={name}
+                label={value.label}
                 readOnly={version !== "manualTranslation"}
               />
             );
           default:
             return (
               <FormTextInput<TranslationDialogFormProps>
-                key={field.name}
-                name={field.name}
-                label={field.label}
+                key={name}
+                name={name}
+                label={value.label}
                 readonly={version !== "manualTranslation"}
               />
             );
@@ -278,12 +276,16 @@ export const TranslationForm = () => {
   const translateArticle = () => {
     const payload = {
       body_html: "",
-      payload: {
-        headline: values.translations[values.writethru].original.headline,
-        headline_extended:
-          values.translations[values.writethru].original.headline_extended,
-        body_html: values.translations[values.writethru].original.body_html,
-      },
+      payload: getObjectKeys(FORM_FIELDS).reduce<
+        Omit<FormInputProps, "images">
+      >(
+        (payload, field) => {
+          payload[field] =
+            values.translations[values.writethru].original[field];
+          return payload;
+        },
+        { headline: "", headline_extended: "", body_html: "" }
+      ),
       target_language: values.translateTo,
       source_language: values.translateFrom,
       translation_type: values.translationType,
@@ -301,18 +303,12 @@ export const TranslationForm = () => {
         const versions = ["aiTranslation", "manualTranslation"] as const;
 
         for (const version of versions) {
-          setFieldValue(
-            `translations.${values.writethru}.${version}.headline`,
-            res.analysis.translated_payload.headline
-          );
-          setFieldValue(
-            `translations.${values.writethru}.${version}.headline_extended`,
-            res.analysis.translated_payload.headline_extended
-          );
-          setFieldValue(
-            `translations.${values.writethru}.${version}.body_html`,
-            res.analysis.translated_payload.body_html
-          );
+          for (const key of getObjectKeys(FORM_FIELDS)) {
+            setFieldValue(
+              `translations.${values.writethru}.${version}.${key}`,
+              res.analysis.translated_payload[key]
+            );
+          }
         }
       })
       .catch((err) => {
@@ -325,9 +321,7 @@ export const TranslationForm = () => {
 
   return (
     <>
-      <div
-        className={`${WIDGET_ID}__translation-form-settings-container d-grid gap-2 items-end`}
-      >
+      <div className="auto-translator__translation-form-settings-container">
         <FormSelect<TranslationDialogFormProps>
           name="writethru"
           label={gettext("Writethru")}
@@ -354,7 +348,7 @@ export const TranslationForm = () => {
         >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([key, value]) => (
             <Option value={value.value} key={`translateFrom-${key}`}>
-              {value.getLabel(gettext)}
+              {value.label}
             </Option>
           ))}
         </FormSelect>
@@ -364,7 +358,7 @@ export const TranslationForm = () => {
         >
           {getObjectEntries(TRANSLATION_LANGUAGES).map(([key, value]) => (
             <Option value={value.value} key={`translateTo-${key}`}>
-              {value.getLabel(gettext)}
+              {value.label}
             </Option>
           ))}
         </FormSelect>
@@ -381,16 +375,24 @@ export const TranslationForm = () => {
       <ContentDivider margin="small" />
       <CompareAccordion />
       <ContentDivider margin="small" />
-      <Container className="flex-grow">
+      <Container>
         <ResizablePanels
           direction="horizontal"
           primarySize={{ min: 33, default: 50 }}
           secondarySize={{ min: 33, default: 50 }}
         >
-          <Container gap="large" direction="column" className="mx-2">
+          <Container
+            gap="large"
+            direction="column"
+            className="auto-translator__translation-form-panel-container"
+          >
             <TranslationFormEntry initialVersion="original" />
           </Container>
-          <Container gap="large" direction="column" className="mx-2">
+          <Container
+            gap="large"
+            direction="column"
+            className="auto-translator__translation-form-panel-container"
+          >
             <TranslationFormEntry initialVersion="aiTranslation" />
           </Container>
         </ResizablePanels>

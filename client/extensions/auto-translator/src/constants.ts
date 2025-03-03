@@ -1,4 +1,4 @@
-import { ISuperdesk } from "superdesk-api";
+import { superdesk } from "./superdesk";
 
 const WIDGET_ID = "auto-translator" as const;
 
@@ -12,33 +12,28 @@ const TRANSLATION_TYPES = {
 const TRANSLATION_LANGUAGES = {
   en: {
     value: "en",
-    getLabel: (gettext: ISuperdesk["localization"]["gettext"]) =>
-      gettext("English"),
+    label: superdesk.localization.gettext("English"),
   },
   fr: {
     value: "fr",
-    getLabel: (gettext: ISuperdesk["localization"]["gettext"]) =>
-      gettext("French"),
+    label: superdesk.localization.gettext("French"),
   },
-} as const;
+};
 
 const TRANSLATION_VERSIONS = {
   original: {
     value: "original",
-    getLabel: (gettext: ISuperdesk["localization"]["gettext"]) =>
-      gettext("Original"),
+    label: superdesk.localization.gettext("Original"),
   },
   aiTranslation: {
     value: "aiTranslation",
-    getLabel: (gettext: ISuperdesk["localization"]["gettext"]) =>
-      gettext("AI Translation"),
+    label: superdesk.localization.gettext("AI Translation"),
   },
   manualTranslation: {
     value: "manualTranslation",
-    getLabel: (gettext: ISuperdesk["localization"]["gettext"]) =>
-      gettext("Manual Translation"),
+    label: superdesk.localization.gettext("Manual Translation"),
   },
-} as const;
+};
 
 // https://www.andiamo.co.uk/resources/iso-language-codes/
 const TRANSLATION_LANGUAGES_CODES_MAP = {
@@ -61,9 +56,9 @@ const TRANSLATION_LANGUAGES_CODES_MAP = {
 } as const;
 
 export {
-  WIDGET_ID,
-  TRANSLATION_TYPES,
   TRANSLATION_LANGUAGES,
-  TRANSLATION_VERSIONS,
   TRANSLATION_LANGUAGES_CODES_MAP,
+  TRANSLATION_TYPES,
+  TRANSLATION_VERSIONS,
+  WIDGET_ID,
 };
