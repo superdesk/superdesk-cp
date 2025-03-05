@@ -1,6 +1,16 @@
 import logging
 import json
-from typing import Dict, List, Literal, Mapping, Optional, TypedDict, Union, overload
+from typing import (
+    Dict,
+    List,
+    Literal,
+    Mapping,
+    Optional,
+    TypedDict,
+    Union,
+    overload,
+    Tuple,
+)
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
 import requests
@@ -13,6 +23,7 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 ResponseType = Mapping[str, Union[str, List[str]]]
+
 
 class TranslateData(TypedDict):
     guid: str
@@ -65,7 +76,7 @@ class Translate(AIServiceBase):
             translator = self.get_translator(translation_type)
             return translator(item)
         except Exception as e:
-            self.handle_error(e, "Translation")
+            return self.handle_error(e, "Translation")
 
     def analyze(self, item: TranslateData, *args) -> ResponseType:
         try:
@@ -92,23 +103,25 @@ class Translate(AIServiceBase):
         else:
             return self.translate_basic
 
-    def translate_basic(self, item: TranslateData) -> ResponseType:
+    def translate_basic(self, item: TranslateData):
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
-            
+
             sanitized_texts = []
             for text in texts:
                 if not isinstance(text, str):
-                    logger.warning(f"Non-string text found: {text}, converting to string")
+                    logger.warning(
+                        f"Non-string text found: {text}, converting to string"
+                    )
                     text = str(text)
                 sanitized_texts.append(text)
-            
+
             if not sanitized_texts:
                 return {"translated_payload": item["payload"], **item}
-            
+
             if self.credentials.expired or self.credentials.token is None:
                 self.credentials.refresh(Request())
-            
+
             url = f"{self.GOOGLE_API_URL}/v2"
             headers = {
                 "Content-Type": "application/json",
@@ -119,15 +132,19 @@ class Translate(AIServiceBase):
                 "q": sanitized_texts,
                 "target": item["target_language"],
                 "source": item["source_language"],
-                "format": "html" if any("<" in text for text in sanitized_texts) else "text",
+                "format": (
+                    "html" if any("<" in text for text in sanitized_texts) else "text"
+                ),
             }
-            
+
             response = requests.post(url, headers=headers, json=payload)
-            
+
             if not response.ok:
-                logger.error(f"Translation API error: Status {response.status_code}, Response: {response.text}")
+                logger.error(
+                    f"Translation API error: Status {response.status_code}, Response: {response.text}"
+                )
             response.raise_for_status()
-            
+
             response_data = response.json()
 
             return self._prepare_translated_payload(
@@ -139,7 +156,7 @@ class Translate(AIServiceBase):
             logger.error(f"Translation error details: {str(e)}", exc_info=True)
             return self.handle_error(e, "Basic translation")
 
-    def translate_advanced(self, item: TranslateData) -> ResponseType:
+    def translate_advanced(self, item: TranslateData):
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
             if self.credentials.expired or self.credentials.token is None:
@@ -165,47 +182,47 @@ class Translate(AIServiceBase):
                 item, translations, translation_key="translatedText"
             )
         except Exception as e:
-            self.handle_error(e, "Advanced translation")
+            return self.handle_error(e, "Advanced translation")
 
     def translate_adaptive(self, item: TranslateData) -> ResponseType:
-        return "Not implemented"
+        return {"error": "Not implemented"}
 
-    def translate_deepl(self, item: TranslateData) -> ResponseType:
+    def translate_deepl(self, item: TranslateData):
         texts, self.paths = self._extract_texts_to_translate(item)
-        
+
         if not texts:
             logger.warning("No texts to translate")
             return {"translated_payload": item["payload"], **item}
-        
+
         try:
 
             separator = "|||||"
             joined_texts = separator.join(texts)
-            
+
             headers = {
                 "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
                 "Content-Type": "application/json",
                 "User-Agent": "YourApp/1.2.3",
             }
-            
+
             payload = {
                 "text": [joined_texts],
                 "target_lang": item["target_language"],
                 "source_lang": item["source_language"],
             }
-            
+
             response = requests.post(self.DEEPL_API_URL, headers=headers, json=payload)
             response.raise_for_status()
             response_data = response.json()
             return self._prepare_translated_payload_deepl(item, response_data)
-            
+
         except Exception as e:
             logger.error(f"DeepL translation failed: {str(e)}", exc_info=True)
             raise Exception(f"DeepL translation failed: {str(e)}")
 
     def handle_error(self, e: Exception, context: str):
         logger.error(f"{context} failed: {str(e)}")
-        return f"{context} failed: {str(e)}"
+        return {"error": f"{context} failed: {str(e)}"}
 
     def _prepare_translated_payload_deepl(self, data, result):
         try:
@@ -213,7 +230,7 @@ class Translate(AIServiceBase):
             translations = result["translations"][0]["text"]
             translations = translations.split(separator)
             result = {}
-        
+
             def build_nested_dict(path_parts, value, target_dict):
                 current = target_dict
                 for i, part in enumerate(path_parts[:-1]):
@@ -221,17 +238,19 @@ class Translate(AIServiceBase):
                         current[part] = {}
                     current = current[part]
                 current[path_parts[-1]] = value
-            
+
             for path, translation in zip(self.paths, translations):
                 build_nested_dict(path, translation, result)
-            
+
             return {"translated_payload": result, **data}
         except Exception as e:
             raise Exception(f"Error preparing translated payload: {str(e)}")
-        
-    def _prepare_translated_payload(self, data, translations, translation_key="translatedText"):
+
+    def _prepare_translated_payload(
+        self, data, translations, translation_key="translatedText"
+    ):
         result = {}
-        
+
         def build_nested_dict(path_parts, value, target_dict):
             current = target_dict
             for i, part in enumerate(path_parts[:-1]):
@@ -239,7 +258,7 @@ class Translate(AIServiceBase):
                     current[part] = {}
                 current = current[part]
             current[path_parts[-1]] = value
-        
+
         for path, translation in zip(self.paths, translations):
             translated_text = html.unescape(
                 getattr(translation, translation_key)
@@ -247,7 +266,7 @@ class Translate(AIServiceBase):
                 else translation[translation_key]
             )
             build_nested_dict(path, translated_text, result)
-        
+
         return {"translated_payload": result, **data}
 
     def _get_model_path(self, translation_type):
@@ -257,15 +276,6 @@ class Translate(AIServiceBase):
             return self.model_path + "/translation-llm"
         else:
             raise ValueError("Invalid translation type for advanced translation")
-
-    @overload
-    def data_operation(
-        self,
-        verb: str,
-        operation: Literal["translate"],
-        name: Optional[str],
-        data: TranslateData,
-    ) -> ResponseType: ...
 
     def data_operation(
         self,
@@ -305,10 +315,12 @@ class Translate(AIServiceBase):
         if not translate_fields:
             raise Exception("No fields to translate inside payload")
 
-    def _extract_texts_to_translate(self, item: TranslateData) -> List[str]:
-        texts = []
-        paths = []
-        
+    def _extract_texts_to_translate(
+        self, item: TranslateData
+    ) -> Tuple[List[str], List[List[str]]]:
+        texts: List[str] = []
+        paths: List[List[str]] = []
+
         def extract_strings(obj, current_path=[]):
             if isinstance(obj, str):
                 if obj.strip():  # Only include non-empty strings
@@ -320,11 +332,9 @@ class Translate(AIServiceBase):
             elif isinstance(obj, list):
                 for i, value in enumerate(value):
                     extract_strings(value, current_path + [str(i)])
-        
+
         extract_strings(item["payload"])
         return texts, paths
-
-
 
     def deepl_create_glossary(
         self, name: str, source_lang: str, target_lang: str, entries: List[str]
@@ -348,7 +358,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            self.handle_error(e, "Creating glossary")
+            return self.handle_error(e, "Creating glossary")
 
     def deepl_list_glossaries(self) -> List[dict]:
         url = f"{self.DEEPL_API_URL}/v2/glossaries"
@@ -360,7 +370,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json().get("glossaries", [])
         except Exception as e:
-            self.handle_error(e, "Listing glossaries")
+            return self.handle_error(e, "Listing glossaries")
 
     def deepl_retrieve_glossary(self, glossary_id: str) -> dict:
         url = f"{self.DEEPL_API_URL}/v2/glossaries/{glossary_id}"
@@ -372,7 +382,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.json()
         except Exception as e:
-            self.handle_error(e, "Retrieving glossary details")
+            return self.handle_error(e, "Retrieving glossary details")
 
     def deepl_retrieve_glossary_entries_by_name(self, glossary_name: str) -> List[str]:
         try:
@@ -394,7 +404,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return response.text.splitlines()  # Assuming TSV format
         except Exception as e:
-            self.handle_error(e, "Retrieving glossary entries")
+            return self.handle_error(e, "Retrieving glossary entries")
 
     def deepl_delete_glossary(self, glossary_id: str) -> dict:
         """Delete a specific glossary."""
@@ -407,7 +417,7 @@ class Translate(AIServiceBase):
             response.raise_for_status()
             return {"message": "Glossary deleted successfully"}
         except Exception as e:
-            self.handle_error(e, "Deleting glossary")
+            return self.handle_error(e, "Deleting glossary")
 
     def deepl_add_entries_to_glossary(self, name: str, new_entries: List[str]) -> dict:
         try:

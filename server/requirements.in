@@ -8,7 +8,6 @@ google-cloud-translate==3.20.1
 deepl==1.21.0
 dotenv==0.9.9
 
-
-Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.8#egg=superdesk-core
-git+https://github.com/superdesk/superdesk-planning.git@release/2.8#egg=superdesk-planning
-git+https://github.com/superdesk/superdesk-analytics.git@release/2.8#egg=superdesk-analytics
+Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.9#egg=superdesk-core
+git+https://github.com/superdesk/superdesk-planning.git@release/2.9#egg=superdesk-planning
+git+https://github.com/superdesk/superdesk-analytics.git@v2.8.1#egg=superdesk-analytics

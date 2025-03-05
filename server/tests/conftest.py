@@ -9,6 +9,7 @@ def app():
         {
             "VERSION": "version",
             "DEFAULT_LANGUAGE": "en",
+            "DEFAULT_AUTHOR_EN": "cpdefaultauthor",
         }
     )
     ctx = app.app_context()

@@ -23,11 +23,13 @@ class TranslateFormatter(CPNINJSFormatter):
                 "headline": get_text(article.get("headline", "")),
                 "body_html": get_text(article.get("body_html", "")),
                 "abstract": get_text(article.get("abstract", "")),
-                "headline_extended": get_text(article.get("headline_extended", ""))
+                "headline_extended": get_text(article.get("headline_extended", "")),
             }
 
             # Perform the translation
-            translated_item = translate.data_operation("translate", "translate", None, formatted_data)
+            translated_item = translate.data_operation(
+                "translate", "translate", None, formatted_data
+            )
 
             # You might want to do something with the translated_item here,
             # such as updating the article or returning it
