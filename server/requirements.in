@@ -4,6 +4,11 @@ python3-saml>=1.9,<1.17
 python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.14
 
+google-auth==2.3.3
+google-cloud-translate==3.7.4
+deepl==1.14.0
+python-dotenv==0.21.1
+
 Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.9#egg=superdesk-core
 git+https://github.com/superdesk/superdesk-planning.git@release/2.9#egg=superdesk-planning
 git+https://github.com/superdesk/superdesk-analytics.git@v2.8.1#egg=superdesk-analytics
