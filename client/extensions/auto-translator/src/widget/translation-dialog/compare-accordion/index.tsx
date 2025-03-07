@@ -17,6 +17,7 @@ import {
 } from "../../../utilities";
 import {
   FORM_FIELDS,
+  FORM_FIELDS_INITIAL_VALUES,
   FormInputProps,
   TranslationDialogFormProps,
 } from "../helpers";
@@ -39,7 +40,7 @@ const getCompareContentValues = (
       result[field] = "";
       return result;
     },
-    { headline: "", headline_extended: "", body_html: "" }
+    { ...FORM_FIELDS_INITIAL_VALUES }
   );
 
   switch (version) {
