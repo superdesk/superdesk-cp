@@ -10,6 +10,7 @@ import {
   TranslationImageField,
   TranslationType,
 } from "../../typings/translation";
+import { getObjectEntries } from "../../utilities";
 
 export const FORM_FIELDS: Record<
   TranslationFields,
@@ -28,6 +29,7 @@ export const FORM_FIELDS: Record<
       key: string;
       value: any;
     };
+    initialValue: any;
   }
 > = {
   headline: {
@@ -40,6 +42,7 @@ export const FORM_FIELDS: Record<
       key: "headline",
       value: values.translations[values.writethru].manualTranslation.headline,
     }),
+    initialValue: "",
   },
   headline_extended: {
     type: "text",
@@ -56,6 +59,7 @@ export const FORM_FIELDS: Record<
             .headline_extended,
       },
     }),
+    initialValue: "",
   },
   body_html: {
     type: "textEditor",
@@ -67,8 +71,17 @@ export const FORM_FIELDS: Record<
       key: "body_html",
       value: values.translations[values.writethru].manualTranslation.body_html,
     }),
+    initialValue: "",
   },
 };
+
+export const FORM_FIELDS_INITIAL_VALUES = getObjectEntries(FORM_FIELDS).reduce(
+  (initialValues, [key, value]) => {
+    Object.assign(initialValues, { [key]: value.initialValue });
+    return initialValues;
+  },
+  {} as Omit<FormInputProps, "images">
+);
 
 export type FormInputProps = Record<TranslationFields, string> & {
   images: Record<TranslationImageField, { description: string; href: string }>;

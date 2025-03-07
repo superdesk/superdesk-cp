@@ -37,6 +37,7 @@ import {
 import { CompareAccordion } from "./compare-accordion";
 import {
   FORM_FIELDS,
+  FORM_FIELDS_INITIAL_VALUES,
   FormInputProps,
   isLanguageCode,
   isTranslationVersion,
@@ -84,7 +85,7 @@ const getTranslationEntryFormValues = (
               formValues[key] = value.getFormValue(article);
               return formValues;
             },
-            { headline: "", headline_extended: "", body_html: "" }
+            { ...FORM_FIELDS_INITIAL_VALUES }
           ),
           images: {},
         };
@@ -97,21 +98,15 @@ const getTranslationEntryFormValues = (
     },
     {
       original: {
-        headline: "",
-        headline_extended: "",
-        body_html: "",
+        ...FORM_FIELDS_INITIAL_VALUES,
         images: {},
       },
       aiTranslation: {
-        headline: "",
-        headline_extended: "",
-        body_html: "",
+        ...FORM_FIELDS_INITIAL_VALUES,
         images: {},
       },
       manualTranslation: {
-        headline: "",
-        headline_extended: "",
-        body_html: "",
+        ...FORM_FIELDS_INITIAL_VALUES,
         images: {},
       },
     }
@@ -126,21 +121,15 @@ export const getTranslationDialogFormInitialValues = () =>
     translations: {
       current: {
         original: {
-          headline: "",
-          headline_extended: "",
-          body_html: "",
+          ...FORM_FIELDS_INITIAL_VALUES,
           images: {},
         },
         aiTranslation: {
-          headline: "",
-          headline_extended: "",
-          body_html: "",
+          ...FORM_FIELDS_INITIAL_VALUES,
           images: {},
         },
         manualTranslation: {
-          headline: "",
-          headline_extended: "",
-          body_html: "",
+          ...FORM_FIELDS_INITIAL_VALUES,
           images: {},
         },
       },
@@ -284,7 +273,7 @@ export const TranslationForm = () => {
             values.translations[values.writethru].original[field];
           return payload;
         },
-        { headline: "", headline_extended: "", body_html: "" }
+        { ...FORM_FIELDS_INITIAL_VALUES }
       ),
       target_language: values.translateTo,
       source_language: values.translateFrom,
