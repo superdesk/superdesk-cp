@@ -3,7 +3,7 @@ honcho
 celery-redbeat
 python3-saml>=1.9,<1.17
 python-xmp-toolkit>=2.0.1,<2.1
-num2words==0.5.13
+num2words==0.5.14
 google-auth==2.38.0
 google-cloud-translate==3.20.1
 deepl==1.21.0
