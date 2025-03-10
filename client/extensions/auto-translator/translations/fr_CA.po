@@ -1,0 +1,102 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "Translate"
+msgstr "Traduire"
+
+msgid "Auto"
+msgstr "Automatique"
+
+msgid "Cancel"
+msgstr "Annuler"
+
+msgid "Apply"
+msgstr "Appliquer"
+
+msgid "Translation"
+msgstr "Traduction"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Original"
+msgstr "Originale"
+
+msgid "AI Translation"
+msgstr "AI Traduction"
+
+msgid "Manual Translation"
+msgstr "Traduction Manuelle"
+
+msgid "Headline"
+msgstr "Titre"
+
+msgid "Extended Headline"
+msgstr "Titre Étendu"
+
+msgid "body HTML"
+msgstr "corps HTML"
+
+msgid "Photos"
+msgstr "Des Photos"
+
+msgid "Caption"
+msgstr "Légende"
+
+msgid "Writethru"
+msgstr "Lead"
+
+msgid "Writethru 1"
+msgstr "Lead 1"
+
+msgid "Writethru 2"
+msgstr "Lead 2"
+
+msgid "Current"
+msgstr "Actuel"
+
+msgid "Type"
+msgstr "Type"
+
+msgid "From"
+msgstr "De"
+
+msgid "To"
+msgstr "En"
+
+msgid "English"
+msgstr "Anglais"
+
+msgid "French"
+msgstr "Français"
+
+msgid "Compare"
+msgstr "Comparer"
+
+msgid "Diff"
+msgstr "Diff"
+
+msgid "Inserted"
+msgstr "Inséré"
+
+msgid "Deleted"
+msgstr "Supprimé"
+
+msgid "Auto Translate"
+msgstr "Traduire Automatique"
+
+msgid "Apply Translation"
+msgstr "Appliquer Traduction"
+
+msgid "Translation Type"
+msgstr "Type de Traduction"
+
+msgid "Translate From"
+msgstr "Traduire de"
+
+msgid "Translate To"
+msgstr "Traduire en"
+
+msgid "Compare Writethru Diff"
+msgstr "Comparer Lead Diff"
