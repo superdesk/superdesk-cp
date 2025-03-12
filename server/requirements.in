@@ -6,7 +6,7 @@ python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.14
 google-auth==2.38.0
 google-cloud-translate==3.20.1
-deepl==1.21.0
+deepl==1.21.1
 dotenv==0.9.9
 
 Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/2.9#egg=superdesk-core
