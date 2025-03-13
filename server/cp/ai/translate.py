@@ -54,6 +54,7 @@ class Translate(AIServiceBase):
 
         self.credentials = {}
         credentials_json = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+        credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS_PATH")
         if credentials_json:
             try:
                 info = json.loads(credentials_json)
@@ -65,6 +66,19 @@ class Translate(AIServiceBase):
                 )
             except Exception as e:
                 logger.error(f"Error loading Google credentials: {str(e)}")
+
+        elif credentials_path:
+            try:
+                with open(credentials_path, "r") as f:
+                    info = json.load(f)
+                    self.credentials = (
+                        service_account.Credentials.from_service_account_info(
+                            info,
+                            scopes=["https://www.googleapis.com/auth/cloud-platform"],
+                        )
+                    )
+            except Exception as e:
+                logger.error(f"Error loading Google credentials from file: {str(e)}")
 
         self.parent = f"projects/{self.GOOGLE_PROJECT_ID}/locations/{self.GOOGLE_PROJECT_LOCATION}"
         self.model_path = f"{self.parent}/models/general"
