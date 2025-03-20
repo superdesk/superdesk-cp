@@ -196,10 +196,6 @@ class Translate(AIServiceBase):
             return {"translated_payload": item["payload"], **item}
 
         try:
-
-            # separator = "|||||"
-            # joined_texts = separator.join(texts)
-
             headers = {
                 "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
                 "Content-Type": "application/json",
@@ -241,25 +237,17 @@ class Translate(AIServiceBase):
                         current[part] = {}
                     current = current[part]
                 current[path_parts[-1]] = value
-
-            # Log the raw response for debugging
-            logger.info(f"Raw DeepL response: {result}")
             
-            # Handle both possible response formats from DeepL
             translations = []
             if isinstance(result, dict):
                 translations = result.get("translations", [])
             elif isinstance(result, list):
                 translations = result
 
-            logger.info(f"Processed translations: {translations}")
-            
             for path, translation_obj in zip(self.paths, translations):
                 translation_text = translation_obj.get("text", "")
-                logger.info(f"Path: {path}, Translation: {translation_text}")
                 build_nested_dict(path, translation_text, result_dict)
 
-            logger.info(f"Final result: {result_dict}")
             return {"translated_payload": result_dict, **data}
         except Exception as e:
             logger.error(f"Error preparing translated payload: {str(e)}", exc_info=True)
