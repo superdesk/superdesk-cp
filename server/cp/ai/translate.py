@@ -249,7 +249,7 @@ class Translate(AIServiceBase):
                         current[part] = {}
                     current = current[part]
                 current[path_parts[-1]] = value
-            
+
             translations = []
             if isinstance(result, dict):
                 translations = result.get("translations", [])
@@ -481,3 +481,4 @@ class Translate(AIServiceBase):
 
 def init_app(app):
     return Translate(app)
+
