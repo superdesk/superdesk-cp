@@ -482,3 +482,4 @@ class Translate(AIServiceBase):
 def init_app(app):
     return Translate(app)
 
+  
