@@ -1,56 +1,67 @@
-import { useField } from "formik";
 import * as React from "react";
 import { InputWrapper } from "superdesk-ui-framework/react";
-import { RecursiveKeyOf } from "../formik-utilties";
-import { superdesk } from "../superdesk";
+import { useSuperdesk } from "../context";
+import { RecursiveKeyOf, useFastField } from "../formik-utilties";
 
 type TextEditorInputProps = {
   label: string;
   value: string;
+  wrapperValue: string;
   readOnly: boolean;
   onChange: (value: string) => void;
+  maxLength?: number;
 };
 
 export const TextEditorInput = ({
   label,
   value,
+  wrapperValue,
   readOnly,
   onChange,
-  ...props
+  maxLength,
 }: TextEditorInputProps) => {
-  const { Editor3Html } = superdesk.components;
+  const superdesk = useSuperdesk(),
+    { Editor3Html } = superdesk.components;
 
   return (
-    <InputWrapper label={label} fullWidth boxedStyle boxedLable>
-      <Editor3Html
-        readOnly={readOnly}
-        value={value}
-        onChange={onChange}
-        {...props}
-      />
+    <InputWrapper
+      fullWidth
+      boxedStyle
+      boxedLable
+      label={label}
+      value={wrapperValue}
+      // max length must be provided to show a character count
+      maxLength={maxLength}
+    >
+      <Editor3Html readOnly={readOnly} value={value} onChange={onChange} />
     </InputWrapper>
   );
 };
 
 type FormTextEditorInputProps<T> = Omit<
   TextEditorInputProps,
-  "value" | "onChange"
-> & { name: RecursiveKeyOf<T> & string };
+  "value" | "wrapperValue" | "onChange"
+> & {
+  name: RecursiveKeyOf<T> & string;
+  maxLength?: number;
+};
 
 export const FormTextEditorInput = <T,>({
-  label,
   name,
   ...props
 }: FormTextEditorInputProps<T>) => {
-  const [field, _meta, helpers] = useField(name);
-  const { setValue } = helpers;
+  const superdesk = useSuperdesk(),
+    { stripHtmlTags } = superdesk.utilities,
+    [field, _, helpers] = useFastField<T>({ name }),
+    { setValue } = helpers,
+    value = field.value as string;
 
   return (
     <TextEditorInput
-      label={label}
-      value={field.value}
-      onChange={(value) => {
-        setValue(value);
+      value={value}
+      wrapperValue={stripHtmlTags(value).replace(/\n/g, "")}
+      onChange={(newValue) => {
+        setValue(newValue as T);
       }}
       {...props}
     />

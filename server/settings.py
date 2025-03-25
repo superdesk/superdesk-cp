@@ -176,6 +176,11 @@ SCHEMA = {
         "usageterms": {"required": False},
         "ednote": {"required": False},
     },
+    "Story": {
+        "headline": {"required": False},
+        "headline_extended": {"required": False},
+        "body_html": {"required": False},
+    },
 }
 
 # editor for images, video, audio
@@ -201,6 +206,7 @@ EDITOR = {
 }
 
 SCHEMA["audio"] = SCHEMA["video"]
+SCHEMA["Story"] = SCHEMA["Story"]
 EDITOR["audio"] = EDITOR["video"]
 
 # if there is picture/audio/video content type defined in data/content_types

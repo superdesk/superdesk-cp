@@ -1,6 +1,12 @@
 // formik setFieldValue currently is not type-safe
 // type-safe implementation of setFieldValue solution: https://github.com/jaredpalmer/formik/issues/1388
-import { FormikHelpers } from "formik";
+import {
+  FieldHelperProps,
+  FormikHelpers,
+  useField,
+  useFormikContext,
+} from "formik";
+import * as React from "react";
 
 type TerminalType =
   | string
@@ -72,11 +78,37 @@ export type DeepPropertyType<
   : never;
 
 export const typedSetFieldValue =
-  <T>(setFieldValue: FormikHelpers<T>["setFieldValue"]) =>
+  <T,>(setFieldValue: FormikHelpers<T>["setFieldValue"]) =>
   <Key extends RecursiveKeyOf<T>>(
     field: Key,
     value: DeepPropertyType<T, Key>,
     shouldValidate?: boolean
-  ) => {
-    return setFieldValue(field, value, shouldValidate);
-  };
+  ) =>
+    setFieldValue(field, value, shouldValidate);
+
+// formik useField.helpers returns new reference on any form update
+// useFormikContext provides helpers but does not return new references https://github.com/jaredpalmer/formik/issues/2268
+type HelperArgs<T extends (...args: any) => any> = Parameters<T> extends [
+  string,
+  ...infer Args
+]
+  ? Args
+  : never;
+
+export const useFastField = <T,>(...args: Parameters<typeof useField<T>>) => {
+  const [field, meta] = useField<T>(...args),
+    { setFieldTouched, setFieldValue, setFieldError } = useFormikContext<T>(),
+    helpers = React.useMemo<FieldHelperProps<T>>(
+      () => ({
+        setValue: (...args: HelperArgs<typeof setFieldValue>) =>
+          setFieldValue(field.name, ...args),
+        setTouched: (...args: HelperArgs<typeof setFieldTouched>) =>
+          setFieldTouched(field.name, ...args),
+        setError: (...args: HelperArgs<typeof setFieldError>) =>
+          setFieldError(field.name, ...args),
+      }),
+      [setFieldTouched, setFieldValue, setFieldError, field.name]
+    );
+
+  return [field, meta, helpers] as const;
+};

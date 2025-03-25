@@ -1,76 +1,77 @@
 import * as React from "react";
 import { createPortal } from "react-dom";
-import { IArticleSideWidgetComponentType } from "superdesk-api";
+import { IArticleSideWidgetComponentType, ISuperdesk } from "superdesk-api";
 import {
   GridList,
   IllustrationButton,
   SvgIconIllustration,
 } from "superdesk-ui-framework/react";
 import { WIDGET_ID } from "../constants";
-import { superdesk } from "../superdesk";
+import { ConfirmProvider, SuperdeskProvider, useSuperdesk } from "../context";
 import { TranslationDialog } from "./translation-dialog";
 
-type AutoTranslatorWidgetProps = { isTranslationOpen: boolean };
+const Menu = ({ openWidget }: { openWidget: () => void }) => (
+  <GridList size="x-small" gap="small" margin="0">
+    <IllustrationButton
+      text={useSuperdesk().localization.gettext("Translate")}
+      onClick={openWidget}
+    >
+      <SvgIconIllustration illustration="translate" />
+    </IllustrationButton>
+  </GridList>
+);
 
-export class AutoTranslatorWidget extends React.Component<
-  IArticleSideWidgetComponentType,
-  AutoTranslatorWidgetProps
-> {
-  state = { isTranslationOpen: false };
-
-  render() {
-    const { gettext } = superdesk.localization;
-    const { AuthoringWidgetLayout, AuthoringWidgetHeading } =
-      superdesk.components;
-
-    const closeTranslationDialog = () => {
-      this.setState({ isTranslationOpen: false });
-    };
-
-    return (
-      <>
-        <AuthoringWidgetLayout
-          header={
-            <AuthoringWidgetHeading
-              widgetId={WIDGET_ID}
-              widgetName={gettext("Auto Translate")}
-              editMode={false}
-            />
-          }
-          body={
-            <Menu
-              openTranslationDialog={() => {
-                this.setState({ isTranslationOpen: true });
-              }}
-            />
-          }
-        />
-        {this.state.isTranslationOpen &&
-          createPortal(
-            <TranslationDialog
-              currentArticle={this.props.article}
-              closeDialog={closeTranslationDialog}
-            />,
-            document.body
-          )}
-      </>
-    );
-  }
-}
-
-type MenuProps = { openTranslationDialog: () => void };
-
-const Menu = ({ openTranslationDialog }: MenuProps) => {
-  const { gettext } = superdesk.localization;
+const Widget = ({
+  article,
+}: {
+  article: IArticleSideWidgetComponentType["article"];
+}) => {
+  const superdesk = useSuperdesk(),
+    { gettext } = superdesk.localization,
+    { AuthoringWidgetLayout, AuthoringWidgetHeading } = superdesk.components,
+    [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <GridList size="x-small" gap="small" margin="0">
-      <IllustrationButton
-        text={gettext("Translate")}
-        onClick={openTranslationDialog}
-      >
-        <SvgIconIllustration illustration="translate" />
-      </IllustrationButton>
-    </GridList>
+    <>
+      <AuthoringWidgetLayout
+        header={
+          <AuthoringWidgetHeading
+            widgetId={WIDGET_ID}
+            widgetName={gettext("Auto Translate")}
+            editMode={false}
+          />
+        }
+        body={
+          <Menu
+            openWidget={() => {
+              setIsOpen(true);
+            }}
+          />
+        }
+      />
+      {isOpen &&
+        createPortal(
+          <TranslationDialog
+            article={article}
+            closeDialog={() => {
+              setIsOpen(false);
+            }}
+          />,
+          document.body
+        )}
+    </>
   );
 };
+
+export const getAutoTranslatorWidget = (superdesk: ISuperdesk) =>
+  class AutoTranslatorWidget extends React.Component<IArticleSideWidgetComponentType> {
+    render() {
+      return (
+        <SuperdeskProvider superdesk={superdesk}>
+          <ConfirmProvider>
+            <Widget article={this.props.article} />
+          </ConfirmProvider>
+        </SuperdeskProvider>
+      );
+    }
+  };

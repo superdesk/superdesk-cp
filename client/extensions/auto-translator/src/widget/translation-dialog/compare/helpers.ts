@@ -16,8 +16,8 @@ export const getPrettyDiffHtml = ({
   gettext: ISuperdesk["localization"]["gettext"];
 }) => {
   let html = [];
-  const patternPara = /\n/g;
-  const tempDiv = document.createElement("div");
+  const patternPara = /\n/g,
+    tempDiv = document.createElement("div");
 
   const getFormattedElements = (text: string, type: "ins" | "del") => {
     let elements = "";
@@ -25,8 +25,8 @@ export const getPrettyDiffHtml = ({
 
     fragment.childNodes.forEach((node) => {
       if (node.nodeType === Node.ELEMENT_NODE) {
-        const element = node as Element;
-        const tag = element.nodeName.toLowerCase();
+        const element = node as Element,
+          tag = element.nodeName.toLowerCase();
 
         if (element.innerHTML)
           elements += `<${tag}>${
@@ -57,9 +57,9 @@ export const getPrettyDiffHtml = ({
   };
 
   for (let x = 0; x < diffs.length; x++) {
-    let op = diffs[x][0];
-    let data = diffs[x][1];
-    let text = data.replace(patternPara, "");
+    let op = diffs[x][0],
+      data = diffs[x][1],
+      text = data.replace(patternPara, "");
     tempDiv.innerHTML = text;
 
     switch (op) {

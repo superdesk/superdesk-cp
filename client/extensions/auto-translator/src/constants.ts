@@ -1,6 +1,8 @@
-import { superdesk } from "./superdesk";
+import { ISuperdesk } from "superdesk-api";
 
 const WIDGET_ID = "auto-translator" as const;
+const FORM_ID = `${WIDGET_ID}-form` as const;
+const SUBMITTER_ID = `submit-${WIDGET_ID}-button` as const;
 
 const TRANSLATION_TYPES = {
   basic: "Google Basic",
@@ -12,28 +14,31 @@ const TRANSLATION_TYPES = {
 const TRANSLATION_LANGUAGES = {
   en: {
     value: "en",
-    label: superdesk.localization.gettext("English"),
+    getLabel: ({ localization: { gettext } }: ISuperdesk) => gettext("English"),
   },
   fr: {
     value: "fr",
-    label: superdesk.localization.gettext("French"),
+    getLabel: ({ localization: { gettext } }: ISuperdesk) => gettext("French"),
   },
-};
+} as const;
 
 const TRANSLATION_VERSIONS = {
   original: {
     value: "original",
-    label: superdesk.localization.gettext("Original"),
+    getLabel: ({ localization: { gettext } }: ISuperdesk) =>
+      gettext("Original"),
   },
   aiTranslation: {
     value: "aiTranslation",
-    label: superdesk.localization.gettext("AI Translation"),
+    getLabel: ({ localization: { gettext } }: ISuperdesk) =>
+      gettext("AI Translation"),
   },
   manualTranslation: {
     value: "manualTranslation",
-    label: superdesk.localization.gettext("Manual Translation"),
+    getLabel: ({ localization: { gettext } }: ISuperdesk) =>
+      gettext("Manual Translation"),
   },
-};
+} as const;
 
 // https://www.andiamo.co.uk/resources/iso-language-codes/
 const TRANSLATION_LANGUAGES_CODES_MAP = {
@@ -56,6 +61,8 @@ const TRANSLATION_LANGUAGES_CODES_MAP = {
 } as const;
 
 export {
+  FORM_ID,
+  SUBMITTER_ID,
   TRANSLATION_LANGUAGES,
   TRANSLATION_LANGUAGES_CODES_MAP,
   TRANSLATION_TYPES,
