@@ -12,6 +12,9 @@ import {
 } from "../../typings/translation";
 import { getObjectEntries } from "../../utilities";
 
+const { gettext } = superdesk.localization;
+const { stripHtmlTags } = superdesk.utilities;
+
 export const FORM_FIELDS: Record<
   TranslationFields,
   {
@@ -30,6 +33,7 @@ export const FORM_FIELDS: Record<
       value: any;
     };
     initialValue: any;
+    setFormValue?: (value: string) => string;
   }
 > = {
   headline: {
@@ -65,13 +69,22 @@ export const FORM_FIELDS: Record<
     type: "textEditor",
     getName: (writethru, version) =>
       `translations.${writethru}.${version}.body_html`,
-    label: superdesk.localization.gettext("body HTML"),
-    getFormValue: (article) => article.body_html ?? "",
+    label: gettext("body HTML"),
+    getFormValue: (article) =>
+      stripHtmlTags(article.body_html ?? "")
+        .split("\n")
+        .map((text) => `<p>${text}</p>`)
+        .join(""),
     setEditorValue: (values) => ({
       key: "body_html",
       value: values.translations[values.writethru].manualTranslation.body_html,
     }),
     initialValue: "",
+    setFormValue: (value) =>
+      value
+        .split("\n")
+        .map((text) => `<p>${text}</p>`)
+        .join(""),
   },
 };
 

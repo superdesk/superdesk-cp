@@ -292,10 +292,14 @@ export const TranslationForm = () => {
         const versions = ["aiTranslation", "manualTranslation"] as const;
 
         for (const version of versions) {
-          for (const key of getObjectKeys(FORM_FIELDS)) {
+          for (const [key, value] of getObjectEntries(FORM_FIELDS)) {
+            const fieldValue = value?.setFormValue
+              ? value.setFormValue(res.analysis.translated_payload[key])
+              : res.analysis.translated_payload[key];
+
             setFieldValue(
               `translations.${values.writethru}.${version}.${key}`,
-              res.analysis.translated_payload[key]
+              fieldValue
             );
           }
         }

@@ -18,6 +18,7 @@ from superdesk.text_checkers.ai.base import AIServiceBase
 import os
 from dotenv import load_dotenv
 import html
+import re
 
 load_dotenv()
 
@@ -209,10 +210,6 @@ class Translate(AIServiceBase):
             return {"translated_payload": item["payload"], **item}
 
         try:
-
-            separator = "|||||"
-            joined_texts = separator.join(texts)
-
             headers = {
                 "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
                 "Content-Type": "application/json",
@@ -220,9 +217,12 @@ class Translate(AIServiceBase):
             }
 
             payload = {
-                "text": [joined_texts],
+                "text": texts,
                 "target_lang": item["target_language"],
                 "source_lang": item["source_language"],
+                "tag_handling": "html",
+                "preserve_formatting": True,
+                "model_type": "prefer_quality_optimized",
             }
 
             response = requests.post(self.DEEPL_API_URL, headers=headers, json=payload)
@@ -240,10 +240,7 @@ class Translate(AIServiceBase):
 
     def _prepare_translated_payload_deepl(self, data, result):
         try:
-            separator = "|||||"
-            translations = result["translations"][0]["text"]
-            translations = translations.split(separator)
-            result = {}
+            result_dict = {}
 
             def build_nested_dict(path_parts, value, target_dict):
                 current = target_dict
@@ -253,11 +250,19 @@ class Translate(AIServiceBase):
                     current = current[part]
                 current[path_parts[-1]] = value
 
-            for path, translation in zip(self.paths, translations):
-                build_nested_dict(path, translation, result)
+            translations = []
+            if isinstance(result, dict):
+                translations = result.get("translations", [])
+            elif isinstance(result, list):
+                translations = result
 
-            return {"translated_payload": result, **data}
+            for path, translation_obj in zip(self.paths, translations):
+                translation_text = translation_obj.get("text", "")
+                build_nested_dict(path, translation_text, result_dict)
+
+            return {"translated_payload": result_dict, **data}
         except Exception as e:
+            logger.error(f"Error preparing translated payload: {str(e)}", exc_info=True)
             raise Exception(f"Error preparing translated payload: {str(e)}")
 
     def _prepare_translated_payload(
