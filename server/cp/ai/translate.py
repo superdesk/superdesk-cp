@@ -222,7 +222,7 @@ class Translate(AIServiceBase):
                 "source_lang": item["source_language"],
                 "tag_handling": "html",
                 "preserve_formatting": True,
-                "model_type": "prefer_quality_optimized"
+                "model_type": "prefer_quality_optimized",
             }
 
             response = requests.post(self.DEEPL_API_URL, headers=headers, json=payload)
