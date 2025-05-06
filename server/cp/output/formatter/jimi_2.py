@@ -11,11 +11,13 @@ from num2words import num2words
 from collections import OrderedDict
 from celery.utils.functional import uniq
 from superdesk.utc import utc_to_local
+from superdesk.resource_fields import ITEM_STATE
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
+from superdesk.publish_async.commands import publish_item
+from superdesk.publish_async.utils import get_subscribers_for_item
 from superdesk.media.renditions import get_rendition_file_name
 from superdesk.metadata.item import SCHEDULE_SETTINGS
-from apps.publish.enqueue import get_enqueue_service
 
 from cp.utils import format_maxlength
 
@@ -114,7 +116,7 @@ class Jimi2Formatter(Formatter):
     def can_format(self, format_type, article):
         return format_type == self.type
 
-    def format(self, article, subscriber, codes=None):
+    async def format(self, article, subscriber, codes=None):
         output = []
         services = [
             s.get("name")
@@ -128,7 +130,7 @@ class Jimi2Formatter(Formatter):
                 "subscribers"
             ).generate_sequence_number(subscriber)
             root = etree.Element("Publish")
-            self._format_item(root, article, pub_seq_num, service, services)
+            await self._format_item(root, article, pub_seq_num, service, services)
             xml = etree.tostring(
                 root, pretty_print=True, encoding=self.ENCODING, xml_declaration=True
             )
@@ -141,7 +143,7 @@ class Jimi2Formatter(Formatter):
             if subj.get("scheme") == scheme and subj.get("qcode"):
                 etree.SubElement(root, elem).text = subj["qcode"]
 
-    def _format_item(self, root, item, pub_seq_num, service, services) -> None:
+    async def _format_item(self, root, item, pub_seq_num, service, services) -> None:
         # Added Fix here to fetch Parents of Manual Tags.
 
         item = self._add_parent_manual_tags(item)
@@ -301,7 +303,7 @@ class Jimi2Formatter(Formatter):
                 etree.SubElement(content, "Corrections").text = extra[cp.CORRECTION]
 
         if item.get("associations"):
-            self._format_associations(content, item)
+            await self._format_associations(content, item)
 
     def get_item_id(self, item):
         if item.get("family_id"):
@@ -664,7 +666,7 @@ class Jimi2Formatter(Formatter):
                 time=created.strftime("%H%M%S"),
             )
 
-    def _format_associations(self, content, item):
+    async def _format_associations(self, content, item):
         """When association is already published we need to resend it again
         with link to text item.
         """
@@ -679,18 +681,22 @@ class Jimi2Formatter(Formatter):
                     published and published["pubstatus"] == "usable" and False
                 ):  # disable for the time being
                     published.setdefault("extra", {})["container"] = item["guid"]
-                    publish_service = get_enqueue_service("publish")
                     subscribers = [
-                        subs
-                        for subs in publish_service.get_subscribers(published, None)[0]
+                        subscriber
+                        for subscriber in await get_subscribers_for_item(published, "publish")
                         if any(
                             [
-                                dest["format"] == "jimi"
-                                for dest in subs.get(cp.DESTINATIONS, [])
+                                dest.format == "jimi"
+                                for dest in subscriber.destinations
                             ]
                         )
                     ]
-                    publish_service.resend(published, subscribers)
+                    await publish_item(
+                        published,
+                        operation="resend",
+                        subscribers=subscribers,
+                        published_state=published.get(ITEM_STATE) or "published",
+                    )
                 if (
                     assoc.get("type") == "picture"
                     and assoc.get("guid")
