@@ -10,8 +10,8 @@
 
 import logging
 
-from flask import current_app as app
-from flask_babel import lazy_gettext
+from quart import current_app as app
+from quart_babel import lazy_gettext
 from superdesk import get_resource_service
 from eve.utils import ParsedRequest
 from apps.archive.common import format_dateline_to_locmmmddsrc

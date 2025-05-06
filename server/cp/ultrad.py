@@ -1,7 +1,7 @@
 import logging
 import requests
 
-from flask import current_app as app
+from quart import current_app as app
 from urllib.parse import urljoin
 
 from apps.tasks import send_to

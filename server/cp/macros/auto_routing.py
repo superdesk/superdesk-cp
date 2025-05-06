@@ -13,7 +13,7 @@ import re
 import logging
 import superdesk
 
-from flask_babel import lazy_gettext
+from quart_babel import lazy_gettext
 from superdesk.metadata.item import CONTENT_STATE
 
 

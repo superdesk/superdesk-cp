@@ -11,7 +11,7 @@
 
 import os
 
-from flask import json
+from superdesk.core import json
 from pathlib import Path
 from superdesk.default_settings import (
     DEFAULT_CATEGORY_QCODES_FOR_AUTO_PUBLISHED_ARTICLES,
@@ -22,6 +22,7 @@ from superdesk.default_settings import (
     CELERY_BEAT_SCHEDULE,
     NINJS_COMMON_RENDITIONS,
     timedelta,
+    MODULES,
 )
 
 
@@ -37,9 +38,9 @@ INSTALLED_APPS = [
     "analytics",
     "superdesk.auth.saml",
     "superdesk.macros.imperial",
-    "cp.orangelogic",
-    "cp.ingest",
-    "cp.output",
+    # "cp.orangelogic",
+    # "cp.ingest",
+    # "cp.output",
     "cp.ultrad",
     "cp.planning_exports",
     "cp.set_province_on_publish",
@@ -47,6 +48,8 @@ INSTALLED_APPS = [
     "cp.ai.semaphore",
     "cp.ai.translate",
 ]
+
+MODULES.append("planning")
 
 MACROS_MODULE = "cp.macros"
 

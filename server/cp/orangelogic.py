@@ -9,7 +9,7 @@ import cp
 from pytz import UTC
 from datetime import datetime
 from urllib.parse import urljoin
-from flask import current_app as app, json
+from quart import current_app as app, json
 from requests.exceptions import HTTPError
 from superdesk.utils import ListCursor
 from superdesk.timer import timer

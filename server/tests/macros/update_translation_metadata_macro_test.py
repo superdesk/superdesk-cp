@@ -1,5 +1,5 @@
 import cp
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 
@@ -17,7 +17,7 @@ from datetime import datetime, timedelta
 
 class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
 
     def test_remove_destination_and_add_presse_canadienne_staff_as_destination(self):
         """

@@ -36,7 +36,7 @@ import logging
 import re
 from typing import Tuple
 
-from flask import current_app as app
+from quart import current_app as app
 from eve.utils import config
 from superdesk.publish.formatters import Formatter
 from superdesk.errors import FormatterError

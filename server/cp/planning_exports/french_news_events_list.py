@@ -1,4 +1,4 @@
-from flask_babel import _
+from quart_babel import gettext
 from babel.dates import format_date
 
 from superdesk import get_resource_service
@@ -156,7 +156,7 @@ def group_items_by_french_topics(items):
 
     if not date_groups:
         raise SuperdeskApiError.badRequestError(
-            _("No items matched the required calendar/agenda")
+            gettext("No items matched the required calendar/agenda")
         )
 
     return date_groups.items()

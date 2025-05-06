@@ -1,4 +1,4 @@
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 
@@ -9,7 +9,7 @@ from cp.set_province_on_publish import set_province_on_publish
 
 class PublishSignalTestCase(unittest.TestCase):
     def setUp(self) -> None:
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
         self.app.config.update(
             {
                 "VERSION": "version",

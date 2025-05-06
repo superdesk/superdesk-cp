@@ -2,7 +2,7 @@ import itertools
 from planning.feed_parsers.onclusive import OnclusiveFeedParser
 from typing import List, Dict
 from superdesk import get_resource_service
-from flask import g
+from superdesk.flask import g
 
 
 def unique(values):

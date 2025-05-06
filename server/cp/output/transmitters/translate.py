@@ -1,4 +1,4 @@
-from flask import current_app, json
+from quart import current_app, json
 
 from superdesk.publish import register_transmitter
 from superdesk.publish.publish_service import PublishService

@@ -1,6 +1,6 @@
 import unittest
 import datetime
-from flask import render_template
+from superdesk.flask import render_template
 from app import get_app
 
 

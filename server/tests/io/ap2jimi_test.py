@@ -1,6 +1,6 @@
 import re
 import cp
-import flask
+import superdesk.flask import json, Flask
 import os.path
 import unittest
 import superdesk
@@ -8,7 +8,6 @@ import requests_mock
 import settings
 
 from lxml import etree
-from flask import json
 from unittest.mock import MagicMock, patch
 
 from tests.mock import SEQUENCE_NUMBER, resources
@@ -31,7 +30,7 @@ def fixture(filename):
 
 
 class AP2JimiTestCase(unittest.TestCase):
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
 

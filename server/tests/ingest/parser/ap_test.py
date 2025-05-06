@@ -2,7 +2,7 @@ import cp
 import pytz
 import copy
 import json
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 import requests_mock
@@ -33,7 +33,7 @@ parser = CP_APMediaFeedParser()
 
 
 class CP_AP_ParseTestCase(unittest.TestCase):
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
     app.locators = MagicMock()
     app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
     subscriber = {}

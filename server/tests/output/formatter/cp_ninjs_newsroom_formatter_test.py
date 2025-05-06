@@ -1,5 +1,5 @@
 import cp
-import flask
+import superdesk.flask import Flask
 import unittest
 
 from unittest.mock import patch
@@ -10,7 +10,7 @@ from cp.output.formatter.cp_ninjs_newsroom_formatter import CPNewsroomNinjsForma
 class TestCPNewsroomNinjsFormatter(unittest.TestCase):
     def setUp(self) -> None:
         self.formatter = CPNewsroomNinjsFormatter()
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
         self.ctx = self.app.test_request_context()
         self.ctx.push()
 

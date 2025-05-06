@@ -1,7 +1,7 @@
 import unittest
 import superdesk
 
-from flask import json
+from superdesk.flask import json
 from unittest.mock import patch
 from tests.mock import resources
 

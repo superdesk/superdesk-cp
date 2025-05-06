@@ -1,7 +1,7 @@
 import os
 import io
 import pytz
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 import lxml.etree as etree
@@ -61,7 +61,7 @@ class OrangelogicTestCase(unittest.TestCase):
     provider = {"config": {"username": "foo", "password": "bar"}}
 
     def setUp(self):
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
         self.app.media = media_storage
         self.app.config["ORANGELOGIC_URL"] = "https://example.com/"
         self.ctx = self.app.app_context()

@@ -1,7 +1,7 @@
 import superdesk
 
 from datetime import datetime, timedelta
-from flask import current_app as app
+from quart import current_app as app
 
 
 class FixEventsCommand(superdesk.Command):

@@ -9,7 +9,7 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 import logging
-from flask_babel import lazy_gettext
+from quart_babel import lazy_gettext
 from superdesk import get_resource_service
 
 

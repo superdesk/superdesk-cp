@@ -1,4 +1,4 @@
-from flask import current_app as app
+from quart import current_app as app
 from typing import Union, Dict, Any
 from datetime import datetime, timedelta
 import pytz

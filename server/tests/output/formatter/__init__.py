@@ -1,4 +1,4 @@
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 import lxml.etree as etree
@@ -13,7 +13,7 @@ class BaseXmlFormatterTestCase(unittest.TestCase):
     article = None
 
     def setUp(self):
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
         self.app.config.update(
             {
                 "VERSION": "version",

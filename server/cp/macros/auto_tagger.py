@@ -1,5 +1,5 @@
-from flask_babel import lazy_gettext
-from flask import current_app as app
+from quart_babel import lazy_gettext
+from quart import current_app as app
 from cp.ai.semaphore import Semaphore
 
 import logging

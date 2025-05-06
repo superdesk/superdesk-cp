@@ -1,7 +1,7 @@
-rest: gunicorn -c gunicorn_config.py wsgi
+rest: hypercorn -c file:hypercorn_config.py wsgi:application
 wamp: python3 -u ws.py
 work: celery -A worker worker -X "${SUPERDESK_CELERY_PREFIX}expiry"
 beat: celery -A worker beat -S redbeat.RedBeatScheduler --max-interval 10
-capi: gunicorn -c gunicorn_config.py content_api.wsgi
-papi: gunicorn -c gunicorn_config.py prod_api_app
+capi: hypercorn -c file:hypercorn_config.py content_api.wsgi:application
+# papi: gunicorn -c gunicorn_config.py prod_api_app
 work_expiry: celery -A worker worker -Q "${SUPERDESK_CELERY_PREFIX}expiry"

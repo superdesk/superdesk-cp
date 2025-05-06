@@ -1,5 +1,5 @@
 import cp
-import flask
+import superdesk.flask import Flask
 import unittest
 import superdesk
 
@@ -11,7 +11,7 @@ from superdesk.utils import ListCursor
 
 class AutoRoutingMacroTestCase(unittest.TestCase):
     def setUp(self):
-        self.app = flask.Flask(__name__)
+        self.app = Flask(__name__)
 
     def test_auto_routing_matches_service_destination(self):
         item = {

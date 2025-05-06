@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-import flask
+import superdesk.flask import Flask
 import superdesk
 
 from cp.ingest import CPTranscriptsFeedParser
@@ -15,7 +15,7 @@ parser = CPTranscriptsFeedParser()
 
 
 class CP_Transcripts_ParseTestCase(unittest.TestCase):
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
 
     def test_parse(self):
         with self.app.app_context(), patch.dict(superdesk.resources, resources):

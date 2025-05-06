@@ -1,5 +1,5 @@
 import os
-import flask
+import superdesk.flask import Flask
 import unittest
 import lxml.etree as etree
 
@@ -19,7 +19,7 @@ class ParserTestCase(unittest.TestCase):
     parser: FeedParser
     provider: str
 
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
 
     def get_xml(self, filename):
         return etree.parse(get_fixture_path(filename, self.provider)).getroot()

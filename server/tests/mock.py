@@ -13,7 +13,7 @@ from apps.publish.published_item import PublishedItemService
 from superdesk.io import IngestService
 from superdesk.places.places_autocomplete import PlacesAutocompleteService
 from superdesk.geonames import geonames_request, format_geoname_item
-from flask import current_app as app
+from quart import current_app as app
 from planning.events.events import EventsService
 from apps.contacts import ContactsService
 

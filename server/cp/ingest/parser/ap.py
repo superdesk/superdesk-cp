@@ -12,7 +12,7 @@ import superdesk
 import superdesk.etree as sd_etree
 
 from typing import List
-from flask import current_app as app
+from quart import current_app as app
 from superdesk.utc import utc_to_local, get_date, utcnow
 from superdesk.media.image import get_meta_iptc
 from superdesk.io.feed_parsers import APMediaFeedParser

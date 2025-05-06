@@ -9,7 +9,7 @@ from superdesk.metadata.item import (
     GUID_FIELD,
     CONTENT_STATE,
 )
-import flask
+import superdesk.flask import Flask
 import superdesk
 from tests.ingest.parser import get_fixture_path
 from tests.mock import resources
@@ -27,7 +27,7 @@ def qcode(subject):
 class OnclusiveFeedParserTestCase(ParserTestCase):
     parser = CPOnclusiveFeedParser()
     provider = "Test_CP_Onclusive"
-    app = flask.Flask(__name__)
+    app = Flask(__name__)
 
     maxDiff = None
 
