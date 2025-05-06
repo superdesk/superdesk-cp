@@ -9,7 +9,7 @@ from superdesk.metadata.item import (
     GUID_FIELD,
     CONTENT_STATE,
 )
-import superdesk.flask import Flask
+from superdesk.flask import Flask
 import superdesk
 from tests.ingest.parser import get_fixture_path
 from tests.mock import resources

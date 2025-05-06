@@ -1,4 +1,4 @@
-import superdesk.flask import Flask
+from superdesk.flask import Flask
 import unittest
 import superdesk
 

@@ -1,6 +1,6 @@
 import re
 import cp
-import superdesk.flask import json, Flask
+from superdesk.flask import json, Flask
 import os.path
 import unittest
 import superdesk
