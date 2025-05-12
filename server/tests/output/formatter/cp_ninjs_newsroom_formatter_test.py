@@ -1,5 +1,5 @@
 import cp
-import superdesk.flask import Flask
+from superdesk.flask import Flask
 import unittest
 
 from unittest.mock import patch
