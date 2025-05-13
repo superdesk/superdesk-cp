@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "analytics",
     "superdesk.auth.saml",
     "superdesk.macros.imperial",
-    # "cp.orangelogic",
+    "cp.orangelogic",
     # "cp.ingest",
     # "cp.output",
     "cp.ultrad",

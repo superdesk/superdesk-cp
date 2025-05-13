@@ -77,7 +77,7 @@ class OrangelogicTestCase(unittest.TestCase):
         service = OrangelogicSearchProvider(self.provider)
 
         with HTTMock(auth_ok, search_ok):
-            items = service.find({})
+            items = service.find_async({})
 
         self.assertEqual(5, len(items))
         self.assertEqual(items.count(), 2021650)
@@ -120,11 +120,11 @@ class OrangelogicTestCase(unittest.TestCase):
 
         with HTTMock(auth_ok, search_error):
             with self.assertRaises(HTTPError):
-                items = service.find({})
+                items = service.find_async({})
 
         with HTTMock(auth_error, search_error):
             with self.assertRaises(HTTPError):
-                items = service.find({})
+                items = service.find_async({})
 
     @patch("cp.orangelogic.update_renditions", side_effect=set_rendition)
     def test_fetch_to_jimi(self, update_renditions_mock):
@@ -140,7 +140,7 @@ class OrangelogicTestCase(unittest.TestCase):
 
         with HTTMock(auth_ok, fetch_ok):
             with patch.dict(superdesk.resources, resources):
-                fetched = service.fetch({})
+                fetched = service.fetch_async({})
             update_renditions_mock.assert_called_once_with(
                 fetched,
                 "https://example.com/htm/GetDocumentAPI.aspx?F=TRX&DocID=2RLQZBCB4R4R4&token=token.foo",
