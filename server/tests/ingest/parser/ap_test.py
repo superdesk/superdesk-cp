@@ -2,7 +2,7 @@ import cp
 import pytz
 import copy
 import json
-import superdesk.flask import Flask
+from superdesk.flask import Flask
 import unittest
 import superdesk
 import requests_mock

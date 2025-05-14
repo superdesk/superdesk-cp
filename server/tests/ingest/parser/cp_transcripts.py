@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-import superdesk.flask import Flask
+from superdesk.flask import Flask
 import superdesk
 
 from cp.ingest import CPTranscriptsFeedParser
