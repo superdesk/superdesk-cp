@@ -1,20 +1,22 @@
 import math
 import logging
-import requests
-import superdesk
 import mimetypes
+import aiohttp
 
+import superdesk
 import cp
+import yarl
 
 from pytz import UTC
 from datetime import datetime
 from urllib.parse import urljoin
 from quart import current_app as app, json
-from requests.exceptions import HTTPError
+from aiohttp import ClientRequest
+from aiohttp.client_exceptions import ClientResponseError
 from superdesk.utils import ListCursor
 from superdesk.timer import timer
 from superdesk.utc import local_to_utc
-from superdesk.search_provider import SearchProvider
+from superdesk.types.search_providers import SearchProvider
 from superdesk.io.commands.update_ingest import update_renditions
 from superdesk.media.image import get_meta_iptc
 
@@ -26,7 +28,7 @@ AUTH_API = "/API/Authentication/v1.0/Login"
 SEARCH_API = "/API/Search/v3.0/search"
 DOWNLOAD_API = "/htm/GetDocumentAPI.aspx"
 
-TIMEOUT = (5, 10)
+TIMEOUT = aiohttp.ClientTimeout(total=10, connect=5)
 DATE_FORMAT = "u"
 
 IPTC_SOURCE_MAPPING = {
@@ -43,7 +45,6 @@ ORIGINAL_TRANSMISSION_REF = "Original Transmission Reference"
 
 
 tokens = {}
-sess = requests.Session()
 logger = logging.getLogger(__name__)
 
 
@@ -114,39 +115,53 @@ class OrangelogicSearchProvider(SearchProvider):
         super().__init__(provider)
         self.config = provider.get("config") or {}
         self.url = app.config.get("ORANGELOGIC_URL") or self.URL
+        self.session = None
+
+    async def ensure_session(self):
+        if self.session is None or self.session.closed:
+            self.session = aiohttp.ClientSession()
 
     def _url(self, path):
         return urljoin(self.url, path)
 
-    def _request(self, api, method="GET", **kwargs):
+    async def _request(self, api, method="GET", **kwargs):
+        await self.ensure_session()
         url = self._url(api)
-        resp = sess.request(method, url, params=kwargs, timeout=TIMEOUT)
-        resp.raise_for_status()
-        return resp
+        params = kwargs.pop("params", None)
+        data = kwargs.pop("data", None)
 
-    def _login(self):
+        async with self.session.request(
+            method, url, params=params, data=data, timeout=TIMEOUT
+        ) as resp:
+            resp.raise_for_status()
+            return await resp.json()
+
+    async def _login(self):
         with timer("orange.login"):
-            resp = self._request(
+            resp = await self._request(
                 AUTH_API,
                 method="POST",
-                Login=self.config.get("username"),
-                Password=self.config.get("password"),
-                format="json",
+                data={
+                    "Login": self.config.get("username"),
+                    "Password": self.config.get("password"),
+                    "format": "json",
+                }
             )
-        tokens[self.config["username"]] = resp.json()["APIResponse"]["Token"]
+        tokens[self.config["username"]] = resp["APIResponse"]["Token"]
 
-    def _auth_request(self, api, **kwargs):
+    async def _auth_request(self, api, **kwargs):
         repeats = 2
         while repeats > 0:
             if not self.token:
-                self._login()
+                await self._login()
             try:
-                kwargs["token"] = self.token
+                kwargs["params"] = kwargs.get("params", {})
+                kwargs["params"]["token"] = self.token
                 with timer("orange.request"):
-                    return self._request(api, **kwargs)
-            except HTTPError as err:
+                    return await self._request(api, **kwargs)
+            except ClientResponseError as err:
                 logger.error(err)
-                self._login()  # auth error
+                await self._login()  # auth error
                 repeats -= 1
                 if repeats == 0:
                     raise
@@ -159,7 +174,7 @@ class OrangelogicSearchProvider(SearchProvider):
         except KeyError:
             return
 
-    def find(self, query, params=None):
+    async def find_async(self, query: dict, params: dict | None = None) -> OrangelogicListCursor:
         if params is None:
             params = {}
 
@@ -171,12 +186,14 @@ class OrangelogicSearchProvider(SearchProvider):
             sort = {"versioncreated": "desc"}
 
         kwargs = {
-            "pagenumber": page,
-            "countperpage": size,
-            "fields": ",".join(self.FIELDS),
-            "Sort": get_api_sort(sort),
-            "format": "json",
-            "DateFormat": "u",
+            "params": {
+                "pagenumber": page,
+                "countperpage": size,
+                "fields": ",".join(self.FIELDS),
+                "Sort": get_api_sort(sort),
+                "format": "json",
+                "DateFormat": "u",
+            }
         }
 
         query_components = {
@@ -196,20 +213,21 @@ class OrangelogicSearchProvider(SearchProvider):
                 if selected:
                     query_components["MediaType"] = "({})".format(" OR ".join(selected))
 
-        kwargs["query"] = " ".join(
+        kwargs["params"]["query"] = " ".join(
             ["{}:{}".format(key, val) for key, val in query_components.items() if val]
         )
 
         if params:
             for param, op in (("from", ">:"), ("to", "<:")):
                 if params.get(param):
-                    kwargs["query"] = "{} MediaDate{}{}".format(
-                        kwargs["query"], op, params[param]
+                    kwargs["params"]["query"] = "{} MediaDate{}{}".format(
+                        kwargs["params"]["query"], op, params[param]
                     ).strip()
 
-        resp = self._auth_request(SEARCH_API, **kwargs)
-        data = resp.json()
+        data = await self._auth_request(SEARCH_API, **kwargs)
+        assert data is not None
 
+        # FIXME-ASYNC: File access should be made async (with `aiofiles?`).
         with open("/tmp/resp.json", mode="w") as out:
             out.write(json.dumps(data, indent=2))
 
@@ -253,16 +271,16 @@ class OrangelogicSearchProvider(SearchProvider):
         local = datetime.strptime(value, "%m/%d/%Y %H:%M:%S %p")
         return local_to_utc(self.TZ, local)
 
-    def fetch(self, guid):
+    async def fetch_async(self, guid: str):
         kwargs = {
-            "query": "SystemIdentifier:{}".format(guid),
-            "fields": ",".join(self.FIELDS),
-            "format": "json",
-            "DateFormat": "u",
+            "params": {
+                "query": "SystemIdentifier:{}".format(guid),
+                "fields": ",".join(self.FIELDS),
+                "format": "json",
+                "DateFormat": "u",
+            }
         }
-        resp = self._auth_request(SEARCH_API, **kwargs)
-
-        data = resp.json()
+        data = await self._auth_request(SEARCH_API, **kwargs)
         item = self._parse_items(data)[0]
 
         url = self._url(DOWNLOAD_API)
@@ -272,11 +290,12 @@ class OrangelogicSearchProvider(SearchProvider):
             "token": self.token,
         }
 
-        href = requests.Request("GET", url, params=params).prepare().url
+        await self.ensure_session()
+        href = str(yarl.URL(url).with_query(params))
         update_renditions(item, href, None)
 
         if item["type"] == "picture":
-            _parse_binary(item)
+            await _parse_binary_async(item)
 
         # it's in superdesk now, so make it ignore the api
         item["fetch_endpoint"] = ""
@@ -285,9 +304,8 @@ class OrangelogicSearchProvider(SearchProvider):
 
         return item
 
-
-def _parse_binary(item):
-    binary = app.media.get(item["renditions"]["original"]["media"])
+async def _parse_binary_async(item):
+    binary = await app.media.get_async(item["renditions"]["original"]["media"])
     iptc = get_meta_iptc(binary)
     if not iptc:
         return
