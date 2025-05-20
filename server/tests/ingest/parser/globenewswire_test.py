@@ -88,7 +88,27 @@ class GlobeNewswireParserTestCase(ParserTestCase):
         self.assertNotIn("</strong><br><br></td>", item["body_html"])
 
     def test_parser_includes_globenewswire_image(self):
-        item = self.parse("0b78.xml")
+        item = self.parse("2025031410361119.xml")
         self.assertIsNotNone(item)
-        img_src = "https://www.globenewswire.com/newsroom/ti?nf=Nzc2NTgzMiMzMjQxODY5IzIxODkxNTU="
-        self.assertIn(img_src, item["body_html"])
+        body_html = item["body_html"]
+
+        # Check for inline images
+        self.assertIn(
+            "https://ml.uat.globenewswire.com/Resource/Download/d5dfed1b-ce47-4d6c-8c8b-545237703b1b/image1.jpg",
+            body_html,
+        )
+        self.assertIn(
+            "https://ml.uat.globenewswire.com/Resource/Download/96adca81-6897-4279-8bf9-715d5229fa6e/image2.jpg",
+            body_html,
+        )
+        self.assertIn(
+            "https://ml.uat.globenewswire.com/Resource/Download/ac936e16-befd-46a3-9c3a-276c5ce4e312/image3.jpg",
+            body_html,
+        )
+        # Check for the tracking image
+        tracking_img_src = (
+            "https://ml.uat.globenewswire.com/media/"
+            "MDUwZjFjMGQtNzZkZC00ZDc4LTk0OGYtMzI4ZGE1MDI0OWM0LTEwMjI3MDYtMjAyNS0wMy0xNC1lbg==/"
+            "tiny/XYZ-Test-Keith-s-Team.png"
+        )
+        self.assertIn(tracking_img_src, body_html)

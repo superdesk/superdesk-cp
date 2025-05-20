@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="utf-8"?>
+<newsItem standard="NewsML-G2" standardversion="2.10" conformance="power"
+  guid="urn:newsml:marketwired.com:20020408:2025031410361119-en" version="1" xml:lang="en-US"
+  xmlns="http://iptc.org/std/nar/2006-10-01/">
+  <catalogRef href="http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_17.xml"/>
+  <catalogRef href="http://www.marketwire.com/NewsML/Marketwire_NewsML-G2_Catalog_1.xml"/>
+  <rightsInfo>
+    <copyrightHolder literal="globenewswire.com"/>
+    <copyrightNotice>© 2025 GlobeNewswire, Inc. All rights reserved.</copyrightNotice>
+  </rightsInfo>
+  <itemMeta>
+    <itemClass qcode="ninat:text"/>
+    <provider literal="globenewswire.com"/>
+    <versionCreated>2025-03-14T14:59:02+00:00</versionCreated>
+    <firstCreated>2025-03-14T14:59:02+00:00</firstCreated>
+    <pubStatus qcode="stat:usable"/>
+    <title role="MWTitleRole:PATopicKeyword">Calendar of Events Marlborough, MA, USA</title>
+    <title role="MWTitleRole:PATopicKeyword">Class Action Lawsuits Marlborough, MA, USA</title>
+    <link rel="irel:associatedWith"
+      href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/5971ef88-1684-4ad4-966f-b7602fd4e9d0/en"
+      contenttype="image/jpeg">
+      <a href="0_medium_Phase2PermitsRPMChromePondMAP91.jpg">Phase 2 Permits RPM Chrome Pond MAP
+        (9)[1]</a>
+      <description>Phase 2 Drill Planning Map, showing new road access to RPM Zone at the southern
+        end of the 30 km Pipestone Ophiolite Complex, Atlantic Nickel Project.<a
+          href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/5971ef88-1684-4ad4-966f-b7602fd4e9d0/en"
+          >Click here for high-resolution version</a></description>
+      <itemClass qcode="ninat:picture"/>
+    </link>
+    <link rel="irel:associatedWith"
+      href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/0c0ac50d-4271-4185-9f2c-35b2548647a5/en"
+      contenttype="image/jpeg">
+      <a
+        href="2_medium_RPMZoneSouthernAccessTrailStartedJanuary2025,providingefficientanddirectaccessforPhase2drillingprogram..jpg"
+        >RPM Zone Southern Access Trail (Started January 2025), providing efficient and direct
+        access for Phase 2 drilling program.</a>
+      <description>PM Zone Southern Access Trail (Started January 2025), providing efficient and
+        direct access for Phase 2 drilling program.<a
+          href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/0c0ac50d-4271-4185-9f2c-35b2548647a5/en"
+          >Click here for high-resolution version</a></description>
+      <itemClass qcode="ninat:picture"/>
+    </link>
+    <link rel="irel:associatedWith"
+      href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/29e359d7-e3dc-4514-b441-4f46e649ecc0/en"
+      contenttype="image/jpeg">
+      <a href="4_medium_QuotefromUSGSonAwaruiteDepositsinCanada.jpg">Quote from USGS on Awaruite
+        Deposits in Canada</a>
+      <description>Quote from USGS on Awaruite Deposits in Canada<a
+          href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/29e359d7-e3dc-4514-b441-4f46e649ecc0/en"
+          >Click here for high-resolution version</a></description>
+      <itemClass qcode="ninat:picture"/>
+    </link>
+  </itemMeta>
+  <contentMeta>
+    <contentCreated>2025-03-14T14:59:02+00:00</contentCreated>
+    <creator literal="globenewswire">
+      <organisationDetails>
+        <contactInfo>
+          <phone>1-888-883-1913, or 514-861-7801</phone>
+          <email>donotreply@globenewswire.com</email>
+          <note>Please contact our Help Desk team on the phone/email above for any technical issues
+            with this release</note>
+        </contactInfo>
+      </organisationDetails>
+    </creator>
+    <located literal="Marlborough, MA, USA"/>
+    <subject qcode="MWSubject:CAL" type="cpnat:abstract">
+      <name>Calendar of Events</name>
+    </subject>
+    <subject qcode="MWSubject:CA" type="cpnat:abstract">
+      <name>Class Action Lawsuits</name>
+    </subject>
+    <subject literal="Test Keith's Team" type="cpnat:organisation" relevance="100">
+      <name>Test Keith's Team</name>
+    </subject>
+    <subject qcode="MWIndustry:TLTR" type="cpnat:abstract">
+      <name>Transportation and Logistics\Trucking</name>
+      <broader qcode="MWIndustry:TL" type="cpnat:abstract">
+        <name>Trucking</name>
+      </broader>
+    </subject>
+    <headline>Re-transmission - First Atlantic Nickel Granted Permits for Phase 2 Drill Program
+      Following RPM Discovery at the Atlantic Nickel Project</headline>
+    <description role="MWdrole:abstract">FIRST ATLANTIC NICKEL GRANTED PERMITS FOR PHASE 2 DRILL
+      PROGRAM FOLLOWING RPM DISCOVERY AT THE ATLANTIC NICKEL PROJECT Vancouver, British Columbia –
+      (GlobeNewswire - Jan 15, 2025) - First Atlantic Nickel Corp. (TSXV: FAN) (OTCQB: FANCF) (FSE:
+      P21)...</description>
+    <language tag="en-US"/>
+    <keyword role="MWKeyRole:Ticker" relevance="100">TPEX:JYTEST</keyword>
+    <keyword role="MWKeyRole:Ticker" relevance="100">EURONEXT PARIS:FMONC</keyword>
+    <keyword role="MWKeyRole:Ticker" relevance="100">FRANKFURT:f234sdf</keyword>
+  </contentMeta>
+  <assert literal="Test Keith's Team">
+    <remoteInfo contenttype="image/jpg"
+      href="https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/0d378aa8-c8a8-4285-b067-4197953a2931">
+      <name>Test Keith's Team</name>
+    </remoteInfo>
+    <related rel="MWFinRel:Instrument" qcode="ISIN:FR0000076986"/>
+    <related rel="MWFinRel:Instrument" literal="JYTEST">
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:TPEX">
+        <name>Taipei Exchange</name>
+      </related>
+    </related>
+    <related rel="MWFinRel:Instrument" literal="FMONC">
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:EURONEXT PARIS">
+        <name>Euronext Paris</name>
+      </related>
+    </related>
+    <related rel="MWFinRel:Instrument" literal="f234sdf">
+      <related rel="MWFinRel:TradedOn" qcode="MWMarket:FRANKFURT">
+        <name>Frankfurt Stock Exchange</name>
+      </related>
+    </related>
+  </assert>
+  <contentSet>
+    <inlineXML contenttype="application/xhtml+xml">
+      <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+          <title>Re-transmission - First Atlantic Nickel Granted Permits for Phase 2 Drill Program
+            Following RPM Discovery at the Atlantic Nickel Project</title>
+        </head>
+        <body>
+          <h1> Re-transmission - First Atlantic Nickel Granted Permits for Phase 2 Drill Program
+            Following RPM Discovery at the Atlantic Nickel Project </h1>
+          <div class="mw_release">
+            <p align="center">
+              <strong>FIRST ATLANTIC NICKEL GRANTED PERMITS FOR PHASE 2 DRILL PROGRAM FOLLOWING RPM
+                DISCOVERY AT THE ATLANTIC NICKEL PROJECT</strong>
+            </p>
+            <p align="justify">Vancouver, British Columbia – (GlobeNewswire - Jan 15, 2025) - First
+              Atlantic Nickel Corp. (TSXV: FAN) (OTCQB: FANCF) (FSE: P21) ("First Atlantic" or the
+              "Company") is pleased to announce that it has been granted permits for its Phase 2
+              drilling program and the construction of a southern access trail at its 100% owned
+              Atlantic Nickel Project (the "Project" or “Atlantic Nickel Project”) in Newfoundland.
+              With these permits in place, the Company has initiated preparations for Phase 2
+              drilling and has commenced construction of the southern access trail. The Phase 2
+              program aims to expand the strike length and width of the recently discovered RPM
+              Zone, focusing on extending mineralization further east towards the historical Chrome
+              Pond occurrence and north towards the Pipestone and Super Gulp targets (see Figure 1).
+              The goal of the Phase 2 program is to define a larger area for resource drilling and
+              prove continuity of nickel mineralization, highlighting the Project's significant
+              potential to host substantial volumes of material suitable for commercial mining
+              within large-scale target areas on the Project.</p>
+            <p align="justify"><strong>Highlights</strong>:</p>
+            <ul type="disc">
+              <li style="margin-bottom:6pt; text-align:justify;"><strong>Phase 2 Drill and Access
+                  Trail Permits Granted: </strong>Newfoundland &amp; Labrador Mineral Lands Division
+                has granted permits for the Phase 2 drilling program and southern access trail,
+                enabling faster and more cost-effective access to the RPM Zone, Chrome Pond and
+                Pipestone areas.</li>
+              <li style="margin-bottom:6pt; text-align:justify;"><strong>Phase 2 Preparations
+                  Underway: </strong>Having secured the necessary permits, the Company has started
+                preparing for the Phase 2 drilling program, including developing a southern access
+                trail and relocating the camp to support upcoming exploration.</li>
+              <li style="margin-bottom:6pt; text-align:justify;"><strong>Phase 2 Drilling
+                  Objective:</strong> The program will focus on widely-spaced step-out drilling to
+                delineate a larger area of strike length and width for future resource
+                drilling.</li>
+              <li style="margin-bottom:6pt; text-align:justify;"><strong>Phase 1 Updates:</strong>
+                The Company anticipates providing updates on the remaining Phase 1 drilling
+                activities shortly, with initial Phase 1 drill assays expected in the coming
+                weeks.</li>
+              <li style="margin-bottom:6pt; text-align:justify;"><strong>Phase 2 Drill Rig:
+                </strong>The Phase 2 drilling program will utilize a higher-power drill rig capable
+                of using both HQ and NQ drill core, enhancing drilling speed and target depth.
+                Additionally, the program will leverage a new core shack facility to expedite core
+                processing.<br/><br/></li>
+            </ul>
+            <p>For further information, questions, or investor inquiries, please contact <strong>Rob
+                Guzman</strong> at <strong>First Atlantic Nickel </strong>by phone at +<strong>1 844
+                592 6337</strong> or via email at <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=oIH8GtwaH1w8Rw5O8ibaBcTEbJNum4j4-eq-OSZi6oFR7sGYyQhI6T0WgVKB173Owv_iM-GEdjfAXYWG9aeofN6CEeNf3eJU6pHFkHjWYqs="
+                rel="nofollow" target="_blank"><strong><u>rob@fanickel.com</u></strong></a></p>
+            <p align="justify">"With permits for our Phase 2 drilling program and southern access
+              trail at the Atlantic Nickel Project now secured, First Atlantic Nickel is poised to
+              advance drilling efforts and expand on the discovery at the RPM Zone," stated Adrian
+              Smith, CEO of First Atlantic Nickel. "Our team has moved quickly to prepare for the
+              Phase 2 program, ensuring a smooth transition from planning to execution. Construction
+              of the new access road is already underway, and we are in the process of relocating
+              our camp to support the expanded drilling activities. These proactive steps position
+              us to accelerate exploration and development at the RPM Zone and evaluate the
+              significant potential within the 30 km ophiolite trend. We are eager to begin Phase 2
+              drilling and continue advancing the Atlantic Nickel Project."</p>
+            <p align="justify">
+              <strong>Phase 2 Exploration Update:</strong>
+            </p>
+            <p align="justify">The Company is pleased to report that permits for the Phase 2
+              exploration program at the Atlantic Nickel Project have been granted by the
+              Newfoundland &amp; Labrador Mineral Lands Division.</p>
+            <p align="justify">Phase 2 drilling will target deeper mineralization, focusing on
+              extending the strike length and width of the RPM Zone. This phase will concentrate on
+              the RPM Zone and surrounding areas while exploring targets along the entire 30 km
+              ophiolite trend for awaruite. The goal of Phase 2 is to delineate and expand known
+              mineralization zones, potentially connecting the RPM and Chrome Pond areas, which are
+              believed to represent a significant target for future resource drilling. The RPM Zone
+              remains open in all directions, and the Company anticipates providing updates on
+              remaining Phase 1 step-out drilling to the north, with further updates expected
+              shortly.</p>
+            <p align="justify">Efforts are also underway to relocate the camp to support upcoming
+              drilling activities while using its newly established drill core processing and
+              storage facility in Grand Falls-Windsor, Newfoundland, for this program. These
+              logistical preparations are designed to ensure the smooth and efficient execution of
+              the Phase 2 drilling campaign. Exploration will continue to test targets within the 30
+              km nickel trend, with additional holes being drilled as the Company expands its
+              operations northward.</p>
+            <p align="center">
+              <img
+                data-mce-src="/api/ImageRender/DownloadFile?resourceId=d5dfed1b-ce47-4d6c-8c8b-545237703b1b&amp;size=3"
+                height="707.1px" name="GNW_RichHtml_IMG"
+                src="https://ml.uat.globenewswire.com/Resource/Download/d5dfed1b-ce47-4d6c-8c8b-545237703b1b/image1.jpg"
+                width="611.37px"/>
+            </p>
+            <p align="justify">
+              <em>Figure 1: Phase 2 Drill Planning Map, showing new road access to RPM Zone at the
+                southern end of the 30 km Pipestone Ophiolite Complex, Atlantic Nickel Project.</em>
+            </p>
+            <p align="center">
+              <img
+                data-mce-src="/api/ImageRender/DownloadFile?resourceId=96adca81-6897-4279-8bf9-715d5229fa6e&amp;size=3"
+                height="570.0px" name="GNW_RichHtml_IMG"
+                src="https://ml.uat.globenewswire.com/Resource/Download/96adca81-6897-4279-8bf9-715d5229fa6e/image2.jpg"
+                width="537.51px"/>
+            </p>
+            <p align="justify">
+              <em>Figure 2: RPM Zone Southern Access Trail (Started January 2025), providing
+                efficient and direct access for Phase 2 drilling program.</em>
+            </p>
+            <p align="justify"><strong>RPM Zone Geology:</strong> The RPM Zone is located within the
+              expansive 30 km highly magnetic ultramafic ophiolite belt, approximately 10 km south
+              of the Super Gulp target and 25 km south of the historic drilling at Atlantic Lake,
+              where significant mineralization was previously encountered in the drill core. This
+              zone is characterized by wide intervals of heavily sheared and serpentinized
+              peridotite ultramafic rock. The serpentinized peridotite within the drilled areas is
+              heavily broken due to extensive shearing and faulting, which results from its vertical
+              position within a subduction zone and its vertical emplacement, rather than being
+              displaced and preserved as a massif. The vertical orientation of the crustal-scale
+              ophiolite is highly favorable, as it absorbs additional structural breakage and
+              increases fluid porosity for serpentinization. This vertical orientation also provides
+              significant depth potential for mineralized zones, where the nickel mineralization
+              could extend to depths of 1 km or more, allowing ample room for depth extensions.</p>
+            <p align="justify">The Company will be available for meetings upon request from January
+              20th to 23rd during the Vancouver VRIC and AME Roundup conferences. To schedule a
+              meeting, please contact Rob Guzman at First Atlantic Nickel by phone at +1 844 592
+              6337 or via email at rob@fanickel.com</p>
+            <p align="justify">
+              <strong>Awaruite (Nickel-iron alloy Ni₂Fe, Ni₃Fe)</strong>
+            </p>
+            <p align="justify">Awaruite, a naturally occurring sulfur-free nickel-iron alloy
+              composed of Ni₃Fe or Ni₂Fe with approximately ~75% nickel content, offers a proven and
+              environmentally safer solution to enhance the resilience and security of North
+              America's domestic critical minerals supply chain. Unlike conventional nickel sources,
+              awaruite can be processed into high-grade concentrates exceeding 60% nickel content
+              through magnetic processing and simple floatation without the need for smelting,
+              roasting, or high-pressure acid leaching<sup>1</sup>. Beginning in 2025, the US
+              Inflation Reduction Act's (IRA) $7,500 electric vehicle (EV) tax credit mandates that
+              eligible clean vehicles must not contain any critical minerals processed by foreign
+              entities of concern (FEOC)<sup>2</sup>. These entities include Russia and China, which
+              currently dominate the global nickel smelting industry. Awaruite's smelter-free
+              processing approach could potentially help North American manufacturers meet the IRA's
+              stringent critical mineral requirements and reduce dependence on FEOCs for nickel
+              processing.</p>
+            <p align="justify">The U.S. Geological Survey (USGS) highlighted awaruite's potential,
+              stating, "The development of awaruite deposits in other parts of Canada may help
+              alleviate any prolonged shortage of nickel concentrate. Awaruite, a natural
+              iron-nickel alloy, is much easier to concentrate than pentlandite, the principal
+              sulfide of nickel"<sup>3</sup>. Awaruite's unique properties enable cleaner and safer
+              processing compared to conventional sulfide and laterite nickel sources, which often
+              involve smelting, roasting, or high-pressure acid leaching that can release toxic
+              sulfur dioxide, generate hazardous waste, and lead to acid mine drainage. Awaruite's
+              simpler processing, facilitated by its amenability to magnetic processing and lack of
+              sulfur, eliminates these harmful methods, reducing greenhouse gas emissions and risks
+              associated with toxic chemical release, addressing concerns about the large carbon
+              footprint and toxic emissions linked to nickel refining.</p>
+            <p align="center">
+              <img
+                data-mce-src="/api/ImageRender/DownloadFile?resourceId=ac936e16-befd-46a3-9c3a-276c5ce4e312&amp;size=3"
+                height="410.0px" name="GNW_RichHtml_IMG"
+                src="https://ml.uat.globenewswire.com/Resource/Download/ac936e16-befd-46a3-9c3a-276c5ce4e312/image3.jpg"
+                width="615.0px"/>
+            </p>
+            <p align="justify">
+              <em>Figure 3: Quote from USGS on Awaruite Deposits in Canada</em>
+            </p>
+            <p align="justify">The development of awaruite resources is crucial, given China's
+              control in the global nickel market. Chinese companies refine and smelt 68% to 80% of
+              the world's nickel<sup>4</sup> and control an estimated 84% of Indonesia's nickel
+              output, the largest worldwide supply<sup>5</sup>. Awaruite is a cleaner source of
+              nickel that reduces dependence on foreign processing controlled by China, leading to a
+              more secure and reliable supply for North America's stainless steel and electric
+              vehicle industries.</p>
+            <p align="justify"><strong>Investor Information</strong>                </p>
+            <p align="justify">The Company's common shares trade on the TSX Venture Exchange under
+              the symbol "<strong>FAN</strong>", the American OTCQB Exchange under the symbol
+                “<strong>FANCF</strong>” and on several German exchanges, including Frankfurt and
+              Tradegate, under the symbol "<strong>P21</strong>".</p>
+            <p align="justify">Investors can get updates about First Atlantic by signing up to
+              receive news via email and SMS text at <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=GEeOySWGyNb9ECis83B4-rSZmVCV5AoeOI_-zBllHDM21-e01zrQEXHroEolX2GkmxsNsn63A1lStsXVvWZfbSKC5gaaYs-pysTUoyB2Hzk="
+                rel="nofollow" target="_blank"><u>www.fanickel.com</u></a>. Stay connected and learn
+              more by following us on these social media platforms:</p>
+            <p align="justify">
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKjEqL8pQJLJwWJOtx0-5A6PwK25zZI7pTtHmc3vUWpkfPOxmsZH4WpXAI00f16AMTrHbf3V50ebZLDrqLNBB2R-LDe1Vjr7FfjMyVaZN51J-"
+                rel="nofollow" target="_blank">
+                <u>https://x.com/FirstAtlanticNi</u>
+              </a>
+              <br/>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKksm6VpJ3G9xa7qv5drJJFiFlSW2JOvx3bb-mwEgJHlr2MS3PiP8AA9TYrJjRvZ5Fz_cKkHPlfIPqlmPhP7oU9t9RYNUPrh2Bt6Wxqz1JJVHBfpk0ltrutTA9vX_ynokgKextrN93QCmnltVs2YjVBo="
+                rel="nofollow" target="_blank">
+                <u>https://www.facebook.com/firstatlanticnickel</u>
+              </a>
+              <br/>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKvIy9h94SmoRhM1b4gbWJyVS0K1Ub_-jjrlutFOjQJcusio5olGeV2CEyY0GA0SsUyezndmKHjjxPS8XX_0gb98claVwOzRve7MU7rI1BHoBPZaF4A1s_t2jl_n6QW6kLNnXaEB4DV7SazPSgZFbr8e-Y1xHDRpTT2sP2KUWgmZH"
+                rel="nofollow" target="_blank">
+                <u>https://www.linkedin.com/company/firstatlanticnickel/</u>
+              </a>
+            </p>
+            <p align="justify"><strong>FOR MORE INFORMATION:</strong><br/>First Atlantic Investor
+              Relations<br/>Robert Guzman<br/>Tel: +1 844 592 6337<br/><a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=oIH8GtwaH1w8Rw5O8ibaBeBLZTSHN7fEdij7NHs3EqCJ1d_LYRrqDgjgllm9bnCX0tMLc9UWGXvDEQL3s3G74OW-P8thQ3REDqAetdKErpc="
+                rel="nofollow" target="_blank"><u>rob@fanickel.com</u></a></p>
+            <p align="justify">
+              <strong>Disclosure </strong>
+            </p>
+            <p align="justify">Adrian Smith, P.Geo., is a qualified person as defined by NI 43-101.
+              The qualified person is a member in good standing of the Professional Engineers and
+              Geoscientists Newfoundland and Labrador (PEGNL) and is a registered professional
+              geoscientist (P.Geo.). Mr. Smith has reviewed and approved the technical information
+              disclosed herein.</p>
+            <p align="justify">
+              <strong>About First Atlantic Nickel Corp.</strong>
+            </p>
+            <p align="justify">First Atlantic Nickel Corp. (TSXV: FAN) (OTCQB: FANCF) (FSE: P21) is
+              a Canadian mineral exploration company developing the 100%-owned Atlantic Nickel
+              Project, a large-scale nickel project strategically located near existing
+              infrastructure in Newfoundland, Canada. The Project's nickel occurs as awaruite, a
+              natural nickel-iron alloy containing approximately 75% nickel with no-sulfur and
+              no-sulfides. Awaruite's properties allow for smelter-free magnetic separation and
+              concentration, which could strengthen North America's critical minerals supply chain
+              by reducing foreign dependence on nickel smelting. This aligns with new US Electric
+              Vehicle US IRA requirements, which stipulate that beginning in 2025, an eligible clean
+              vehicle may not contain any critical minerals processed by a FEOC (Foreign Entities Of
+                Concern)<sup>6</sup>.</p>
+            <p align="justify">First Atlantic aims to be a key input of a secure and reliable North
+              American critical minerals supply chain for the stainless steel and electric vehicle
+              industries in the USA and Canada. The company is positioned to meet the growing demand
+              for responsibly sourced nickel that complies with the critical mineral requirements
+              for eligible clean vehicles under the US IRA. With its commitment to responsible
+              practices and experienced team, First Atlantic is poised to contribute significantly
+              to the nickel industry's future, supporting the transition to a cleaner energy
+              landscape. This mission gained importance when the US added nickel to its critical
+              minerals list in 2022, recognizing it as a non-fuel mineral essential to economic and
+              national security with a supply chain vulnerable to disruption.</p>
+            <p align="justify">
+              <em>Neither the TSX Venture Exchange nor its Regulation Services Provider (as that
+                term is defined in policies of the TSX Venture Exchange) accepts responsibility for
+                the adequacy or accuracy of this release.</em>
+            </p>
+            <p align="justify">
+              <strong>
+                <em>Forward-looking statements:</em>
+              </strong>
+            </p>
+            <p align="justify">
+              <em>This news release may include "forward-looking information" under applicable
+                Canadian securities legislation. Such forward-looking information reflects
+                management's current beliefs and are based on a number of estimates and/or
+                assumptions made by and information currently available to the Company that, while
+                considered reasonable, are subject to known and unknown risks, uncertainties, and
+                other factors that may cause the actual results and future events to differ
+                materially from those expressed or implied by such forward-looking information.</em>
+              <em>Forward looking information in this news release includes, but is not limited to,
+                expectations regarding the timing, scope, and results from the 2024 work and
+                drilling program; results from the Phase 2 drilling program, future project
+                developments, the Company’s objectives, goals or future plans, statements, and
+                estimates of market conditions, the Company’s plans to acquire a 100% interest in
+                the Claims pursuant to the Purchase Agreement, the anticipated issuance of the
+                Consideration Shares and receipt of TSX Venture Exchange approval. Readers are
+                cautioned that such forward-looking information are neither promises nor guarantees
+                and are subject to known and unknown risks and uncertainties including, but not
+                limited to, general business, economic, competitive, political and social
+                uncertainties, uncertain and volatile equity and capital markets, lack of available
+                capital, actual results of exploration activities, environmental risks, future
+                prices of base and other metals, operating risks, accidents, labour issues, delays
+                in obtaining governmental approvals and permits, and other risks in the mining
+                industry. Additional factors and risks including various risk factors discussed in
+                the Company’s disclosure documents which can be found under the Company’s profile on
+                http://www.sedarplus.ca. Should one or more of these risks or uncertainties
+                materialize, or should assumptions underlying the forward-looking statements prove
+                incorrect, actual results may vary materially from those described herein as
+                intended, planned, anticipated, believed, estimated or expected.</em>
+            </p>
+            <p align="justify">
+              <em>The Company is presently an exploration stage company. Exploration is highly
+                speculative in nature, involves many risks, requires substantial expenditures, and
+                may not result in the discovery of mineral deposits that can be mined profitably.
+                Furthermore, the Company currently has no reserves on any of its properties. As a
+                result, there can be no assurance that such forward-looking statements will prove to
+                be accurate, and actual results and future events could differ materially from those
+                anticipated in such statements. </em>
+            </p>
+            <hr/>
+            <p>
+              <sup>1</sup>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=2PdJn3ytDYQXqOWF2xHGnuL6lzXhV6nic_k9GNULePw36WEbW0qUAGYdJF8wyv7J4FfaESQ5bDw6L-K5Uq3KU97rwgC1HigSen1LkkggzPO-lcKqXqG93nYxAT6_TLjBufsDYrS3oB5Ql5Cp3rrzmuHgC9v17ZxZlzSnQ5E0yNLvCsWhGQpdMA7K1tNZSbmS"
+                rel="nofollow" target="_blank">
+                <em>
+                  <u>https://fpxnickel.com/projects-overview/what-is-awaruite/</u>
+                </em>
+              </a>
+              <br/>
+              <sup>2</sup>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKlTsBoRApJn1ld2JmBG91EJqaUqAfLaFMDBr6rA8X-i4Ngs1P-cLkCeDGKVTne928-cLL-sO9OEAMAoBS6BNogeNUcb6lzZv5jQ0xcaD-U8KxP3YsjBzDaOiGUib-AiaKspN-LGJxOMhcFYvCQjXaziun-XOI3h42-xB5qZ-6VUyXgV8RE_kuZRD0i7GB18XsWQJjPHX853L827buWJOCYBm9nJbV7r353-DpQUxNc0tyHyKvuG_MBp-33OIc1kM1Uon0VvGkP_dJ_zUVhw2NvRQ7rTqG5tZvyCsreE9lnzU407XgCuBu_IO1i1T2FWqKlN3deAtubGwnbm7uzU0Kk82O51L6Uc5vlQg806-5gUEZdabl59XTUiUbsyFmyB9olEuO3GR6RVHTsw4L-QDJyE="
+                rel="nofollow" target="_blank">
+                <em>
+                  <u>https://home.treasury.gov/news/press-releases/jy1939</u>
+                </em>
+              </a>
+              <br/>
+              <sup>3</sup>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKsphtEL7U2cSDyjgZvqJnAM1h4RnSQZncL0uwsqdblElZBWiT61uVXoQRJJ64ZFEWmmm8KL6JQnEHkTi7OLDpO3he3BplpYSjzdYdjPEWoH6yB-HyRzfWkEVc5XV-s8d5BuPDNvtJRajSdJ8KW9aQOLgUWo8nfXMc9ssWGlRwOo4oTNvUmZudWQ4GE16KdyW2WyDN_nOtJnpFyKTYp0wg65DnvYEeVvLyhx9Wk-FqjQLb-5njNAwGP7PslZ-Q3DYUbp8dSa_lBJkc-Uuo30hgSGWLdq0ocQ5_se5fh6LiY1X0K8yuol3gejoedUyOeMSdPV-te0ezw_Blhec4mX13jYUgAPzsb5z7FRFsAM7htgbB7Gsj42V8hil9nO-xLQC3ltSJFzyDnHiu11rzdQkBFV3MrjK_eluURup7KSheXaAV_tIyLdmu3izOuO8X7pLc5KvcYCZsm_RqPox9oQOqsmD4N46YMVHcsadnYnsusAyopNJGQHvS2sTH5w-u8jXY0_19pRy4Vp9F0zpip3YgdbWijS6TrcU2_9EO8GvBWb_Rw2GYKlwRR6NVIW7inFsXLpyzlBlF0g4NGrArUAElER9Laudfq5Fd3qFcffFCYR0AtgBn5OHb7PMqD-gs6Y9G85H5e2GPiZTR9sIDTIZEDKzW2UM8GCzIvUSIsVEZFZ_"
+                rel="nofollow" target="_blank">
+                <em>
+                  <u>https://d9-wret.s3.us-west-2.amazonaws.com/assets/palladium/production/mineral-pubs/nickel/mcs-2012-nicke.pdf</u>
+                </em>
+              </a>
+              <br/>
+              <sup>4</sup>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKss9Ek2_b5rZzFofNi7GaTfZK6nkqJGYTCanZpIFr6mYNOFzrq5iCV9RzE-kzCw1dnUBH65GrEIJ0_Giu8y0PkAEfyPB_EtTJhlJesWunBgsutHbnqJCJxKbyw5gHVxAZNraIEo6gNK-jLVFcELddgy5_x2OTtTZCoQCuE2GJr5I8a0xzzjADqQ_g08u2lDFzzKE8Gvvf0Z56XKpAPWZgPo4SL8XjD6vWpictLDjDZ39gi8Y9cikAtO6FBlNiqwzeFPKLoXYfDewIiBpeqwHafvHoT4IEptOreN4Fpf8zSnvNhfr9fryXDYsNK5Bnu-92ZwnclnvtmoHUB0x11qr-P0gS9HGW7OTuDfb6_OvqXD4Q1-0cac5J_ZJ7kXme0Q7FaVUkBBqIBNU_FlX1qc5REZcHRT2ks-8Lp9zfaWjTN-igE45dghcbgoCON7DFZsdA_DwXQcNg4Oyc5WegEkgGSl5xIIvBiTQwmr_PsOi5nC5x5ddl2pKA5x29J_lWvEnrZzcyDUKcEzDA8k-xJ4wWcY="
+                rel="nofollow" target="_blank">
+                <em>
+                  <u>https://www.brookings.edu/wp-content/uploads/2022/08/LTRC_ChinaSupplyChain.pdf</u>
+                </em>
+              </a>
+              <br/>
+              <sup>5</sup>
+              <a
+                href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKkrmYpxQKIZOkfF-JAkHskC-gqHnVl39WgmNM6ytaWx2uW9mIDeq1jDDqqm-aSmVFYCM1Gh67JX30djj7spcJlABORsLuzXfmrv1KpQ_T66te82eKJA5IaP8QsSKdmxb92AO35V9yTT3zL3icXbf_jvoyrBJ9XHVFG2P9F9kbuzMNXDBxSnkk58sqStQ8jVXFFMKMmRPsQSquPeqYwka2oDIVSzVsE1AdCaMgLBu4OI4GP4x1uVfbKkt8My_ut6dEoRfFCQTr4qb7J4Z1S6IjH4Dvjc1qBIuHjSEpAVY_1qucuzwEOg2ujfub2TXiXHwvM46hyd86T0i6o5cjlOqjyvl9k3Ajmwb13wolD2Sw56ZQcHvVfS29VZM3GDfRRnekof6dKbSPmuRS2-z4rty2yRZxYdZ7DOe2UWpbdsbi3SS7xZDpzWXC7VjNub10FL3muQNYOc6r2LEytZWtbongf71rofe-gNk-j1auMjZEKnlXL7Ghjajxiqks8PHwLblMLzSymAi0cgVAILDa1b9J3vA9yOxfRj94fN-cneZ2pe5FSJQ2clTcKr31QZm1E0d9M_jjjJV-pRkwbO0KWfYtnVR2t9e8l3DYtEFk69VkPjq"
+                rel="nofollow" target="_blank">
+                <em>
+                  <u>https://www.airuniversity.af.edu/JIPA/Display/Article/3703867/the-rise-of-great-mineral-powers/</u>
+                </em>
+              </a>
+              <br/>
+              <sup>6</sup>
+              <em>
+                <u>
+                  <a
+                    href="https://pnr.uat.globenewswire.com/Tracker?data=L6TzG4vzIagTVEDmzYYfKlTsBoRApJn1ld2JmBG91EJqaUqAfLaFMDBr6rA8X-i4Ngs1P-cLkCeDGKVTne928_CIZ3xRGXZugBO9ZoZpvRsWdqfm5AkTHzEGCv5MYbptPRMHp3eTOE8-07rW1nFvOXmT92f3Ydzueanp5VDATW8_xIIuZVLdJ35xeWEIM9Ee"
+                    rel="nofollow" target="_blank"
+                    >https://home.treasury.gov/news/press-releases/jy1939</a>
+                </u>
+              </em>
+            </p>
+            <p>
+              <em>
+                <u>
+                  <br/>
+                </u>
+              </em>
+            </p>
+            <p>
+              <a class="gnw_hidden_cns"
+                href="https://pnr.uat.globenewswire.com/Tracker?data=bl-p7aqPTgCZhsFYq2Q0-ruBAFFIzq8S0fa2upU73kWe-9Arc3ZRP4rgzhRPr7dXeealp4Bhu4JsSQmVKc0C8Ui3DRphUCjhU4pyx4dXr1ldopJudRcOhwvHth8uhIiuXP6LsYO_VwCAvBNV8coOkWgItTYZ1umlmM2fuAXuiUtcKoFWNF0X9ZIPYv6Qib1jbTwDLwwnaVgC4zH7Z9YDiuzdJzIjZ7FghL1QEjZPM5A="
+                rel="nofollow" target="_blank">Phase 2 Permits RPM Chrome Pond MAP (9)[1]</a>
+            </p>
+            <p> </p>
+            <p>
+              <a class="gnw_hidden_cns"
+                href="https://pnr.uat.globenewswire.com/Tracker?data=qRKl0zK4f_XgL3LNb_gE9a_55hbuxolsfvj2_x_Gnlu1grXaNDZNq-U07MenZJPodn0ES7RadHlXt2-fizy31zW_CiZo3MKjy9USKxbenodO2ExgWAGrLqsp4T0400YN00mQaZjAXi663voS43FXDQcBHQGbBMLfu8EAVcOPn33WIqXx_Aybhn4pfXBz6hnlRGtWHcFLtG8GsjrALvSWoyly7INXdI-08cu5FJkNP8PR4RE_ZOa92snVo8V7KI3o9SxNaIr9E8yNcA7PtSeVJ2iLSIVTFq3ldBRTcm0QNSOvlPHr6McVw_U0tZw9rWDdrZIA1pwfJsHgBit28QkKOw=="
+                rel="nofollow" target="_blank">RPM Zone Southern Access Trail (Started January
+                2025), providing efficient and direct access for Phase 2 drilling program.</a>
+            </p>
+            <p> </p>
+            <p>
+              <a class="gnw_hidden_cns"
+                href="https://pnr.uat.globenewswire.com/Tracker?data=3lPMkh0FrUpClrGvQflDdr2KGTsPDg3Z8U7HwFGNIE-rgGAer1xA7V8yIHiZabxMgZT78YdJrzCTSCyHFlczgJVif1f-oyJ2IKVEUSccE8WJChYYXACJsoNq75GD62ULUuhPMVj5p4qFKTO_YIE-xwx5kY-bL4tGfNQBJVyq8rpL1ZD7F6uDOhzYEA1Y7Y1EoaZ9fUeUwwJqI0kJ80DQ6uMAOMnHGiDIYu6EyfUY79Y="
+                rel="nofollow" target="_blank">Quote from USGS on Awaruite Deposits in Canada</a>
+            </p>
+            <p> </p>
+            <p>
+              <br/>
+            </p>
+            <p id="gnw_attachments_section-header">
+              <strong>Attachments</strong>
+            </p>
+            <ul id="gnw_attachments_section-items">
+              <li>
+                <a target="_blank"
+                  href="https://ml.uat.globenewswire.com/Resource/Download/5971ef88-1684-4ad4-966f-b7602fd4e9d0"
+                  >Phase 2 Permits RPM Chrome Pond MAP (9)[1]</a>
+              </li>
+              <li>
+                <a target="_blank"
+                  href="https://ml.uat.globenewswire.com/Resource/Download/0c0ac50d-4271-4185-9f2c-35b2548647a5"
+                  >RPM Zone Southern Access Trail (Started January 2025), providing efficient and
+                  direct access for Phase 2 drilling program.</a>
+              </li>
+              <li>
+                <a target="_blank"
+                  href="https://ml.uat.globenewswire.com/Resource/Download/29e359d7-e3dc-4514-b441-4f46e649ecc0"
+                  >Quote from USGS on Awaruite Deposits in Canada</a>
+              </li>
+            </ul>
+            <img alt="" class="__GNW8366DE3E__IMG"
+              src="https://pnr.uat.globenewswire.com/newsroom/ti?nf=MTAzNjExMTkjOTY3MzkwNCMyMDExMTMz"/>
+            <br/>
+            <img alt=""
+              src="https://ml.uat.globenewswire.com/media/MDUwZjFjMGQtNzZkZC00ZDc4LTk0OGYtMzI4ZGE1MDI0OWM0LTEwMjI3MDYtMjAyNS0wMy0xNC1lbg==/tiny/XYZ-Test-Keith-s-Team.png"
+              referrerpolicy="no-referrer-when-downgrade"/>
+          </div>
+          <div class="mw_contactinfo"> </div>
+        </body>
+
+      </html>
+    </inlineXML>
+
+  </contentSet>
+</newsItem>
