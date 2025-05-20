@@ -49,7 +49,7 @@ class GlobeNewswireParserTestCase(ParserTestCase):
 
         self.assertGreaterEqual(item["word_count"], 1)
         self.assertRegex(item["body_html"], r"^<p>CALGARY")
-        self.assertNotIn("https://www.globenewswire.com/newsroom/ti", item["body_html"])
+        self.assertIn("https://www.globenewswire.com/newsroom/ti", item["body_html"])
         self.assertIn(
             "<p>NEWS RELEASE TRANSMITTED BY Globe Newswire</p>", item["body_html"]
         )
@@ -86,3 +86,9 @@ class GlobeNewswireParserTestCase(ParserTestCase):
     def test_parse_tables(self):
         item = self.parse("tables.newsml")
         self.assertNotIn("</strong><br><br></td>", item["body_html"])
+
+    def test_parser_includes_globenewswire_image(self):
+        item = self.parse("0b78.xml")
+        self.assertIsNotNone(item)
+        img_src = "https://www.globenewswire.com/newsroom/ti?nf=Nzc2NTgzMiMzMjQxODY5IzIxODkxNTU="
+        self.assertIn(img_src, item["body_html"])
