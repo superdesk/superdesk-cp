@@ -121,8 +121,6 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
         divs = html.xpath('./xhtml:body/xhtml:*[@class="mw_release"]', namespaces=NS)
         for div in divs:
             for child in div:
-                if "img" in child.tag:
-                    continue
                 child_html = lxml_html.fromstring(
                     lxml_html.tostring(child, encoding="unicode")
                 )
