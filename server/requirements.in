@@ -4,7 +4,7 @@ celery-redbeat
 python3-saml>=1.9,<1.17
 python-xmp-toolkit>=2.0.1,<2.1
 num2words==0.5.14
-google-auth==2.40.1
+google-auth==2.40.2
 google-cloud-translate==3.20.2
 deepl==1.22.0
 dotenv==0.9.9
