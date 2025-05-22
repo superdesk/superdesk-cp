@@ -84,3 +84,25 @@ def test_set_byline_with_missing_default_user(mock_get_resource_service):
         set_byline_on_publish(None, item, updates)
     except ValueError as e:
         assert str(e) == "Default user 'cpdefaultauthor' not found in the database."
+
+
+@patch("superdesk.get_resource_service")
+def test_set_byline_skips_default_for_non_cp_sources(mock_get_resource_service):
+    mock_user_service = MagicMock()
+    mock_user_service.find_one.return_value = {
+        "_id": "64d13ff3446949ccb5348bdc",
+        "username": "cpdefaultauthor",
+        "first_name": "Default",
+        "last_name": "Author",
+        "email": "default.author@example.com",
+    }
+    mock_get_resource_service.return_value = mock_user_service
+
+    item = {"language": "en-CA", "source": "Reuters"}
+    updates = {}
+
+    set_byline_on_publish(None, item, updates)
+
+    assert "authors" not in item
+    assert "byline" not in item
+    assert "byline" not in updates
