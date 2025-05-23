@@ -27,7 +27,6 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
     if not updated.get("authors"):
         source = updated.get("source", "").strip().lower()
         if source and source not in CP_SOURCES:
-            logger.warning(f"Skipping default author for non-CP source: {source}")
             return
         language = updated.get("language", "en-CA")
         default_author_username = (
