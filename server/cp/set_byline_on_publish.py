@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 CP_SOURCES = {
     ORGANIZATION_NAME.lower(),
     ORGANIZATION_NAME_ABBREVIATION.lower(),
+    "la presse canadienne",
 }
 
 
