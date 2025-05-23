@@ -1,9 +1,20 @@
 from superdesk.signals import item_publish
-from settings import DEFAULT_AUTHOR_EN, DEFAULT_AUTHOR_FR
+from settings import (
+    DEFAULT_AUTHOR_EN,
+    DEFAULT_AUTHOR_FR,
+    ORGANIZATION_NAME,
+    ORGANIZATION_NAME_ABBREVIATION,
+)
 import superdesk
 import logging
 
 logger = logging.getLogger(__name__)
+
+CP_SOURCES = {
+    ORGANIZATION_NAME.lower(),
+    ORGANIZATION_NAME_ABBREVIATION.lower(),
+    "la presse canadienne",
+}
 
 
 def set_byline_on_publish(sender, item, updates, **kwargs):
@@ -14,6 +25,9 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
         return
 
     if not updated.get("authors"):
+        source = updated.get("source", "").strip().lower()
+        if source and source not in CP_SOURCES:
+            return
         language = updated.get("language", "en-CA")
         default_author_username = (
             DEFAULT_AUTHOR_EN if language.startswith("en") else DEFAULT_AUTHOR_FR
