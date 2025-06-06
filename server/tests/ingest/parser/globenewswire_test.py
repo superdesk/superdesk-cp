@@ -112,3 +112,18 @@ class GlobeNewswireParserTestCase(ParserTestCase):
             "tiny/XYZ-Test-Keith-s-Team.png"
         )
         self.assertIn(tracking_img_src, body_html)
+
+        self.assertIn(
+            "https://pnr.uat.globenewswire.com/NewsRoom/AttachmentNg/0d378aa8-c8a8-4285-b067-4197953a2931",
+            body_html,
+        )
+
+    def test_parser_includes_globenewswire_image_attach(self):
+        item = self.parse("0b78.xml")
+        self.assertIsNotNone(item)
+        body_html = item["body_html"]
+
+        self.assertIn(
+            "https://www.globenewswire.com/NewsRoom/AttachmentNg/c52f529a-bec2-467e-8ce4-cb75ddc3652c",
+            body_html,
+        )
