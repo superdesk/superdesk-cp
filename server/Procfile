@@ -1,7 +1,9 @@
 rest: gunicorn -c gunicorn_config.py wsgi
 wamp: python3 -u ws.py
-work: celery -A worker worker -X "${SUPERDESK_CELERY_PREFIX}expiry"
+work: celery -A worker worker -X "${SUPERDESK_CELERY_PREFIX}expiry,${SUPERDESK_CELERY_PREFIX}publish,${SUPERDESK_CELERY_PREFIX}publish_priority,${SUPERDESK_CELERY_PREFIX}ingest" --concurrency ${CELERY_WORKER_CONCURRENCY:-2}
 beat: celery -A worker beat -S redbeat.RedBeatScheduler --max-interval 10
-capi: gunicorn -c gunicorn_config.py content_api.wsgi
-papi: gunicorn -c gunicorn_config.py prod_api_app
-work_expiry: celery -A worker worker -Q "${SUPERDESK_CELERY_PREFIX}expiry"
+capi: gunicorn --bind 0.0.0.0:$PORT -w 2 content_api.wsgi
+papi: gunicorn --bind 0.0.0.0:$PORT -w 2 prod_api_app
+work_expiry: celery -A worker worker -Q "${SUPERDESK_CELERY_PREFIX}expiry" --concurrency ${CELERY_EXPIRY_CONCURRENCY:-2}
+work_ingest: celery -A worker worker -Q "${SUPERDESK_CELERY_PREFIX}ingest" --concurrency ${CELERY_INGEST_CONCURRENCY:-4}
+work_publish: celery -A worker worker -Q "${SUPERDESK_CELERY_PREFIX}publish,${SUPERDESK_CELERY_PREFIX}publish_priority" --concurrency ${CELERY_PUBLISH_CONCURRENCY:-4}
