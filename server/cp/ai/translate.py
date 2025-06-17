@@ -10,10 +10,13 @@ from typing import (
     Union,
     overload,
     Tuple,
+    Callable,
+    Awaitable,
+    Any,
 )
 from google.oauth2 import service_account
 from google.auth.transport.requests import Request
-import requests
+import aiohttp
 from superdesk.text_checkers.ai.base import AIServiceBase
 import os
 from dotenv import load_dotenv
@@ -23,7 +26,7 @@ import re
 load_dotenv()
 
 logger = logging.getLogger(__name__)
-ResponseType = Mapping[str, Union[str, List[str]]]
+ResponseType = dict
 
 
 class TranslateData(TypedDict):
@@ -84,26 +87,31 @@ class Translate(AIServiceBase):
         self.parent = f"projects/{self.GOOGLE_PROJECT_ID}/locations/{self.GOOGLE_PROJECT_LOCATION}"
         self.model_path = f"{self.parent}/models/general"
 
-    def translate(self, item: TranslateData, *args) -> ResponseType:
+    async def translate(self, item: TranslateData, *args) -> ResponseType:
         try:
             self.validate_request_data(item)
             translation_type = item.get("translation_type", "basic")
             translator = self.get_translator(translation_type)
-            return translator(item)
+
+            async with aiohttp.ClientSession() as session:
+                return await translator(session, item)
         except Exception as e:
             return self.handle_error(e, "Translation")
 
-    def analyze(self, item: TranslateData, *args) -> ResponseType:
+    async def analyze(self, item: TranslateData, *args) -> ResponseType:
         try:
             self.validate_request_data(item)
             translation_type = item.get("translation_type", "basic")
             translator = self.get_translator(translation_type)
-            result = translator(item)
-            return result
+
+            async with aiohttp.ClientSession() as session:
+                return await translator(session, item)
         except Exception as e:
             return self.handle_error(e, "Translation")
 
-    def get_translator(self, translation_type):
+    def get_translator(
+        self, translation_type
+    ) -> Callable[[aiohttp.ClientSession, TranslateData], Awaitable[ResponseType]]:
         if translation_type == self.TRANSLATION_TYPE_BASIC:
             return self.translate_basic
         elif translation_type in {
@@ -118,7 +126,9 @@ class Translate(AIServiceBase):
         else:
             return self.translate_basic
 
-    def translate_basic(self, item: TranslateData):
+    async def translate_basic(
+        self, session: aiohttp.ClientSession, item: TranslateData
+    ) -> ResponseType:
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
 
@@ -152,15 +162,13 @@ class Translate(AIServiceBase):
                 ),
             }
 
-            response = requests.post(url, headers=headers, json=payload)
-
-            if not response.ok:
-                logger.error(
-                    f"Translation API error: Status {response.status_code}, Response: {response.text}"
-                )
-            response.raise_for_status()
-
-            response_data = response.json()
+            async with session.post(url, headers=headers, json=payload) as response:
+                if not response.ok:
+                    logger.error(
+                        f"Translation API error: Status {response.status}, Response: {await response.text()}"
+                    )
+                response.raise_for_status()
+                response_data = await response.json()
 
             return self._prepare_translated_payload(
                 item,
@@ -171,7 +179,9 @@ class Translate(AIServiceBase):
             logger.error(f"Translation error details: {str(e)}", exc_info=True)
             return self.handle_error(e, "Basic translation")
 
-    def translate_advanced(self, item: TranslateData):
+    async def translate_advanced(
+        self, session: aiohttp.ClientSession, item: TranslateData
+    ) -> ResponseType:
         try:
             texts, self.paths = self._extract_texts_to_translate(item)
             if self.credentials.expired or self.credentials.token is None:
@@ -190,19 +200,24 @@ class Translate(AIServiceBase):
 
             url = f"https://translate.googleapis.com/v3/{self.parent}:translateText"
 
-            response = requests.post(url, headers=headers, json=payload)
-            response.raise_for_status()
-            translations = response.json().get("translations", [])
+            async with session.post(url, headers=headers, json=payload) as response:
+                response.raise_for_status()
+                translations = (await response.json()).get("translations", [])
+
             return self._prepare_translated_payload(
                 item, translations, translation_key="translatedText"
             )
         except Exception as e:
             return self.handle_error(e, "Advanced translation")
 
-    def translate_adaptive(self, item: TranslateData) -> ResponseType:
+    async def translate_adaptive(
+        self, session: aiohttp.ClientSession, item: TranslateData
+    ) -> ResponseType:
         return {"error": "Not implemented"}
 
-    def translate_deepl(self, item: TranslateData):
+    async def translate_deepl(
+        self, session: aiohttp.ClientSession, item: TranslateData
+    ) -> ResponseType:
         texts, self.paths = self._extract_texts_to_translate(item)
 
         if not texts:
@@ -225,22 +240,25 @@ class Translate(AIServiceBase):
                 "model_type": "prefer_quality_optimized",
             }
 
-            response = requests.post(self.DEEPL_API_URL, headers=headers, json=payload)
-            response.raise_for_status()
-            response_data = response.json()
+            async with session.post(
+                self.DEEPL_API_URL, headers=headers, json=payload
+            ) as response:
+                response.raise_for_status()
+                response_data = await response.json()
+
             return self._prepare_translated_payload_deepl(item, response_data)
 
         except Exception as e:
             logger.error(f"DeepL translation failed: {str(e)}", exc_info=True)
             raise Exception(f"DeepL translation failed: {str(e)}")
 
-    def handle_error(self, e: Exception, context: str):
+    def handle_error(self, e: Exception, context: str) -> ResponseType:
         logger.error(f"{context} failed: {str(e)}")
         return {"error": f"{context} failed: {str(e)}"}
 
-    def _prepare_translated_payload_deepl(self, data, result):
+    def _prepare_translated_payload_deepl(self, data, result) -> ResponseType:
         try:
-            result_dict = {}
+            result_dict: dict = {}
 
             def build_nested_dict(path_parts, value, target_dict):
                 current = target_dict
@@ -267,8 +285,8 @@ class Translate(AIServiceBase):
 
     def _prepare_translated_payload(
         self, data, translations, translation_key="translatedText"
-    ):
-        result = {}
+    ) -> ResponseType:
+        result: dict = {}
 
         def build_nested_dict(path_parts, value, target_dict):
             current = target_dict
@@ -296,15 +314,15 @@ class Translate(AIServiceBase):
         else:
             raise ValueError("Invalid translation type for advanced translation")
 
-    def data_operation(
+    async def data_operation(
         self,
         verb: str,
         operation: Literal["translate"],
         name: Optional[str],
         data: TranslateData,
-    ) -> ResponseType:
+    ) -> ResponseType | None:
         if operation == "translate":
-            return self.translate(data)
+            return await self.translate(data)
 
     def validate_request_data(self, data):
         if not data:
@@ -355,9 +373,14 @@ class Translate(AIServiceBase):
         extract_strings(item["payload"])
         return texts, paths
 
-    def deepl_create_glossary(
-        self, name: str, source_lang: str, target_lang: str, entries: List[str]
-    ) -> dict:
+    async def deepl_create_glossary(
+        self,
+        session: aiohttp.ClientSession,
+        name: str,
+        source_lang: str,
+        target_lang: str,
+        entries: List[str],
+    ) -> ResponseType:
         url = f"{self.DEEPL_API_URL}/v2/glossaries"
         headers = {
             "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
@@ -373,39 +396,45 @@ class Translate(AIServiceBase):
             "entries_format": "tsv",
         }
         try:
-            response = requests.post(url, headers=headers, json=payload)
-            response.raise_for_status()
-            return response.json()
+            async with session.post(url, headers=headers, json=payload) as response:
+                response.raise_for_status()
+                return await response.json()
         except Exception as e:
             return self.handle_error(e, "Creating glossary")
 
-    def deepl_list_glossaries(self) -> List[dict]:
+    async def deepl_list_glossaries(
+        self, session: aiohttp.ClientSession
+    ) -> ResponseType | list[ResponseType]:
         url = f"{self.DEEPL_API_URL}/v2/glossaries"
         headers = {
             "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
         }
         try:
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()
-            return response.json().get("glossaries", [])
+            async with session.get(url, headers=headers) as response:
+                response.raise_for_status()
+                return (await response.json()).get("glossaries", [])
         except Exception as e:
             return self.handle_error(e, "Listing glossaries")
 
-    def deepl_retrieve_glossary(self, glossary_id: str) -> dict:
+    async def deepl_retrieve_glossary(
+        self, session: aiohttp.ClientSession, glossary_id: str
+    ) -> ResponseType:
         url = f"{self.DEEPL_API_URL}/v2/glossaries/{glossary_id}"
         headers = {
             "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
         }
         try:
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()
-            return response.json()
+            async with session.get(url, headers=headers) as response:
+                response.raise_for_status()
+                return await response.json()
         except Exception as e:
             return self.handle_error(e, "Retrieving glossary details")
 
-    def deepl_retrieve_glossary_entries_by_name(self, glossary_name: str) -> List[str]:
+    async def deepl_retrieve_glossary_entries_by_name(
+        self, session: aiohttp.ClientSession, glossary_name: str
+    ) -> ResponseType | list[str]:
         try:
-            glossaries = self.deepl_list_glossaries()
+            glossaries = await self.deepl_list_glossaries(session)
             existing_glossary = next(
                 (g for g in glossaries if g["name"] == glossary_name), None
             )
@@ -419,38 +448,49 @@ class Translate(AIServiceBase):
                 "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
                 "Accept": "text/tab-separated-values",
             }
-            response = requests.get(url, headers=headers)
-            response.raise_for_status()
-            return response.text.splitlines()  # Assuming TSV format
+            async with session.get(url, headers=headers) as response:
+                response.raise_for_status()
+                return (await response.text()).splitlines()  # Assuming TSV format
         except Exception as e:
             return self.handle_error(e, "Retrieving glossary entries")
 
-    def deepl_delete_glossary(self, glossary_id: str) -> dict:
+    async def deepl_delete_glossary(
+        self, session: aiohttp.ClientSession, glossary_id: str
+    ) -> ResponseType:
         """Delete a specific glossary."""
         url = f"{self.DEEPL_API_URL}/v2/glossaries/{glossary_id}"
         headers = {
             "Authorization": f"DeepL-Auth-Key {self.DEEPL_AUTH_KEY}",
         }
         try:
-            response = requests.delete(url, headers=headers)
-            response.raise_for_status()
-            return {"message": "Glossary deleted successfully"}
+            async with session.delete(url, headers=headers) as response:
+                response.raise_for_status()
+                return {"message": "Glossary deleted successfully"}
         except Exception as e:
             return self.handle_error(e, "Deleting glossary")
 
-    def deepl_add_entries_to_glossary(self, name: str, new_entries: List[str]) -> dict:
+    async def deepl_add_entries_to_glossary(
+        self, session: aiohttp.ClientSession, name: str, new_entries: List[str]
+    ) -> ResponseType:
         try:
-            glossaries = self.deepl_list_glossaries()
+            glossaries = await self.deepl_list_glossaries(session)
             existing_glossary = next((g for g in glossaries if g["name"] == name), None)
 
             if not existing_glossary:
                 raise Exception(f"Glossary '{name}' not found")
 
-            current_entries = self.deepl_retrieve_glossary_entries_by_name(name)
+            current_entries = await self.deepl_retrieve_glossary_entries_by_name(
+                session, name
+            )
+            if isinstance(current_entries, dict):
+                # If ``deepl_retrieve_glossary_entries_by_name`` returned a dictionary,
+                # then it must have failed, so we return it now
+                return current_entries
 
             updated_entries = current_entries + new_entries
 
-            return self.deepl_update_glossary(
+            return await self.deepl_update_glossary(
+                session,
                 name,
                 existing_glossary["source_lang"],
                 existing_glossary["target_lang"],
@@ -460,19 +500,26 @@ class Translate(AIServiceBase):
         except Exception as e:
             return self.handle_error(e, "Adding entries to glossary")
 
-    def deepl_update_glossary(
-        self, name: str, source_lang: str, target_lang: str, new_entries: List[str]
-    ) -> dict:
+    async def deepl_update_glossary(
+        self,
+        session: aiohttp.ClientSession,
+        name: str,
+        source_lang: str,
+        target_lang: str,
+        new_entries: List[str],
+    ) -> ResponseType:
         try:
-            glossaries = self.deepl_list_glossaries()
+            glossaries = await self.deepl_list_glossaries(session)
 
             existing_glossary = next((g for g in glossaries if g["name"] == name), None)
 
             if existing_glossary:
-                self.deepl_delete_glossary(existing_glossary["glossary_id"])
+                await self.deepl_delete_glossary(
+                    session, existing_glossary["glossary_id"]
+                )
 
-            return self.deepl_create_glossary(
-                name, source_lang, target_lang, new_entries
+            return await self.deepl_create_glossary(
+                session, name, source_lang, target_lang, new_entries
             )
 
         except Exception as e:
