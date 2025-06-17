@@ -2,8 +2,7 @@ import cp
 import pytz
 import copy
 import json
-from superdesk.flask import Flask
-import unittest
+from superdesk.tests import TestCase
 import superdesk
 import requests_mock
 import settings
@@ -32,12 +31,15 @@ provider = {}
 parser = CP_APMediaFeedParser()
 
 
-class CP_AP_ParseTestCase(unittest.TestCase):
-    app = Flask(__name__)
-    app.locators = MagicMock()
-    app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
+class CP_AP_ParseTestCase(TestCase):
     subscriber = {}
     formatter = JimiFormatter()
+
+    app_config: dict = {"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING}
+
+    async def asyncSetUp(self):
+        await super().asyncSetUp()
+        self.app.locators = MagicMock()
 
     def test_slugline(self):
         parser = CP_APMediaFeedParser()
@@ -45,16 +47,15 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual("foo-bar", parser.process_slugline("foo-bar"))
         self.assertEqual("foo-bar", parser.process_slugline("foo - bar"))
 
-    def test_parse(self):
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                superdesk.resources["archive"].service.find_one.side_effect = [
-                    {"uri": "foo"},
-                    None,
-                    {"guid": "bar", "extra": {"ap_version": 999}},
-                ]
-                item = parser.parse(data, provider)
-                superdesk.resources["archive"].service.find_one.side_effect = None
+    async def test_parse(self):
+        with patch.dict(superdesk.resources, resources):
+            superdesk.resources["archive"].service.find_one_async.side_effect = [
+                {"uri": "foo"},
+                None,
+                {"guid": "bar", "extra": {"ap_version": 999}},
+            ]
+            item = await parser.parse(data, provider)
+            superdesk.resources["archive"].service.find_one_async.side_effect = None
 
         self.assertEqual("ba7d03f0cd24a17faa81bebc724bcf3f", item["guid"])
         self.assertEqual("Story", item["profile"])
@@ -147,29 +148,25 @@ class CP_AP_ParseTestCase(unittest.TestCase):
 
         self.assertRegex(item["body_html"], r"^<p>.*</p>$")
 
-    def test_parse_ignore_associations_based_on_type_config(self):
+    async def test_parse_ignore_associations_based_on_type_config(self):
         _provider = {
             "content_types": ["text"],
         }
 
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(data, _provider)
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(data, _provider)
 
         self.assertFalse(item.get("associations"))
 
-    def test_parse_picture(self):
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                with requests_mock.mock() as mock:
-                    with open(get_fixture_path("preview.jpg", "ap"), "rb") as f:
-                        mock.get(
-                            picture_data["data"]["item"]["renditions"]["preview"][
-                                "href"
-                            ],
-                            content=f.read(),
-                        )
-                    item = parser.parse(picture_data, provider)
+    async def test_parse_picture(self):
+        with patch.dict(superdesk.resources, resources):
+            with requests_mock.mock() as mock:
+                with open(get_fixture_path("preview.jpg", "ap"), "rb") as f:
+                    mock.get(
+                        picture_data["data"]["item"]["renditions"]["preview"]["href"],
+                        content=f.read(),
+                    )
+                item = await parser.parse(picture_data, provider)
 
         self.assertEqual("Jae C. Hong", item["byline"])
         self.assertEqual(5, item["urgency"])
@@ -179,46 +176,42 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("Pedestrians are silhouetted", item["description_text"])
         self.assertEqual("AP", item["extra"]["provider"])
 
-    def test_parse_embargoed(self):
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                source = copy.deepcopy(data)
-                embargoed = datetime.now(pytz.utc).replace(microsecond=0) + timedelta(
-                    hours=2
-                )
-                source["data"]["item"]["embargoed"] = embargoed.strftime(
-                    "%Y-%m-%dT%H:%M:%SZ"
-                )
-                source["data"]["item"]["pubstatus"] = "embargoed"
-                item = parser.parse(source, provider)
-                self.assertEqual(embargoed, item["embargoed"])
-                self.assertIn("embargo", item)
-                self.assertEqual(
-                    {
-                        "utc_embargo": embargoed,
-                        "time_zone": cp.TZ,
-                    },
-                    item[SCHEDULE_SETTINGS],
-                )
-                self.assertEqual(PUB_STATUS.HOLD, item["pubstatus"])
-                self.assertEqual(
-                    ["Advance"], [genre["name"] for genre in item["genre"]]
-                )
+    async def test_parse_embargoed(self):
+        with patch.dict(superdesk.resources, resources):
+            source = copy.deepcopy(data)
+            embargoed = datetime.now(pytz.utc).replace(microsecond=0) + timedelta(
+                hours=2
+            )
+            source["data"]["item"]["embargoed"] = embargoed.strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
+            source["data"]["item"]["pubstatus"] = "embargoed"
+            item = await parser.parse(source, provider)
+            self.assertEqual(embargoed, item["embargoed"])
+            self.assertIn("embargo", item)
+            self.assertEqual(
+                {
+                    "utc_embargo": embargoed,
+                    "time_zone": cp.TZ,
+                },
+                item[SCHEDULE_SETTINGS],
+            )
+            self.assertEqual(PUB_STATUS.HOLD, item["pubstatus"])
+            self.assertEqual(["Advance"], [genre["name"] for genre in item["genre"]])
 
-                embargoed = embargoed - timedelta(hours=5)
-                source["data"]["item"]["embargoed"] = embargoed.strftime(
-                    "%Y-%m-%dT%H:%M:%SZ"
-                )
-                item = parser.parse(source, provider)
-                self.assertEqual(embargoed, item["embargoed"])
-                self.assertNotIn("embargo", item)
+            embargoed = embargoed - timedelta(hours=5)
+            source["data"]["item"]["embargoed"] = embargoed.strftime(
+                "%Y-%m-%dT%H:%M:%SZ"
+            )
+            item = await parser.parse(source, provider)
+            self.assertEqual(embargoed, item["embargoed"])
+            self.assertNotIn("embargo", item)
 
-    def test_category_politics_international(self):
+    async def test_category_politics_international(self):
         with open(get_fixture_path("politics.json", "ap")) as fp:
             _data = json.load(fp)
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
         self.assertEqual(
             [
                 {
@@ -234,12 +227,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         )
         self.assertEqual("US-Biden-Staff", item["slugline"])
 
-    def test_category_apv(self):
+    async def test_category_apv(self):
         with open(get_fixture_path("apv.json", "ap")) as fp:
             _data = json.load(fp)
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
         self.assertEqual(
             [
                 {
@@ -255,12 +247,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         )
         self.assertEqual("EU-Spain-Storm-Aftermath", item["slugline"])
 
-    def test_category_tennis(self):
+    async def test_category_tennis(self):
         with open(get_fixture_path("ap-sports.json", "ap")) as fp:
             _data = json.load(fp)
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
         self.assertEqual(
             [
                 {
@@ -277,11 +268,11 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual(
             [], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV]
         )
-        output = self.format(item)
+        output = await self.format(item)
         self.assertIn("<Category>Agate</Category>", output)
         self.assertIn("<IndexCode>Agate</IndexCode>", output)
 
-    def test_ignore_slugline_to_subject_map(self):
+    async def test_ignore_slugline_to_subject_map(self):
         with open(get_fixture_path("ap-sports.json", "ap")) as fp:
             _data = json.load(fp)
             # Prefix slugline with `BC` so slugline -> subject mapping works
@@ -290,9 +281,8 @@ class CP_AP_ParseTestCase(unittest.TestCase):
                 "BC" + _data["data"]["item"]["slugline"][2:]
             )
 
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
 
         self.assertEqual(
             [
@@ -310,87 +300,81 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertEqual(
             [], [s["name"] for s in item["subject"] if s.get("scheme") == AP_SUBJECT_CV]
         )
-        output = self.format(item)
+        output = await self.format(item)
         self.assertIn("<Category>Agate</Category>", output)
 
         # Make sure `IndexCode` only contains `Agate` and not `Sport` or `Tennis`
         self.assertIn("<IndexCode>Agate</IndexCode>", output)
 
-    def test_slugline_prev_version(self):
+    async def test_slugline_prev_version(self):
         with open(get_fixture_path("ap-sports.json", "ap")) as fp:
             _data = json.load(fp)
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                resources["ingest"].service.find_one.return_value = {
-                    "slugline": "prev-slugline",
-                }
-                item = parser.parse(_data, {})
-                resources["ingest"].service.find_one.return_value = None
+        with patch.dict(superdesk.resources, resources):
+            resources["ingest"].service.find_one_async.return_value = {
+                "slugline": "prev-slugline",
+            }
+            item = await parser.parse(_data, {})
+            resources["ingest"].service.find_one_async.return_value = None
         self.assertEqual("prev-slugline", item["slugline"])
 
-    def test_aps_category(self):
+    async def test_aps_category(self):
         with open(get_fixture_path("ap-aps.json", "ap")) as fp:
             _data = json.load(fp)
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
         self.assertEqual("Advisory", item["anpa_category"][0]["name"])
 
-    def format(self, item):
+    async def format(self, item):
         with patch.dict(superdesk.resources, resources):
             item["unique_id"] = 1
-            return self.formatter.format(item, self.subscriber)[0][1]
+            return (await self.formatter.format(item, self.subscriber))[0][1]
 
-    def test_parse_agate_headings(self):
+    async def test_parse_agate_headings(self):
         with open(get_fixture_path("ap-agate.json", "ap")) as fp:
             _data = json.load(fp)
 
-        with self.app.app_context():
-            xml = etree.parse(get_fixture_path("ap-agate-nitf.xml", "ap"))
-            parsed = nitf.NITFFeedParser().parse(xml)
-            _data["nitf"] = parsed
+        xml = etree.parse(get_fixture_path("ap-agate-nitf.xml", "ap"))
+        parsed = await nitf.NITFFeedParser().parse(xml)
+        _data["nitf"] = parsed
 
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
 
         self.assertIn("<p>Atlantic Division</p>", item["body_html"])
 
-    def test_parse_table(self):
+    async def test_parse_table(self):
         with open(get_fixture_path("ap-table.json", "ap")) as fp:
             _data = json.load(fp)
 
-        with self.app.app_context():
-            xml = etree.parse(get_fixture_path("ap-table-nitf.xml", "ap"))
-            parsed = nitf.NITFFeedParser().parse(xml)
-            _data["nitf"] = parsed
+        xml = etree.parse(get_fixture_path("ap-table-nitf.xml", "ap"))
+        parsed = await nitf.NITFFeedParser().parse(xml)
+        _data["nitf"] = parsed
 
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
 
         self.assertIn("<table>", item["body_html"])
-        output = self.format(item)
+        output = await self.format(item)
         jimi = etree.fromstring(output.encode("utf-8"))
         content = jimi.find("ContentItem").find("ContentText").text
         self.assertIn("table", content)
 
-    def test_parse_subject_duplicates(self):
+    async def test_parse_subject_duplicates(self):
         with open(get_fixture_path("ap-subject.json", "ap")) as fp:
             _data = json.load(fp)
 
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
 
         qcodes = [subj["qcode"] for subj in item["subject"]]
         self.assertEqual(len(qcodes), len(set(qcodes)))
 
-    def test_parse_aps_right_now(self):
+    async def test_parse_aps_right_now(self):
         with open(get_fixture_path("ap-aps-mi-right-now.json", "ap")) as fp:
             _data = json.load(fp)
 
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                item = parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            item = await parser.parse(_data, {})
 
         self.assertEqual("International", item["anpa_category"][0]["name"])
 

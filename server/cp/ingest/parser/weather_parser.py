@@ -9,8 +9,7 @@ class WeatherParser(FeedParser):
         # Assuming all files coming from FTP are valid
         return True
 
-    def parse(self, article, provider=None):
-
+    async def parse(self, article, provider=None):
         item = {}
         if self.can_parse(article):
             paragraphs = article.split("\n\n")

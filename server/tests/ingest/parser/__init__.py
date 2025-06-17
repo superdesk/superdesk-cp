@@ -1,8 +1,7 @@
 import os
-from superdesk.flask import Flask
-import unittest
 import lxml.etree as etree
 
+from superdesk.tests import TestCase
 from superdesk.io.feed_parsers import FeedParser
 
 
@@ -15,17 +14,15 @@ def get_fixture_path(filename, provider):
     )
 
 
-class ParserTestCase(unittest.TestCase):
+class ParserTestCase(TestCase):
     parser: FeedParser
     provider: str
-
-    app = Flask(__name__)
 
     def get_xml(self, filename):
         return etree.parse(get_fixture_path(filename, self.provider)).getroot()
 
-    def parse(self, filename):
+    async def parse(self, filename):
         xml = self.get_xml(filename)
         self.assertTrue(self.parser.can_parse(xml))
-        with self.app.app_context():
-            return self.parser.parse(xml)[0]
+        # with self.app.app_context():
+        return (await self.parser.parse(xml))[0]
