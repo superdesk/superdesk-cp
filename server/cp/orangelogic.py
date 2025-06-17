@@ -11,9 +11,9 @@ from pytz import UTC
 from datetime import datetime
 from urllib.parse import urljoin
 from quart import current_app as app, json
-from aiohttp import ClientRequest
 from aiohttp.client_exceptions import ClientResponseError
 from superdesk.utils import ListCursor
+from superdesk.errors import AlreadyExistsError
 from superdesk.timer import timer
 from superdesk.utc import local_to_utc
 from superdesk.types.search_providers import SearchProvider
@@ -145,7 +145,7 @@ class OrangelogicSearchProvider(SearchProvider):
                     "Login": self.config.get("username"),
                     "Password": self.config.get("password"),
                     "format": "json",
-                }
+                },
             )
         tokens[self.config["username"]] = resp["APIResponse"]["Token"]
 
@@ -174,15 +174,17 @@ class OrangelogicSearchProvider(SearchProvider):
         except KeyError:
             return
 
-    async def find_async(self, query: dict, params: dict | None = None) -> OrangelogicListCursor:
+    async def find_async(
+        self, query: dict, params: dict | None = None
+    ) -> OrangelogicListCursor:
         if params is None:
             params = {}
 
         size = 25  # int(query.get('size', 25))
         page = math.ceil((int(query.get("from", 0)) + 1) / size)
         try:
-            sort = query.get("sort")[0]
-        except (IndexError, AttributeError, TypeError):
+            sort = query["sort"][0]
+        except (IndexError, AttributeError, TypeError, KeyError):
             sort = {"versioncreated": "desc"}
 
         kwargs = {
@@ -304,6 +306,7 @@ class OrangelogicSearchProvider(SearchProvider):
 
         return item
 
+
 async def _parse_binary_async(item):
     binary = await app.media.get_async(item["renditions"]["original"]["media"])
     iptc = get_meta_iptc(binary)
@@ -316,7 +319,7 @@ async def _parse_binary_async(item):
         item["byline"] = iptc["By-line"]
 
     if iptc.get("Category"):
-        append_matching_subject(item, cp.PHOTO_CATEGORIES, iptc["Category"])
+        await append_matching_subject(item, cp.PHOTO_CATEGORIES, iptc["Category"])
 
     if iptc.get("Credit"):
         item["creditline"] = (
@@ -405,6 +408,10 @@ def rendition(data):
 
 
 def init_app(app):
-    superdesk.register_search_provider(
-        "orangelogic", provider_class=OrangelogicSearchProvider
-    )
+    try:
+        superdesk.register_search_provider(
+            "orangelogic", provider_class=OrangelogicSearchProvider
+        )
+    except AlreadyExistsError:
+        # No need to raise an error here
+        pass
