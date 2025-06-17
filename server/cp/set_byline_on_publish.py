@@ -1,12 +1,13 @@
-from superdesk.signals import item_publish
-from settings import DEFAULT_AUTHOR_EN, DEFAULT_AUTHOR_FR
-import superdesk
 import logging
+
+from superdesk import get_resource_service
+from superdesk.signals import item_publish_async
+from settings import DEFAULT_AUTHOR_EN, DEFAULT_AUTHOR_FR
 
 logger = logging.getLogger(__name__)
 
 
-def set_byline_on_publish(sender, item, updates, **kwargs):
+async def set_byline_on_publish(item, updates):
     updated = item.copy()
     updated.update(updates)
 
@@ -19,8 +20,7 @@ def set_byline_on_publish(sender, item, updates, **kwargs):
             DEFAULT_AUTHOR_EN if language.startswith("en") else DEFAULT_AUTHOR_FR
         )
 
-        users_service = superdesk.get_resource_service("users")
-        default_user = users_service.find_one(
+        default_user = await get_resource_service("users").find_one_async(
             req=None, username=default_author_username
         )
 
@@ -51,4 +51,4 @@ def get_author_name(author) -> str:
 
 
 def init_app(app):
-    item_publish.connect(set_byline_on_publish)
+    item_publish_async.connect(set_byline_on_publish)
