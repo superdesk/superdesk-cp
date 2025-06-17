@@ -1,5 +1,5 @@
 import logging
-import requests
+import aiohttp
 
 from quart import current_app as app
 from urllib.parse import urljoin
@@ -13,7 +13,6 @@ from superdesk.editor_utils import Editor3Content
 from superdesk.metadata.item import CONTENT_STATE
 
 
-sess = requests.Session()
 logger = logging.getLogger(__name__)
 
 ULTRAD_ID = "ultrad_id"
@@ -36,10 +35,10 @@ def get_headers():
     return {"x-ultrad-auth": app.config["ULTRAD_AUTH"]}
 
 
-def upload_document(item):
+async def upload_document(item: dict) -> str | None:
     item_name = item.get("headline") or item.get("slugline")
     if not item_name or not item.get("body_html"):
-        return
+        return None
 
     payload = {
         "lang": {
@@ -53,62 +52,64 @@ def upload_document(item):
         },
     }
 
-    resp = sess.post(
-        ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT
-    )
-    raise_for_resp_error(resp)
-    data = get_json(resp)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(
+            ULTRAD_URL, json=payload, headers=get_headers(), timeout=ULTRAD_TIMEOUT
+        ) as resp:
+            raise_for_resp_error(resp)
+            data = await get_json(resp)
     return data["_id"]
 
 
-def get_document(ultrad_id):
+async def get_document(ultrad_id: str) -> dict:
     url = urljoin(ULTRAD_URL, ultrad_id)
-    resp = sess.get(url, headers=get_headers(), timeout=ULTRAD_TIMEOUT)
-    raise_for_resp_error(resp)
-    return get_json(resp)
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            url, headers=get_headers(), timeout=ULTRAD_TIMEOUT
+        ) as resp:
+            raise_for_resp_error(resp)
+            return await get_json(resp)
 
 
-def raise_for_resp_error(resp):
+def raise_for_resp_error(resp: aiohttp.ClientResponse) -> None:
     try:
         resp.raise_for_status()
-    except requests.HTTPError:
+    except aiohttp.ClientResponseError:
         logger.error(
             "HTTP error %d: %s when doing %s on %s",
-            resp.status_code,
+            resp.status,
             resp.text,
-            resp.request.method,
-            resp.request.path_url,
+            resp.method,
+            resp.url,
         )
         raise UltradException()
 
 
-def get_json(resp):
+async def get_json(resp: aiohttp.ClientResponse) -> dict:
     try:
-        return resp.json()
+        return await resp.json()
     except ValueError:
         logger.error('error when parsing ultrad response "%s"', resp.text)
         raise UltradException()
 
 
 @celery.task(soft_time_limit=300)
-def sync():
+async def sync():
     lock_name = "ultrad"
     if not lock(lock_name):
         logger.info("lock taken %s", lock_name)
         return
     try:
-        todo_stages = list(
-            get_resource_service("stages").get(
-                req=None, lookup={"name": app.config["ULTRAD_TODO_STAGE"]}
-            )
+        todo_stages_cursor = await get_resource_service("stages").get_async(
+            req=None, lookup={"name": app.config["ULTRAD_TODO_STAGE"]}
         )
-        if not len(todo_stages):
+        if not await todo_stages_cursor.count():
             logger.warning(
                 "ultrad todo stage not found, name=%s", app.config["ULTRAD_TODO_STAGE"]
             )
             return
-        for todo_stage in todo_stages:
-            desk = get_resource_service("desks").find_one(
+        async for todo_stage in todo_stages_cursor:
+            desk = await get_resource_service("desks").find_one_async(
                 req=None, _id=todo_stage["desk"]
             )
             if not desk:
@@ -117,11 +118,15 @@ def sync():
                 )
                 continue
             lookup = {"task.stage": todo_stage["_id"]}
-            items = list(get_resource_service("archive").get(req=None, lookup=lookup))
-            logger.info(
-                "checking %d items on ultrad on desk %s", len(items), desk["name"]
+            items_cursor = await get_resource_service("archive").get_async(
+                req=None, lookup=lookup
             )
-            for item in items:
+            logger.info(
+                "checking %d items on ultrad on desk %s",
+                await items_cursor.count(),
+                desk["name"],
+            )
+            async for item in items_cursor:
                 if not touch(lock_name, expire=300):
                     logger.warning("lost lock %s", lock_name)
                     break
@@ -140,7 +145,7 @@ def sync():
                 except KeyError:
                     continue
                 try:
-                    ultrad_doc = get_document(ultrad_id)
+                    ultrad_doc = await get_document(ultrad_id)
                 except UltradException:
                     continue
                 if ultrad_doc["state"] == "revised":
@@ -171,8 +176,12 @@ def sync():
                         "fields_meta": updated["fields_meta"],
                     }
                     # don't use patch, it assumes there is a user
-                    get_resource_service("archive").update(item["_id"], updates, item)
-                    get_resource_service("archive").on_updated(updates, item)
+                    await get_resource_service("archive").update_async(
+                        item["_id"], updates, item
+                    )
+                    await get_resource_service("archive").on_updated_async(
+                        updates, item
+                    )
                 else:
                     logger.debug(
                         "skip updating item guid=%s ultrad_id=%s state=%s",
