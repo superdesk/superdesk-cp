@@ -1,15 +1,16 @@
 import os
-import cp
-import cp.ingest.parser.globenewswire as globenewswire
-
+from unittest.mock import patch, AsyncMock
 from pytz import UTC
 from datetime import datetime, timedelta
 
-from cp.output.formatter.jimi import JimiFormatter
+from superdesk.eve_async import AsyncListCursor
 from superdesk.metadata.item import SCHEDULE_SETTINGS
 
-from tests.mock import resources, SEQUENCE_NUMBER
+import cp
+import cp.ingest.parser.globenewswire as globenewswire
+from cp.output.formatter.jimi import JimiFormatter
 
+from tests.mock import resources, SEQUENCE_NUMBER
 from . import BaseXmlFormatterTestCase
 
 
@@ -56,8 +57,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         },
     }
 
-    def format_item(self, updates=None, return_root=False):
-        xml = self.format(updates)
+    async def format_item(self, updates=None, return_root=False):
+        xml = await self.format(updates)
         root = self.parse(xml)
         if return_root:
             return root
@@ -66,8 +67,13 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
     def test_can_format(self):
         self.assertTrue(self.formatter.can_format("jimi", {}))
 
-    def test_format(self):
-        xml = self.format()
+    @patch(
+        "cp.output.formatter.jimi.generate_sequence_number",
+        new_callable=AsyncMock,
+        return_value=SEQUENCE_NUMBER,
+    )
+    async def test_format(self, mock_generate_sequence_number):
+        xml = await self.format()
         self.assertIn("<?xml version='1.0' encoding='utf-8'?>", xml)
         self.assertIn("<ContentText>&lt;p&gt;Body HTML&lt;br /&gt;test", xml)
 
@@ -134,7 +140,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         # etc
         self.assertEqual("NewsAlert", item.find("VersionType").text)
 
-    def test_writethru(self):
+    async def test_writethru(self):
         expected_data = {
             1: "1st",
             2: "2nd",
@@ -147,13 +153,13 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         }
 
         for val, num in expected_data.items():
-            item = self.format_item({"rewrite_sequence": val})
+            item = await self.format_item({"rewrite_sequence": val})
             self.assertEqual(num, item.find("WritethruNum").text)
             self.assertEqual(str(val), item.find("WritethruValue").text)
             self.assertEqual("Writethru", item.find("WriteThruType").text)
 
-    def test_dateline(self):
-        item = self.format_item(
+    async def test_dateline(self):
+        item = await self.format_item(
             {
                 "dateline": {
                     "source": "AAP",
@@ -183,8 +189,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("34.0522", item.find("Latitude").text)
         self.assertEqual("-118.2347", item.find("Longitude").text)
 
-    def test_globenewswire(self):
-        output = self.format(
+    async def test_globenewswire(self):
+        output = await self.format(
             {
                 "source": globenewswire.SOURCE,
                 "headline": "Foo",
@@ -219,9 +225,9 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("Foo", item.find("Headline").text)
         self.assertEqual("Foo", item.find("Headline2").text)
 
-    def test_limits(self):
+    async def test_limits(self):
         long = "foo bar {}".format("x" * 200)
-        item = self.format_item(
+        item = await self.format_item(
             {
                 "headline": long,
                 "extra": {
@@ -235,7 +241,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("foo bar", item.find("Headline2").text)
         self.assertEqual("foo,bar,foo bar", item.find("Keyword").text)
 
-    def test_picture(self):
+    async def test_picture(self):
         updates = {
             "type": "picture",
             "guid": "urn:picture",
@@ -263,7 +269,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                 },
             },
         }
-        root = self.format_item(updates, True)
+        root = await self.format_item(updates, True)
 
         self.assertEqual("Pictures", root.find("Services").text)
         self.assertEqual("Online", root.find("PscCodes").text)
@@ -296,7 +302,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
 
         self.assertEqual(1, len(item.findall("FileName")))
 
-    def test_picture_amazon(self):
+    async def test_picture_amazon(self):
         updates = {
             "type": "picture",
             "renditions": {
@@ -305,13 +311,13 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
                 },
             },
         }
-        item = self.format_item(updates)
+        item = await self.format_item(updates)
         filename = updates["renditions"]["original"]["media"].replace("/", "-")
         self.assertEqual(os.path.splitext(filename)[0], item.find("FileName").text)
         self.assertEqual(filename, item.find("ViewFile").text)
         self.assertEqual(filename, item.find("ContentRef").text)
 
-    def test_embargo(self):
+    async def test_embargo(self):
         embargo = datetime(2020, 7, 22, 13, 10, 5, tzinfo=UTC)
         updates = {
             SCHEDULE_SETTINGS: {
@@ -319,17 +325,17 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             },
         }
 
-        item = self.format_item(updates)
+        item = await self.format_item(updates)
         self.assertEqual("2020-07-22T09:10:05", item.find("EmbargoTime").text)
 
-        item = self.format_item({"embargoed": embargo})
+        item = await self.format_item({"embargoed": embargo})
         self.assertEqual("2020-07-22T09:10:05", item.find("EmbargoTime").text)
 
-    def test_format_credit(self):
-        item = self.format_item({"source": "CP", "creditline": None})
+    async def test_format_credit(self):
+        item = await self.format_item({"source": "CP", "creditline": None})
         self.assertEqual("THE CANADIAN PRESS", item.find("Credit").text)
 
-    def test_item_with_picture(self):
+    async def test_item_with_picture(self):
         updates = {
             "source": "CP",
             "associations": {
@@ -369,17 +375,17 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             },
         }
 
-        item = self.format_item(updates)
+        item = await self.format_item(updates)
 
         self.assertEqual("Many", item.find("PhotoType").text)
         self.assertEqual("foo,bar", item.find("PhotoReference").text)
 
-    def test_format_filename_rewrite(self):
+    async def test_format_filename_rewrite(self):
         date_1am_et = datetime(2020, 8, 12, 5, tzinfo=UTC)
         date_2am_et = date_1am_et + timedelta(hours=1)
         date_3am_et = date_1am_et + timedelta(hours=2)
 
-        resources["archive"].service.find_one.side_effect = [
+        resources["archive"].service.find_one_async.side_effect = [
             {
                 "guid": "same-cycle",
                 "rewrite_of": "prev-cycle",
@@ -395,7 +401,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             },
         ]
 
-        item = self.format_item(
+        item = await self.format_item(
             {
                 "guid": "last",
                 "rewrite_of": "same-cycle",
@@ -405,12 +411,12 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             }
         )
 
-        resources["archive"].service.find_one.side_effect = None
+        resources["archive"].service.find_one_async.side_effect = None
 
         self.assertEqual("prev-cycle", item.find("FileName").text)
         self.assertEqual("prev-cycle", item.find("SystemSlug").text)
 
-    def test_format_fr_CA(self):
+    async def test_format_fr_CA(self):
         updates = {
             "language": "fr-CA",
             "anpa_category": [{"name": "National", "qcode": "g"}],
@@ -420,7 +426,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             ],
         }
 
-        item = self.format_item(updates)
+        item = await self.format_item(updates)
 
         self.assertEqual("2", item.find("Language").text)
         self.assertEqual("Nouvelles Générales", item.find("Category").text)
@@ -433,8 +439,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("2ème", item.find("WritethruNum").text)
         self.assertEqual("Lead", item.find("WriteThruType").text)
 
-    def test_correction_update(self):
-        item = self.format_item(
+    async def test_correction_update(self):
+        item = await self.format_item(
             {
                 "extra": {
                     cp.UPDATE: "update text",
@@ -445,8 +451,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         self.assertEqual("update text", item.find("UpdateNote").text)
         self.assertEqual("correction text", item.find("Corrections").text)
 
-    def test_writethru_keeps_newscompid(self):
-        resources["archive"].service.find_one.side_effect = [
+    async def test_writethru_keeps_newscompid(self):
+        resources["archive"].service.find_one_async.side_effect = [
             {
                 "guid": "same-cycle",
                 "rewrite_of": "prev-cycle",
@@ -456,7 +462,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             {"guid": "prev-cycle", "unique_id": 1, "type": "text"},
         ]
 
-        item = self.format_item(
+        item = await self.format_item(
             {
                 "type": "text",
                 "rewrite_of": "same-cycle",
@@ -464,56 +470,58 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             }
         )
 
-        resources["archive"].service.find_one.side_effect = None
+        resources["archive"].service.find_one_async.side_effect = None
 
         self.assertEqual("00000001", item.find("NewsCompID").text)
 
-    def test_ap_update_keeps_newscomip(self):
-        resources["ingest"].service.find_one.side_effect = [
+    async def test_ap_update_keeps_newscomip(self):
+        resources["ingest"].service.find_one_async.side_effect = [
             {
                 "unique_id": 1,
             }
         ]
 
-        item = self.format_item(
+        item = await self.format_item(
             {
                 "type": "text",
                 "unique_id": 5,
             }
         )
 
-        resources["ingest"].service.find_one.side_effect = None
+        resources["ingest"].service.find_one_async.side_effect = None
 
         self.assertEqual("00000001", item.find("NewsCompID").text)
 
-    def test_picture_container_ids(self):
-        resources["news"].service.search.side_effect = [
-            [
-                {"guid": "usable", "pubstatus": "usable", "type": "text"},
-                {
-                    "guid": "usable2",
-                    "pubstatus": "usable",
-                    "type": "text",
-                    "extra": {
-                        cp.ORIG_ID: 32 * "a",  # slug constraints
+    async def test_picture_container_ids(self):
+        resources["news"].service.search_async.side_effect = [
+            AsyncListCursor(
+                [
+                    {"guid": "usable", "pubstatus": "usable", "type": "text"},
+                    {
+                        "guid": "usable2",
+                        "pubstatus": "usable",
+                        "type": "text",
+                        "extra": {
+                            cp.ORIG_ID: 32 * "a",  # slug constraints
+                        },
                     },
-                },
-            ]
+                ]
+            )
         ]
 
-        item = self.format_item(
+        item = await self.format_item(
             {
                 "type": "picture",
                 "unique_id": 3,
             }
         )
 
-        resources["news"].service.search.side_effect = None
+        resources["news"].service.search_async.side_effect = None
 
         self.assertEqual("{}, usable".format(32 * "a"), item.find("ContainerIDs").text)
 
-    def test_placeline_washington(self):
-        item = self.format_item(
+    async def test_placeline_washington(self):
+        item = await self.format_item(
             {
                 "dateline": {
                     "source": "AAP",
@@ -538,8 +546,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         )
         self.assertEqual("District of Columbia", item.find("Province").text)
 
-    def test_format_content(self):
-        item = self.format_item(
+    async def test_format_content(self):
+        item = await self.format_item(
             {
                 "body_html": "<p>Body HTML<br>test remove bold <b>  </b> and <b>bold1</b> and <i>idiom</i></p>"
             }
@@ -550,8 +558,8 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
             str(" ".join(content_text.split())),
         )
 
-    def test_ap_translated(self):
-        item = self.format_item(
+    async def test_ap_translated(self):
+        item = await self.format_item(
             {
                 "language": "fr-CA",
                 "extra": {cp.ORIG_ID: "a" * 32},

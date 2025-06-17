@@ -4,10 +4,9 @@ from cp.output.formatter.ninjs_formatter_2 import NINJSFormatter_2
 
 
 class TestNinjsFormatter(unittest.TestCase):
-    def setUp(self):
-        self.formatter = NINJSFormatter_2()
+    formatter = NINJSFormatter_2()
 
-    def test_get_associations_text(self):
+    async def test_get_associations_text(self):
         # Test case for article type "text"
         article = {
             "type": "text",

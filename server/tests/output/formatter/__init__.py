@@ -1,5 +1,4 @@
-from superdesk.flask import Flask
-import unittest
+from superdesk.tests import TestCase
 import superdesk
 import lxml.etree as etree
 
@@ -7,30 +6,22 @@ from tests.mock import resources
 from unittest.mock import patch
 
 
-class BaseXmlFormatterTestCase(unittest.TestCase):
+class BaseXmlFormatterTestCase(TestCase):
     subscriber = {}
     formatter = None
     article = None
 
-    def setUp(self):
-        self.app = Flask(__name__)
-        self.app.config.update(
-            {
-                "VERSION": "version",
-                "DEFAULT_LANGUAGE": "en",
-            }
-        )
-        self.ctx = self.app.app_context()
-        self.ctx.push()
+    app_config = {
+        # "VERSION": "version",
+        # "DEFAULT_LANGUAGE": "en",
+        # "MAX_VALUE_OF_PUBLISH_SEQUENCE": 9999,
+    }
 
-    def tearDown(self):
-        self.ctx.pop()
-
-    def format(self, updates=None, _all=False):
+    async def format(self, updates=None, _all=False):
         article = self.article.copy()
         article.update(updates or {})
         with patch.dict(superdesk.resources, resources):
-            formatted = self.formatter.format(article, self.subscriber)
+            formatted = await self.formatter.format(article, self.subscriber)
             if _all:
                 return formatted
             seq, xml_str = formatted[0]

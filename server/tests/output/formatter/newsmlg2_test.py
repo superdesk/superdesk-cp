@@ -18,7 +18,7 @@ class NewsmlG2TestCase(BaseXmlFormatterTestCase):
         "guid": "guid",
         "type": "text",
         "state": "published",
-        "version": 1,
+        "_current_version": 1,
         "firstcreated": now,
         "versioncreated": now,
         "headline": "short headline",
@@ -27,8 +27,8 @@ class NewsmlG2TestCase(BaseXmlFormatterTestCase):
         },
     }
 
-    def test_format(self):
-        xml = self.format()
+    async def test_format(self):
+        xml = await self.format()
         root = self.parse(xml)
 
         item = root.find("itemSet", NSMAP).find("newsItem", NSMAP)

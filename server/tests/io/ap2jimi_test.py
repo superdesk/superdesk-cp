@@ -1,14 +1,14 @@
 import re
 import cp
-from superdesk.flask import json, Flask
+from superdesk.tests import TestCase
 import os.path
-import unittest
 import superdesk
+from superdesk.core import json
 import requests_mock
 import settings
 
 from lxml import etree
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, patch, AsyncMock
 
 from tests.mock import SEQUENCE_NUMBER, resources
 from tests.ingest.parser import get_fixture_path
@@ -29,55 +29,65 @@ def fixture(filename):
     )
 
 
-class AP2JimiTestCase(unittest.TestCase):
-    app = Flask(__name__)
-    app.locators = MagicMock()
-    app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
+class AP2JimiTestCase(TestCase):
+    # app = Flask(__name__)
+    # app.locators = MagicMock()
+    # app.config.update({"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING})
 
     provider = {}
     subscriber = {}
 
     maxDiff = None
+    app_config: dict = {"AP_TAGS_MAPPING": settings.AP_TAGS_MAPPING}
 
-    def parse_format(self, source, binary=None, service=None):
+    async def asyncSetUp(self):
+        await super().asyncSetUp()
+        self.app.locators = MagicMock()
+
+    async def parse_format(self, source, binary=None, service=None):
         with open(get_fixture_path(source, "ap")) as fp:
             data = json.load(fp)
 
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                with requests_mock.mock() as mock:
-                    if binary:
-                        with open(get_fixture_path(binary, "ap"), "rb") as f:
-                            mock.get(
-                                data["data"]["item"]["renditions"]["preview"]["href"],
-                                content=f.read(),
-                            )
-                    parsed = parser.parse(data, self.provider)
-                parsed["_id"] = "superdesk-id"
-                parsed["guid"] = "superdesk-guid"
-                parsed["unique_id"] = 1
-                parsed["family_id"] = parsed["_id"]
-                parsed["renditions"] = {
-                    "original": {"media": "abcd-media", "mimetype": "image/jpeg"}
-                }
-                if service:
-                    parsed.setdefault("subject", []).append(
-                        {
-                            "name": service,
-                            "qcode": service,
-                            "scheme": cp.DISTRIBUTION,
-                        }
-                    )
-                jimi = formatter.format(parsed, self.subscriber)[0][1]
+        with patch.dict(superdesk.resources, resources):
+            with requests_mock.mock() as mock:
+                if binary:
+                    with open(get_fixture_path(binary, "ap"), "rb") as f:
+                        mock.get(
+                            data["data"]["item"]["renditions"]["preview"]["href"],
+                            content=f.read(),
+                        )
+                parsed = await parser.parse(data, self.provider)
+            parsed["_id"] = "superdesk-id"
+            parsed["guid"] = "superdesk-guid"
+            parsed["unique_id"] = 1
+            parsed["family_id"] = parsed["_id"]
+            parsed["renditions"] = {
+                "original": {"media": "abcd-media", "mimetype": "image/jpeg"}
+            }
+            if service:
+                parsed.setdefault("subject", []).append(
+                    {
+                        "name": service,
+                        "qcode": service,
+                        "scheme": cp.DISTRIBUTION,
+                    }
+                )
+
+            with patch(
+                "cp.output.formatter.jimi.generate_sequence_number",
+                new_callable=AsyncMock,
+                return_value=SEQUENCE_NUMBER,
+            ):
+                jimi = (await formatter.format(parsed, self.subscriber))[0][1]
 
         root = etree.fromstring(jimi.encode(formatter.ENCODING))
         return root.find("ContentItem")
 
-    def test_getty_picture(self):
+    async def test_getty_picture(self):
         """
         ref: tests/io/fixtures/6dd9971f75c24ce59865879cf315d7fe-6dd9971f75c24ce59.xml
         """
-        item = self.parse_format("ap-getty-picture.json", "preview.jpg")
+        item = await self.parse_format("ap-getty-picture.json", "preview.jpg")
         self.assertEqual("Stuart Franklin", item.find("Byline").text)
         self.assertEqual("S", item.find("Category").text)
         self.assertEqual("THE ASSOCIATED PRESS", item.find("Credit").text)
@@ -113,11 +123,11 @@ class AP2JimiTestCase(unittest.TestCase):
         )
         self.assertEqual("POOL Getty Images", item.find("CustomField6").text)
 
-    def test_ap_picture(self):
+    async def test_ap_picture(self):
         """
         ref: tests/io/fixtures/AB101-65_2020_101001.xml
         """
-        item = self.parse_format("ap-picture.json", "preview-keywords.jpg")
+        item = await self.parse_format("ap-picture.json", "preview-keywords.jpg")
         self.assertEqual(
             "PhotoContentItem",
             item.get("{http://www.w3.org/2001/XMLSchema-instance}type"),
@@ -219,11 +229,11 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual("false", root.find("NewCycle").text)
         self.assertEqual("false", root.find("OnlineResend").text)
 
-    def test_ap_text(self):
+    async def test_ap_text(self):
         """
         ref: tests/io/fixtures/5d846ed8-96b6-4adc-a028-017b0fa5e2c1.xml
         """
-        item = self.parse_format("ap-text.json")
+        item = await self.parse_format("ap-text.json")
         self.assertEqual(
             "f14dd246c9b5efeb56de0141aa50c4fd", item.find("SystemSlug").text
         )
@@ -266,11 +276,11 @@ class AP2JimiTestCase(unittest.TestCase):
         self.assertEqual("3", item.find("WritethruValue").text)
         self.assertEqual("3rd", item.find("WritethruNum").text)
 
-    def test_ap_broadcast(self):
+    async def test_ap_broadcast(self):
         """
         ref: tests/io/fixtures/0c828d30-d250-4aec-9739-b04961eb36fc.xml
         """
-        item = self.parse_format("ap-broadcast.json", service=cp.BROADCAST)
+        item = await self.parse_format("ap-broadcast.json", service=cp.BROADCAST)
         expected = etree.parse(
             fixture("0c828d30-d250-4aec-9739-b04961eb36fc.xml")
         ).find("ContentItem")
@@ -288,6 +298,6 @@ class AP2JimiTestCase(unittest.TestCase):
         )
         self.assertEqual("superdesk-guid", item.find("FileName").text)
 
-    def test_ap_category(self):
-        item = self.parse_format("ap-category.json", service=cp.BROADCAST)
+    async def test_ap_category(self):
+        item = await self.parse_format("ap-category.json", service=cp.BROADCAST)
         self.assertEqual("Business,International", item.find("Category").text)

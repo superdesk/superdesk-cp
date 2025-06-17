@@ -16,7 +16,10 @@ from superdesk.resource_fields import ITEM_STATE
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
 from superdesk.publish_async.commands import publish_item
-from superdesk.publish_async.utils import get_subscribers_for_item
+from superdesk.publish_async.utils import (
+    get_subscribers_for_item,
+    generate_sequence_number,
+)
 from superdesk.media.renditions import get_rendition_file_name
 from superdesk.metadata.item import SCHEDULE_SETTINGS
 
@@ -133,9 +136,7 @@ class JimiFormatter(Formatter):
         if not services:
             services.append(None)
         for service in services:
-            pub_seq_num = superdesk.get_resource_service(
-                "subscribers"
-            ).generate_sequence_number(subscriber)
+            pub_seq_num = await generate_sequence_number(subscriber)
             root = etree.Element("Publish")
             await self._format_item(root, article, pub_seq_num, service, services)
             xml = etree.tostring(
@@ -195,14 +196,14 @@ class JimiFormatter(Formatter):
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
-            self._format_services(root, item)
+            await self._format_services(root, item)
 
         is_broadcast = cp.is_broadcast(item)
 
         # content system fields
-        orig = self._get_original_item(item)
+        orig = await self._get_original_item(item)
         seq_id = "{:08d}".format(pub_seq_num % 100000000)
-        item_id = "{:08d}".format(self.get_item_id(orig) % 100000000)
+        item_id = "{:08d}".format(await self.get_item_id(orig) % 100000000)
         etree.SubElement(content, "Name")
         etree.SubElement(content, "Cachable").text = "false"
         etree.SubElement(content, "FileName").text = filename(orig)
@@ -280,9 +281,9 @@ class JimiFormatter(Formatter):
         if item.get("keywords") and item.get("source") == globenewswire.SOURCE:
             etree.SubElement(content, "Stocks").text = ",".join(item["keywords"])
 
-        self._format_category_index(content, item)
-        self._format_genre(content, item)
-        self._format_urgency(content, item.get("urgency"), item["language"])
+        await self._format_category_index(content, item)
+        await self._format_genre(content, item)
+        await self._format_urgency(content, item.get("urgency"), item["language"])
         self._format_keyword(
             content,
             item.get("keywords"),
@@ -295,7 +296,7 @@ class JimiFormatter(Formatter):
             etree.SubElement(content, "Byline").text = item["byline"]
 
         if is_picture(item):
-            self._format_picture_metadata(content, item)
+            await self._format_picture_metadata(content, item)
         else:
             etree.SubElement(content, "EditorNote").text = item.get("ednote")
             if extra.get(cp.UPDATE):
@@ -306,9 +307,9 @@ class JimiFormatter(Formatter):
         if item.get("associations"):
             await self._format_associations(content, item)
 
-    def get_item_id(self, item):
+    async def get_item_id(self, item):
         if item.get("family_id"):
-            ingest_item = superdesk.get_resource_service("ingest").find_one(
+            ingest_item = await superdesk.get_resource_service("ingest").find_one_async(
                 req=None, _id=item["family_id"]
             )
             if ingest_item and ingest_item.get("unique_id"):
@@ -323,11 +324,11 @@ class JimiFormatter(Formatter):
             return "THE CANADIAN PRESS"
         return credit or item.get("source") or ""
 
-    def _format_urgency(self, content, urgency, language):
+    async def _format_urgency(self, content, urgency, language):
         if urgency is None:
             urgency = 3
         etree.SubElement(content, "RankingValue").text = str(urgency)
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id="urgency"
         )
         items = [item for item in cv["items"] if str(item.get("qcode")) == str(urgency)]
@@ -404,9 +405,9 @@ class JimiFormatter(Formatter):
         else:
             etree.SubElement(content, "Placeline")
 
-    def _format_category_index(self, content, item):
-        categories = self._get_categories(item)
-        indexes = uniq(categories + self._get_indexes(item))
+    async def _format_category_index(self, content, item):
+        categories = await self._get_categories(item)
+        indexes = uniq(categories + await self._get_indexes(item))
         if categories:
             etree.SubElement(content, "Category").text = ",".join(categories)
         if indexes:
@@ -414,8 +415,8 @@ class JimiFormatter(Formatter):
         else:
             etree.SubElement(content, "IndexCode")
 
-    def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+    async def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id=cv_id
         )
         names = []
@@ -432,15 +433,15 @@ class JimiFormatter(Formatter):
                 names.append(name)
         return names
 
-    def _get_categories(self, item):
+    async def _get_categories(self, item):
         if not item.get("anpa_category"):
             return []
-        names = self._resolve_names(
+        names = await self._resolve_names(
             item["anpa_category"], item["language"], "categories", False
         )
         return names
 
-    def _get_indexes(self, item):
+    async def _get_indexes(self, item):
         SUBJECTS_ID = "subject_custom"
 
         subject = [
@@ -449,27 +450,31 @@ class JimiFormatter(Formatter):
             if s.get("name") and s.get("scheme") in (None, SUBJECTS_ID)
         ]
 
-        return self._resolve_names(subject, item["language"], SUBJECTS_ID)
+        return await self._resolve_names(subject, item["language"], SUBJECTS_ID)
 
-    def _format_genre(self, content, item):
+    async def _format_genre(self, content, item):
         version_type = etree.SubElement(content, "VersionType")
         if item.get("genre"):
-            names = self._resolve_names(item["genre"], item["language"], "genre", False)
+            names = await self._resolve_names(
+                item["genre"], item["language"], "genre", False
+            )
             if names:
                 version_type.text = names[0]
 
-    def _format_services(self, root, item):
+    async def _format_services(self, root, item):
         try:
             services = [
                 s for s in item["subject"] if s.get("scheme") == cp.DISTRIBUTION
             ]
         except KeyError:
             return
-        names = self._resolve_names(services, item["language"], cp.DISTRIBUTION, False)
+        names = await self._resolve_names(
+            services, item["language"], cp.DISTRIBUTION, False
+        )
         if names:
             etree.SubElement(root, "Services").text = names[0]
 
-    def _format_picture_metadata(self, content, item):
+    async def _format_picture_metadata(self, content, item):
         # no idea how to populate these
         etree.SubElement(content, "HeadlineService").text = "false"
         etree.SubElement(content, "VideoType").text = "None"
@@ -571,14 +576,16 @@ class JimiFormatter(Formatter):
                 extra["container"]
             )
         else:
-            self._format_refs(content, item)
+            await self._format_refs(content, item)
 
-    def _format_refs(self, content, item):
+    async def _format_refs(self, content, item):
         """ContainerIDs shoud link to SystemSlug of story."""
         refs = set(
             [
-                slug(self._get_original_item(ref))
-                for ref in superdesk.get_resource_service("news").search(
+                slug(await self._get_original_item(ref))
+                async for ref in await superdesk.get_resource_service(
+                    "news"
+                ).search_async(
                     {
                         "query": {
                             "bool": {
@@ -627,12 +634,11 @@ class JimiFormatter(Formatter):
                     published.setdefault("extra", {})["container"] = item["guid"]
                     subscribers = [
                         subscriber
-                        for subscriber in await get_subscribers_for_item(published, "publish")
+                        for subscriber in await get_subscribers_for_item(
+                            published, "publish"
+                        )
                         if any(
-                            [
-                                dest.format == "jimi"
-                                for dest in subscriber.destinations
-                            ]
+                            [dest.format == "jimi" for dest in subscriber.destinations]
                         )
                     ]
                     await publish_item(
@@ -656,12 +662,12 @@ class JimiFormatter(Formatter):
                 filter(None, [media_ref(photo) for photo in photos])
             )
 
-    def _get_original_item(self, item):
+    async def _get_original_item(self, item):
         orig = item
         for i in range(100):
             if not orig.get("rewrite_of"):
                 return orig
-            next_orig = superdesk.get_resource_service("archive").find_one(
+            next_orig = await superdesk.get_resource_service("archive").find_one_async(
                 req=None, _id=orig["rewrite_of"]
             )
             if next_orig is not None:
