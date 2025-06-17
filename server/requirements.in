@@ -9,6 +9,6 @@ google-cloud-translate==3.20.2
 deepl==1.22.0
 dotenv==0.9.9
 
-Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@async#egg=superdesk-core
+Superdesk-Core[exiv2] @ git+https://github.com/MarkLark86/superdesk-core.git@SDCP-947#egg=superdesk-core
 git+https://github.com/superdesk/superdesk-planning.git@async#egg=superdesk-planning
 git+https://github.com/superdesk/superdesk-analytics.git@async#egg=superdesk-analytics
