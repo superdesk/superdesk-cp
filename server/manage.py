@@ -16,4 +16,5 @@ from quart.cli import main
 
 if __name__ == "__main__":
     import cp.commands  # noqa
+
     main()
