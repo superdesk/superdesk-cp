@@ -1,7 +1,7 @@
 import re
 import decimal
 import logging
-import requests
+import aiohttp
 import functools
 
 from quart_babel import lazy_gettext
@@ -31,23 +31,28 @@ CURRENCY_REGEX_FR = re.compile(
     re.MULTILINE | re.VERBOSE,
 )
 
-sess = requests.Session()
 logger = logging.getLogger(__name__)
 
 
-def get_rate():
-    res = sess.get(SERVICE_URL, timeout=(3, 10))
-    res.raise_for_status()
-    rate = decimal.Decimal(res.json()["observations"][0]["FXUSDCAD"]["v"])
+async def get_rate() -> decimal.Decimal:
+    async with aiohttp.ClientSession() as session:
+        async with session.get(
+            SERVICE_URL, timeout=aiohttp.ClientTimeout(total=10, connect=3)
+        ) as res:
+            res.raise_for_status()
+            rate = decimal.Decimal(
+                (await res.json())["observations"][0]["FXUSDCAD"]["v"]
+            )
+
     logger.debug("got USD2CAD rate %f", rate)
     return rate
 
 
-def callback(item, **kwargs):
+async def callback(item, **kwargs):
     diff = {}
     if not item.get("body_html"):
         return diff
-    rate = get_rate()
+    rate = await get_rate()
     text = get_text(item["body_html"], "html", True)
 
     def repl(m, is_fr=False):

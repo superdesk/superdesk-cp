@@ -17,10 +17,10 @@ def update_tag_relevance(existing_tag, new_tag):
         existing_tag["relevance"] = new_tag["relevance"]
 
 
-def callback(item, **kwargs):
+async def callback(item, **kwargs):
     """This macro will tag the item using the AutoTagging service based on the item's content."""
     semaphore = Semaphore(app)
-    tags = semaphore.analyze(item)
+    tags = await semaphore.analyze(item)
 
     if tags:
         for key, values in tags.items():

@@ -1,6 +1,5 @@
 import cp
-from superdesk.flask import Flask
-import unittest
+from superdesk.tests import AsyncQuartTestCase
 import superdesk
 
 from unittest.mock import patch
@@ -15,11 +14,10 @@ from superdesk import default_settings
 from datetime import datetime, timedelta
 
 
-class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
-    def setUp(self):
-        self.app = Flask(__name__)
-
-    def test_remove_destination_and_add_presse_canadienne_staff_as_destination(self):
+class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
+    async def test_remove_destination_and_add_presse_canadienne_staff_as_destination(
+        self,
+    ):
         """
         Remove the current destination and add the Presse Canadienne staff as destination
         make the anpa_take_key as an empty string
@@ -39,9 +37,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             ],
         }
 
-        with self.app.app_context():
+        async with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                macro(item)
+                await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -54,7 +52,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
         )
         self.assertEqual(item.get("anpa_take_key"), "")
 
-    def test_override_destination_canadian_press_staff_to_presse_canadienne_staff(self):
+    async def test_override_destination_canadian_press_staff_to_presse_canadienne_staff(
+        self,
+    ):
         """
         If Canadian Press Staff destination is present override it with Presse Canadienne staff
         """
@@ -75,9 +75,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             ],
         }
 
-        with self.app.app_context():
+        async with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                macro(item)
+                await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -89,7 +89,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             item["subject"],
         )
 
-    def test_override_destination_the_associated_press_to_l_associated_press(self):
+    async def test_override_destination_the_associated_press_to_l_associated_press(
+        self,
+    ):
         """
         If The Associated Press destination is present override it with L'Associated Press
         """
@@ -110,9 +112,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             ],
         }
 
-        with self.app.app_context():
+        async with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                macro(item)
+                await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -124,7 +126,7 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             item["subject"],
         )
 
-    def test_destination_is_empty_add_presse_canadienne_staff(self):
+    async def test_destination_is_empty_add_presse_canadienne_staff(self):
         """
         If the destination is empty add Presse Canadienne staff
         """
@@ -139,9 +141,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             "language": "en",
         }
 
-        with self.app.app_context():
+        async with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                macro(item)
+                await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -153,7 +155,7 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             item["subject"],
         )
 
-    def test_dateline(self):
+    async def test_dateline(self):
         self.app.config.update(
             {
                 "GEONAMES_SEARCH_STYLE": settings.GEONAMES_SEARCH_STYLE,
@@ -189,9 +191,9 @@ class UpdateTranslationMetadataMacroTestCase(unittest.TestCase):
             },
         }
 
-        with self.app.app_context():
+        async with self.app.app_context():
             with patch.dict(superdesk.resources, resources):
-                macro(item)
+                await macro(item)
 
         dateline = item.get("dateline")
         self.assertEqual("The Associated Press", dateline["source"])
