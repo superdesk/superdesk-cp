@@ -1,7 +1,7 @@
-import unittest
+from superdesk.tests import TestCase
 import superdesk
 
-from superdesk.flask import json
+from superdesk.core import json
 from unittest.mock import patch
 from tests.mock import resources
 
@@ -12,12 +12,12 @@ from cp.output import CPPublishService, JimiFormatter
 now = utcnow()
 
 
-class CPPublishServiceTestCase(unittest.TestCase):
+class CPPublishServiceTestCase(TestCase):
     formatter = JimiFormatter()
 
-    def format_queue_item(self, item):
+    async def format_queue_item(self, item):
         with patch.dict(superdesk.resources, resources):
-            resources["archive"].service.find_one.side_effect = [
+            resources["archive"].service.find_one_async.side_effect = [
                 {"guid": "bar", "firstcreated": now, "unique_id": 1, "type": "text"},
             ]
 
@@ -27,10 +27,10 @@ class CPPublishServiceTestCase(unittest.TestCase):
                 "content_type": "text",
                 "destination": {"config": {"file_extension": "xml"}},
                 "published_seq_num": 5,
-                "formatted_item": self.formatter.format(item, {})[0][1],
+                "formatted_item": (await self.formatter.format(item, {}))[0][1],
             }
 
-    def test_get_filename(self):
+    async def test_get_filename(self):
         item = {
             "type": "text",
             "guid": "foo",
@@ -41,7 +41,7 @@ class CPPublishServiceTestCase(unittest.TestCase):
             "unique_id": 2,
         }
 
-        queue_item = self.format_queue_item(item)
+        queue_item = await self.format_queue_item(item)
         self.assertEqual("bar.xml", CPPublishService.get_filename(queue_item))
 
     def test_get_filename_non_jimi(self):
@@ -67,7 +67,7 @@ class CPPublishServiceTestCase(unittest.TestCase):
                 <Publish><ContentItem></ContentItem></Publish>"""
             self.assertEqual("foo-bar.xml", CPPublishService.get_filename(queue_item))
 
-    def test_get_filename_media(self):
+    async def test_get_filename_media(self):
         item = {
             "type": "picture",
             "guid": "foo",
@@ -82,5 +82,5 @@ class CPPublishServiceTestCase(unittest.TestCase):
                 },
             },
         }
-        queue_item = self.format_queue_item(item)
+        queue_item = await self.format_queue_item(item)
         self.assertEqual("media-id.xml", CPPublishService.get_filename(queue_item))
