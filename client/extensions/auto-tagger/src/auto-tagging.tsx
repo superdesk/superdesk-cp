@@ -12,7 +12,7 @@ import { toClientFormat, IServerResponse, toServerFormat } from './adapter';
 import { getGroups } from './groups';
 import { getAutoTaggingVocabularyLabels } from './common';
 import { getExistingTags, createTagsPatch } from './data-transformations';
-import { noop } from 'lodash';
+import { noop, memoize } from 'lodash';
 
 export const entityGroups = OrderedSet(['place', 'person', 'organisation', 'event',]);
 
@@ -145,7 +145,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
     const { preferences } = superdesk;
     const { httpRequestJsonLocal } = superdesk;
     const { gettext, gettextPlural } = superdesk.localization;
-    const { memoize, generatePatch, arrayToTree } = superdesk.utilities;
+    const { generatePatch, arrayToTree } = superdesk.utilities;
     const { AuthoringWidgetHeading, Alert } = superdesk.components;
     const groupLabels = getGroups(superdesk);
 
