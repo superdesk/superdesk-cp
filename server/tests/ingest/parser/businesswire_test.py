@@ -9,9 +9,9 @@ class BusinessWireTestCase(ParserTestCase):
     parser = BusinessWireParser()
     provider = "businesswire"
 
-    def test_parser(self):
+    async def test_parser(self):
         filename = "20210130005024r1.xml"
-        item = self.parse(filename)
+        item = await self.parse(filename)
         self.assertIsNotNone(item)
         self.assertEqual(
             "Interactive Brokers Lifts All Trading Restrictions on Options",

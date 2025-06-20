@@ -1,15 +1,20 @@
 import os
 import io
 import pytz
+import re
+from aioresponses import aioresponses
+
 from superdesk.flask import Flask
-import unittest
+from superdesk.tests import TestCase
 import superdesk
 import lxml.etree as etree
 
 from datetime import datetime
 from unittest.mock import patch
 from httmock import urlmatch, HTTMock
-from requests.exceptions import HTTPError
+
+# from requests.exceptions import HTTPError
+from aiohttp.client_exceptions import ClientError
 from superdesk.utc import tzinfo
 from tests.mock import resources, media_storage
 
@@ -32,52 +37,49 @@ def set_rendition(item, *args, **kwargs):
     }
 
 
-@urlmatch(netloc=r"example\.com$", path=r"/API/Auth")
-def auth_ok(url, request):
-    return read_fixture("orangelogic_auth.json")
+auth_url = re.compile(r"^https://example\.com/API/Auth")
+search_url = re.compile(r"^https://example\.com/API/Search")
 
 
-@urlmatch(netloc=r"example\.com$", path=r"/API/Search")
-def search_ok(url, request):
-    return read_fixture("orangelogic_search.json")
+def auth_ok(aiohttp_mock: aioresponses):
+    aiohttp_mock.post(auth_url, body=read_fixture("orangelogic_auth.json"))
 
 
-@urlmatch(netloc=r"example\.com$", path=r"/API/Auth")
-def auth_error(url, request):
-    return {"status_code": 400}
+def search_ok(aiohttp_mock: aioresponses):
+    aiohttp_mock.get(search_url, body=read_fixture("orangelogic_search.json"))
 
 
-@urlmatch(netloc=r"example\.com$", path=r"/API/Search")
-def search_error(url, request):
-    return {"status_code": 400}
+def auth_error(aiohttp_mock: aioresponses):
+    aiohttp_mock.post(auth_url, status=400)
 
 
-@urlmatch(netloc=r"example\.com$", path=r"/API/Search")
-def fetch_ok(url, request):
-    return read_fixture("orangelogic_fetch.json")
+def search_error(aiohttp_mock: aioresponses):
+    aiohttp_mock.get(search_url, status=400)
 
 
-class OrangelogicTestCase(unittest.TestCase):
+def fetch_ok(aiohttp_mock: aioresponses):
+    aiohttp_mock.get(search_url, body=read_fixture("orangelogic_fetch.json"))
+
+
+class OrangelogicTestCase(TestCase):
     provider = {"config": {"username": "foo", "password": "bar"}}
+    app_config = {"ORANGELOGIC_URL": "https://example.com/"}
 
-    def setUp(self):
-        self.app = Flask(__name__)
+    async def asyncSetUp(self):
+        await super().asyncSetUp()
         self.app.media = media_storage
-        self.app.config["ORANGELOGIC_URL"] = "https://example.com/"
-        self.ctx = self.app.app_context()
-        self.ctx.push()
+        self.service = OrangelogicSearchProvider(self.provider)
 
-    def tearDown(self):
-        self.ctx.pop()
+    async def asyncTearDown(self):
+        await super().asyncTearDown()
+        if self.service and self.service.session:
+            await self.service.session.close()
 
-    def test_instance(self):
-        OrangelogicSearchProvider(self.provider)
-
-    def test_find(self):
-        service = OrangelogicSearchProvider(self.provider)
-
-        with HTTMock(auth_ok, search_ok):
-            items = service.find_async({})
+    async def test_find(self):
+        with aioresponses() as aiohttp_mock:
+            auth_ok(aiohttp_mock)
+            search_ok(aiohttp_mock)
+            items = await self.service.find_async({})
 
         self.assertEqual(5, len(items))
         self.assertEqual(items.count(), 2021650)
@@ -115,32 +117,34 @@ class OrangelogicTestCase(unittest.TestCase):
             items[0]["renditions"]["viewImage"],
         )
 
-    def test_repeat_and_raise_on_error(self):
-        service = OrangelogicSearchProvider(self.provider)
+    async def test_repeat_and_raise_on_error(self):
+        with aioresponses() as aiohttp_mock:
+            auth_ok(aiohttp_mock)
+            search_error(aiohttp_mock)
+            with self.assertRaises(ClientError):
+                items = await self.service.find_async({})
 
-        with HTTMock(auth_ok, search_error):
-            with self.assertRaises(HTTPError):
-                items = service.find_async({})
-
-        with HTTMock(auth_error, search_error):
-            with self.assertRaises(HTTPError):
-                items = service.find_async({})
+        with aioresponses() as aiohttp_mock:
+            auth_error(aiohttp_mock)
+            search_error(aiohttp_mock)
+            with self.assertRaises(ClientError):
+                items = await self.service.find_async({})
 
     @patch("cp.orangelogic.update_renditions", side_effect=set_rendition)
-    def test_fetch_to_jimi(self, update_renditions_mock):
-        service = OrangelogicSearchProvider(self.provider)
-
-        update_renditions_mock.side_effects = set_rendition
-
-        self.app.media.get.return_value = io.BytesIO(
+    async def test_fetch_to_jimi(self, update_renditions_mock):
+        self.app.media.get_async.return_value = io.BytesIO(
             read_fixture(
                 "9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152.jpg", "rb"
             )
         )
 
-        with HTTMock(auth_ok, fetch_ok):
+        with aioresponses() as aiohttp_mock:
+            auth_ok(aiohttp_mock)
+            fetch_ok(aiohttp_mock)
+
             with patch.dict(superdesk.resources, resources):
-                fetched = service.fetch_async({})
+                fetched = await self.service.fetch_async({})
+
             update_renditions_mock.assert_called_once_with(
                 fetched,
                 "https://example.com/htm/GetDocumentAPI.aspx?F=TRX&DocID=2RLQZBCB4R4R4&token=token.foo",
@@ -156,7 +160,7 @@ class OrangelogicTestCase(unittest.TestCase):
 
         with patch.dict(superdesk.resources, resources):
             formatter = JimiFormatter()
-            xml = formatter.format(fetched, {})[0][1]
+            xml = (await formatter.format(fetched, {}))[0][1]
 
         root = etree.fromstring(xml.encode(formatter.ENCODING))
 

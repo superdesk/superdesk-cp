@@ -8,7 +8,7 @@ from superdesk.text_checkers.ai.semaphore import (
 
 
 class SemaphoreTransmitter(PublishService):
-    def _transmit(self, queue_item, subscriber):
+    async def _transmit(self, queue_item, subscriber):
         semaphore = Semaphore(current_app)  # Initialize the Semaphore integration
         item = json.loads(queue_item["formatted_item"])
         # Modify this part to transmit the item using the Semaphore integration

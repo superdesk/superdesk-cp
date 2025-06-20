@@ -1,13 +1,16 @@
 import superdesk
-
-from prod_api.items.resource import item_url
+from superdesk.eve_async.service import AsyncBaseService
 from superdesk.auth_server.scopes import Scope
 
+from prod_api.items.resource import item_url
 
-def get_users(items):
+
+async def get_users(items):
     user_ids = [item["user"] for item in items]
     return {
-        _id: superdesk.get_resource_service("users").find_one(req=None, _id=_id)
+        _id: await superdesk.get_resource_service("users").find_one_async(
+            req=None, _id=_id
+        )
         for _id in user_ids
     }
 
@@ -30,11 +33,11 @@ class UsageResource(superdesk.Resource):
     }
 
 
-class UsageService(superdesk.Service):
-    def on_fetched(self, doc):
-        super().on_fetched(doc)
+class UsageService(AsyncBaseService):
+    async def on_fetched_async(self, doc):
+        await super().on_fetched_async(doc)
 
-        users = get_users(doc["_items"])
+        users = await get_users(doc["_items"])
 
         for item in doc["_items"]:
             user_id = item.pop("user")

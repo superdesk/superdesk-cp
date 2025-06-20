@@ -1,7 +1,6 @@
-import unittest
 import datetime
+from superdesk.tests import TestCase
 from superdesk.flask import render_template
-from app import get_app
 
 
 events = [
@@ -81,15 +80,13 @@ events = [
 ]
 
 
-class ParserTestCase(unittest.TestCase):
+class ParserTestCase(TestCase):
+    app_config = {"DEFAULT_TIMEZONE": "America/Toronto"}
 
-    app = get_app()
-
-    def test_new_one(self):
-        with self.app.app_context():
-            template_data = render_template(
-                "news_events_list_export.html", items=events, app=self.app
-            )
+    async def test_new_one(self):
+        template_data = await render_template(
+            "news_events_list_export.html", items=events, app=self.app
+        )
         self.assertIn(
             "<p>First<br>06:30 AM 2024-04-22 - 11:30 AM 2024-04-24<br></p>",
             template_data,

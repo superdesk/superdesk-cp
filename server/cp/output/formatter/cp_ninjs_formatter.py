@@ -35,8 +35,10 @@ class CPNINJSFormatter(NINJSFormatter):
 
     author_user_fields = ["email"]
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
-        ninjs = super()._transform_to_ninjs(article, subscriber, recursive=recursive)
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
+        ninjs = await super()._transform_to_ninjs(
+            article, subscriber, recursive=recursive
+        )
 
         if (
             article.get("subject")

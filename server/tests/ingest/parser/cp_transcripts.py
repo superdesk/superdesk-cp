@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import patch
 
-from superdesk.flask import Flask
+from superdesk.tests import TestCase
 import superdesk
 
 from cp.ingest import CPTranscriptsFeedParser
@@ -14,12 +14,10 @@ provider = {}
 parser = CPTranscriptsFeedParser()
 
 
-class CP_Transcripts_ParseTestCase(unittest.TestCase):
-    app = Flask(__name__)
-
-    def test_parse(self):
-        with self.app.app_context(), patch.dict(superdesk.resources, resources):
-            items = parser.parse(
+class CP_Transcripts_ParseTestCase(TestCase):
+    async def test_parse(self):
+        with patch.dict(superdesk.resources, resources):
+            items = await parser.parse(
                 get_fixture_path("cp_transcripts.json", "cp_transcripts"), provider
             )
 

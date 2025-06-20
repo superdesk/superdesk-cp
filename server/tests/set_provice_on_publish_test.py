@@ -1,29 +1,14 @@
-from superdesk.flask import Flask
-import unittest
+from unittest.mock import patch
+
+from superdesk.tests.async_case import IsolatedAsyncioTestCase
 import superdesk
 
-from tests.mock import resources
-from unittest.mock import patch
 from cp.set_province_on_publish import set_province_on_publish
+from tests.mock import resources
 
 
-class PublishSignalTestCase(unittest.TestCase):
-    def setUp(self) -> None:
-        self.app = Flask(__name__)
-        self.app.config.update(
-            {
-                "VERSION": "version",
-                "DEFAULT_LANGUAGE": "en",
-            }
-        )
-        self.ctx = self.app.app_context()
-        self.ctx.push()
-
-    def tearDown(self) -> None:
-        super().tearDown()
-        self.ctx.pop()
-
-    def test_publish_signal(self):
+class PublishSignalTestCase(IsolatedAsyncioTestCase):
+    async def test_publish_signal(self):
         with patch.dict(superdesk.resources, resources):
             item = {
                 "dateline": {
@@ -61,8 +46,8 @@ class PublishSignalTestCase(unittest.TestCase):
 
             updates = {}
 
-            set_province_on_publish(None, item, updates, foo=1)
-            set_province_on_publish(None, item, updates, foo=1)
+            await set_province_on_publish(item, updates)
+            await set_province_on_publish(item, updates)
 
             assert "subject" in item
             regions = [
@@ -76,5 +61,5 @@ class PublishSignalTestCase(unittest.TestCase):
             assert 1 == len(updates["subject"])
             assert item["subject"] == updates["subject"]
 
-    def test_empty_located(self):
-        set_province_on_publish(None, {"dateline": {"located": None}}, {}, bar=1)
+    async def test_empty_located(self):
+        await set_province_on_publish({"dateline": {"located": None}}, {})

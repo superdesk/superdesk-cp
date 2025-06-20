@@ -49,6 +49,7 @@ from superdesk.metadata.item import (
 )
 from superdesk.metadata.packages import RESIDREF, GROUP_ID, GROUPS, ROOT_GROUP, REFS
 from superdesk.utils import json_serialize_datetime_objectId
+from superdesk.publish_async.utils import generate_sequence_number
 from superdesk.media.renditions import get_renditions_spec
 from superdesk.vocabularies import is_related_content
 from apps.archive.common import get_utc_schedule
@@ -179,13 +180,11 @@ class NINJSFormatter_2(Formatter):
         self.can_export = True
         self.internal_renditions = ["original"]
 
-    def format(self, article, subscriber, codes=None):
+    async def format(self, article, subscriber, codes=None):
         try:
-            pub_seq_num = superdesk.get_resource_service(
-                "subscribers"
-            ).generate_sequence_number(subscriber)
+            pub_seq_num = await generate_sequence_number(subscriber)
 
-            ninjs = self._transform_to_ninjs(article, subscriber)
+            ninjs = await self._transform_to_ninjs(article, subscriber)
             return [
                 (
                     pub_seq_num,
@@ -197,8 +196,8 @@ class NINJSFormatter_2(Formatter):
 
     # Adding a method to fetch Parents of Manual Tags
 
-    def _add_parent_manual_tags(self, item):
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+    async def _add_parent_manual_tags(self, item):
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id="subject_custom"
         )
         vocab_items = cv.get("items", [])
@@ -230,10 +229,10 @@ class NINJSFormatter_2(Formatter):
         item["subject"] = updated_subjects
         return item
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
         # Using the method we created to fetch Parents of all Manual Tags
         article = self._filter_out_region_subjects(article)
-        article = self._add_parent_manual_tags(article)
+        article = await self._add_parent_manual_tags(article)
 
         ninjs = {
             "guid": article.get(GUID_FIELD, article.get("uri")),
@@ -265,7 +264,7 @@ class NINJSFormatter_2(Formatter):
             ninjs["description_html"] = self.append_body_footer(article)
 
         if article.get("place"):
-            ninjs["place"] = self._format_place(article)
+            ninjs["place"] = await self._format_place(article)
 
         if article.get("profile"):
             ninjs["profile"] = self._format_profile(article["profile"])
@@ -273,7 +272,7 @@ class NINJSFormatter_2(Formatter):
         extra_items = None
         # Updated the output for associations HERE
         if article.get("associations"):
-            ninjs["associations"] = self._get_associations(article, subscriber)
+            ninjs["associations"] = await self._get_associations(article, subscriber)
 
         if article.get("embargoed"):
             ninjs["embargoed"] = article["embargoed"].isoformat()
@@ -371,7 +370,7 @@ class NINJSFormatter_2(Formatter):
             )
 
         if article.get("attachments"):
-            ninjs["attachments"] = self._format_attachments(article)
+            ninjs["attachments"] = await self._format_attachments(article)
 
         if ninjs["type"] == CONTENT_TYPE.TEXT and (
             "body_html" in ninjs or "body_text" in ninjs
@@ -395,7 +394,7 @@ class NINJSFormatter_2(Formatter):
             ninjs["readtime"] = readtime
 
         if article.get("authors"):
-            ninjs["authors"] = self._format_authors(article)
+            ninjs["authors"] = await self._format_authors(article)
 
         if (article.get("schedule_settings") or {}).get("utc_publish_schedule"):
             ninjs["publish_schedule"] = article["schedule_settings"][
@@ -414,7 +413,7 @@ class NINJSFormatter_2(Formatter):
                     value.setdefault("description", "")
 
         # Method to Append Jimi Tags in Subjects
-        self.update_ninjs_subjects(ninjs, language="en-CA")
+        await self.update_ninjs_subjects(ninjs, language="en-CA")
 
         return ninjs
 
@@ -449,7 +448,7 @@ class NINJSFormatter_2(Formatter):
         return article[ITEM_TYPE]
 
     # Updated _get_association to work with both Pictures and Text
-    def _get_associations(self, article, subscriber):
+    async def _get_associations(self, article, subscriber):
         associations = {}
         article_type = self._get_type(article)
 
@@ -475,7 +474,7 @@ class NINJSFormatter_2(Formatter):
                         item["label"] = ref.get("label")
                     if ref.get("package_item"):
                         item.update(
-                            self._transform_to_ninjs(
+                            await self._transform_to_ninjs(
                                 ref["package_item"], subscriber, recursive=False
                             )
                         )
@@ -490,7 +489,7 @@ class NINJSFormatter_2(Formatter):
 
             return associations
 
-    def _format_related(self, article, subscriber):
+    async def _format_related(self, article, subscriber):
         """Format all associated items for simple items (not packages)."""
         associations = OrderedDict()
         extra_items = {}
@@ -508,11 +507,13 @@ class NINJSFormatter_2(Formatter):
         for key, item in article_associations.items():
             if item:
                 if is_related_content(key) and "_type" not in item:
-                    orig_item = archive_service.find_one(req=None, _id=item["_id"])
+                    orig_item = await archive_service.find_one_async(
+                        req=None, _id=item["_id"]
+                    )
                     orig_item["order"] = item.get("order", 1)
                     item = orig_item.copy()
 
-                item = self._transform_to_ninjs(item, subscriber, recursive=False)
+                item = await self._transform_to_ninjs(item, subscriber, recursive=False)
 
                 # Keep original POI and get rid of all other POI.
                 renditions = item.get("renditions")
@@ -539,9 +540,9 @@ class NINJSFormatter_2(Formatter):
                             )
                             content_profile = {"schema": {}}
                         else:
-                            content_profile = superdesk.get_resource_service(
+                            content_profile = await superdesk.get_resource_service(
                                 "content_types"
-                            ).find_one(_id=profile, req=None)
+                            ).find_one_async(_id=profile, req=None)
                     field_id = match.group("field_id")
                     schema = content_profile["schema"].get(field_id, {})
                     if (
@@ -573,7 +574,7 @@ class NINJSFormatter_2(Formatter):
         lang = article.get("language", "")
         return [format_cv_item(item, lang) for item in article["genre"]]
 
-    def update_ninjs_subjects(self, ninjs, language="en-CA"):
+    async def update_ninjs_subjects(self, ninjs, language="en-CA"):
         capital_subjects = [
             "HIV and AIDS",
             "traditional Chinese medicine",
@@ -632,7 +633,7 @@ class NINJSFormatter_2(Formatter):
         ]
         try:
             # Fetch the vocabulary
-            cv = superdesk.get_resource_service("vocabularies").find_one(
+            cv = await superdesk.get_resource_service("vocabularies").find_one_async(
                 req=None, _id="subject_custom"
             )
             vocab_items = cv.get("items", [])
@@ -771,9 +772,11 @@ class NINJSFormatter_2(Formatter):
                     formatted.pop(field, None)
         return formatted
 
-    def _format_place(self, article):
+    async def _format_place(self, article):
         vocabularies_service = superdesk.get_resource_service("vocabularies")
-        locator_map = vocabularies_service.find_one(req=None, _id="locators")
+        locator_map = await vocabularies_service.find_one_async(
+            req=None, _id="locators"
+        )
         if locator_map and "items" in locator_map:
             locator_map["items"] = vocabularies_service.get_locale_vocabulary(
                 locator_map.get("items"), article.get("language")
@@ -848,11 +851,11 @@ class NINJSFormatter_2(Formatter):
             {"name": "Content Warning", "code": "cwarn", "scheme": SCHEME_MAP["sig"]}
         ]
 
-    def _format_attachments(self, article):
+    async def _format_attachments(self, article):
         output = []
         attachments_service = superdesk.get_resource_service("attachments")
         for attachment_ref in article["attachments"]:
-            attachment = attachments_service.find_one(
+            attachment = await attachments_service.find_one_async(
                 req=None, _id=attachment_ref["attachment"]
             )
             href = get_attachment_public_url(attachment)
@@ -872,10 +875,12 @@ class NINJSFormatter_2(Formatter):
                 )
         return output
 
-    def _format_authors(self, article):
+    async def _format_authors(self, article):
         users_service = superdesk.get_resource_service("users")
         vocabularies_service = superdesk.get_resource_service("vocabularies")
-        job_titles_voc = vocabularies_service.find_one(None, _id="job_titles")
+        job_titles_voc = await vocabularies_service.find_one_async(
+            None, _id="job_titles"
+        )
         if job_titles_voc and "items" in job_titles_voc:
             job_titles_voc["items"] = vocabularies_service.get_locale_vocabulary(
                 job_titles_voc.get("items"), article.get("language")
@@ -893,14 +898,18 @@ class NINJSFormatter_2(Formatter):
             except KeyError:
                 # XXX: in some older items, parent may be missing, we try to find user with name in this case
                 try:
-                    user = next(users_service.find({"display_name": author["name"]}))
-                except (StopIteration, KeyError):
+                    user = await (
+                        await users_service.find_async({"display_name": author["name"]})
+                    ).next()
+                except (StopAsyncIteration, KeyError):
                     logger.warning("unknown user")
                     user = {}
             else:
                 try:
-                    user = next(users_service.find({"_id": user_id}))
-                except StopIteration:
+                    user = await (
+                        await users_service.find_async({"_id": user_id})
+                    ).next()
+                except StopAsyncIteration:
                     logger.warning("unknown user: {user_id}".format(user_id=user_id))
                     user = {}
 
@@ -965,8 +974,8 @@ class NINJS2Formatter(NINJSFormatter_2):
         "rewrite_of",
     )
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
-        ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
+        ninjs = await super()._transform_to_ninjs(article, subscriber, recursive)
 
         ninjs["version"] = str(article.get("correction_sequence", 1))
 

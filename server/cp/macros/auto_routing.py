@@ -11,17 +11,18 @@
 import cp
 import re
 import logging
-import superdesk
 
 from quart_babel import lazy_gettext
+
+from superdesk import get_resource_service
 from superdesk.metadata.item import CONTENT_STATE
 
 
 logger = logging.getLogger(__name__)
 
 
-def find_name_item(cv_id, name):
-    cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id=cv_id)
+async def find_name_item(cv_id, name):
+    cv = await get_resource_service("vocabularies").find_one_async(req=None, _id=cv_id)
     if not cv or not cv.get("items"):
         return
     for item in cv["items"]:
@@ -29,7 +30,7 @@ def find_name_item(cv_id, name):
             return item
 
 
-def callback(item, **kwargs):
+async def callback(item, **kwargs):
     """This macro will set the language of the articles to the Desk language."""
     rule = kwargs.get("rule")
     item["profile"] = "autorouting"
@@ -41,7 +42,7 @@ def callback(item, **kwargs):
         }
 
         for cv_id, name in mapping.items():
-            subject = find_name_item(cv_id, name.lower())
+            subject = await find_name_item(cv_id, name.lower())
             if subject:
                 item.setdefault("subject", []).append(
                     {
@@ -62,8 +63,7 @@ def callback(item, **kwargs):
                 item["body_html"] = item.pop("abstract")
 
     manually_edited = (
-        superdesk.get_resource_service("archive")
-        .find(
+        await get_resource_service("archive").find_async(
             where={
                 "$and": [
                     {"uri": item["uri"]},
@@ -76,12 +76,15 @@ def callback(item, **kwargs):
             },  # type: ignore
             max_results=1,
         )
-        .sort("versioncreated", -1)
-    )
+    ).sort("versioncreated", -1)
 
-    if manually_edited.count():
+    try:
+        prev = await manually_edited.next()
+    except StopIteration:
+        prev = None
+
+    if prev:
         logger.info("Manually updated before %s", item["slugline"])
-        prev = manually_edited[0]
         subj = [
             subject
             for subject in prev["subject"]

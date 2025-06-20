@@ -16,13 +16,15 @@ from superdesk import get_resource_service
 logger = logging.getLogger(__name__)
 
 
-def translate_to_desk_language(item, **kwargs):
+async def translate_to_desk_language(item, **kwargs):
     """This macro will set the language of the articles to the Desk language."""
 
     dest_desk = kwargs.get("dest_desk_id")
 
     if dest_desk:
-        desk = get_resource_service("desks").find_one(req=None, _id=dest_desk)
+        desk = await get_resource_service("desks").find_one_async(
+            req=None, _id=dest_desk
+        )
     else:
         desk = kwargs.get("desk")
 

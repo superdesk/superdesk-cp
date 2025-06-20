@@ -15,7 +15,10 @@ from superdesk.resource_fields import ITEM_STATE
 from superdesk.text_utils import get_text, get_word_count
 from superdesk.publish.formatters import Formatter
 from superdesk.publish_async.commands import publish_item
-from superdesk.publish_async.utils import get_subscribers_for_item
+from superdesk.publish_async.utils import (
+    get_subscribers_for_item,
+    generate_sequence_number,
+)
 from superdesk.media.renditions import get_rendition_file_name
 from superdesk.metadata.item import SCHEDULE_SETTINGS
 
@@ -126,9 +129,7 @@ class Jimi2Formatter(Formatter):
         if not services:
             services.append(None)
         for service in services:
-            pub_seq_num = superdesk.get_resource_service(
-                "subscribers"
-            ).generate_sequence_number(subscriber)
+            pub_seq_num = await generate_sequence_number(subscriber)
             root = etree.Element("Publish")
             await self._format_item(root, article, pub_seq_num, service, services)
             xml = etree.tostring(
@@ -146,7 +147,7 @@ class Jimi2Formatter(Formatter):
     async def _format_item(self, root, item, pub_seq_num, service, services) -> None:
         # Added Fix here to fetch Parents of Manual Tags.
 
-        item = self._add_parent_manual_tags(item)
+        item = await self._add_parent_manual_tags(item)
 
         if is_picture(item):
             D2P1 = "http://www.w3.org/2001/XMLSchema-instance"
@@ -192,14 +193,14 @@ class Jimi2Formatter(Formatter):
             etree.SubElement(root, "PscCodes").text = service
         else:
             self._format_subject_code(root, item, "PscCodes", cp.DESTINATIONS)
-            self._format_services(root, item)
+            await self._format_services(root, item)
 
         is_broadcast = cp.is_broadcast(item)
 
         # content system fields
-        orig = self._get_original_item(item)
+        orig = await self._get_original_item(item)
         seq_id = "{:08d}".format(pub_seq_num % 100000000)
-        item_id = "{:08d}".format(self.get_item_id(orig) % 100000000)
+        item_id = "{:08d}".format(await self.get_item_id(orig) % 100000000)
         etree.SubElement(content, "Name")
         etree.SubElement(content, "Cachable").text = "false"
         etree.SubElement(content, "FileName").text = filename(orig)
@@ -279,9 +280,9 @@ class Jimi2Formatter(Formatter):
 
         #  IndexCodes are set here
 
-        self._format_category_index(content, item)
-        self._format_genre(content, item)
-        self._format_urgency(content, item.get("urgency"), item["language"])
+        await self._format_category_index(content, item)
+        await self._format_genre(content, item)
+        await self._format_urgency(content, item.get("urgency"), item["language"])
         self._format_keyword(
             content,
             item.get("keywords"),
@@ -294,7 +295,7 @@ class Jimi2Formatter(Formatter):
             etree.SubElement(content, "Byline").text = item["byline"]
 
         if is_picture(item):
-            self._format_picture_metadata(content, item)
+            await self._format_picture_metadata(content, item)
         else:
             etree.SubElement(content, "EditorNote").text = item.get("ednote")
             if extra.get(cp.UPDATE):
@@ -305,9 +306,9 @@ class Jimi2Formatter(Formatter):
         if item.get("associations"):
             await self._format_associations(content, item)
 
-    def get_item_id(self, item):
+    async def get_item_id(self, item):
         if item.get("family_id"):
-            ingest_item = superdesk.get_resource_service("ingest").find_one(
+            ingest_item = await superdesk.get_resource_service("ingest").find_one_async(
                 req=None, _id=item["family_id"]
             )
             if ingest_item and ingest_item.get("unique_id"):
@@ -322,11 +323,11 @@ class Jimi2Formatter(Formatter):
             return "THE CANADIAN PRESS"
         return credit or item.get("source") or ""
 
-    def _format_urgency(self, content, urgency, language):
+    async def _format_urgency(self, content, urgency, language):
         if urgency is None:
             urgency = 3
         etree.SubElement(content, "RankingValue").text = str(urgency)
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id="urgency"
         )
         items = [item for item in cv["items"] if str(item.get("qcode")) == str(urgency)]
@@ -404,8 +405,8 @@ class Jimi2Formatter(Formatter):
             etree.SubElement(content, "Placeline")
 
     # Creating a new Method FOr adding Parents in Manually added Index Codes
-    def _add_parent_manual_tags(self, item):
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+    async def _add_parent_manual_tags(self, item):
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id="subject_custom"
         )
         vocab_items = cv.get("items", [])
@@ -437,9 +438,9 @@ class Jimi2Formatter(Formatter):
         item["subject"] = updated_subjects
         return item
 
-    def _format_category_index(self, content, item):
-        categories = self._get_categories(item)
-        indexes = uniq(categories + self._get_indexes(item))
+    async def _format_category_index(self, content, item):
+        categories = await self._get_categories(item)
+        indexes = uniq(categories + await self._get_indexes(item))
 
         #  Add code here to remove the small case letters from here
         filtered_indexes = [index for index in indexes if not index[0].islower()]
@@ -453,8 +454,8 @@ class Jimi2Formatter(Formatter):
         else:
             etree.SubElement(content, "IndexCode")
 
-    def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+    async def _resolve_names(self, selected_items, language, cv_id, jimi_only=True):
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id=cv_id
         )
         names = []
@@ -477,10 +478,10 @@ class Jimi2Formatter(Formatter):
 
         return names
 
-    def _resolve_names_categories(
+    async def _resolve_names_categories(
         self, selected_items, language, cv_id, jimi_only=True
     ):
-        cv = superdesk.get_resource_service("vocabularies").find_one(
+        cv = await superdesk.get_resource_service("vocabularies").find_one_async(
             req=None, _id=cv_id
         )
         names = []
@@ -497,16 +498,16 @@ class Jimi2Formatter(Formatter):
                 names.append(name)
         return names
 
-    def _get_categories(self, item):
+    async def _get_categories(self, item):
         if not item.get("anpa_category"):
             return []
-        names = self._resolve_names_categories(
+        names = await self._resolve_names_categories(
             item["anpa_category"], item["language"], "categories", False
         )
         return names
 
     #  This was changed for IndeCodes Updates
-    def _get_indexes(self, item):
+    async def _get_indexes(self, item):
         SUBJECTS_ID = "subject_custom"
 
         SUBJECTS_ID_2 = "subject"
@@ -520,31 +521,31 @@ class Jimi2Formatter(Formatter):
             and s.get("scheme") in (None, SUBJECTS_ID, SUBJECTS_ID_2, SUBJECTS_ID_3)
         ]
 
-        return self._resolve_names(subject, item["language"], SUBJECTS_ID)
+        return await self._resolve_names(subject, item["language"], SUBJECTS_ID)
 
-    def _format_genre(self, content, item):
+    async def _format_genre(self, content, item):
         version_type = etree.SubElement(content, "VersionType")
         if item.get("genre"):
-            names = self._resolve_names_categories(
+            names = await self._resolve_names_categories(
                 item["genre"], item["language"], "genre", False
             )
             if names:
                 version_type.text = names[0]
 
-    def _format_services(self, root, item):
+    async def _format_services(self, root, item):
         try:
             services = [
                 s for s in item["subject"] if s.get("scheme") == cp.DISTRIBUTION
             ]
         except KeyError:
             return
-        names = self._resolve_names_categories(
+        names = await self._resolve_names_categories(
             services, item["language"], cp.DISTRIBUTION, False
         )
         if names:
             etree.SubElement(root, "Services").text = names[0]
 
-    def _format_picture_metadata(self, content, item):
+    async def _format_picture_metadata(self, content, item):
         # no idea how to populate these
         etree.SubElement(content, "HeadlineService").text = "false"
         etree.SubElement(content, "VideoType").text = "None"
@@ -636,14 +637,14 @@ class Jimi2Formatter(Formatter):
         if extra.get("container"):
             etree.SubElement(content, "ContainerIDs").text = extra["container"]
         else:
-            self._format_refs(content, item)
+            await self._format_refs(content, item)
 
-    def _format_refs(self, content, item):
+    async def _format_refs(self, content, item):
         """ContainerIDs shoud link to SystemSlug of story."""
         refs = set(
             [
-                slug(self._get_original_item(ref))
-                for ref in superdesk.get_resource_service("news").get(
+                slug(await self._get_original_item(ref))
+                async for ref in await superdesk.get_resource_service("news").get_async(
                     req=None, lookup={"refs.guid": item["guid"]}
                 )
                 if ref.get("pubstatus") == "usable"
@@ -674,7 +675,7 @@ class Jimi2Formatter(Formatter):
         photos = []
         for assoc in item["associations"].values():
             if assoc:
-                published = superdesk.get_resource_service(
+                published = await superdesk.get_resource_service(
                     "published"
                 ).get_last_published_version(assoc["_id"])
                 if (
@@ -683,12 +684,11 @@ class Jimi2Formatter(Formatter):
                     published.setdefault("extra", {})["container"] = item["guid"]
                     subscribers = [
                         subscriber
-                        for subscriber in await get_subscribers_for_item(published, "publish")
+                        for subscriber in await get_subscribers_for_item(
+                            published, "publish"
+                        )
                         if any(
-                            [
-                                dest.format == "jimi"
-                                for dest in subscriber.destinations
-                            ]
+                            [dest.format == "jimi" for dest in subscriber.destinations]
                         )
                     ]
                     await publish_item(
@@ -712,12 +712,12 @@ class Jimi2Formatter(Formatter):
                 filter(None, [media_ref(photo) for photo in photos])
             )
 
-    def _get_original_item(self, item):
+    async def _get_original_item(self, item):
         orig = item
         for i in range(100):
             if not orig.get("rewrite_of"):
                 return orig
-            next_orig = superdesk.get_resource_service("archive").find_one(
+            next_orig = await superdesk.get_resource_service("archive").find_one_async(
                 req=None, _id=orig["rewrite_of"]
             )
             if next_orig is not None:

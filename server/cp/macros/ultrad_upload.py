@@ -4,7 +4,7 @@ from quart import current_app as app
 from cp.ultrad import upload_document, ULTRAD_ID
 
 
-def callback(item, **kwargs):
+async def callback(item, **kwargs):
     item.setdefault("extra", {})
     if item["extra"].get(ULTRAD_ID):
         app.logger.info("item %s is already in ultrad", item["guid"])
@@ -14,7 +14,7 @@ def callback(item, **kwargs):
         app.logger.debug("nothing to translate for item %s", item["guid"])
         return item
 
-    ultrad_id = upload_document(item)
+    ultrad_id = await upload_document(item)
     if ultrad_id:
         item["extra"][ULTRAD_ID] = ultrad_id
 

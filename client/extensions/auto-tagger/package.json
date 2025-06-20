@@ -10,8 +10,9 @@
     "lodash": "4.17.5"
   },
   "devDependencies": {
+    "@types/lodash": "4.14.117",
     "superdesk-code-style": "1.3.0",
-    "typescript": "4.4.2",
+    "typescript": "4.9.5",
     "react-bootstrap": "1.6.0"
   },
   "superdeskExtension": {

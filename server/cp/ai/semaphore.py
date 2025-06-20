@@ -1,5 +1,6 @@
 import logging
-import requests
+import aiohttp
+from aiohttp.web_exceptions import HTTPError
 import xml.etree.ElementTree as ET
 from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
@@ -19,9 +20,8 @@ import datetime
 
 
 logger = logging.getLogger(__name__)
-session = requests.Session()
 
-TIMEOUT = (5, 30)
+TIMEOUT = aiohttp.ClientTimeout(total=30, connect=5)
 
 
 def format_relevance(value: str) -> int:
@@ -100,35 +100,22 @@ class Semaphore(AIServiceBase):
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = app.config.get("SEMAPHORE_CREATE_TAG_QUERY")
 
-    def convert_to_desired_format(input_data):
-        result = {
-            "result": {
-                "tags": {
-                    "subject": input_data["subject"],
-                    "organisation": input_data["organisation"],
-                    "person": input_data["person"],
-                    "event": input_data["event"],
-                    "place": input_data["place"],
-                    "object": [],  # Assuming no data for 'object'
-                },
-                "broader": {"subject": input_data["broader"]},
-            }
-        }
-
-        return result
-
-    def get_access_token(self):
+    async def get_access_token(self, session: aiohttp.ClientSession) -> str:
         """Get access token for Semaphore."""
         url = self.base_url
 
         payload = f"grant_type=apikey&key={self.api_key}"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = session.post(url, headers=headers, data=payload, timeout=TIMEOUT)
-        response.raise_for_status()
-        return response.json().get("access_token")
+        async with session.post(
+            url, headers=headers, data=payload, timeout=TIMEOUT
+        ) as response:
+            response.raise_for_status()
+            return (await response.json()).get("access_token")
 
-    def fetch_parent_info(self, qcode, article_language):
-        headers = {"Authorization": f"Bearer {self.get_access_token()}"}
+    async def fetch_parent_info(
+        self, session: aiohttp.ClientSession, qcode, article_language
+    ):
+        headers = {"Authorization": f"Bearer {await self.get_access_token(session)}"}
         try:
             frank = "?relationshipType=has%20broader"
             # Change language based on article language
@@ -140,19 +127,22 @@ class Semaphore(AIServiceBase):
             query = qcode
             parent_url = self.get_parent_url + query + frank
 
-            response = session.get(parent_url, headers=headers)
-            if response.status_code != 200:
-                logging.error(
-                    f"Error response: {response.status_code} - {response.text}"
-                )
-                return []
-            response.raise_for_status()
-            root = ET.fromstring(response.text)
+            async with session.get(parent_url, headers=headers) as response:
+                if response.status != 200:
+                    logging.error(
+                        f"Error response: {response.status} - {await response.text()}"
+                    )
+                    return []
+
+                response.raise_for_status()
+                root = ET.fromstring(await response.text())
+
             path = root.find(".//PATH[@TYPE='Narrower Term']")
             parent_info = []
             if path is not None:
                 for field in path.findall("FIELD"):
-                    if field.find("CLASS").get("NAME") == "Topic":
+                    class_field = field.find("CLASS")
+                    if class_field and class_field.get("NAME") == "Topic":
                         parent_info.append(
                             {
                                 "name": field.get("NAME"),
@@ -169,7 +159,9 @@ class Semaphore(AIServiceBase):
             return []
 
     # Analyze2 changed name to analyze_parent_info
-    def analyze_parent_info(self, data: SearchData) -> ResponseType:
+    async def analyze_parent_info(
+        self, session: aiohttp.ClientSession, data: SearchData
+    ) -> ResponseType:
         try:
             if not self.base_url or not self.api_key:
                 logger.warning(
@@ -190,20 +182,19 @@ class Semaphore(AIServiceBase):
             new_url = self.search_url + query + ".json"
 
             # Make a POST request using XML payload
-            headers = {"Authorization": f"bearer {self.get_access_token()}"}
+            headers = {
+                "Authorization": f"bearer {await self.get_access_token(session)}"
+            }
 
             try:
-                response = session.get(new_url, headers=headers)
-
-                response.raise_for_status()
+                async with session.get(new_url, headers=headers) as response:
+                    response.raise_for_status()
+                    root = await response.text()
             except Exception as e:
                 traceback.print_exc()
                 logger.error(f"An error occurred while making the request: {str(e)}")
 
-            root = response.text
-
-            # def transform_xml_response(xml_data):
-            def transform_xml_response(api_response, article_language):
+            async def transform_xml_response(api_response, article_language):
                 result = {
                     "subject": [],
                     "organisation": [],
@@ -251,8 +242,10 @@ class Semaphore(AIServiceBase):
                         result["place"].append(entry)
                     else:
                         # Fetch parent info for each subject item
-                        parent_info, reversed_parent_info = self.fetch_parent_info(
-                            item["id"], article_language
+                        parent_info, reversed_parent_info = (
+                            await self.fetch_parent_info(
+                                session, item["id"], article_language
+                            )
                         )
 
                         # Assign the immediate parent to the subject item
@@ -307,13 +300,13 @@ class Semaphore(AIServiceBase):
                 }
 
             root = json.loads(root)
-            json_response = transform_xml_response(root, article_language)
+            json_response = await transform_xml_response(root, article_language)
 
             json_response = convert_to_desired_format(json_response)
 
             return json_response
 
-        except requests.exceptions.RequestException as e:
+        except HTTPError as e:
             traceback.print_exc()
             logger.error(
                 f"Semaphore Search request failed. \
@@ -321,7 +314,9 @@ class Semaphore(AIServiceBase):
             )
             return {}
 
-    def create_tag_in_semaphore(self, data: FeedbackData) -> ResponseType:
+    async def create_tag_in_semaphore(
+        self, session: aiohttp.ClientSession, data: FeedbackData
+    ) -> ResponseType:
         result_summary: Dict[str, List[str]] = {
             "created_tags": [],
             "failed_tags": [],
@@ -341,7 +336,7 @@ class Semaphore(AIServiceBase):
             new_url = url + task + query_string
 
             headers = {
-                "Authorization": f"bearer {self.get_access_token()}",
+                "Authorization": f"bearer {await self.get_access_token(session)}",
                 "Content-Type": "application/ld+json",
             }
 
@@ -385,17 +380,18 @@ class Semaphore(AIServiceBase):
                 )
 
                 try:
-                    response = session.post(new_url, headers=headers, data=payload)
-
-                    if response.status_code == 409:
-                        print(
-                            f"Tag already exists in KMM. Response is 409. The Tag is: {concept_name}"
-                        )
-                        result_summary["existing_tags"].append(concept_name)
-                    else:
-                        response.raise_for_status()
-                        print(f"Tag Got Created is: {concept_name}")
-                        result_summary["created_tags"].append(concept_name)
+                    async with session.post(
+                        new_url, headers=headers, data=payload
+                    ) as response:
+                        if response.status == 409:
+                            print(
+                                f"Tag already exists in KMM. Response is 409. The Tag is: {concept_name}"
+                            )
+                            result_summary["existing_tags"].append(concept_name)
+                        else:
+                            response.raise_for_status()
+                            print(f"Tag Got Created is: {concept_name}")
+                            result_summary["created_tags"].append(concept_name)
                 except Exception as e:
                     print(f"Failed to create tag: {concept_name}, Error: {e}")
                     result_summary["failed_tags"].append(concept_name)
@@ -407,7 +403,7 @@ class Semaphore(AIServiceBase):
         return result_summary
 
     @overload
-    def data_operation(  # noqa: E704
+    async def data_operation(  # noqa: E704
         self,
         verb: str,
         operation: Literal["feedback"],
@@ -416,7 +412,7 @@ class Semaphore(AIServiceBase):
     ) -> ResponseType: ...
 
     @overload
-    def data_operation(  # noqa: E704
+    async def data_operation(  # noqa: E704
         self,
         verb: str,
         operation: Literal["search"],
@@ -424,24 +420,27 @@ class Semaphore(AIServiceBase):
         data: SearchData,
     ) -> ResponseType: ...
 
-    def data_operation(
+    async def data_operation(
         self,
         verb: str,
         operation: Literal["search", "feedback"],
         name: Optional[str],
         data,
     ) -> ResponseType:
-        if operation == "feedback":
-            return self.create_tag_in_semaphore(data)
-        if operation == "search":
-            return self.search(data)
+        async with aiohttp.ClientSession() as session:
+            if operation == "feedback":
+                return await self.create_tag_in_semaphore(session, data)
+            if operation == "search":
+                return await self.search(session, data)
         return {}
 
-    def search(self, data: SearchData) -> ResponseType:
+    async def search(
+        self, session: aiohttp.ClientSession, data: SearchData
+    ) -> ResponseType:
         try:
-            self.output = self.analyze_parent_info(data)
+            self.output = await self.analyze_parent_info(session, data)
             try:
-                updated_output = replace_qcodes(self.output)
+                updated_output = await replace_qcodes(self.output)
                 return updated_output
             except Exception as e:
                 print(
@@ -454,7 +453,13 @@ class Semaphore(AIServiceBase):
             pass
         return {}
 
-    def analyze(self, item: Item, tags=None) -> ResponseType:
+    async def analyze(self, item: Item, tags=None) -> ResponseType:
+        async with aiohttp.ClientSession() as session:
+            return await self.process_analyze_request(session, item)
+
+    async def process_analyze_request(
+        self, session: aiohttp.ClientSession, item: Item, tags=None
+    ) -> ResponseType:
         def transform_xml_response(xml_data):
             response_dict = {
                 "subject": [],
@@ -650,30 +655,31 @@ class Semaphore(AIServiceBase):
             xml_payload = self.html_to_xml(item)
             payload = {"XML_INPUT": xml_payload}
 
-            headers = {"Authorization": f"bearer {self.get_access_token()}"}
+            headers = {
+                "Authorization": f"bearer {await self.get_access_token(session)}"
+            }
 
             try:
-                response = session.post(self.analyze_url, headers=headers, data=payload)
-                response.raise_for_status()
+                async with session.post(
+                    self.analyze_url, headers=headers, data=payload
+                ) as response:
+                    response.raise_for_status()
+                    root = await response.text()
             except Exception as e:
                 traceback.print_exc()
                 logger.error(f"An error occurred while making the request: {str(e)}")
 
-            root = response.text
             json_response = transform_xml_response(root)
-
             json_response = capitalize_name_if_parent_none_for_analyze(json_response)
 
             try:
-                updated_output = replace_qcodes(json_response)
-
+                updated_output = await replace_qcodes(json_response)
                 return updated_output
-
             except Exception as e:
                 print(f"Error occurred in replace_qcodes: {e}")
                 return json_response
 
-        except requests.exceptions.RequestException as e:
+        except HTTPError as e:
             traceback.print_exc()
             logger.error(
                 f"Semaphore request failed. \
@@ -770,8 +776,8 @@ def capitalize_name_if_parent_none_for_analyze(response):
     return response
 
 
-def replace_qcodes(output_data):
-    cv = superdesk.get_resource_service("vocabularies").find_one(
+async def replace_qcodes(output_data):
+    cv = await superdesk.get_resource_service("vocabularies").find_one_async(
         req=None, _id="subject_custom"
     )
 

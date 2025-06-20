@@ -75,8 +75,10 @@ PRIORITY_MAP = {
 sess = requests.Session()
 
 
-def _get_cv_items(_id: str) -> List:
-    cv = superdesk.get_resource_service("vocabularies").find_one(req=None, _id=_id)
+async def _get_cv_items(_id: str) -> List:
+    cv = await superdesk.get_resource_service("vocabularies").find_one_async(
+        req=None, _id=_id
+    )
     return cv["items"]
 
 
@@ -110,12 +112,12 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             dateline_date = utcnow()
         return dateline_date
 
-    def parse(self, data, provider=None):
+    async def parse(self, data, provider=None):
         """
         Applying custom CP mapping based on _APWebFeed-1.0-JIMI-3.0.xsl
         """
         ap_item = data["data"]["item"]
-        item = super().parse(data, provider=provider)
+        item = await super().parse(data, provider=provider)
         item.setdefault("extra", {})
 
         if item.get("associations") and provider and provider.get("content_types"):
@@ -145,7 +147,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         except KeyError:
             pass
 
-        prev = superdesk.get_resource_service("ingest").find_one(
+        prev = await superdesk.get_resource_service("ingest").find_one_async(
             req=None, guid=item["guid"]
         )
         if prev and prev.get("slugline"):
@@ -234,12 +236,12 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item["type"] == "text":
             self._parse_genre(data["data"], item)
-            self._parse_category(data["data"], item)
+            await self._parse_category(data["data"], item)
         elif item["type"] == "picture":
-            self._parse_picture_category(data["data"], item)
+            await self._parse_picture_category(data["data"], item)
 
         if ap_item.get("subject"):
-            self._parse_subject(ap_item["subject"], item)
+            await self._parse_subject(ap_item["subject"], item)
 
         if ap_item.get("organisation"):
             item["extra"]["stocks"] = self._parse_stocks(ap_item["organisation"])
@@ -270,9 +272,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             item["associations"] = {}
             for key, assoc in associations.items():
                 if assoc.get("guid"):
-                    existing = superdesk.get_resource_service("archive").find_one(
-                        req=None, ingest_id=assoc["guid"]
-                    )
+                    existing = await superdesk.get_resource_service(
+                        "archive"
+                    ).find_one_async(req=None, ingest_id=assoc["guid"])
                     if existing:
                         item["associations"][key] = {
                             "residRef": existing["uri"],
@@ -293,9 +295,9 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         if item["type"] == "text":
             try:
-                prev_item = superdesk.get_resource_service("archive").find_one(
-                    req=None, ingest_id=item["guid"]
-                )
+                prev_item = await superdesk.get_resource_service(
+                    "archive"
+                ).find_one_async(req=None, ingest_id=item["guid"])
                 if (
                     prev_item is not None
                     and prev_item["extra"]["ap_version"] != ap_item["version"]
@@ -512,13 +514,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         # as we'll process subjects in `_parse_subject` function
         pass
 
-    def _parse_subject(self, subject, item):
+    async def _parse_subject(self, subject, item):
         item.setdefault("subject", [])
         is_agate = "Agate" in [c["name"] for c in item.get("anpa_category") or []]
         if is_agate:
             return
         added = set()
-        available = _get_cv_items(AP_SUBJECT_CV)
+        available = await _get_cv_items(AP_SUBJECT_CV)
         for subj in available:
             if subj.get("ap_subject"):
                 codes = [code.strip() for code in subj["ap_subject"].split(",")]
@@ -540,8 +542,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                             }
                         )
 
-    def _map_category_codes(self, item):
-        categories = _get_cv_items(CATEGORY_SCHEME)
+    async def _map_category_codes(self, item):
+        categories = await _get_cv_items(CATEGORY_SCHEME)
         codes = [cat["qcode"] for cat in item["anpa_category"]]
         item["anpa_category"] = [
             {
@@ -726,7 +728,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 }
             ]
 
-    def _parse_category(self, data, item):
+    async def _parse_category(self, data, item):
         """Index in JIMI"""
         index_names = set()
         index = self._parse_index_code(data, item)
@@ -752,7 +754,7 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             # set default
             index_names.add("International")
 
-        categories = _get_cv_items(CATEGORY_SCHEME)
+        categories = await _get_cv_items(CATEGORY_SCHEME)
         item["anpa_category"] = []
 
         for cat in categories:
@@ -768,13 +770,15 @@ class CP_APMediaFeedParser(APMediaFeedParser):
                 set_cat(cat)
                 return
 
-    def _parse_picture_category(self, data, item):
+    async def _parse_picture_category(self, data, item):
         for subj in data["item"].get("subject", []):
             rels = subj.get("rels", [])
             if "category" in rels:
-                append_matching_subject(item, cp.PHOTO_CATEGORIES, subj["code"])
+                await append_matching_subject(item, cp.PHOTO_CATEGORIES, subj["code"])
             elif "suppcategory" in rels:
-                append_matching_subject(item, cp.PHOTO_SUPPCATEGORIES, subj["code"])
+                await append_matching_subject(
+                    item, cp.PHOTO_SUPPCATEGORIES, subj["code"]
+                )
             else:
                 continue
 
@@ -880,13 +884,13 @@ class CP_APMediaFeedParser(APMediaFeedParser):
             ]
         )
 
-    def categorisation_mapping(self, in_item, item):
+    async def categorisation_mapping(self, in_item, item):
         """Avoid extra mapping."""
         pass
 
 
-def append_matching_subject(item, scheme, qcode):
-    cv_items = _get_cv_items(scheme)
+async def append_matching_subject(item, scheme, qcode):
+    cv_items = await _get_cv_items(scheme)
     for cv_item in cv_items:
         if qcode.upper() == cv_item["qcode"].upper():
             item.setdefault("subject", []).append(

@@ -1,6 +1,5 @@
-import unittest
-
-from httmock import urlmatch, HTTMock
+from superdesk.tests.async_case import IsolatedAsyncioTestCase
+from aioresponses import aioresponses
 from cp.macros import usd_to_cad as macro
 
 
@@ -18,17 +17,12 @@ SERVICE_JSON = """
 """
 
 
-@urlmatch(netloc=r"www\.bankofcanada\.ca$", path=r"/valet/observations/FXUSDCAD/json")
-def rates(url, request):
-    return SERVICE_JSON
-
-
-class USD2CADMacroTestCase(unittest.TestCase):
+class USD2CADMacroTestCase(IsolatedAsyncioTestCase):
     def test_metadata(self):
         self.assertIsNotNone(getattr(macro, "name"))
         self.assertIsNotNone(getattr(macro, "label"))
 
-    def test_convertions(self):
+    async def test_convertions(self):
         test = {
             # us notation
             "$52": "C$69.10",
@@ -64,8 +58,9 @@ class USD2CADMacroTestCase(unittest.TestCase):
 
         item = {"body_html": "\n".join(test.keys())}
 
-        with HTTMock(rates):
-            (_, diff) = macro.callback(item)
+        with aioresponses() as mock:
+            mock.get(macro.SERVICE_URL, body=SERVICE_JSON)
+            (_, diff) = await macro.callback(item)
 
         for key, val in test.items():
             if val and isinstance(val, str):

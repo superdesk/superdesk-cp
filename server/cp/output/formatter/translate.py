@@ -10,7 +10,7 @@ class TranslateFormatter(CPNINJSFormatter):
     def can_format(self, format_type, article):
         return format_type.lower() == "translate" and article.get("type") == "text"
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
         translate = Translate(self.app)  # Initialize the Translate integration
         formatted_data = {}  # Define how you want to format the data for translation
 
@@ -27,7 +27,7 @@ class TranslateFormatter(CPNINJSFormatter):
             }
 
             # Perform the translation
-            translated_item = translate.data_operation(
+            translated_item = await translate.data_operation(
                 "translate", "translate", None, formatted_data
             )
 

@@ -108,7 +108,7 @@ def set_dateline_for_translation(item):
             pass
 
 
-def update_translation_metadata_macro(item, **kwargs):
+async def update_translation_metadata_macro(item, **kwargs):
     req = ParsedRequest()
     req.args = {}
 
@@ -127,7 +127,9 @@ def update_translation_metadata_macro(item, **kwargs):
     if item.get("correction_sequence"):
         item["correction_sequence"] = 0
 
-    cv = get_resource_service("vocabularies").find_one(req=None, _id="destinations")
+    cv = await get_resource_service("vocabularies").find_one_async(
+        req=None, _id="destinations"
+    )
     if not cv or not cv.get("items"):
         return
 

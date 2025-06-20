@@ -9,10 +9,10 @@
 # at https://www.sourcefabric.org/superdesk/license
 
 
-import superdesk
 import logging
 import json
 
+from superdesk import get_resource_service
 from superdesk.publish.formatters import NewsroomNinjsFormatter
 
 from cp import is_broadcast
@@ -30,10 +30,10 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
         self.can_export = False
         self.internal_renditions = ["original", "viewImage", "baseImage"]
 
-    def update_ninjs_subjects(self, ninjs, language="en-CA"):
+    async def update_ninjs_subjects(self, ninjs, language="en-CA"):
         try:
             # Fetch the vocabulary
-            cv = superdesk.get_resource_service("vocabularies").find_one(
+            cv = await get_resource_service("vocabularies").find_one_async(
                 req=None, _id="subject_custom"
             )
             vocab_items = cv.get("items", [])
@@ -126,10 +126,10 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
                 f"An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: {str(e)}"
             )
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
-        ninjs = super()._transform_to_ninjs(article, subscriber, recursive)
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
+        ninjs = await super()._transform_to_ninjs(article, subscriber, recursive)
 
-        self.update_ninjs_subjects(ninjs, "en-CA")
+        await self.update_ninjs_subjects(ninjs, "en-CA")
 
         if is_broadcast(article) and ninjs["guid"] == article.get("ingest_id"):
             ninjs["guid"] = ninjs["guid"] + "-br"

@@ -29,24 +29,24 @@ class CPOnclusiveFeedParser(OnclusiveFeedParser):
     Feed Parser which can parse the Onclusive API Events
     """
 
-    def _get_cv_items(self, _id: str) -> List:
+    async def _get_cv_items(self, _id: str) -> List:
         if "cache" not in g:
             g.cache = {}
         assert isinstance(g.cache, dict)
         cache_id = f"{_id}_cv_items"
         if cache_id not in g.cache:
-            g.cache[cache_id] = get_resource_service("vocabularies").get_items(
-                _id=_id, is_active=True
-            )
+            g.cache[cache_id] = await get_resource_service(
+                "vocabularies"
+            ).get_items_async(_id=_id, is_active=True)
         return g.cache[cache_id]
 
-    def parse(self, content, provider=None):
-        onclusive_cv_items = self._get_cv_items("onclusive_ingest_categories")
-        anpa_categories = self._get_cv_items("categories")
-        event_types = self._get_cv_items("event_types")
-        subjects = self._get_cv_items("subject_custom")
+    async def parse(self, content, provider=None):
+        onclusive_cv_items = await self._get_cv_items("onclusive_ingest_categories")
+        anpa_categories = await self._get_cv_items("categories")
+        event_types = await self._get_cv_items("event_types")
+        subjects = await self._get_cv_items("subject_custom")
 
-        items = super().parse(content, provider)
+        items = await super().parse(content, provider)
         events = []
 
         for item in items:

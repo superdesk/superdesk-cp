@@ -1,32 +1,30 @@
-import cp
-from superdesk.flask import Flask
-import unittest
-
 from unittest.mock import patch
 
+from superdesk.tests import TestCase
+import cp
 from cp.output.formatter.cp_ninjs_newsroom_formatter import CPNewsroomNinjsFormatter
 
 
-class TestCPNewsroomNinjsFormatter(unittest.TestCase):
-    def setUp(self) -> None:
+class TestCPNewsroomNinjsFormatter(TestCase):
+    async def asyncSetUp(self):
+        await super().asyncSetUp()
         self.formatter = CPNewsroomNinjsFormatter()
-        self.app = Flask(__name__)
-        self.ctx = self.app.test_request_context()
-        self.ctx.push()
-
-    def tearDown(self) -> None:
-        self.ctx.pop()
 
     @patch("superdesk.get_resource_service")
-    def test_transform_to_ninjs(self, mock_get_resource_service):
+    async def test_transform_to_ninjs(self, mock_get_resource_service):
         # Create a sample article and subscriber
-        article = {"ingest_id": "123", "type": "text", "auto_publish": True}
+        article = {
+            "guid": "123",
+            "ingest_id": "123",
+            "type": "text",
+            "auto_publish": True,
+        }
         subscriber = {
             # Add necessary fields for the test
         }
 
         # Call the _transform_to_ninjs method
-        result = self.formatter._transform_to_ninjs(article, subscriber)
+        result = await self.formatter._transform_to_ninjs(article, subscriber)
 
         # Assert that the result is as expected
         self.assertEqual(result["guid"], "123")
@@ -34,9 +32,10 @@ class TestCPNewsroomNinjsFormatter(unittest.TestCase):
         # Add more assertions for other fields if needed
 
     @patch("superdesk.get_resource_service")
-    def test_transform_to_ninjs_with_broadcast(self, mock_get_resource_service):
+    async def test_transform_to_ninjs_with_broadcast(self, mock_get_resource_service):
         # Create a sample article and subscriber
         article = {
+            "guid": "123",
             "ingest_id": "123",
             "type": "text",
             "auto_publish": True,
@@ -49,20 +48,24 @@ class TestCPNewsroomNinjsFormatter(unittest.TestCase):
         }
 
         # Call the _transform_to_ninjs method with is_broadcast=True
-        result = self.formatter._transform_to_ninjs(article, subscriber, recursive=True)
+        result = await self.formatter._transform_to_ninjs(
+            article, subscriber, recursive=True
+        )
 
         # Assert that the result is as expected
         self.assertEqual(result["guid"], "123-br")
 
-    @patch("superdesk.get_resource_service")
-    def test_update_ninjs_subjects_exception(self, mock_get_resource_service):
+    @patch("cp.output.formatter.cp_ninjs_newsroom_formatter.get_resource_service")
+    async def test_update_ninjs_subjects_exception(self, mock_get_resource_service):
         mock_get_resource_service.side_effect = Exception("Test exception")
 
         ninjs = {"subject": [{"name": "test", "scheme": "subject"}]}
         with self.assertLogs(
             "cp.output.formatter.cp_ninjs_newsroom_formatter", level="ERROR"
         ) as cm:
-            self.formatter.update_ninjs_subjects(ninjs, "en-CA")
+            await self.formatter.update_ninjs_subjects(ninjs, "en-CA")
+
+        print(cm.output)
 
         self.assertIn(
             "An error occurred. We are in NewsRoom Ninjs Formatter Ninjs Subjects exception: Test exception",

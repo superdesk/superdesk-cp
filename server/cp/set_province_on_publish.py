@@ -1,11 +1,10 @@
-import superdesk
-
-from superdesk.signals import item_publish
+from superdesk import get_resource_service
+from superdesk.signals import item_publish_async
 
 PROVINCE_CV = "regions"
 
 
-def set_province_on_publish(sender, item, updates, **kwargs):
+async def set_province_on_publish(item, updates):
     try:
         region = item["dateline"]["located"]["state"]
     except (AttributeError, KeyError, TypeError):
@@ -16,7 +15,7 @@ def set_province_on_publish(sender, item, updates, **kwargs):
     for subj in updates["subject"]:
         if subj.get("scheme") == PROVINCE_CV:
             return
-    provinces = superdesk.get_resource_service("vocabularies").get_items(
+    provinces = await get_resource_service("vocabularies").get_items_async(
         PROVINCE_CV, is_active=True
     )
     for province in provinces:
@@ -27,4 +26,4 @@ def set_province_on_publish(sender, item, updates, **kwargs):
 
 
 def init_app(app):
-    item_publish.connect(set_province_on_publish)
+    item_publish_async.connect(set_province_on_publish)

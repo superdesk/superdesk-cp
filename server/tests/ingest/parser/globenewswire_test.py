@@ -14,8 +14,8 @@ class GlobeNewswireParserTestCase(ParserTestCase):
     parser = GlobeNewswireParser()
     provider = "globenewswire"
 
-    def test_parser(self):
-        item = self.parse("0b78.xml")
+    async def test_parser(self):
+        item = await self.parse("0b78.xml")
         self.assertIsNotNone(item)
 
         self.assertIsNone(item.get("byline"))
@@ -54,27 +54,26 @@ class GlobeNewswireParserTestCase(ParserTestCase):
             "<p>NEWS RELEASE TRANSMITTED BY Globe Newswire</p>", item["body_html"]
         )
 
-    def test_parser_slugline(self):
-        item = self.parse("1bf6.xml")
+    async def test_parser_slugline(self):
+        item = await self.parse("1bf6.xml")
         self.assertIsNotNone(item)
         self.assertEqual("GNW-en-10--CAL-MIS-FNC", item["slugline"])
         self.assertIn('<a href="https://www.globenewswire.com/', item["body_html"])
 
-    def test_fr(self):
-        item = self.parse("fr.xml")
+    async def test_fr(self):
+        item = await self.parse("fr.xml")
         self.assertIsNotNone(item)
         self.assertEqual("fr-CA", item["language"])
         self.assertEqual("Communiqué", item["description_text"])
 
         item["unique_id"] = 1
-        with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                _, output = JimiFormatter().format(item, {}, None)[0]
+        with patch.dict(superdesk.resources, resources):
+            _, output = (await JimiFormatter().format(item, {}, None))[0]
         self.assertIn("<Services>Écrit</Services>", output)
 
-    def test_abstract(self):
+    async def test_abstract(self):
         self.maxDiff = None
-        item = self.parse("202006097942547-en.newsml")
+        item = await self.parse("202006097942547-en.newsml")
         self.assertEqual(
             "FOR: AUXLY CANNABIS GROUP INC. "
             "TORONTO, June 09, 2020 (GLOBE NEWSWIRE) -- Auxly Cannabis Group Inc. "
@@ -83,6 +82,6 @@ class GlobeNewswireParserTestCase(ParserTestCase):
             item["abstract"],
         )
 
-    def test_parse_tables(self):
-        item = self.parse("tables.newsml")
+    async def test_parse_tables(self):
+        item = await self.parse("tables.newsml")
         self.assertNotIn("</strong><br><br></td>", item["body_html"])

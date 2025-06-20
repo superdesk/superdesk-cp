@@ -10,7 +10,7 @@ class SemaphoreFormatter(CPNINJSFormatter):
     def can_format(self, format_type, article):
         return format_type.lower() == "semaphore" and article.get("type") == "text"
 
-    def _transform_to_ninjs(self, article, subscriber, recursive=True):
+    async def _transform_to_ninjs(self, article, subscriber, recursive=True):
         semaphore = Semaphore()  # Initialize the Semaphore integration
         formatted_data = {}  # Define how you want to format the data for Semaphore
 
