@@ -4,7 +4,6 @@ import json
 
 from unittest.mock import create_autospec
 
-# from superdesk.publish.subscribers import SubscribersService
 from superdesk.vocabularies import VocabulariesService
 from superdesk.storage.desk_media_storage import SuperdeskGridFSMediaStorage
 from superdesk.eve_async import AsyncListCursor
@@ -72,14 +71,9 @@ class MockAsyncListCursor(AsyncListCursor):
         return self
 
 
-# subscriber_service = create_autospec(SubscribersService)
-# subscriber_service.generate_sequence_number.return_value = SEQUENCE_NUMBER
-
 vocabularies_service = create_autospec(VocabulariesService)
-# vocabularies_service.find_one.side_effect = get_cv
 vocabularies_service.find_one_async.side_effect = get_cv
 vocabularies_service.get_rightsinfo.side_effect = get_rightsinfo
-# vocabularies_service.get_items.side_effect = get_cv_items
 vocabularies_service.get_items_async.side_effect = get_cv_items
 
 news_service = create_autospec(NewsService)
@@ -89,9 +83,7 @@ published_service = create_autospec(PublishedItemService)
 
 media_storage = create_autospec(SuperdeskGridFSMediaStorage)
 
-# ingest_service.find_one.return_value = None
 ingest_service.find_one_async.return_value = None
-# archive_service.find_one.return_value = None
 archive_service.find_one_async.return_value = None
 archive_service.find_async.return_value = MockAsyncListCursor([])
 
@@ -99,11 +91,9 @@ places_autocomplete_service = create_autospec(PlacesAutocompleteService)
 places_autocomplete_service.get_place.side_effect = get_place
 
 event_service = create_autospec(EventsService)
-# event_service.find_one.return_value = None
 event_service.find_one_async.return_value = None
 
 contacts_service = create_autospec(ContactsService)
-# contacts_service.find_one.return_value = {"_id": bson.ObjectId()}
 contacts_service.find_one_async.return_value = {"_id": bson.ObjectId()}
 
 resources = {
@@ -111,7 +101,6 @@ resources = {
     "ingest": Resource(ingest_service),
     "archive": Resource(archive_service),
     "published": Resource(published_service),
-    # "subscribers": Resource(subscriber_service),
     "vocabularies": Resource(vocabularies_service),
     "places_autocomplete": Resource(places_autocomplete_service),
     "events": Resource(event_service),

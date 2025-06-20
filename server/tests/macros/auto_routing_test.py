@@ -20,9 +20,8 @@ class AutoRoutingMacroTestCase(AsyncQuartTestCase):
         }
         rule = {"name": "Broadcast: The Associated Press (APR)"}
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await callback(item, rule=rule)
+        with patch.dict(superdesk.resources, resources):
+            await callback(item, rule=rule)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -54,22 +53,21 @@ class AutoRoutingMacroTestCase(AsyncQuartTestCase):
 
         LOG_PREFIX = "ERROR:cp.macros.auto_routing:"
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                with self.assertLogs("cp.macros.auto_routing", "ERROR") as log:
-                    await callback(item, rule=rule)
-                    self.assertIsNone(item.get("subject"))
-                    self.assertEqual(
-                        log.output,
-                        [
-                            "{}no item found in vocabulary distribution with name Foo".format(
-                                LOG_PREFIX
-                            ),
-                            "{}no item found in vocabulary destinations with name Bar".format(
-                                LOG_PREFIX
-                            ),
-                        ],
-                    )
+        with patch.dict(superdesk.resources, resources):
+            with self.assertLogs("cp.macros.auto_routing", "ERROR") as log:
+                await callback(item, rule=rule)
+                self.assertIsNone(item.get("subject"))
+                self.assertEqual(
+                    log.output,
+                    [
+                        "{}no item found in vocabulary distribution with name Foo".format(
+                            LOG_PREFIX
+                        ),
+                        "{}no item found in vocabulary destinations with name Bar".format(
+                            LOG_PREFIX
+                        ),
+                    ],
+                )
 
     async def test_auto_previous_item_control_stop(self):
         item = {"uri": "uri", "slugline": "foo", "urgency": 5}

@@ -37,9 +37,8 @@ class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
             ],
         }
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await macro(item)
+        with patch.dict(superdesk.resources, resources):
+            await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -75,9 +74,8 @@ class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
             ],
         }
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await macro(item)
+        with patch.dict(superdesk.resources, resources):
+            await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -112,9 +110,8 @@ class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
             ],
         }
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await macro(item)
+        with patch.dict(superdesk.resources, resources):
+            await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -141,9 +138,8 @@ class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
             "language": "en",
         }
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await macro(item)
+        with patch.dict(superdesk.resources, resources):
+            await macro(item)
 
         self.assertIn("subject", item)
         self.assertIn(
@@ -191,9 +187,8 @@ class UpdateTranslationMetadataMacroTestCase(AsyncQuartTestCase):
             },
         }
 
-        async with self.app.app_context():
-            with patch.dict(superdesk.resources, resources):
-                await macro(item)
+        with patch.dict(superdesk.resources, resources):
+            await macro(item)
 
         dateline = item.get("dateline")
         self.assertEqual("The Associated Press", dateline["source"])

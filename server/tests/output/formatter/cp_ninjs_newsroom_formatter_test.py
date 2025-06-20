@@ -1,11 +1,7 @@
-import cp
-from superdesk.tests import TestCase
-
-# from superdesk.flask import Flask
-import unittest
-
 from unittest.mock import patch
 
+from superdesk.tests import TestCase
+import cp
 from cp.output.formatter.cp_ninjs_newsroom_formatter import CPNewsroomNinjsFormatter
 
 
@@ -13,13 +9,6 @@ class TestCPNewsroomNinjsFormatter(TestCase):
     async def asyncSetUp(self):
         await super().asyncSetUp()
         self.formatter = CPNewsroomNinjsFormatter()
-
-    #     self.app = Flask(__name__)
-    #     self.ctx = self.app.test_request_context()
-    #     self.ctx.push()
-    #
-    # def tearDown(self) -> None:
-    #     self.ctx.pop()
 
     @patch("superdesk.get_resource_service")
     async def test_transform_to_ninjs(self, mock_get_resource_service):

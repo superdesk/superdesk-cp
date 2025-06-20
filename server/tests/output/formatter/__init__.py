@@ -11,12 +11,6 @@ class BaseXmlFormatterTestCase(TestCase):
     formatter = None
     article = None
 
-    app_config = {
-        # "VERSION": "version",
-        # "DEFAULT_LANGUAGE": "en",
-        # "MAX_VALUE_OF_PUBLISH_SEQUENCE": 9999,
-    }
-
     async def format(self, updates=None, _all=False):
         article = self.article.copy()
         article.update(updates or {})
