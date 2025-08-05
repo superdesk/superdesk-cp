@@ -398,3 +398,25 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         item = {"language": "fr"}
         data = {"item": {"urgency": 1}}
         self.assertEqual(cp.NEWS_URGENT, parser._parse_ranking(data, item))
+
+    def parse(self, fixture, nitf_fixture=None):
+        with open(get_fixture_path(fixture, "ap")) as fp:
+            _data = json.load(fp)
+
+        with self.app.app_context():
+            if nitf_fixture:
+                xml = etree.parse(get_fixture_path(nitf_fixture, "ap"))
+                parsed = nitf.NITFFeedParser().parse(xml)
+                _data["nitf"] = parsed
+
+            with patch.dict(superdesk.resources, resources):
+                return parser.parse(_data, {})
+
+    def test_ignore_betting(self):
+        item = self.parse("ap-sports-preview.json", "ap-sports-preview.xml")
+        assert "BETMGM SPORTSBOOK LINE:" not in item["body_html"]
+        assert "Yankees -125, Reds +105" not in item["body_html"]
+        assert "BOTTOM LINE" in item["body_html"]
+
+        item = self.parse("ap-agate.json", "ap-sports-preview.xml")
+        assert "BETMGM SPORTSBOOK LINE:" in item["body_html"]
