@@ -82,7 +82,7 @@ cryptography==45.0.4
     # via
     #   authlib
     #   jwcrypto
-deepdiff==8.5.0
+deepdiff==8.6.1
     # via superdesk-planning
 deepl==1.22.0
     # via -r requirements.in
