@@ -396,8 +396,8 @@ class CP_AP_ParseTestCase(TestCase):
             with patch.dict(superdesk.resources, resources):
                 return parser.parse(_data, {})
 
-    def test_ignore_betting(self):
-        item = self.parse("ap-sports-preview.json", "ap-sports-preview.xml")
+    async def test_ignore_betting(self):
+        item = await self.parse("ap-sports-preview.json", "ap-sports-preview.xml")
         assert "BETMGM SPORTSBOOK LINE:" not in item["body_html"]
         assert "Yankees -125, Reds +105" not in item["body_html"]
         assert "BOTTOM LINE" in item["body_html"]

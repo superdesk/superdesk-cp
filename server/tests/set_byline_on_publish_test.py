@@ -103,7 +103,7 @@ class SetBylineOnPublishTestCase(IsolatedAsyncioTestCase):
         item = {"language": "en-CA", "source": "Reuters"}
         updates = {}
 
-        await set_byline_on_publish(None, item, updates)
+        await set_byline_on_publish(item, updates)
 
         assert "authors" not in item
         assert "byline" not in item
