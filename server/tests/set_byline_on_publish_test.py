@@ -87,7 +87,9 @@ class SetBylineOnPublishTestCase(IsolatedAsyncioTestCase):
             assert str(e) == "Default user 'cpdefaultauthor' not found in the database."
 
     @patch("superdesk.get_resource_service")
-    async def test_set_byline_skips_default_for_non_cp_sources(self, mock_get_resource_service):
+    async def test_set_byline_skips_default_for_non_cp_sources(
+        self, mock_get_resource_service
+    ):
         mock_user_service = AsyncMock()
         mock_user_service.find_one_async.return_value = {
             "_id": "64d13ff3446949ccb5348bdc",

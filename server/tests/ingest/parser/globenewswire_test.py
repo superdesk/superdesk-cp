@@ -86,8 +86,8 @@ class GlobeNewswireParserTestCase(ParserTestCase):
         item = await self.parse("tables.newsml")
         self.assertNotIn("</strong><br><br></td>", item["body_html"])
 
-    def test_parser_includes_globenewswire_image(self):
-        item = self.parse("2025031410361119.xml")
+    async def test_parser_includes_globenewswire_image(self):
+        item = await self.parse("2025031410361119.xml")
         self.assertIsNotNone(item)
         body_html = item["body_html"]
 
@@ -117,8 +117,8 @@ class GlobeNewswireParserTestCase(ParserTestCase):
             body_html,
         )
 
-    def test_parser_includes_globenewswire_image_attach(self):
-        item = self.parse("0b78.xml")
+    async def test_parser_includes_globenewswire_image_attach(self):
+        item = await self.parse("0b78.xml")
         self.assertIsNotNone(item)
         body_html = item["body_html"]
 
