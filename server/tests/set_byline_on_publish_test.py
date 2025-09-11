@@ -104,7 +104,7 @@ class SetBylineOnPublishTestCase(IsolatedAsyncioTestCase):
         updates = {}
 
         await set_byline_on_publish(None, item, updates)
-    
+
         assert "authors" not in item
         assert "byline" not in item
         assert "byline" not in updates
