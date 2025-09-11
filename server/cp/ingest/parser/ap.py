@@ -310,7 +310,15 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         self._parse_ap_products(data["data"], item)
 
         if item.get("body_html"):
-            item["body_html"] = clean_html(item["body_html"])
+            remove_betting = "preview" in data["data"]["item"].get(
+                "slugline", ""
+            ).lower() and "Data Skrive" in [
+                s["name"] for s in data["data"]["item"].get("infosource", [])
+            ]
+
+            item["body_html"] = clean_html(
+                item["body_html"], remove_betting=remove_betting
+            )
 
         return item
 
@@ -908,7 +916,7 @@ def capitalize(name):
     return " ".join([n.capitalize() for n in name.split(" ")])
 
 
-def clean_html(html):
+def clean_html(html, remove_betting=False):
     cleaner = lxml.html.clean.Cleaner()
     root = lxml.html.fromstring(html)
 
@@ -917,6 +925,14 @@ def clean_html(html):
         elem.attrib.pop("class", None)
         if elem.tag in ("hl2", "pre", "note"):
             elem.tag = "p"
+        if (
+            remove_betting
+            and elem.tag == "a"
+            and (elem.text or "").startswith("BETMGM SPORTSBOOK LINE:")
+        ):
+            # remove paragraph with betting link
+            parent = elem.getparent()
+            parent.getparent().remove(parent)
 
     root = cleaner.clean_html(root)
     return sd_etree.to_string(root, method="html")

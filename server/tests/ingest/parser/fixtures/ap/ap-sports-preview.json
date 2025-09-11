@@ -1,0 +1,674 @@
+{
+    "api_version": "2.2",
+    "api_mode": "live",
+    "api_build": "2.2.18",
+    "id": "dNtevaR9tbeI",
+    "method": "/content.GET",
+    "org_name": "Canadian Press",
+    "params": {},
+    "data": {
+        "meta": {
+            "products": [
+                {
+                    "id": 30599,
+                    "name": "AP Sports News (S Wire only)"
+                },
+                {
+                    "id": 40802,
+                    "name": "AP New York City - Sports only"
+                },
+                {
+                    "id": 40803,
+                    "name": "AP New York State - Sports only"
+                },
+                {
+                    "id": 40806,
+                    "name": "AP Ohio - Sports only"
+                },
+                {
+                    "id": 100019,
+                    "name": "All State Wires - News Only & Weather Only"
+                },
+                {
+                    "id": 100502,
+                    "name": "Member Choice Sports Option"
+                },
+                {
+                    "id": 101267,
+                    "name": "Sports Wire"
+                }
+            ]
+        },
+        "item": {
+            "uri": "https://api.ap.org/media/v2.2/content/18fea29fa58e426ba080218399e4fcaa?qt=dNtevaR9tbeI&et=0a1aza0c0",
+            "altids": {
+                "itemid": "18fea29fa58e426ba080218399e4fcaa",
+                "etag": "18fea29fa58e426ba080218399e4fcaa_0a1aza0c0",
+                "friendlykey": "7013850031001429",
+                "referenceid": "BBO--Yankees-Reds-Preview"
+            },
+            "foreignkeys": [
+                {
+                    "memberentryid": "ct14-nid11354-qid881-syid27693-mid2936341"
+                },
+                {
+                    "membermanagementid": "urn:publicid:dataskrive.com:sr:match:2936341"
+                }
+            ],
+            "version": 0,
+            "type": "text",
+            "urgency": 4,
+            "profile": "Preview",
+            "language": "en",
+            "versioncreated": "2025-06-23T08:01:00Z",
+            "firstcreated": "2025-06-23T07:55:31Z",
+            "expires": "2025-07-23T08:01:08Z",
+            "pubstatus": "usable",
+            "signals": [
+                "newscontent"
+            ],
+            "title": "BBO--Yankees-Reds-Preview",
+            "headline": "Reds host the Yankees to open 3-game series",
+            "headline_extended": "The Cincinnati Reds host the New York Yankees to begin a three-game series",
+            "slugline": "BC-BBO--Yankees-Reds-Preview",
+            "bylines": [
+                {
+                    "by": "By The Associated Press"
+                }
+            ],
+            "copyrightnotice": "© Data Skrive. All rights reserved.",
+            "usageterms": [
+                "This content is intended for editorial use only. For other uses, additional clearances may be required."
+            ],
+            "keywords": [
+                "NL Central",
+                "AL East",
+                "Cincinnati Reds",
+                "New York Yankees",
+                "National League",
+                "American League",
+                "Major League Baseball",
+                "Baseball",
+                "Men",
+                "Ohio",
+                "New York",
+                "New York City",
+                "Professional",
+                "Preview",
+                "Data Skrive"
+            ],
+            "provider": "Data Skrive",
+            "infosource": [
+                {
+                    "name": "Data Skrive",
+                    "type": "ThirdParty",
+                    "url": "https://dataskrive.com/"
+                }
+            ],
+            "person": [
+                {
+                    "name": "Tyler Callihan",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PERSON"
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "name": "Rhett Lowder",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PERSON"
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "name": "Julian Aguiar",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PERSON"
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "20f7d377e70147b68b7424dffc4ef376",
+                    "name": "Luis Gil",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "e1c48175c4cb4661816ac45d972ac2bf",
+                    "name": "Gerrit Cole",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "ad9ece4034e54982a89db71f31427057",
+                    "name": "Jake Cousins",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "b8f6e10df5f30e46a7920c0bf6d6647a",
+                    "name": "Marcus Stroman",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "610da6a4e60c4a7385d4f78fcb6961fe",
+                    "name": "Yerry De Los Santos",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "0696c1cf8d1f44b0b7aa35634052304c",
+                            "name": "Pittsburgh Pirates"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "acd566a294654da79e083053f74d69c5",
+                    "name": "Oswaldo Cabrera",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "1f10bc4c6ade494793ebc4464030745d",
+                    "name": "Ryan Yarbrough",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "a22c87218b6f496ba912505fe4528b68",
+                            "name": "Los Angeles Dodgers"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "095c1642405a4d11bc91a0b48138eeb0",
+                    "name": "Brandon Williamson",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "ab819c828a2146459caae40554d7ee9c",
+                    "name": "Noelvi Marte",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "c56c1b9ca7224651bf16b03089a19de3",
+                    "name": "Carson Spiers",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "a036c1dd8132465689955cf26e07e46b",
+                    "name": "Austin Hays",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "ba83eb1a77a1437bab584ff84ab2d6b3",
+                            "name": "Baltimore Orioles"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "6530ab4ce2884306a8906f73691e3172",
+                    "name": "Hunter Greene",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "5e83d0d98b464b0eb6df1830cb05a128",
+                    "name": "Graham Ashcraft",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "eca66785d9ed4d66848787568cafc273",
+                    "name": "Wade Miley",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "a5860818ee13458b8953b93e2342ade4",
+                            "name": "Chicago Cubs"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "6f34926c767bec4a8940c0fe6d96f815",
+                    "name": "Jeimer Candelario",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "51eecdbcb5f4dc498523fb9f9e4a997c",
+                    "name": "Trent Grisham",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "dfd3b11e6dec4023aedb703840890e64",
+                            "name": "New York Yankees"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "6c4153f4110a462d89c840928b9118f7",
+                    "name": "Paul Goldschmidt",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "4dc06bf808ca45bf8d6f81ff9672deba",
+                            "name": "St. Louis Cardinals"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "f170512a50ea4b5d834f5474a1da6506",
+                    "name": "Elly De La Cruz",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "ee67dca33b27f343ac6446a76cb3a275",
+                    "name": "Gavin Lux",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "a22c87218b6f496ba912505fe4528b68",
+                            "name": "Los Angeles Dodgers"
+                        }
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "0a38f0dc39f245dc8909f80c91e8df50",
+                    "name": "Nick Lodolo",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "22007d37d4e348398a6e35efa6018050",
+                            "name": "Cincinnati Reds"
+                        }
+                    ],
+                    "relevance": 44
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "f84014138dc34146bb2d4844735db712",
+                    "name": "Allan Winans",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "types": [
+                        "PROFESSIONAL_ATHLETE",
+                        "SPORTS_FIGURE",
+                        "PERSON"
+                    ],
+                    "teams": [
+                        {
+                            "code": "b5e7d258ae154823866eb6a637d4e418",
+                            "name": "Atlanta Braves"
+                        }
+                    ],
+                    "relevance": 81
+                }
+            ],
+            "subject": [
+                {
+                    "rels": [
+                        "category"
+                    ],
+                    "creator": "Editorial",
+                    "code": "s",
+                    "name": "s"
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "20d738b87e4e1004889ed0913b2d075c",
+                    "name": "Athlete injuries",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "relevance": 65
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "94aaa8f88c0c100489d7b9433d2f4c0e",
+                    "name": "MLB baseball",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "relevance": 81
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "20d82ae87e4e100488a0d0913b2d075c",
+                    "name": "Baseball",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "relevance": 65
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "54df6c687df7100483dedf092526b43e",
+                    "name": "Sports",
+                    "creator": "Editorial",
+                    "editorial_subject": "Sports",
+                    "rels": [
+                        "direct"
+                    ],
+                    "topparent": true
+                }
+            ],
+            "organisation": [
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "22007d37d4e348398a6e35efa6018050",
+                    "name": "Cincinnati Reds",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "relevance": 94
+                },
+                {
+                    "scheme": "http://cv.ap.org/id/",
+                    "code": "dfd3b11e6dec4023aedb703840890e64",
+                    "name": "New York Yankees",
+                    "creator": "Machine",
+                    "rels": [
+                        "direct"
+                    ],
+                    "relevance": 99
+                }
+            ],
+            "renditions": {
+                "nitf": {
+                    "title": "NITF Story Download",
+                    "rel": "Story",
+                    "format": "IIM",
+                    "type": "text",
+                    "mimetype": "text/xml",
+                    "fileextension": "xml",
+                    "words": 328,
+                    "contentid": "5be8a5e1b7524892901917f2847c6bc5",
+                    "href": "https://api.ap.org/media/v2.2/content/18fea29fa58e426ba080218399e4fcaa.0/download?type=text&format=NITF&rid=5be8a5e1b7524892901917f2847c6bc5&cid=0&fid=4e9f9d8a085343d099812c5855574d83&trf=&qt=dNtevaR9tbeI&dt=zQR1DCrJXs&et=0a1aza0c0",
+                    "mediafilterid": "2"
+                }
+            },
+            "textformat": "bx"
+        }
+    }
+}

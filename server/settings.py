@@ -396,6 +396,7 @@ AP_TAGS_MAPPING = {
     "APR": {
         100216,
         101543,
+        101668,
     },
     "APV": {
         30599,
@@ -476,3 +477,5 @@ ASSIGNMENT_MANUAL_REASSIGNMENT_ONLY = True
 DEFAULT_AUTHOR_EN = "cpdefaultauthor"
 
 DEFAULT_AUTHOR_FR = "cpdefaultauthorfr"
+
+HTTP_PUSH_TIMEOUT = (5, int(env("HTTP_PUSH_TIMEOUT", 60)))

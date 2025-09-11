@@ -85,3 +85,24 @@ class SetBylineOnPublishTestCase(IsolatedAsyncioTestCase):
             await set_byline_on_publish(item, updates)
         except ValueError as e:
             assert str(e) == "Default user 'cpdefaultauthor' not found in the database."
+
+    @patch("superdesk.get_resource_service")
+    async def test_set_byline_skips_default_for_non_cp_sources(self, mock_get_resource_service):
+        mock_user_service = AsyncMock()
+        mock_user_service.find_one_async.return_value = {
+            "_id": "64d13ff3446949ccb5348bdc",
+            "username": "cpdefaultauthor",
+            "first_name": "Default",
+            "last_name": "Author",
+            "email": "default.author@example.com",
+        }
+        mock_get_resource_service.return_value = mock_user_service
+
+        item = {"language": "en-CA", "source": "Reuters"}
+        updates = {}
+
+        await set_byline_on_publish(None, item, updates)
+    
+        assert "authors" not in item
+        assert "byline" not in item
+        assert "byline" not in updates

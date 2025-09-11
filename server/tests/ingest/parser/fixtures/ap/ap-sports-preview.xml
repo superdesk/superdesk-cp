@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<nitf version="-//IPTC//DTD NITF 3.4//EN" change.date="October 18, 2006" change.time="19:30">
+    <head>
+        <docdata>
+            <doc-id regsrc="AP"/>
+            <date.issue norm="20250623T075531Z"/>
+            <doc.copyright holder="AP" year="2025"/>
+            <identified-content>
+                <classifier type="apcategorycode" value="s"/>
+            </identified-content>
+        </docdata>
+    </head>
+    <body>
+        <body.head>
+            <hedline>
+                <hl1 id="headline">Reds host the Yankees to open 3-game series</hl1>
+            </hedline>
+            <byline>By The Associated Press</byline>
+            <distributor>The Associated Press</distributor>
+        </body.head>
+        <body.content>
+            <block>
+                <p>New York Yankees (45-32, first in the AL East) vs. Cincinnati Reds (40-38, fourth in the NL Central)</p>
+                <p>Cincinnati; Monday, 7:10 p.m. EDT</p>
+                <p>PITCHING PROBABLES: Yankees: Allan Winans (0-0); Reds: Nick Lodolo (5-5, 3.71 ERA, 1.11 WHIP, 74 strikeouts)</p>
+                <p>
+                    <a href="http://betmgm.com/" rel="nofollow">BETMGM SPORTSBOOK LINE:</a> Yankees -125, Reds +105; over/under is 10 runs
+                </p>
+                <p>BOTTOM LINE: The Cincinnati Reds host the New York Yankees to start a three-game series.</p>
+                <p>Cincinnati is 20-17 in home games and 40-38 overall. The Reds are 21-5 in games when they hit two or more home runs.</p>
+                <p>New York is 45-32 overall and 21-16 in road games. The Yankees have the fourth-best team batting average in MLB play at .256.</p>
+                <p>Monday's game is the first time these teams square off this season.</p>
+                <p>TOP PERFORMERS: Gavin Lux has 14 doubles, a triple and three home runs for the Reds. Elly De La Cruz is 13 for 41 with two doubles, a triple and five home runs over the last 10 games.</p>
+                <p>Paul Goldschmidt has 15 doubles, a triple and eight home runs for the Yankees. Trent Grisham is 9 for 38 with two doubles and two home runs over the past 10 games.</p>
+                <p>LAST 10 GAMES: Reds: 5-5, .245 batting average, 5.39 ERA, outscored by eight runs</p>
+                <p>Yankees: 3-7, .227 batting average, 2.20 ERA, outscored opponents by three runs</p>
+                <p>INJURIES: Reds: Jeimer Candelario: day-to-day (spine), Wade Miley: 15-Day IL (flexor), Graham Ashcraft: 15-Day IL (groin), Rhett Lowder: 60-Day IL (forearm), Hunter Greene: 15-Day IL (groin), Austin Hays: 10-Day IL (foot), Carson Spiers: 60-Day IL (shoulder), Tyler Callihan: 60-Day IL (forearm), Noelvi Marte: 10-Day IL (side), Brandon Williamson: 60-Day IL (elbow), Julian Aguiar: 60-Day IL (elbow)</p>
+                <p>Yankees: Ryan Yarbrough: 15-Day IL (oblique), Oswaldo Cabrera: 60-Day IL (ankle), Yerry De Los Santos: 15-Day IL (elbow), Marcus Stroman: 15-Day IL (knee), Jake Cousins: 60-Day IL (elbow), Gerrit Cole: 60-Day IL (elbow), Luis Gil: 60-Day IL (back)</p>
+                <p>___</p>
+                <p>The Associated Press created this story using technology provided by 
+                    
+                    <a href="https://www.dataskrive.com/">Data Skrive</a> and data from
+                    <a href="https://www.sportradar.com">Sportradar</a>.
+                </p>
+            </block>
+        </body.content>
+    </body>
+</nitf>

@@ -101,6 +101,21 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
 
         return meta
 
+    def _get_attachment_links(self, tree):
+        root = tree.getroottree().getroot()
+        nsmap = {"nar": "http://iptc.org/std/nar/2006-10-01/"}
+
+        attachments = []
+        for remote in root.findall(".//nar:remoteInfo", namespaces=nsmap):
+            href = remote.get("href")
+            if not href:
+                continue
+
+            name = remote.findtext("nar:name", default="Attachment", namespaces=nsmap)
+            attachments.append(f'<a target="_blank" href="{href}">{name}</a>')
+
+        return attachments
+
     def parse_inline_content(self, tree, item, ns=NS["xhtml"]):
         """
         Get contents of span/div with class mw_release and
@@ -121,8 +136,6 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
         divs = html.xpath('./xhtml:body/xhtml:*[@class="mw_release"]', namespaces=NS)
         for div in divs:
             for child in div:
-                if "img" in child.tag:
-                    continue
                 child_html = lxml_html.fromstring(
                     lxml_html.tostring(child, encoding="unicode")
                 )
@@ -131,6 +144,9 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
                     clean_td_br(clean_html)
                 clean_td_br(clean_html)
                 contents.append(lxml_html.tostring(clean_html, encoding="unicode"))
+
+        remote_infos_html = self._get_attachment_links(tree)
+        contents.extend(remote_infos_html)
         content["content"] = "\n".join(contents)
         return content
 

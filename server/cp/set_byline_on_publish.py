@@ -2,9 +2,21 @@ import logging
 
 from superdesk import get_resource_service
 from superdesk.signals import item_publish_async
+from settings import (
+    DEFAULT_AUTHOR_EN,
+    DEFAULT_AUTHOR_FR,
+    ORGANIZATION_NAME,
+    ORGANIZATION_NAME_ABBREVIATION,
+)
 from settings import DEFAULT_AUTHOR_EN, DEFAULT_AUTHOR_FR
 
 logger = logging.getLogger(__name__)
+
+CP_SOURCES = {
+    ORGANIZATION_NAME.lower(),
+    ORGANIZATION_NAME_ABBREVIATION.lower(),
+    "la presse canadienne",
+}
 
 
 async def set_byline_on_publish(item, updates):
@@ -15,6 +27,9 @@ async def set_byline_on_publish(item, updates):
         return
 
     if not updated.get("authors"):
+        source = updated.get("source", "").strip().lower()
+        if source and source not in CP_SOURCES:
+            return
         language = updated.get("language", "en-CA")
         default_author_username = (
             DEFAULT_AUTHOR_EN if language.startswith("en") else DEFAULT_AUTHOR_FR
