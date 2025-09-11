@@ -402,5 +402,5 @@ class CP_AP_ParseTestCase(TestCase):
         assert "Yankees -125, Reds +105" not in item["body_html"]
         assert "BOTTOM LINE" in item["body_html"]
 
-        item = self.parse("ap-agate.json", "ap-sports-preview.xml")
+        item = await self.parse("ap-agate.json", "ap-sports-preview.xml")
         assert "BETMGM SPORTSBOOK LINE:" in item["body_html"]
