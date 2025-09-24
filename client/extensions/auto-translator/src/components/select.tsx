@@ -36,7 +36,7 @@ export const Select = <T,>({
       if (onChange) onChange(newValue);
       else if (helpers) helpers.setValue(newValue as T);
     }}
-    error={meta?.error ? meta.error : error ? error : undefined}
+    error={meta?.error ?? error ?? undefined}
   >
     {children}
   </SuperdeskSelect>
@@ -55,7 +55,7 @@ export const FormSelect = <T,>({
   const [field, meta, helpers] = useFastField<T>(name);
 
   return (
-    <Select<T>
+    <Select
       {...props}
       label={label}
       field={field}

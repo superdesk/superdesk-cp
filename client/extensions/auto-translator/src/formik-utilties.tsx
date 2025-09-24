@@ -96,19 +96,20 @@ type HelperArgs<T extends (...args: any) => any> = Parameters<T> extends [
   : never;
 
 export const useFastField = <T,>(...args: Parameters<typeof useField<T>>) => {
-  const [field, meta] = useField<T>(...args),
-    { setFieldTouched, setFieldValue, setFieldError } = useFormikContext<T>(),
-    helpers = React.useMemo<FieldHelperProps<T>>(
-      () => ({
-        setValue: (...args: HelperArgs<typeof setFieldValue>) =>
-          setFieldValue(field.name, ...args),
-        setTouched: (...args: HelperArgs<typeof setFieldTouched>) =>
-          setFieldTouched(field.name, ...args),
-        setError: (...args: HelperArgs<typeof setFieldError>) =>
-          setFieldError(field.name, ...args),
-      }),
-      [setFieldTouched, setFieldValue, setFieldError, field.name]
-    );
+  const [field, meta] = useField<T>(...args);
+  const { setFieldTouched, setFieldValue, setFieldError } =
+    useFormikContext<T>();
+  const helpers = React.useMemo<FieldHelperProps<T>>(
+    () => ({
+      setValue: (...args: HelperArgs<typeof setFieldValue>) =>
+        setFieldValue(field.name, ...args),
+      setTouched: (...args: HelperArgs<typeof setFieldTouched>) =>
+        setFieldTouched(field.name, ...args),
+      setError: (...args: HelperArgs<typeof setFieldError>) =>
+        setFieldError(field.name, ...args),
+    }),
+    [setFieldTouched, setFieldValue, setFieldError, field.name]
+  );
 
   return [field, meta, helpers] as const;
 };

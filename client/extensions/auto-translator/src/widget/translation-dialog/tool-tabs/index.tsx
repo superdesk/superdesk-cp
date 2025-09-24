@@ -8,13 +8,12 @@ import {
   Tabs,
 } from "superdesk-ui-framework/react";
 import { CustomHeaderToggleBox } from "superdesk-ui-framework/react/components/ToggleBox/CustomHeaderToggleBox";
-import { useSuperdesk } from "../../../context";
+import { superdesk } from "../../../superdesk";
 import { Compare } from "../compare";
 import { ReplaceAll } from "../replace-all";
 
 const useTools = () => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization;
+  const { gettext } = superdesk.localization;
 
   return React.useMemo(
     () =>
@@ -53,12 +52,11 @@ const useTabs = (tools: ReturnType<typeof useTools>) =>
   );
 
 const ToggleBox = () => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization,
-    [tab, setTab] = React.useState(0),
-    tools = useTools(),
-    toggleBoxRef = React.useRef<CustomHeaderToggleBox>(null),
-    { tabLabels, tabPanels } = useTabs(tools);
+  const { gettext } = superdesk.localization;
+  const [tab, setTab] = React.useState(0);
+  const tools = useTools();
+  const toggleBoxRef = React.useRef<CustomHeaderToggleBox>(null);
+  const { tabLabels, tabPanels } = useTabs(tools);
 
   const handleTabOnClick = (newTab: number): void => {
     if (tab === newTab) return void toggleBoxRef.current?.toggle();

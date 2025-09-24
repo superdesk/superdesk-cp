@@ -2,8 +2,8 @@ import { Formik, FormikConfig, useFormikContext } from "formik";
 import * as React from "react";
 import { Button, ButtonGroup, Spacer } from "superdesk-ui-framework/react";
 import { FormTextInput } from "../../../components";
-import { useSuperdesk } from "../../../context";
 import { typedSetFieldValue } from "../../../formik-utilties";
+import { superdesk } from "../../../superdesk";
 import { getObjectKeys } from "../../../utilities";
 import { FORM_FIELDS, TranslationForm } from "../helpers";
 
@@ -17,9 +17,13 @@ type ReplaceAllFormProps = {
   replace: string;
 };
 
+/**
+ * The pattern is matching the literal string value string.
+ * This can be replaced with string.replaceAll once node is updated to 15+
+ */
 const getReplaceValue = (value: string, search: string, replace: string) => {
-  const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-    regex = new RegExp(escapedSearch, "gi");
+  const escapedSearch = search.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const regex = new RegExp(escapedSearch, "gi");
   return value.replace(regex, replace);
 };
 
@@ -28,8 +32,7 @@ const ReplaceAllForm = ({
 }: {
   translationFormRef: React.RefObject<TranslationFormRef>;
 }) => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization;
+  const { gettext } = superdesk.localization;
 
   const onSubmit: FormikConfig<ReplaceAllFormProps>["onSubmit"] = (
     values,

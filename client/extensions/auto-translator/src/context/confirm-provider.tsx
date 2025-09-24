@@ -1,7 +1,10 @@
 import * as React from "react";
-import { createPortal } from "react-dom";
-import { Button, ButtonGroup, Modal } from "superdesk-ui-framework/react";
-import { useSuperdesk } from "./superdesk-provider";
+import {
+  Button,
+  ButtonGroup,
+  Modal as SuperdeskModal,
+} from "superdesk-ui-framework/react";
+import { superdesk } from "../superdesk";
 
 type ConfirmProps = {
   header?: string | JSX.Element;
@@ -11,8 +14,8 @@ type ConfirmProps = {
     handleCancel: () => void
   ) => string | JSX.Element;
   footerProps?: {
-    confirm?: Partial<React.ComponentProps<typeof Button>>;
-    cancel?: Partial<React.ComponentProps<typeof Button>>;
+    confirm?: { buttonProps?: Partial<React.ComponentProps<typeof Button>> };
+    cancel?: { buttonProps?: Partial<React.ComponentProps<typeof Button>> };
   };
 };
 
@@ -31,80 +34,85 @@ export const useConfirm = () => {
   return context;
 };
 
+type ConfirmModalProps = ConfirmProps & {
+  resolve: (value: boolean) => void;
+  closeModal: () => void;
+};
+
+const ConfirmModal = ({
+  header,
+  footer,
+  footerProps,
+  body,
+  resolve,
+  closeModal,
+}: ConfirmModalProps) => {
+  const { gettext } = superdesk.localization;
+
+  const handleConfirm = () => {
+    closeModal();
+    resolve(true);
+  };
+
+  const handleCancel = () => {
+    closeModal();
+    resolve(false);
+  };
+
+  return (
+    <SuperdeskModal
+      headerTemplate={header ? header : gettext("Confirm")}
+      visible
+      onHide={handleCancel}
+      footerTemplate={
+        <ButtonGroup align="end">
+          {footer ? (
+            footer(handleConfirm, handleCancel)
+          ) : (
+            <>
+              <Button
+                text={gettext("Cancel")}
+                style="hollow"
+                onClick={handleCancel}
+                {...footerProps?.cancel?.buttonProps}
+              />
+              <Button
+                text={gettext("Confirm")}
+                type="primary"
+                style="hollow"
+                onClick={handleConfirm}
+                {...footerProps?.confirm?.buttonProps}
+              />
+            </>
+          )}
+        </ButtonGroup>
+      }
+    >
+      {body}
+    </SuperdeskModal>
+  );
+};
+
 export const ConfirmProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization,
-    [confirmState, setConfirmState] = React.useState<
-      | (ConfirmProps & {
-          resolve?: (value: boolean) => void;
-        })
-      | null
-    >(null);
+  const { showModal } = superdesk.ui;
 
   const confirm = React.useCallback(
-    (props: ConfirmProps): Promise<boolean> =>
+    (confirmProps: ConfirmProps): Promise<boolean> =>
       new Promise((resolve) => {
-        setConfirmState({ ...props, resolve });
+        showModal(({ closeModal }) => (
+          <ConfirmModal {...{ ...confirmProps, resolve, closeModal }} />
+        ));
       }),
     []
   );
 
-  const handleConfirm = () => {
-    confirmState?.resolve?.(true);
-    setConfirmState(null);
-  };
-
-  const handleCancel = () => {
-    confirmState?.resolve?.(false);
-    setConfirmState(null);
-  };
-
-  const modal = confirmState
-    ? createPortal(
-        <Modal
-          headerTemplate={
-            confirmState.header ? confirmState.header : gettext("Confirm")
-          }
-          visible
-          onHide={handleCancel}
-          footerTemplate={
-            <ButtonGroup align="end">
-              {confirmState.footer ? (
-                confirmState.footer(handleConfirm, handleCancel)
-              ) : (
-                <>
-                  <Button
-                    text={gettext("Cancel")}
-                    style="hollow"
-                    onClick={handleCancel}
-                    {...confirmState.footerProps?.cancel}
-                  />
-                  <Button
-                    text={gettext("Confirm")}
-                    type="primary"
-                    style="hollow"
-                    onClick={handleConfirm}
-                    {...confirmState.footerProps?.confirm}
-                  />
-                </>
-              )}
-            </ButtonGroup>
-          }
-        >
-          {confirmState.body}
-        </Modal>,
-        document.body
-      )
-    : null;
-
   return (
     <ConfirmContext.Provider value={{ confirm }}>
       {children}
-      {modal}
     </ConfirmContext.Provider>
   );
 };

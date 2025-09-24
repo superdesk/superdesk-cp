@@ -18,6 +18,10 @@ import {
   isNotEmptyObject,
   stripLinkTags,
 } from "../../utilities";
+import { superdesk } from "../../superdesk";
+
+const { gettext } = superdesk.localization;
+const { GenericFormFieldType } = superdesk.forms;
 
 type FormInputProps = Record<TranslationFields, string> & {
   images: Record<TranslationImageField, { description: string; href: string }>;
@@ -49,14 +53,12 @@ type ExtraTranslationForm = {
 const FORM_FIELDS: Record<
   TranslationFields,
   {
-    getType: (
-      superdesk: ISuperdesk
-    ) => ValueOf<ISuperdesk["forms"]["GenericFormFieldType"]>;
+    type: ValueOf<ISuperdesk["forms"]["GenericFormFieldType"]>;
     getName: (
       writethru: string,
       version: string
     ) => RecursiveKeyOf<TranslationForm>;
-    getLabel: (superdesk: ISuperdesk) => string;
+    label: string;
     getFormValue: (article: IArticle) => string;
     setEditorValue: (
       values: TranslationForm,
@@ -68,25 +70,24 @@ const FORM_FIELDS: Record<
     initialValue: any;
     validate?: (
       value: string,
-      { schema }: { schema: { maxlength: number } },
-      superdesk: ISuperdesk
+      { schema }: { schema: { maxlength: number } }
     ) => string | undefined;
     setFormValue?: (value: string) => string;
     mapApiValue?: (value: string) => string;
   }
 > = {
   headline: {
-    getType: ({ forms: { GenericFormFieldType } }) => GenericFormFieldType.plainText,
+    type: GenericFormFieldType.plainText,
     getName: (writethru, version) =>
       `translations.${writethru}.${version}.headline`,
-    getLabel: ({ localization: { gettext } }) => gettext("Headline"),
+    label: gettext("Headline"),
     getFormValue: (article) => article.headline ?? "",
     setEditorValue: (values) => ({
       key: "headline",
       value: values.translations[values.writethru].manualTranslation.headline,
     }),
     initialValue: "",
-    validate: (value, { schema }, { localization: { gettext } }) => {
+    validate: (value, { schema }) => {
       if (value.length > schema.maxlength)
         return gettext(
           "Headline may have a maximum character length of {{length}}",
@@ -96,10 +97,10 @@ const FORM_FIELDS: Record<
     },
   },
   headline_extended: {
-    getType: ({ forms: { GenericFormFieldType } }) => GenericFormFieldType.plainText,
+    type: GenericFormFieldType.plainText,
     getName: (writethru, version) =>
       `translations.${writethru}.${version}.headline_extended`,
-    getLabel: ({ localization: { gettext } }) => gettext("Extended Headline"),
+    label: gettext("Extended Headline"),
     getFormValue: (article) => article?.extra?.headline_extended ?? "",
     setEditorValue: (values, props) => ({
       key: "extra",
@@ -111,7 +112,7 @@ const FORM_FIELDS: Record<
       },
     }),
     initialValue: "",
-    validate: (value, { schema }, { localization: { gettext } }) => {
+    validate: (value, { schema }) => {
       if (value.length > schema.maxlength)
         return gettext(
           "Extended Headline may have a maximum character length of {{length}}",
@@ -121,10 +122,10 @@ const FORM_FIELDS: Record<
     },
   },
   body_html: {
-    getType: ({ forms: { GenericFormFieldType } }) => GenericFormFieldType.textEditor3,
+    type: GenericFormFieldType.textEditor3,
     getName: (writethru, version) =>
       `translations.${writethru}.${version}.body_html`,
-    getLabel: ({ localization: { gettext } }) => gettext("body HTML"),
+    label: gettext("body HTML"),
     getFormValue: (article) => article.body_html ?? "",
     setEditorValue: (values) => ({
       key: "body_html",
@@ -152,43 +153,52 @@ const isLanguageCode = (
 ): value is keyof typeof TRANSLATION_LANGUAGES_CODES_MAP =>
   value in TRANSLATION_LANGUAGES_CODES_MAP;
 
-const formatWritethruLabel = (
-  {
-    isCurrentStory,
-    anpa_take_key,
-    correction_sequence,
-    language,
-  }: Partial<IArticle> & { isCurrentStory?: boolean },
-  { localization: { gettext } }: ISuperdesk
-) => {
+type formatWritethruLabelProps = Partial<IArticle> & {
+  isCurrentStory?: boolean;
+};
+
+const formatWritethruLabel = ({
+  isCurrentStory,
+  anpa_take_key,
+  correction_sequence,
+  language,
+}: formatWritethruLabelProps) => {
   let label = "";
-  if (anpa_take_key)
+  if (
+    anpa_take_key !== null &&
+    typeof anpa_take_key === "string" &&
+    anpa_take_key.length > 0
+  )
     label += isCurrentStory ? `(${anpa_take_key})` : anpa_take_key;
-  if (correction_sequence)
+  if (typeof correction_sequence === "number" && !isNaN(correction_sequence))
     label += ` #${correction_sequence} (${gettext("Corrected")})`;
-  if (language) label += ` (${language})`;
+  if (language !== null && typeof language === "string" && language.length > 0)
+    label += ` (${language})`;
   return label;
 };
 
-const isManualTranslationDirty = (
-  {
-    values,
-    getFieldMeta,
-  }: Pick<FormikContextType<TranslationForm>, "values" | "getFieldMeta">,
-  superdesk: ISuperdesk
-) => {
-  const { GenericFormFieldType } = superdesk.forms,
-    { getContentStateFromHtml } = superdesk.helpers;
+type isManualTranslationDirtyProps = Pick<
+  FormikContextType<TranslationForm>,
+  "values" | "getFieldMeta"
+>;
+
+const isManualTranslationDirty = ({
+  values,
+  getFieldMeta,
+}: isManualTranslationDirtyProps) => {
+  const { getContentStateFromHtml } = superdesk.helpers;
 
   return getObjectEntries(FORM_FIELDS).some(([key, value]) => {
     const field = getFieldMeta<string>(
       `translations.${values.writethru}.manualTranslation.${key}`
     );
-    if (value.getType(superdesk) === GenericFormFieldType.textEditor3) {
-      const contentState = getContentStateFromHtml(field.value),
-        text = contentState.getPlainText(),
-        initialContentState = getContentStateFromHtml(field.initialValue ?? ""),
-        initialText = initialContentState.getPlainText();
+    if (value.type === GenericFormFieldType.textEditor3) {
+      const contentState = getContentStateFromHtml(field.value);
+      const text = contentState.getPlainText();
+      const initialContentState = getContentStateFromHtml(
+        field.initialValue ?? ""
+      );
+      const initialText = initialContentState.getPlainText();
 
       return initialText !== text;
     }
@@ -196,10 +206,10 @@ const isManualTranslationDirty = (
   });
 };
 
-const getWritethrus = (
-  article: IArticle,
-  { httpRequestJsonLocal, helpers: { prepareSuperdeskQuery } }: ISuperdesk
-) => {
+const getWritethrus = (article: IArticle) => {
+  const { prepareSuperdeskQuery } = superdesk.helpers;
+  const { httpRequestJsonLocal } = superdesk;
+
   const query = prepareSuperdeskQuery("/search", {
     filter: { family_id: { $eq: article.family_id } },
     sort: [{ versioncreated: "asc" }],
@@ -217,8 +227,8 @@ const getImagesFormValues = (article: IArticle) =>
     (images, [key, article]) => {
       if (!isArticle(article)) return images;
 
-      const description = article?.description_text,
-        thumbnailHref = article?.renditions?.thumbnail?.href;
+      const description = article?.description_text;
+      const thumbnailHref = article?.renditions?.thumbnail?.href;
 
       if (!thumbnailHref) return images;
 
@@ -233,13 +243,13 @@ const getImagesFormValues = (article: IArticle) =>
     { original: {}, aiTranslation: {}, manualTranslation: {} }
   );
 
-const getTranslationEntryFormValues = (
-  {
-    article,
-    images,
-  }: { article: IArticle; images: ReturnType<typeof getImagesFormValues> },
-  superdesk: ISuperdesk
-) =>
+const getTranslationEntryFormValues = ({
+  article,
+  images,
+}: {
+  article: IArticle;
+  images: ReturnType<typeof getImagesFormValues>;
+}) =>
   getObjectKeys(TRANSLATION_VERSIONS).reduce<
     TranslationForm["translations"][string]
   >(
@@ -277,13 +287,11 @@ const getTranslationEntryFormValues = (
         ...FORM_FIELDS_INITIAL_VALUES,
         images: {},
       },
-      label: formatWritethruLabel(article, superdesk),
+      label: formatWritethruLabel(article),
     }
   );
 
-const getTranslationFormInitialValues = ({
-  localization: { gettext },
-}: ISuperdesk) =>
+const getTranslationFormInitialValues = () =>
   ({
     writethru: "current",
     translationType: "deepl",
@@ -310,11 +318,10 @@ const getTranslationFormInitialValues = ({
 
 const getTranslationFormValues = (
   article: IArticle,
-  articleVersions: IArticle[],
-  superdesk: ISuperdesk
+  articleVersions: IArticle[]
 ): TranslationForm => {
-  const { gettext } = superdesk.localization,
-    { writethrus, originals } = articleVersions.reduce<{
+  const { gettext } = superdesk.localization;
+  const { writethrus, originals } = articleVersions.reduce<{
       writethrus: typeof articleVersions;
       originals: Partial<
         Record<
@@ -324,7 +331,11 @@ const getTranslationFormValues = (
       >;
     }>(
       (acc, article) => {
-        if (article.anpa_take_key) {
+        if (
+          article.anpa_take_key !== null &&
+          typeof article.anpa_take_key === "string" &&
+          article.anpa_take_key.length > 0
+        ) {
           acc.writethrus.push(article);
           return acc;
         }
@@ -338,31 +349,25 @@ const getTranslationFormValues = (
       { writethrus: [], originals: {} }
     ),
     current = {
-      ...getTranslationEntryFormValues(
-        { article, images: getImagesFormValues(article) },
-        superdesk
-      ),
+      ...getTranslationEntryFormValues({
+        article,
+        images: getImagesFormValues(article),
+      }),
       label: gettext("Current Story {{writethru}}", {
-        writethru: formatWritethruLabel(
-          {
-            ...article,
-            isCurrentStory: true,
-          },
-          superdesk
-        ),
+        writethru: formatWritethruLabel({
+          ...article,
+          isCurrentStory: true,
+        }),
       }),
     },
     translations = {
       current,
       ...(originals.en && {
         [`${originals.en._id}`]: {
-          ...getTranslationEntryFormValues(
-            {
-              article: originals.en,
-              images: getImagesFormValues(originals.en),
-            },
-            superdesk
-          ),
+          ...getTranslationEntryFormValues({
+            article: originals.en,
+            images: getImagesFormValues(originals.en),
+          }),
           label: `${
             originals.en.translated_from
               ? gettext("Translation")
@@ -372,13 +377,10 @@ const getTranslationFormValues = (
       }),
       ...(originals.fr && {
         [`${originals.fr._id}`]: {
-          ...getTranslationEntryFormValues(
-            {
-              article: originals.fr,
-              images: getImagesFormValues(originals.fr),
-            },
-            superdesk
-          ),
+          ...getTranslationEntryFormValues({
+            article: originals.fr,
+            images: getImagesFormValues(originals.fr),
+          }),
           label: `${
             originals.fr.translated_from
               ? gettext("Translation")
@@ -389,11 +391,11 @@ const getTranslationFormValues = (
       ...(writethrus.length &&
         writethrus.reduce<TranslationForm["translations"]>(
           (translations, article) => {
-            const images = getImagesFormValues(article),
-              translationEntry = getTranslationEntryFormValues(
-                { article, images },
-                superdesk
-              );
+            const images = getImagesFormValues(article);
+            const translationEntry = getTranslationEntryFormValues({
+              article,
+              images,
+            });
             translations[`${article._id}`] = translationEntry;
             return translations;
           },
@@ -422,16 +424,15 @@ const getTranslationFormValues = (
   };
 };
 
-const validateTranslationForm: (
-  superdesk: ISuperdesk
-) => FormikConfig<TranslationForm>["validate"] = (superdesk) => (values) => {
+const validateTranslationForm: FormikConfig<TranslationForm>["validate"] = (
+  values
+) => {
   const errors: FormikErrors<TranslationForm> = {};
 
   for (const [key, value] of getObjectEntries(FORM_FIELDS)) {
     const error = value?.validate?.(
       values.translations[values.writethru].manualTranslation[key],
-      { schema: superdesk.instance.config.schema?.["Story"]?.[key] },
-      superdesk
+      { schema: superdesk.instance.config.schema?.["Story"]?.[key] }
     );
 
     if (!error) continue;

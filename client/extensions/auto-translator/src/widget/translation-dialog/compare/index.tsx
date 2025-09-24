@@ -1,7 +1,6 @@
 import DiffMatchPatch from "diff-match-patch";
 import { useFormikContext } from "formik";
 import * as React from "react";
-import { ISuperdesk } from "superdesk-api";
 import {
   Label,
   Option,
@@ -10,7 +9,7 @@ import {
   Text,
 } from "superdesk-ui-framework/react";
 import { Select } from "../../../components";
-import { useSuperdesk } from "../../../context";
+import { superdesk } from "../../../superdesk";
 import { getObjectEntries, getObjectKeys } from "../../../utilities";
 import {
   FORM_FIELDS,
@@ -22,26 +21,23 @@ import { getPrettyDiffHtml, sanitizeHtml } from "./helpers";
 
 const COMPARE_VERSIONS = ["ls", "rs", "diff"] as const;
 
-const getCompareContentValues = (
-  {
-    ls,
-    rs,
-    version,
-  }: {
-    ls: TranslationForm["translations"][string];
-    rs: TranslationForm["translations"][string];
-    version: (typeof COMPARE_VERSIONS)[number];
-  },
-  { localization: { gettext } }: ISuperdesk
-) => {
-  const dmp = new DiffMatchPatch(),
-    result = getObjectKeys(FORM_FIELDS).reduce<Omit<FormInputProps, "images">>(
-      (result, field) => {
-        result[field] = "";
-        return result;
-      },
-      { ...FORM_FIELDS_INITIAL_VALUES }
-    );
+type CompareContentValues = {
+  ls: TranslationForm["translations"][string];
+  rs: TranslationForm["translations"][string];
+  version: (typeof COMPARE_VERSIONS)[number];
+};
+
+const getCompareContentValues = ({ ls, rs, version }: CompareContentValues) => {
+  const differ = new DiffMatchPatch();
+  const result = getObjectKeys(FORM_FIELDS).reduce<
+    Omit<FormInputProps, "images">
+  >(
+    (result, field) => {
+      result[field] = "";
+      return result;
+    },
+    { ...FORM_FIELDS_INITIAL_VALUES }
+  );
 
   switch (version) {
     case "ls":
@@ -56,42 +52,37 @@ const getCompareContentValues = (
       break;
     case "diff":
       for (const key of getObjectKeys(FORM_FIELDS)) {
-        const diffs = dmp.diff_main(
+        const diffs = differ.diff_main(
           sanitizeHtml(ls.original[key]),
           sanitizeHtml(rs.original[key])
         );
-        result[key] = getPrettyDiffHtml({ diffs, gettext });
+        result[key] = getPrettyDiffHtml(diffs);
       }
   }
 
   return result;
 };
 
-const CompareContent = (props: Omit<FormInputProps, "images">) => {
-  const superdesk = useSuperdesk();
-
-  return (
-    <>
-      {getObjectEntries(FORM_FIELDS).map(([key, value]) => (
-        <Spacer key={`compare-${key}`} v gap="8" noWrap>
-          <Label text={value.getLabel(superdesk)} style="hollow" />
-          <p dangerouslySetInnerHTML={{ __html: props[key] }}></p>
-        </Spacer>
-      ))}
-    </>
-  );
-};
+const CompareContent = (props: Omit<FormInputProps, "images">) => (
+  <>
+    {getObjectEntries(FORM_FIELDS).map(([key, value]) => (
+      <Spacer key={`compare-${key}`} v gap="8" noWrap>
+        <Label text={value.label} style="hollow" />
+        <p dangerouslySetInnerHTML={{ __html: props[key] }}></p>
+      </Spacer>
+    ))}
+  </>
+);
 
 export const Compare = () => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization,
-    { values } = useFormikContext<TranslationForm>(),
-    [compareLeft, setCompareLeft] = React.useState<
-      TranslationForm["writethru"]
-    >(getObjectKeys(values.translations)?.[0] ?? ""),
-    [compareRight, setCompareRight] = React.useState<
-      TranslationForm["writethru"]
-    >(getObjectKeys(values.translations)?.[0] ?? "");
+  const { gettext } = superdesk.localization;
+  const { values } = useFormikContext<TranslationForm>();
+  const [compareLeft, setCompareLeft] = React.useState<
+    TranslationForm["writethru"]
+  >(getObjectKeys(values.translations)?.[0] ?? "");
+  const [compareRight, setCompareRight] = React.useState<
+    TranslationForm["writethru"]
+  >(getObjectKeys(values.translations)?.[0] ?? "");
 
   return (
     <>
@@ -122,7 +113,7 @@ export const Compare = () => {
         ))}
       </Spacer>
       <SpacerBlock v gap="16" />
-      {compareLeft && compareRight && (
+      {compareLeft != null && compareRight !== null && (
         <Spacer h gap="16" alignItems="start" noWrap>
           {COMPARE_VERSIONS.map((version, i) => {
             const header =
@@ -136,14 +127,11 @@ export const Compare = () => {
                   {header}
                 </Text>
                 <CompareContent
-                  {...getCompareContentValues(
-                    {
-                      ls: values.translations[compareLeft],
-                      rs: values.translations[compareRight],
-                      version,
-                    },
-                    superdesk
-                  )}
+                  {...getCompareContentValues({
+                    ls: values.translations[compareLeft],
+                    rs: values.translations[compareRight],
+                    version,
+                  })}
                 />
               </Spacer>
             );

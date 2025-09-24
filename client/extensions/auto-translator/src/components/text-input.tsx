@@ -33,7 +33,7 @@ export const TextInput = <T,>({
       if (onChange) onChange(newValue);
       else if (helpers) helpers.setValue(newValue as T);
     }}
-    error={meta?.error ? meta.error : undefined}
+    error={meta?.error ?? undefined}
   />
 );
 

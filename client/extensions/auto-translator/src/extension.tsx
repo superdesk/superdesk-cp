@@ -18,7 +18,7 @@ const extension: IExtension = {
             label: gettext("Auto Translate"),
             icon: "multiedit",
             order: 1,
-            component: getAutoTranslatorWidget(superdesk),
+            component: getAutoTranslatorWidget(),
             isAllowed: (item: IArticle) => item.type === "text",
           },
         ],

@@ -145,3 +145,9 @@ msgstr "Montrer {{tool}}"
 
 msgid "Hide {{tool}}"
 msgstr "Cacher {{tool}}"
+
+msgid "Failed to translate writethru."
+msgstr "Échec de la traduction de lead."
+
+msgid "Failed to load writethrus."
+msgstr "Échec du chargement de lead."

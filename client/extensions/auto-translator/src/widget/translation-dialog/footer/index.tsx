@@ -2,7 +2,7 @@ import { useFormikContext } from "formik";
 import * as React from "react";
 import { Button, ButtonGroup } from "superdesk-ui-framework/react";
 import { FORM_ID, SUBMITTER_ID } from "../../../constants";
-import { useSuperdesk } from "../../../context";
+import { superdesk } from "../../../superdesk";
 import { isManualTranslationDirty, TranslationForm } from "../helpers";
 
 const SubmitButton = ({
@@ -10,13 +10,12 @@ const SubmitButton = ({
 }: {
   formRef: React.RefObject<HTMLFormElement>;
 }) => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization,
-    { isValid, status, values, getFieldMeta } =
-      useFormikContext<TranslationForm>();
+  const { gettext } = superdesk.localization;
+  const { isValid, status, values, getFieldMeta } =
+    useFormikContext<TranslationForm>();
 
   const handleOnSubmitClick = () => {
-    if (!formRef.current) return;
+    if (formRef.current === null) return;
 
     const button = document.createElement("button");
     button.type = "submit";
@@ -44,22 +43,20 @@ const SubmitButton = ({
         !isValid ||
         status.isLoading ||
         (status.isPristine &&
-          !isManualTranslationDirty({ values, getFieldMeta }, superdesk))
+          !isManualTranslationDirty({ values, getFieldMeta }))
       }
       onClick={handleOnSubmitClick}
     />
   );
 };
 
-export const Footer = ({
-  closeDialog,
-  formRef,
-}: {
+type FooterProps = {
   closeDialog: () => void;
   formRef: React.RefObject<HTMLFormElement>;
-}) => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization;
+};
+
+export const Footer = ({ closeDialog, formRef }: FooterProps) => {
+  const { gettext } = superdesk.localization;
 
   return (
     <ButtonGroup align="end">

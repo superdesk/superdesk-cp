@@ -2,7 +2,7 @@ import { Formik, FormikConfig } from "formik";
 import * as React from "react";
 import { IArticle } from "superdesk-api";
 import { Modal } from "superdesk-ui-framework/react";
-import { useSuperdesk } from "../../context";
+import { superdesk } from "../../superdesk";
 import { getObjectValues } from "../../utilities";
 import { Footer } from "./footer";
 import { TranslationForm } from "./form";
@@ -21,11 +21,10 @@ export const TranslationDialog = ({
   article: IArticle;
   closeDialog: () => void;
 }) => {
-  const superdesk = useSuperdesk(),
-    { gettext } = superdesk.localization,
-    { applyFieldChangesToEditor } = superdesk.ui.article,
-    { _id: articleId } = article,
-    formRef = React.useRef<HTMLFormElement>(null);
+  const { gettext } = superdesk.localization;
+  const { applyFieldChangesToEditor } = superdesk.ui.article;
+  const { _id: articleId } = article;
+  const formRef = React.useRef<HTMLFormElement>(null);
 
   const onSubmit: FormikConfig<TranslationFormType>["onSubmit"] = (
     values,
@@ -45,9 +44,9 @@ export const TranslationDialog = ({
   return (
     <Formik<TranslationFormType, ExtraTranslationForm>
       enableReinitialize
-      initialValues={getTranslationFormInitialValues(superdesk)}
+      initialValues={getTranslationFormInitialValues()}
       onSubmit={onSubmit}
-      validate={validateTranslationForm(superdesk)}
+      validate={validateTranslationForm}
       initialStatus={{ isLoading: true, isPristine: true }}
     >
       <Modal
