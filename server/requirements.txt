@@ -187,8 +187,6 @@ grpcio==1.74.0
     #   grpcio-status
 grpcio-status==1.74.0
     # via google-api-core
-gunicorn==23.0.0
-    # via -r requirements.in
 h11==0.16.0
     # via
     #   hypercorn
@@ -206,7 +204,9 @@ hpack==4.1.0
 httplib2==0.30.2
     # via oauth2client
 hypercorn==0.17.3
-    # via quart
+    # via
+    #   -r requirements.in
+    #   quart
 hyperframe==6.1.0
     # via h2
 icalendar==5.0.13
@@ -273,9 +273,7 @@ oauthlib==3.3.1
 orderly-set==5.5.0
     # via deepdiff
 packaging==25.0
-    # via
-    #   gunicorn
-    #   kombu
+    # via kombu
 pillow==11.2.1
     # via
     #   reportlab

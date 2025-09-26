@@ -1,5 +1,5 @@
-gunicorn
 honcho
+hypercorn
 celery-redbeat
 python3-saml>=1.9,<1.17
 python-xmp-toolkit>=2.0.1,<2.1
