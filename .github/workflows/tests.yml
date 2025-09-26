@@ -22,3 +22,5 @@ jobs:
 
   client:
     uses: superdesk/superdesk/.github/workflows/client.yml@develop
+    with:
+      node-version: '22'
