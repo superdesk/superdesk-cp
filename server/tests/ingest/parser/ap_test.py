@@ -383,18 +383,17 @@ class CP_AP_ParseTestCase(TestCase):
         data = {"item": {"urgency": 1}}
         self.assertEqual(cp.NEWS_URGENT, parser._parse_ranking(data, item))
 
-    def parse(self, fixture, nitf_fixture=None):
+    async def parse(self, fixture, nitf_fixture=None):
         with open(get_fixture_path(fixture, "ap")) as fp:
             _data = json.load(fp)
 
-        with self.app.app_context():
-            if nitf_fixture:
-                xml = etree.parse(get_fixture_path(nitf_fixture, "ap"))
-                parsed = nitf.NITFFeedParser().parse(xml)
-                _data["nitf"] = parsed
+        if nitf_fixture:
+            xml = etree.parse(get_fixture_path(nitf_fixture, "ap"))
+            parsed = await nitf.NITFFeedParser().parse(xml)
+            _data["nitf"] = parsed
 
-            with patch.dict(superdesk.resources, resources):
-                return parser.parse(_data, {})
+        with patch.dict(superdesk.resources, resources):
+            return await parser.parse(_data, {})
 
     async def test_ignore_betting(self):
         item = await self.parse("ap-sports-preview.json", "ap-sports-preview.xml")
