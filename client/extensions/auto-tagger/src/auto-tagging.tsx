@@ -2,6 +2,7 @@ import * as React from 'react';
 import { OrderedMap, OrderedSet, Map } from 'immutable';
 import { Switch, Button, ButtonGroup, EmptyState, Autocomplete, Modal } from 'superdesk-ui-framework/react';
 import { ToggleBoxNext } from 'superdesk-ui-framework';
+import memoizeOne from 'memoize-one';
 
 import { IArticle, IArticleSideWidget, ISuperdesk } from 'superdesk-api';
 
@@ -184,7 +185,7 @@ export function getAutoTaggingComponent(superdesk: ISuperdesk, label: string): I
             this.insertTagFromSearch = this.insertTagFromSearch.bind(this);
             this.reload = this.reload.bind(this);
             this.save = this.save.bind(this);
-            this.isDirty = superdesk.utilities.memoize((a, b) => Object.keys(generatePatch(a, b)).length > 0);
+            this.isDirty = memoizeOne((a, b) => Object.keys(generatePatch(a, b)).length > 0);
         }
 
         runAnalysis() {
