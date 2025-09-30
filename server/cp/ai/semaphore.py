@@ -633,9 +633,15 @@ class Semaphore(AIServiceBase):
             return response_dict
 
         def escape_ampersands_in_item(item):
-            item["headline"] = item["headline"].replace("&", "&amp;")
-            item["abstract"] = item["abstract"].replace("&", "&amp;")
-            item["body_html"] = item["body_html"].replace("&", "&amp;")
+            item["headline"] = (
+                item["headline"].replace("&", "&amp;") if item.get("headline") else ""
+            )
+            item["abstract"] = (
+                item["abstract"].replace("&", "&amp;") if item.get("abstract") else ""
+            )
+            item["body_html"] = (
+                item["body_html"].replace("&", "&amp;") if item.get("body_html") else ""
+            )
             return item
 
         try:
