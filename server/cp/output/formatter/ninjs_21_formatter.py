@@ -953,7 +953,8 @@ class NINJS21Formatter(Formatter):
             if isinstance(filemeta_json, str):
                 try:
                     filemeta_json = json.loads(filemeta_json)
-                except:
+                except Exception as e:
+                    logger.error(f"Error parsing filemeta_json: {str(e)}")
                     filemeta_json = {}
 
             # Use 'main' instead of 'original' for video name
