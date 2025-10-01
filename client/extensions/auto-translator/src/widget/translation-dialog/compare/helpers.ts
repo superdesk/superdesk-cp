@@ -4,17 +4,13 @@ import diff_match_patch, {
   DIFF_INSERT,
 } from "diff-match-patch";
 import DOMPurify from "dompurify";
-import { ISuperdesk } from "superdesk-api";
+import { superdesk } from "../../../superdesk";
 
 export const sanitizeHtml = (html: string | Node) => DOMPurify.sanitize(html);
 
-export const getPrettyDiffHtml = ({
-  diffs,
-  gettext,
-}: {
-  diffs: diff_match_patch.Diff[];
-  gettext: ISuperdesk["localization"]["gettext"];
-}) => {
+export const getPrettyDiffHtml = (diffs: diff_match_patch.Diff[]) => {
+  const { gettext } = superdesk.localization;
+
   let html = [];
   const patternPara = /\n/g;
   const tempDiv = document.createElement("div");
@@ -59,7 +55,7 @@ export const getPrettyDiffHtml = ({
   for (let x = 0; x < diffs.length; x++) {
     let op = diffs[x][0];
     let data = diffs[x][1];
-    let text = data.replace(patternPara, "");
+    const text = data.replace(patternPara, "");
     tempDiv.innerHTML = text;
 
     switch (op) {

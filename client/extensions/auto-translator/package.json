@@ -21,7 +21,7 @@
   "dependencies": {
     "diff-match-patch": "1.0.5",
     "formik": "2.4.6",
-    "superdesk-ui-framework": "3.1.18"
+    "superdesk-ui-framework": "4.0.72"
   },
   "superdeskExtension": {
     "translations-extract-paths": [

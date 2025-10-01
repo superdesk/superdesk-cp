@@ -4,11 +4,10 @@ import {
   IExtensionActivationResult,
 } from "superdesk-api";
 import { WIDGET_ID } from "./constants";
-import { superdesk } from "./superdesk";
-import { AutoTranslatorWidget } from "./widget";
+import { getAutoTranslatorWidget } from "./widget";
 
 const extension: IExtension = {
-  activate: () => {
+  activate: (superdesk) => {
     const { gettext } = superdesk.localization;
 
     const result: IExtensionActivationResult = {
@@ -19,7 +18,7 @@ const extension: IExtension = {
             label: gettext("Auto Translate"),
             icon: "multiedit",
             order: 1,
-            component: AutoTranslatorWidget,
+            component: getAutoTranslatorWidget(),
             isAllowed: (item: IArticle) => item.type === "text",
           },
         ],
