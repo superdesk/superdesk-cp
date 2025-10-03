@@ -227,7 +227,7 @@ class ArchiveSearchProvider(SearchProvider):
         return out
 
     def _api_search(self, api_params: Dict[str, Any]):
-        last_err = None
+        last_err: Any = None
 
         with requests.Session() as session:
             url = f"{self.api_base}{self.api_path}"
@@ -285,7 +285,7 @@ class ArchiveSearchProvider(SearchProvider):
         if not isinstance(items, list):
             items = []
 
-        total = data.get("total", {})
+        total: int = data.get("total", {})
         total = (
             total
             if isinstance(total, int)
@@ -399,6 +399,7 @@ class ArchiveSearchProvider(SearchProvider):
                 wordcount = 0
             language = prefer_top_level(whole, data, "language", "")
             located = prefer_top_level(whole, data, "located", "")
+            wire = whole.get("wire") or data.get("wire")
 
             transformed.append(
                 {
@@ -422,6 +423,13 @@ class ArchiveSearchProvider(SearchProvider):
                     "byline": byline or "",
                     "located": located,
                     "wordcount": wordcount,
+                    **(
+                        {"anpa_category": [{"name": w} for w in wire]}
+                        if isinstance(wire, list)
+                        else {"anpa_category": [{"name": wire}]}
+                        if wire
+                        else {}
+                    ),
                 }
             )
         return transformed
