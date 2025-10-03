@@ -289,11 +289,15 @@ class ArchiveSearchProvider(SearchProvider):
         total = (
             total
             if isinstance(total, int)
-            else total.get("value")
-            if isinstance(total, dict) and isinstance(total.get("value"), int)
-            else data.get("total_count")
-            if isinstance(data.get("total_count"), int)
-            else len(items)
+            else (
+                total.get("value")
+                if isinstance(total, dict) and isinstance(total.get("value"), int)
+                else (
+                    data.get("total_count")
+                    if isinstance(data.get("total_count"), int)
+                    else len(items)
+                )
+            )
         )
 
         normalized_items = []
@@ -408,9 +412,9 @@ class ArchiveSearchProvider(SearchProvider):
                     "headline": legacy_headline or "",
                     "headline_extended": hl_ext or "",
                     "headline_main": hl_main or "",
-                    "description_text": (description[:200] + "...")
-                    if description
-                    else "",
+                    "description_text": (
+                        (description[:200] + "...") if description else ""
+                    ),
                     "versioncreated": self._parse_datetime(data.get("versioncreated")),
                     "slugline": data.get("slugline", ""),
                     "firstcreated": data.get("firstcreated"),
@@ -426,9 +430,7 @@ class ArchiveSearchProvider(SearchProvider):
                     **(
                         {"anpa_category": [{"name": w} for w in wire]}
                         if isinstance(wire, list)
-                        else {"anpa_category": [{"name": wire}]}
-                        if wire
-                        else {}
+                        else {"anpa_category": [{"name": wire}]} if wire else {}
                     ),
                 }
             )
