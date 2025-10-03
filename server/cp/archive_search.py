@@ -227,7 +227,7 @@ class ArchiveSearchProvider(SearchProvider):
         return out
 
     def _api_search(self, api_params: Dict[str, Any]):
-        last_err = None
+        last_err: Any = None
 
         with requests.Session() as session:
             url = f"{self.api_base}{self.api_path}"
@@ -285,15 +285,19 @@ class ArchiveSearchProvider(SearchProvider):
         if not isinstance(items, list):
             items = []
 
-        total = data.get("total", {})
+        total: int = data.get("total", {})
         total = (
             total
             if isinstance(total, int)
-            else total.get("value")
-            if isinstance(total, dict) and isinstance(total.get("value"), int)
-            else data.get("total_count")
-            if isinstance(data.get("total_count"), int)
-            else len(items)
+            else (
+                total.get("value")
+                if isinstance(total, dict) and isinstance(total.get("value"), int)
+                else (
+                    data.get("total_count")
+                    if isinstance(data.get("total_count"), int)
+                    else len(items)
+                )
+            )
         )
 
         normalized_items = []
@@ -399,6 +403,7 @@ class ArchiveSearchProvider(SearchProvider):
                 wordcount = 0
             language = prefer_top_level(whole, data, "language", "")
             located = prefer_top_level(whole, data, "located", "")
+            wire = whole.get("wire") or data.get("wire")
 
             transformed.append(
                 {
@@ -407,9 +412,9 @@ class ArchiveSearchProvider(SearchProvider):
                     "headline": legacy_headline or "",
                     "headline_extended": hl_ext or "",
                     "headline_main": hl_main or "",
-                    "description_text": (description[:200] + "...")
-                    if description
-                    else "",
+                    "description_text": (
+                        (description[:200] + "...") if description else ""
+                    ),
                     "versioncreated": self._parse_datetime(data.get("versioncreated")),
                     "slugline": data.get("slugline", ""),
                     "firstcreated": data.get("firstcreated"),
@@ -422,6 +427,11 @@ class ArchiveSearchProvider(SearchProvider):
                     "byline": byline or "",
                     "located": located,
                     "wordcount": wordcount,
+                    **(
+                        {"anpa_category": [{"name": w} for w in wire]}
+                        if isinstance(wire, list)
+                        else {"anpa_category": [{"name": wire}]} if wire else {}
+                    ),
                 }
             )
         return transformed
