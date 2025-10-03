@@ -1,6 +1,7 @@
 import logging
 import requests
 import xml.etree.ElementTree as ET
+from .semaphore_api_key_manager import SemaphoreAPIKeyManager
 from superdesk.text_checkers.ai.base import AIServiceBase
 import traceback
 import superdesk
@@ -76,14 +77,14 @@ class Semaphore(AIServiceBase):
     label = "Semaphore autotagging service"
 
     def __init__(self, app):
+
+        self.api_key_manager = SemaphoreAPIKeyManager(app)
+
         # SEMAPHORE_BASE_URL OR TOKEN_ENDPOINT Goes Here
         self.base_url = app.config.get("SEMAPHORE_BASE_URL")
 
         #  SEMAPHORE_ANALYZE_URL Goes Here
         self.analyze_url = app.config.get("SEMAPHORE_ANALYZE_URL")
-
-        #  SEMAPHORE_API_KEY Goes Here
-        self.api_key = app.config.get("SEMAPHORE_API_KEY")
 
         #  SEMAPHORE_SEARCH_URL Goes Here
         self.search_url = app.config.get("SEMAPHORE_SEARCH_URL")
@@ -99,6 +100,8 @@ class Semaphore(AIServiceBase):
 
         #  SEMAPHORE_CREATE_TAG_QUERY Goes Here
         self.create_tag_query = app.config.get("SEMAPHORE_CREATE_TAG_QUERY")
+
+        self.api_key = None
 
     def convert_to_desired_format(input_data):
         result = {
@@ -118,12 +121,15 @@ class Semaphore(AIServiceBase):
         return result
 
     def get_access_token(self):
-        """Get access token for Semaphore."""
-        url = self.base_url
+        """Get access token for Semaphore using managed API key."""
+        # Get valid API key (will auto-renew if needed)
+        self.api_key = self.api_key_manager.get_valid_api_key()
 
         payload = f"grant_type=apikey&key={self.api_key}"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
-        response = session.post(url, headers=headers, data=payload, timeout=TIMEOUT)
+        response = session.post(
+            self.base_url + "/token", headers=headers, data=payload, timeout=TIMEOUT
+        )
         response.raise_for_status()
         return response.json().get("access_token")
 
@@ -171,7 +177,7 @@ class Semaphore(AIServiceBase):
     # Analyze2 changed name to analyze_parent_info
     def analyze_parent_info(self, data: SearchData) -> ResponseType:
         try:
-            if not self.base_url or not self.api_key:
+            if not self.base_url:
                 logger.warning(
                     "Semaphore Search is not configured properly, can't \
                     analyze content"
@@ -328,7 +334,7 @@ class Semaphore(AIServiceBase):
             "existing_tags": [],
         }
         try:
-            if not self.create_tag_url or not self.api_key:
+            if not self.create_tag_url:
                 logger.warning(
                     "Semaphore Create is not configured properly, \
                     can't analyze content"
@@ -645,7 +651,7 @@ class Semaphore(AIServiceBase):
             return item
 
         try:
-            if not self.base_url or not self.api_key:
+            if not self.api_key_manager:
                 logger.warning(
                     "Semaphore is not configured properly, \
                     can't analyze content"
@@ -729,7 +735,7 @@ class Semaphore(AIServiceBase):
         )
         slugline = html_content["slugline"]
         guid = html_content["guid"]
-        env = self.api_key[-4:]
+        env = self.api_key if self.api_key else ""
         dateTime = datetime.datetime.now().isoformat()
 
         # Embed the 'body_html' into the XML template
