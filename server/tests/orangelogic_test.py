@@ -61,6 +61,14 @@ def fetch_ok(aiohttp_mock: aioresponses):
     aiohttp_mock.get(search_url, body=read_fixture("orangelogic_fetch.json"))
 
 
+class MockAsyncFile:
+    def __init__(self, data):
+        self.data = data
+
+    async def read(self):
+        return self.data
+
+
 class OrangelogicTestCase(TestCase):
     provider = {"config": {"username": "foo", "password": "bar"}}
     app_config = {"ORANGELOGIC_URL": "https://example.com/"}
@@ -132,7 +140,7 @@ class OrangelogicTestCase(TestCase):
 
     @patch("cp.orangelogic.update_renditions", side_effect=set_rendition)
     async def test_fetch_to_jimi(self, update_renditions_mock):
-        self.app.media.get_async.return_value = io.BytesIO(
+        self.app.media.get_async.return_value = MockAsyncFile(
             read_fixture(
                 "9e627f74b97841b3b8562b6547ada9c7-d1538139479c43e88021152.jpg", "rb"
             )
