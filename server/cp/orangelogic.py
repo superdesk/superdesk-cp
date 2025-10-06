@@ -2,6 +2,7 @@ import math
 import logging
 import mimetypes
 import aiohttp
+import io
 
 import superdesk
 import cp
@@ -308,7 +309,8 @@ class OrangelogicSearchProvider(SearchProvider):
 
 
 async def _parse_binary_async(item):
-    binary = await app.media.get_async(item["renditions"]["original"]["media"])
+    file_obj = await app.media.get_async(item["renditions"]["original"]["media"])
+    binary = io.BytesIO(await file_obj.read())
     iptc = get_meta_iptc(binary)
     if not iptc:
         return
