@@ -103,6 +103,10 @@ class Semaphore(AIServiceBase):
 
         self.api_key = None
 
+        self.id_value = (
+            "http://cv.cp.org/ConceptScheme/620c4a58-74a7-4996-85e6-415e734adfbb"
+        )
+
     def convert_to_desired_format(input_data):
         result = {
             "result": {
@@ -355,30 +359,12 @@ class Semaphore(AIServiceBase):
 
             for item in manual_tags:
                 concept_name = item["name"]
-                scheme = item["scheme"]
-
-                id_value = None
-                if scheme == "subject":
-                    id_value = "http://cv.cp.org/4916d989-2227-4f2d-8632-525cd462ab9f"
-                elif scheme == "organisation":
-                    id_value = "http://cv.cp.org/e2c332d3-05e0-4dcc-b358-9e4855e80e88"
-                elif scheme == "place":
-                    id_value = "http://cv.cp.org/c3b17bf6-7969-424d-92ae-966f4f707a95"
-                elif scheme == "person":
-                    id_value = "http://cv.cp.org/1630a532-329f-43fe-9606-b381330c35cf"
-                elif scheme == "event":
-                    id_value = "http://cv.cp.org/3c493189-023f-4d14-a2f4-fc7b79735ffc"
-
-                if id_value is None:
-                    print(f"Unsupported scheme: {scheme}")
-                    result_summary["failed_tags"].append(concept_name)
-                    continue
 
                 payload = json.dumps(
                     {
                         "@type": ["skos:Concept"],
                         "rdfs:label": "ConceptNameForUriGeneration",
-                        "skos:topConceptOf": {"@id": id_value},
+                        "skos:topConceptOf": {"@id": self.id_value},
                         "skosxl:prefLabel": [
                             {
                                 "@type": ["skosxl:Label"],
