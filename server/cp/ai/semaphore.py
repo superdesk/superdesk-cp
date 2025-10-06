@@ -721,7 +721,7 @@ class Semaphore(AIServiceBase):
         )
         slugline = html_content["slugline"]
         guid = html_content["guid"]
-        env = (self.api_key[-4:] if self.api_key else "")
+        env = self.api_key[-4:] if self.api_key else ""
         dateTime = datetime.datetime.now().isoformat()
 
         # Embed the 'body_html' into the XML template

@@ -63,13 +63,6 @@ class SemaphoreAPIKeyManager:
         if not self.current_key:
             raise ValueError("No valid API key available")
 
-        # Redact API key in logs: show only last 4 characters
-        redacted_key = (
-            f"{'*' * (len(self.current_key) - 4)}{self.current_key[-4:]}"
-            if self.current_key and len(self.current_key) > 4
-            else "****"
-        )
-        logger.info(f"Valid API key found: {redacted_key}")
         return self.current_key
 
     def _is_key_expired_or_near_expiry(self) -> bool:
