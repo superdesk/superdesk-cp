@@ -15,7 +15,7 @@ libmagic-dev \
 # windowns
 dos2unix \
 # exif
-libexempi-dev \
+libexempi-dev exiftool \
 && rm -rf /var/lib/apt/lists/* 
 
 # setup venv
