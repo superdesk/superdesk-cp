@@ -1,10 +1,10 @@
-import moment from "moment";
 import * as React from "react";
 import { ISearchPanelWidgetProps, IVocabularyItem } from "superdesk-api";
 import {
   Input,
   MultiSelect as SuperdeskMultiSelect,
 } from "superdesk-ui-framework/react";
+import { DatePickerISO } from "./date-picker";
 import { superdesk } from "./superdesk";
 
 const { gettext } = superdesk.localization;
@@ -21,6 +21,12 @@ interface IParams {
   languages: string[];
   source: string[];
 }
+
+const HEADER_BUTTON_BAR_PROPS = [
+  { label: gettext("Today"), days: 1 },
+  { label: gettext("Tomorrow"), days: 2 },
+  { label: gettext("In 2 days"), days: 3 },
+];
 
 type MultiSelectProps = Record<
   string,
@@ -74,7 +80,7 @@ const MultiSelect = ({
 
   const options = React.useMemo(
     () => getVocabulary(vocabularyKey)?.items ?? [],
-    []
+    [vocabularyKey]
   );
 
   return (
@@ -100,31 +106,30 @@ export const widgetFactory = (): React.ComponentType<
   > {
     render() {
       const { provider, params, setParams } = this.props;
-      const { DateInput } = superdesk.components;
 
       if (provider !== "archive_search") return null;
       return (
         <fieldset>
-          <div style={{ width: "100%" }}>
-            <DateInput
+          <div className="form__row">
+            <DatePickerISO
               label={gettext("From")}
-              value={params.from ? moment(params.from, "YYYY-MM-DD") : ""}
+              value={params.from ?? ""}
               dateFormat="YYYY-MM-DD"
-              field="from"
-              onChange={(f, v) => {
-                setParams({ [f]: v.format("YYYY-MM-DD") });
+              onChange={(v) => {
+                setParams({ from: v });
               }}
+              headerButtonBar={HEADER_BUTTON_BAR_PROPS}
             />
           </div>
-          <div style={{ width: "100%" }}>
-            <DateInput
+          <div className="form__row">
+            <DatePickerISO
               label={gettext("To")}
-              value={params.to ? moment(params.to, "YYYY-MM-DD") : ""}
+              value={params.to ?? ""}
               dateFormat="YYYY-MM-DD"
-              field="to"
-              onChange={(f, v) => {
-                setParams({ [f]: v.format("YYYY-MM-DD") });
+              onChange={(v) => {
+                setParams({ to: v });
               }}
+              headerButtonBar={HEADER_BUTTON_BAR_PROPS}
             />
           </div>
           <div className="form__row form__row--flex gap-1">

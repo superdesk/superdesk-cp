@@ -233,6 +233,8 @@ class ArchiveSearchProvider(SearchProvider):
             url = f"{self.api_base}{self.api_path}"
 
             for attempt in range(1, self.max_retries + 1):
+                resp = None
+
                 try:
                     req = requests.Request(
                         "GET", url, headers=self.headers, params=api_params
