@@ -1,15 +1,15 @@
 import logging
-import time
-import random
 from datetime import datetime, timedelta, timezone, date
 from typing import Any, Dict
 
 import requests
 from flask import current_app as app
+from urllib3 import Retry
 import superdesk
 from superdesk.utils import ListCursor
 from superdesk.search_provider import SearchProvider
 from superdesk.utc import utc_to_local
+from requests.adapters import HTTPAdapter
 
 logger = logging.getLogger(__name__)
 
@@ -67,12 +67,6 @@ class ArchiveSearchProvider(SearchProvider):
             app.config.get("ARCHIVE_SEARCH_API_TIMEOUT_SECONDS", 15)
         )
         self.max_retries = int(app.config.get("ARCHIVE_SEARCH_API_MAX_RETRIES", 3))
-        self.retry_min_sleep = float(
-            app.config.get("ARCHIVE_SEARCH_API_RETRY_MIN", 0.2)
-        )
-        self.retry_max_sleep = float(
-            app.config.get("ARCHIVE_SEARCH_API_RETRY_MAX", 0.8)
-        )
 
         self.search_profile = app.config.get("ARCHIVE_SEARCH_PROFILE", None)
 
@@ -227,57 +221,44 @@ class ArchiveSearchProvider(SearchProvider):
         return out
 
     def _api_search(self, api_params: Dict[str, Any]):
-        last_err: Any = None
+        retries = Retry(
+            total=self.max_retries,
+            backoff_factor=0.1,
+            status_forcelist=self.SEARCH_RETRY_CODES,
+            allowed_methods={"GET"},
+            raise_on_status=False,
+        )
+        adapter = HTTPAdapter(max_retries=retries)
 
         with requests.Session() as session:
+            session.mount("https://", adapter)
             url = f"{self.api_base}{self.api_path}"
 
-            for attempt in range(1, self.max_retries + 1):
-                resp = None
+            try:
+                req = requests.Request(
+                    "GET", url, headers=self.headers, params=api_params
+                )
+                prepared = req.prepare()
+                logger.info(f"API call: {prepared.url}")
 
-                try:
-                    req = requests.Request(
-                        "GET", url, headers=self.headers, params=api_params
-                    )
-                    prepared = req.prepare()
-                    logger.info("API call (attempt %d): %s", attempt, prepared.url)
+                resp = session.send(prepared, timeout=self.timeout_seconds)
 
-                    resp = session.send(prepared, timeout=self.timeout_seconds)
+                if 200 <= resp.status_code < 300:
+                    data = resp.json() if resp.content else {}
+                    return self._normalize_api_response(data)
 
-                    if 200 <= resp.status_code < 300:
-                        data = resp.json() if resp.content else {}
-                        return self._normalize_api_response(data)
-
-                    if resp.status_code in self.SEARCH_RETRY_CODES:
-                        last_err = RuntimeError(
-                            f"Retryable status {resp.status_code}: {resp.text[:200]}"
-                        )
-                        self._handle_search_retry(
-                            f"Retryable API error {resp.status_code}", attempt
-                        )
-                        continue
-
+                if resp.status_code in self.SEARCH_RETRY_CODES:
                     raise RuntimeError(
-                        f"Archive API error {resp.status_code}: {resp.text[:500]}"
+                        f"Retryable status {resp.status_code}: {resp.text[:200]}"
                     )
-                except (requests.Timeout, requests.ConnectionError) as e:
-                    last_err = e
-                    self._handle_search_retry(
-                        f"Retryable API error res:{resp} err:{e}", attempt
-                    )
-                    continue
-                except Exception as e:
-                    if attempt < self.max_retries:
-                        last_err = e
-                        self._handle_search_retry(
-                            f"Retryable API error res:{resp} err:{e}", attempt
-                        )
-                        continue
-                    raise
 
-        if last_err:
-            raise last_err
-        return [], 0
+                raise RuntimeError(
+                    f"Archive API error {resp.status_code}: {resp.text[:500]}"
+                )
+
+            except (requests.Timeout, requests.ConnectionError) as e:
+                logger.error(f"API request failed after retries: {e}")
+                raise
 
     def _normalize_api_response(self, data: Dict[str, Any]):
         if not isinstance(data, dict):
@@ -316,15 +297,6 @@ class ArchiveSearchProvider(SearchProvider):
                 normalized_items.append(it)
 
         return normalized_items, int(total)
-
-    def _handle_search_retry(self, msg: str, attempt: int):
-        sleep_s = self._jitter_sleep(attempt)
-        logger.warning("%s; sleeping %.2fs", msg, sleep_s)
-        time.sleep(sleep_s)
-
-    def _jitter_sleep(self, attempt: int) -> float:
-        base = min(self.retry_max_sleep, self.retry_min_sleep * (2 ** (attempt - 1)))
-        return random.uniform(self.retry_min_sleep, base)
 
     def _transform_items(self, items):
         def get_nested(obj, path, default=""):
