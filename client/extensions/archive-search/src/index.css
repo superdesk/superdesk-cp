@@ -1,4 +1,5 @@
 .calendar-panel div > div > div:nth-child(3) {
+  flex: 1;
   display: flex;
   gap: 16px;
 }
