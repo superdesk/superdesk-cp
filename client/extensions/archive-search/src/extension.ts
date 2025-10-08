@@ -3,14 +3,14 @@ import {
   IExtensionActivationResult,
   ISearchPanelWidgetProps,
 } from "superdesk-api";
-import { widgetFactory } from "./widget";
+import { SearchPanelWidget } from "./widget";
 
 const extension: IExtension = {
   activate: () => {
     const result: IExtensionActivationResult = {
       contributions: {
         searchPanelWidgets: [
-          widgetFactory() as React.ComponentType<
+          SearchPanelWidget as React.ComponentType<
             ISearchPanelWidgetProps<unknown>
           >,
         ],
