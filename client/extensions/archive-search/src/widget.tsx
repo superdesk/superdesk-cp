@@ -5,12 +5,16 @@ import {
   Spacer,
   SpacerBlock,
   MultiSelect as SuperdeskMultiSelect,
+  DatePickerISO
 } from "superdesk-ui-framework/react";
-import { DatePickerISO } from "./date-picker";
 import { superdesk } from "./superdesk";
 
 const { gettext } = superdesk.localization;
-const { getVocabulary } = superdesk.entities.vocabulary;
+const { getVocabulary, getVocabularyItemNameTranslated } =
+  superdesk.entities.vocabulary;
+const { view, default_language } = superdesk.instance.config;
+const { dateformat } = view;
+const { getLocaleForDatePicker } = superdesk.ui.framework;
 
 interface IParams {
   from: string;
@@ -94,7 +98,7 @@ const MultiSelect = ({
       label={label}
       value={options.filter((o) => (value ?? []).includes(o.qcode))}
       options={options}
-      optionLabel={(item) => item.name}
+      optionLabel={getVocabularyItemNameTranslated}
       onChange={onChange}
     />
   );
@@ -113,20 +117,30 @@ export class SearchPanelWidget extends React.PureComponent<
           <DatePickerISO
             label={gettext("From")}
             value={params.from ?? ""}
-            dateFormat="YYYY-MM-DD"
+            dateFormat={dateformat}
+            locale={{
+              type: "full",
+              payload: getLocaleForDatePicker(default_language),
+            }}
             onChange={(v) => {
               setParams({ from: v });
             }}
             headerButtonBar={HEADER_BUTTON_BAR_PROPS}
+            showNavigators
           />
           <DatePickerISO
             label={gettext("To")}
             value={params.to ?? ""}
-            dateFormat="YYYY-MM-DD"
+            dateFormat={dateformat}
+            locale={{
+              type: "full",
+              payload: getLocaleForDatePicker(default_language),
+            }}
             onChange={(v) => {
               setParams({ to: v });
             }}
             headerButtonBar={HEADER_BUTTON_BAR_PROPS}
+            showNavigators
           />
           <Spacer h gap="16">
             <Input
