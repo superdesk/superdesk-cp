@@ -344,7 +344,7 @@ superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@rel
     # via -r requirements.in
 tenacity==9.1.2
     # via celery-redbeat
-types-python-dateutil==2.9.0.20250822
+types-python-dateutil==2.9.0.20251008
     # via arrow
 typing-extensions==4.14.0
     # via jwcrypto
