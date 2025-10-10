@@ -21,8 +21,5 @@
       "./src"
     ],
     "translations-directory": "translations"
-  },
-  "dependencies": {
-    "@superdesk/primereact": "5.0.2-15"
   }
 }

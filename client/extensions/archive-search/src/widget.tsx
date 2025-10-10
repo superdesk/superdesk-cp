@@ -126,7 +126,6 @@ export class SearchPanelWidget extends React.PureComponent<
               setParams({ from: v });
             }}
             headerButtonBar={HEADER_BUTTON_BAR_PROPS}
-            showNavigators
           />
           <DatePickerISO
             label={gettext("To")}
@@ -140,7 +139,6 @@ export class SearchPanelWidget extends React.PureComponent<
               setParams({ to: v });
             }}
             headerButtonBar={HEADER_BUTTON_BAR_PROPS}
-            showNavigators
           />
           <Spacer h gap="16">
             <Input
