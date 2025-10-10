@@ -84,7 +84,7 @@ cryptography==45.0.4
     #   jwcrypto
 deepdiff==8.6.1
     # via superdesk-planning
-deepl==1.22.0
+deepl==1.23.0
     # via -r requirements.in
 docopt==0.6.2
     # via num2words
@@ -252,6 +252,8 @@ pyasn1-modules==0.4.2
     #   oauth2client
 pycparser==2.22
     # via cffi
+pyexiftool==0.5.6
+    # via -r requirements.in
 pyexiv2==2.15.4
     # via superdesk-core
 pyjwt==2.10.1
@@ -342,7 +344,7 @@ superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@rel
     # via -r requirements.in
 tenacity==9.1.2
     # via celery-redbeat
-types-python-dateutil==2.9.0.20250822
+types-python-dateutil==2.9.0.20251008
     # via arrow
 typing-extensions==4.14.0
     # via jwcrypto

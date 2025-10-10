@@ -490,6 +490,12 @@ PICTURE_METADATA_MAPPING = {
     "slugline": "Title",
     "extra.filename": "JobId",
     "description_text": "Description",
+    "byline": "Creator",
+    "copyrightnotice": "CopyrightNotice",
+    "ednote": "Instructions",
+    "extra.caption_writer": "DescriptionWriter",
+    "extra.photographer_code": "CreatorsJobtitle",
+    "headline": "Headline",
 }
 
 TIME_FORMAT_SHORT = "%I:%M %p"
