@@ -584,7 +584,7 @@ class NINJS21Formatter(Formatter):
                 )
 
         # Add HTML descriptions if present
-        if description_html := article.get(f"description_html"):
+        if description_html := article.get("description_html"):
             descriptions.append(
                 {
                     "role": "html",
