@@ -86,6 +86,9 @@ class Semaphore(AIServiceBase):
         #  SEMAPHORE_ANALYZE_URL Goes Here
         self.analyze_url = app.config.get("SEMAPHORE_ANALYZE_URL")
 
+        #  SEMAPHORE_TOKEN_URL
+        self.token_url = app.config.get("SEMAPHORE_TOKEN_URL")
+
         #  SEMAPHORE_SEARCH_URL Goes Here
         self.search_url = app.config.get("SEMAPHORE_SEARCH_URL")
 
@@ -132,7 +135,7 @@ class Semaphore(AIServiceBase):
         payload = f"grant_type=apikey&key={self.api_key}"
         headers = {"Content-Type": "application/x-www-form-urlencoded"}
         response = session.post(
-            self.base_url + "/token", headers=headers, data=payload, timeout=TIMEOUT
+            self.token_url, headers=headers, data=payload, timeout=TIMEOUT
         )
         response.raise_for_status()
         return response.json().get("access_token")

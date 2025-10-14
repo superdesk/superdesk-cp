@@ -49,7 +49,6 @@ class AppConfigService(BaseService):
 
     def on_update(self, updates, original):
         """Handle updates to configuration items - runs BEFORE the update is applied."""
-        updates["updated_at"] = datetime.now(timezone.utc)
 
         if "key" in updates and updates["key"] != original["key"]:
             existing = self.find_one(req=None, key=updates["key"])
