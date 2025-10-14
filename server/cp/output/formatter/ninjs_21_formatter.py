@@ -13,9 +13,7 @@ from superdesk.metadata.item import (
     CONTENT_TYPE,
 )
 from superdesk.utils import json_serialize_datetime_objectId
-import superdesk
 from datetime import datetime, timezone
-import re
 
 logger = logging.getLogger(__name__)
 
@@ -104,10 +102,10 @@ class NINJS21Formatter(Formatter):
                         if item.get("in_jimi", False)
                     }
                 else:
-                    self._jimi_subjects_cache = []
+                    self._jimi_subjects_cache = {}
             except Exception as e:
                 logger.error(f"Error loading jimi subjects vocabulary: {e}")
-                self._jimi_subjects_cache = []
+                self._jimi_subjects_cache = {}
 
         return self._jimi_subjects_cache
 
@@ -858,7 +856,13 @@ class NINJS21Formatter(Formatter):
             if (order := value.get("order")) is not None:
                 descriptions.append({"role": "sortorder", "value": str(order)})
 
-            descriptions.append(new_associations.get(guid, {}))
+            new_assoc = new_associations.get(guid)
+            if (
+                isinstance(new_assoc, dict)
+                and "role" in new_assoc
+                and "value" in new_assoc
+            ):
+                descriptions.append(new_assoc)
 
             association_item["descriptions"] = descriptions
             association_item["altids"] = self._build_altids(value)
