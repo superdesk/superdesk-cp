@@ -30,6 +30,7 @@ export function createTagsPatch(
                     tag.scheme === 'subject_custom'
                     || tag.scheme === 'destinations'
                     || tag.scheme === 'distribution'
+                    || tag.scheme === "ap_ingest_control"
                 )
             ) {
                 newValuesMap = newValuesMap.set(qcode, tag);

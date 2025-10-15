@@ -27,3 +27,12 @@
     font-size: 13px;
     font-weight: 300;
 }
+
+.admin-panel-container {
+    display: flex;
+    gap: 1rem;   
+}
+
+.admin-panel-container :last-child {
+    align-self: flex-end;
+}
