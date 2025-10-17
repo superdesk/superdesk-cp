@@ -142,7 +142,7 @@ class Semaphore(AIServiceBase):
             if path is not None:
                 for field in path.findall("FIELD"):
                     class_field = field.find("CLASS")
-                    if class_field and class_field.get("NAME") == "Topic":
+                    if class_field is not None and class_field.get("NAME") == "Topic":
                         parent_info.append(
                             {
                                 "name": field.get("NAME"),
