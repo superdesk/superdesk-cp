@@ -24,6 +24,8 @@ module.exports = function(grunt) {
             dateformat: 'DD.MM.YYYY',
         },
 
+        shortDateFormat: "DD/MM/YYYY",
+
         editor3: { browserSpellCheck: true, },
         
         langOverride: {
