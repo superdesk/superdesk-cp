@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "superdesk.auth.saml",
     "superdesk.macros.imperial",
     "cp.orangelogic",
+    "cp.archive_search",
     "cp.ingest",
     "cp.output",
     "cp.ultrad",
@@ -464,6 +465,28 @@ DEEPL_AUTH_KEY = os.getenv("DEEPL_AUTH_KEY")
 DEEPL_API_URL = os.getenv("DEEPL_API_URL")
 GOOGLE_SERVICE_ACCOUNT_PATH = os.getenv("GOOGLE_SERVICE_ACCOUNT_PATH")
 GOOGLE_SCOPES = ["https://www.googleapis.com/auth/cloud-platform"]
+
+ARCHIVE_SEARCH_MONGO_CLUSTER = os.getenv("ARCHIVE_SEARCH_MONGO_CLUSTER")
+ARCHIVE_SEARCH_MONGO_COLLECTION = os.getenv("ARCHIVE_SEARCH_MONGO_COLLECTION")
+ARCHIVE_SEARCH_MONGO_URI = os.getenv("ARCHIVE_SEARCH_MONGO_URI")
+ARCHIVE_SEARCH_INDEX = "archive"
+
+ARCHIVE_SEARCH_API_BASE_URL = os.getenv(
+    "ARCHIVE_SEARCH_API_BASE_URL", "http://localhost:8080"
+)
+ARCHIVE_SEARCH_API_SEARCH_PATH = os.getenv(
+    "ARCHIVE_SEARCH_API_SEARCH_PATH", "/v1/archive/search"
+)
+ARCHIVE_SEARCH_API_KEY = os.getenv("ARCHIVE_SEARCH_API_KEY", "")
+ARCHIVE_SEARCH_API_TIMEOUT_SECONDS = int(
+    os.getenv("ARCHIVE_SEARCH_API_TIMEOUT_SECONDS", "15")
+)
+ARCHIVE_SEARCH_API_MAX_RETRIES = int(os.getenv("ARCHIVE_SEARCH_API_MAX_RETRIES", "3"))
+ARCHIVE_SEARCH_API_RETRY_MIN = float(os.getenv("ARCHIVE_SEARCH_API_RETRY_MIN", "0.2"))
+ARCHIVE_SEARCH_API_RETRY_MAX = float(os.getenv("ARCHIVE_SEARCH_API_RETRY_MAX", "0.8"))
+ARCHIVE_SEARCH_DEFAULT_RECENT_DAYS = int(
+    os.getenv("ARCHIVE_SEARCH_DEFAULT_RECENT_DAYS", "30")
+)
 
 PICTURE_METADATA_MAPPING = {
     "slugline": "Title",
