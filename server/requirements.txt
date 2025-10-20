@@ -139,7 +139,7 @@ google-auth==2.41.1
     #   google-cloud-translate
 google-cloud-core==2.4.3
     # via google-cloud-translate
-google-cloud-translate==3.21.1
+google-cloud-translate==3.22.0
     # via -r requirements.in
 googleapis-common-protos[grpc]==1.70.0
     # via
@@ -151,6 +151,7 @@ grpc-google-iam-v1==0.14.2
 grpcio==1.73.1
     # via
     #   google-api-core
+    #   google-cloud-translate
     #   googleapis-common-protos
     #   grpc-google-iam-v1
     #   grpcio-status
