@@ -1,9 +1,9 @@
-import unittest
+from superdesk.tests import TestCase
 
 from cp.output.formatter.ninjs_formatter_2 import NINJSFormatter_2
 
 
-class TestNinjsFormatter(unittest.TestCase):
+class TestNinjsFormatter(TestCase):
     formatter = NINJSFormatter_2()
 
     async def test_get_associations_text(self):
@@ -23,5 +23,5 @@ class TestNinjsFormatter(unittest.TestCase):
             "key3": {"guid": "value3"},
         }
 
-        result = self.formatter._get_associations(article, {})
+        result = await self.formatter._get_associations(article, {})
         self.assertEqual(result, expected_result)

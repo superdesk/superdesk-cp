@@ -12,7 +12,6 @@ class SemaphoreAPIKeyManager:
     """Manages Semaphore API keys with automatic renewal using Superdesk vocabularies"""
 
     def __init__(self, app):
-        self.app = app
         self.base_url = app.config.get("SEMAPHORE_BASE_URL")
         self.token_url = app.config.get("SEMAPHORE_TOKEN_URL")
         self.api_key_url = app.config.get("SEMAPHORE_API_KEY_URL")
