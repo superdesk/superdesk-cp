@@ -30,6 +30,10 @@ setTimeout(() => {
                 id: 'auto-translator',
                 load: () => import('./extensions/auto-translator')
             },
+            {
+                id: 'archive-search',
+                load: () => import('./extensions/archive-search'),
+            },
         ],
         {},
     );

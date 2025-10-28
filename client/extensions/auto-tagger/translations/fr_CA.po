@@ -5,8 +5,8 @@ msgstr ""
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:440
 msgid "1 tag can not be displayed"
 msgid_plural "{{n}} tags can not be displayed"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{{n}} étiquette ne peut pas être affichée"
+msgstr[1] "{{n}} étiquettes ne peuvent pas être affichées"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/new-item.tsx:227
 msgid "Add"
@@ -18,7 +18,7 @@ msgstr "Ajouter une nouvelle étiquette"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/new-item.tsx:84
 msgid "Add tag"
-msgstr "jouter une nouvelle étiquette"
+msgstr "Ajouter une nouvelle étiquette"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/tag-popover.tsx:26
 msgid "Aliases:"
@@ -104,7 +104,7 @@ msgstr "Organisations"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:125
 msgid "parent ID"
-msgstr ""
+msgstr "parent ID"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/groups.ts:21
 msgid "People"
@@ -124,7 +124,7 @@ msgstr "Endroits"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:650
 msgid "Please use the Index field to add tags manually"
-msgstr ""
+msgstr "Veuillez utiliser le champ Index pour ajouter des balises manuellement"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:124
 msgid "qcode"
@@ -152,7 +152,7 @@ msgstr "électionner le type"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/auto-tagging.tsx:110
 msgid "Some tags can not be displayed"
-msgstr ""
+msgstr "Certaines balises ne peuvent pas être affichées"
 
 #: /home/tomas/superdesk-repos/superdesk-cp/client/extensions/auto-tagger/src/tag-popover.tsx:29
 msgid "Source:"
@@ -192,8 +192,11 @@ msgstr "Le type est requis."
 msgid "Unable to use Autotagger service"
 msgstr "Erreur du service d'étiquetage automatique"
 
-msgid: "Click "Run" to test Autotagger"
-msgstr: "Cliquez sur Exécuter pour tester l'Étiquetage automatique"
+msgid "Click "Run" to test Autotagger"
+msgstr "Cliquez sur Exécuter pour tester l'Étiquetage automatique"
 
-msgid: "Search for an entity or subject"
-msgstr: "Rechercher une entité ou un sujet"
+msgid "Search for an entity or subject"
+msgstr "Rechercher une entité ou un sujet"
+
+msgid "API Key"
+msgstr "API Key"

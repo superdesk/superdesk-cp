@@ -1,12 +1,7 @@
-import {
-  FieldHelperProps,
-  FieldInputProps,
-  FieldMetaProps,
-  useField,
-} from "formik";
+import { FieldHelperProps, FieldInputProps, FieldMetaProps } from "formik";
 import * as React from "react";
 import { Select as SuperdeskSelect } from "superdesk-ui-framework/react";
-import { RecursiveKeyOf } from "../formik-utilties";
+import { RecursiveKeyOf, useFastField } from "../formik-utilties";
 
 type SelectProps<T> = Omit<
   React.InputHTMLAttributes<HTMLSelectElement>,
@@ -18,7 +13,7 @@ type SelectProps<T> = Omit<
   helpers?: FieldHelperProps<T>;
   value?: string;
   onChange?: (newValue: string) => void;
-  [key: string]: any;
+  error?: string;
 };
 
 export const Select = <T,>({
@@ -29,24 +24,23 @@ export const Select = <T,>({
   helpers,
   value,
   onChange,
+  error,
   ...props
-}: SelectProps<T>) => {
-  return (
-    <SuperdeskSelect
-      {...field}
-      {...props}
-      label={label}
-      value={(field?.value as string) || (value as string)}
-      onChange={(newValue) => {
-        if (onChange) onChange(newValue);
-        else if (helpers) helpers.setValue(newValue as T);
-      }}
-      error={meta?.error ? meta.error : undefined}
-    >
-      {children}
-    </SuperdeskSelect>
-  );
-};
+}: SelectProps<T>) => (
+  <SuperdeskSelect
+    {...field}
+    {...props}
+    label={label}
+    value={(field?.value as string) || (value as string)}
+    onChange={(newValue) => {
+      if (onChange) onChange(newValue);
+      else if (helpers) helpers.setValue(newValue as T);
+    }}
+    error={meta?.error ?? error ?? undefined}
+  >
+    {children}
+  </SuperdeskSelect>
+);
 
 type FormSelectProps<T> = Omit<SelectProps<T>, "name"> & {
   name: RecursiveKeyOf<T> & string;
@@ -58,7 +52,7 @@ export const FormSelect = <T,>({
   children,
   ...props
 }: FormSelectProps<T>) => {
-  const [field, meta, helpers] = useField(name);
+  const [field, meta, helpers] = useFastField<T>(name);
 
   return (
     <Select

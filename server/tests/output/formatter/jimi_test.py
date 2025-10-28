@@ -30,7 +30,7 @@ class JimiFormatterTestCase(BaseXmlFormatterTestCase):
         "abstract": "<p>Abstract</p>",
         "body_html": "<p>Body HTML<br>test <b>bold</b> and <i>idiom</i></p>",
         "keywords": ["Foo bar", "baz"],
-        "anpa_category": [{"name": "National", "qcode": "n"}],
+        "anpa_category": [{"name": "National", "qcode": "g"}],
         "subject": [
             {"name": "health", "qcode": "07000000", "scheme": "subject_custom"},
             {"name": "citizens", "qcode": "20000575", "scheme": "subject_custom"},

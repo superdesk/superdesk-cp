@@ -3,21 +3,31 @@ import {IExtension, IExtensionActivationResult, ISuperdesk, IArticle, ISubject, 
 const PHOTO_CAT_ID = 'photo_categories';
 const PHOTO_SUPPCAT_ID = 'photo_supplementalcategories';
 
-// convert 20191209 to 2019-12-09
-const parseDate = (date: string) => date.length === 8 ?
-    [
-        date.substr(0, 4),
-        date.substr(4, 2),
-        date.substr(6, 2),
-    ].join('-') : date;
+// convert 2024:03:22 00:23:02+00:00 or 2024:03:22 or 20191209 to 2019-12-09
+const parseDate = (date: string) => date.includes(':')
+    ? date.split(' ')[0].split(':').join('-')
+    : date.length === 8 
+    ?   [
+            date.substr(0, 4),
+            date.substr(4, 2),
+            date.substr(6, 2),
+        ].join('-')
+    : date;
 
-// convert 152339+0000 to 15:23:39+0000
-const parseTime = (time: string) => time.length >= 6 ?
-    [
-        time.substr(0, 2),
-        time.substr(2, 2),
-        time.substr(4),
-    ].join(':') : time;
+// convert 15:23:39+00:00 or 152339+0000 to 15:23:39+0000
+const parseTime = (time: string) => {
+    if (time.includes(':')) {
+        const [tValue, tz] = time.split('+'),
+            offset = tz ? tz.replace(':', '') : '0000';
+        return `${tValue}+${offset}`
+    }
+    return time.length >= 6 ?
+        [
+            time.substr(0, 2),
+            time.substr(2, 2),
+            time.substr(4),
+        ].join(':') : time;
+} 
 
 const parseDatetime = (date?: string, time?: string) => (date && time) ?
     `${parseDate(date)}T${parseTime(time)}` :
