@@ -10,6 +10,6 @@ deepl==1.23.0
 dotenv==0.9.9
 pyexiftool==0.5.6
 
-Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@release/3.0#egg=superdesk-core
-git+https://github.com/superdesk/superdesk-planning.git@release/3.0#egg=superdesk-planning
-git+https://github.com/superdesk/superdesk-analytics.git@release/3.0#egg=superdesk-analytics
+Superdesk-Core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v3.0.0-beta.3#egg=superdesk-core
+git+https://github.com/superdesk/superdesk-planning.git@v3.0.0-beta.3#egg=superdesk-planning
+git+https://github.com/superdesk/superdesk-analytics.git@v3.0.0-beta.1#egg=superdesk-analytics
