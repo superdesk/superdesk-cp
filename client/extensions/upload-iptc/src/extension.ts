@@ -17,9 +17,11 @@ const parseDate = (date: string) => date.includes(':')
 // convert 15:23:39+00:00 or 152339+0000 to 15:23:39+0000
 const parseTime = (time: string) => {
     if (time.includes(':')) {
-        const [tValue, tz] = time.split('+'),
-            offset = tz ? tz.replace(':', '') : '0000';
-        return `${tValue}+${offset}`
+        return [
+            time.substr(0, 2),
+            time.substr(3, 2),
+            time.substr(6).replace(":", "")
+        ].join(':');
     }
     return time.length >= 6 ?
         [
