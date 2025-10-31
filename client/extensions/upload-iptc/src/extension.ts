@@ -4,32 +4,27 @@ const PHOTO_CAT_ID = 'photo_categories';
 const PHOTO_SUPPCAT_ID = 'photo_supplementalcategories';
 
 // convert 2024:03:22 00:23:02+00:00 or 2024:03:22 or 20191209 to 2019-12-09
-const parseDate = (date: string) => date.includes(':')
-    ? date.split(' ')[0].split(':').join('-')
-    : date.length === 8 
+const parseDate = (date: string) => {
+    const formatted = date.split(" ")[0].replace(/:/g, "")
+    return formatted.length === 8 
     ?   [
-            date.substr(0, 4),
-            date.substr(4, 2),
-            date.substr(6, 2),
+            formatted.substr(0, 4),
+            formatted.substr(4, 2),
+            formatted.substr(6, 2),
         ].join('-')
-    : date;
+    : formatted;
+}
 
 // convert 15:23:39+00:00 or 152339+0000 to 15:23:39+0000
 const parseTime = (time: string) => {
-    if (time.includes(':')) {
-        return [
-            time.substr(0, 2),
-            time.substr(3, 2),
-            time.substr(6).replace(":", "")
-        ].join(':');
-    }
-    return time.length >= 6 ?
+    const formatted = time.replace(/:/g, "")
+    return formatted.length >= 6 ?
         [
-            time.substr(0, 2),
-            time.substr(2, 2),
-            time.substr(4),
-        ].join(':') : time;
-} 
+            formatted.substr(0, 2),
+            formatted.substr(2, 2),
+            formatted.substr(4),
+        ].join(':') : formatted;
+}
 
 const parseDatetime = (date?: string, time?: string) => (date && time) ?
     `${parseDate(date)}T${parseTime(time)}` :
