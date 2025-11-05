@@ -115,7 +115,7 @@ cryptography==46.0.3
     #   jwcrypto
 deepdiff==8.6.1
     # via superdesk-planning
-deepl==1.23.0
+deepl==1.24.0
     # via -r requirements.in
 dnspython==2.8.0
     # via pymongo
@@ -162,7 +162,7 @@ google-api-core[grpc]==2.28.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.41.1
+google-auth==2.42.1
     # via
     #   -r requirements.in
     #   google-api-core
