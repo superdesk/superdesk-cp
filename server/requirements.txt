@@ -131,7 +131,7 @@ google-api-core[grpc]==2.25.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.42.1
+google-auth==2.43.0
     # via
     #   -r requirements.in
     #   google-api-core
