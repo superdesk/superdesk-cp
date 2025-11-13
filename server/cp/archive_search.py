@@ -405,7 +405,6 @@ class ArchiveSearchProvider(SearchProvider):
                     "word_count": wordcount,
                     "sign_off": sign_off,
                     "dateline": {"text": dateline},
-
                     **(
                         {"anpa_category": [{"name": w} for w in wire]}
                         if isinstance(wire, list)
