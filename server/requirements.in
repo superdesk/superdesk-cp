@@ -2,7 +2,7 @@ gunicorn
 honcho
 celery-redbeat
 python3-saml>=1.9,<1.17
-python-xmp-toolkit>=2.0.1,<2.1
+python-xmp-toolkit>=2.0.1,<2.2
 num2words==0.5.14
 google-auth==2.43.0
 google-cloud-translate==3.23.0
