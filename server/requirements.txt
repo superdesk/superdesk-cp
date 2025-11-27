@@ -285,7 +285,7 @@ python-magic==0.4.27
     # via superdesk-core
 python-twitter==3.5
     # via superdesk-core
-python-xmp-toolkit==2.0.2
+python-xmp-toolkit==2.1.0
     # via -r requirements.in
 python3-saml==1.16.0
     # via -r requirements.in
