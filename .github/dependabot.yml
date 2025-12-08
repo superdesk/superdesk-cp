@@ -15,6 +15,12 @@ updates:
     target-branch: "async"
     schedule:
       interval: "daily"
+  # uat branch
+  - package-ecosystem: "npm"
+    directory: "/client"
+    target-branch: "uat"
+    schedule:
+      interval: "daily"
   - package-ecosystem: "pip"
     directory: "server"
     schedule:
