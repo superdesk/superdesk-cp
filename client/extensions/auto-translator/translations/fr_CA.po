@@ -151,3 +151,15 @@ msgstr "Échec de la traduction de lead."
 
 msgid "Failed to load writethrus."
 msgstr "Échec du chargement de lead."
+
+msgid "Glossary"
+msgstr "Glossary"
+
+msgid "Style"
+msgstr "Style"
+
+msgid "Failed to get glossaries."
+msgstr "Failed to get glossaries."
+
+msgid "Failed to get style rules."
+msgstr "Failed to get style rules."
