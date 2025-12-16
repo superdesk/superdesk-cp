@@ -153,13 +153,16 @@ msgid "Failed to load writethrus."
 msgstr "Échec du chargement de lead."
 
 msgid "Glossary"
-msgstr "Glossary"
+msgstr "Glossaire"
 
 msgid "Style"
 msgstr "Style"
 
 msgid "Failed to get glossaries."
-msgstr "Failed to get glossaries."
+msgstr "Échec du chargement des glossaires."
 
-msgid "Failed to get style rules."
-msgstr "Failed to get style rules."
+msgid "Failed to get styles."
+msgstr "Échec du chargement des styles."
+
+msgid "none"
+msgstr "aucun"

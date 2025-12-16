@@ -31,7 +31,7 @@ export const StyleSelect = () => {
       .catch(() => {
         showModal(({ closeModal }) => (
           <ErrorDialog
-            message={gettext("Failed to get style rules.")}
+            message={gettext("Failed to get styles.")}
             closeModal={closeModal}
           />
         ));
@@ -40,7 +40,7 @@ export const StyleSelect = () => {
 
   return (
     <FormSelect<TranslationForm> label={gettext("Style")} name={"style"}>
-      <Option value=""></Option>
+      <Option value="">{gettext("none")}</Option>
       {styles
         .filter(({ language }) => language === values.translateTo)
         .map((style) => (

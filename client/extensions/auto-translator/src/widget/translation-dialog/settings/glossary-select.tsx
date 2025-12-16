@@ -45,7 +45,7 @@ export const GlossarySelect = () => {
 
   return (
     <FormSelect<TranslationForm> label={gettext("Glossary")} name={"glossary"}>
-      <Option value=""></Option>
+      <Option value="">{gettext("none")}</Option>
       {glossaries
         .filter(({ dictionaries }) =>
           dictionaries.some(
