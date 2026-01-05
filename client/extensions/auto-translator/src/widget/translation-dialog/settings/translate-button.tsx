@@ -45,7 +45,7 @@ const getPayload = (values: FormikProps<TranslationForm>["values"]) => {
     source_language: values.translateFrom,
     translation_type: values.translationType,
     ...(values.glossary ? { glossary_id: values.glossary } : {}),
-    ...(values.style ? { style: values.style } : {}),
+    ...(values.style ? { style_id: values.style } : {}),
   } as const;
 };
 

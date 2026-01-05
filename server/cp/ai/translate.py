@@ -18,7 +18,6 @@ from superdesk.text_checkers.ai.base import AIServiceBase
 import os
 from dotenv import load_dotenv
 import html
-import re
 from superdesk.resource import Resource
 from superdesk.services import BaseService
 from superdesk.utils import ListCursor
@@ -541,7 +540,7 @@ class TranslateConfigService(BaseService):
             return ListCursor(data)
         except Exception as e:
             logger.error(e)
-            return ListCursor()
+            raise Exception(f"Failed to fetch {resource}")
 
 
 def init_app(app):
