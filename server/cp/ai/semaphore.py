@@ -705,6 +705,7 @@ class Semaphore(AIServiceBase):
         dateTime = datetime.datetime.now().isoformat()
 
         # Embed the 'body_html' into the XML template
+        # double escape is needed here to properly escape inner content for semaphore
         xml_output = xml_template.format(
             html.escape(html.escape(headline)),
             html.escape(html.escape(headline_extended)),
