@@ -21,7 +21,10 @@ from superdesk.text_checkers.ai.base import AIServiceBase
 import os
 from dotenv import load_dotenv
 import html
-import re
+import requests
+from superdesk.resource import Resource
+from superdesk.services import BaseService
+from superdesk.utils import ListCursor
 
 load_dotenv()
 
@@ -35,6 +38,8 @@ class TranslateData(TypedDict):
     target_language: str
     translation_type: str
     payload: Dict[str, str]
+    glossary_id: Optional[str]
+    style_id: Optional[str]
 
 
 class Translate(AIServiceBase):
@@ -238,6 +243,12 @@ class Translate(AIServiceBase):
                 "tag_handling": "html",
                 "preserve_formatting": True,
                 "model_type": "prefer_quality_optimized",
+                **(
+                    {"glossary_id": item["glossary_id"]}
+                    if "glossary_id" in item
+                    else {}
+                ),
+                **({"style_id": item["style_id"]} if "style_id" in item else {}),
             }
 
             async with session.post(
@@ -526,5 +537,65 @@ class Translate(AIServiceBase):
             return self.handle_error(e, "Updating glossary")
 
 
+class TranslateConfigResource(Resource):
+    endpoint_name = "translate_config"
+    resource_methods = ["GET"]
+    schema = {
+        "glossary_id": {
+            "type": "string",
+        },
+        "name": {
+            "type": "string",
+        },
+        "dictionaries": {
+            "type": "list",
+        },
+        "style_id": {"type": "string"},
+        "language": {"type": "string"},
+    }
+    privileges = {
+        "GET": "archive",
+    }
+
+
+class TranslateConfigService(BaseService):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.resource_map = {
+            "glossaries": os.getenv("DEEPL_API_GLOSSARIES_URL"),
+            "style_rules": os.getenv("DEEPL_API_STYLE_RULES_URL"),
+        }
+        self.auth_key = os.getenv("DEEPL_AUTH_KEY")
+
+    def get(self, req, lookup):
+        resource = req.args.get("resource")
+
+        if not resource:
+            return ListCursor()
+
+        endpoint = self.resource_map.get(resource)
+
+        if not endpoint:
+            return ListCursor()
+
+        try:
+            response = requests.get(
+                endpoint, headers={"Authorization": f"DeepL-Auth-Key {self.auth_key}"}
+            )
+            response.raise_for_status()
+            data = response.json()
+            data = data.get(resource, [])
+            return ListCursor(data)
+        except Exception as e:
+            logger.error(e)
+            raise Exception(f"Failed to fetch {resource}")
+
+
 def init_app(app):
+    from superdesk import register_resource
+
+    register_resource(
+        "translate_config", TranslateConfigResource, TranslateConfigService, _app=app
+    )
+
     return Translate(app)

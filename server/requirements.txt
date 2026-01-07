@@ -115,7 +115,7 @@ cryptography==46.0.3
     #   jwcrypto
 deepdiff==8.6.1
     # via superdesk-planning
-deepl==1.24.0
+deepl==1.27.0
     # via -r requirements.in
 dnspython==2.8.0
     # via pymongo
@@ -162,7 +162,7 @@ google-api-core[grpc]==2.28.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.42.1
+google-auth==2.45.0
     # via
     #   -r requirements.in
     #   google-api-core
@@ -170,7 +170,7 @@ google-auth==2.42.1
     #   google-cloud-translate
 google-cloud-core==2.4.3
     # via google-cloud-translate
-google-cloud-translate==3.22.0
+google-cloud-translate==3.23.0
     # via -r requirements.in
 googleapis-common-protos[grpc]==1.71.0
     # via
@@ -348,7 +348,7 @@ python-magic==0.4.27
     # via superdesk-core
 python-twitter==3.5
     # via superdesk-core
-python-xmp-toolkit==2.0.2
+python-xmp-toolkit==2.1.0
     # via -r requirements.in
 python3-saml==1.16.0
     # via -r requirements.in
@@ -420,7 +420,7 @@ tenacity==9.1.2
     # via celery-redbeat
 tomli==2.3.0
     # via hypercorn
-types-python-dateutil==2.9.0.20251008
+types-python-dateutil==2.9.0.20251115
     # via arrow
 types-pytz==2025.2.0.20250809
     # via quart-babel

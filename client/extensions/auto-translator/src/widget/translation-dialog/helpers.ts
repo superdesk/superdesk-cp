@@ -38,6 +38,8 @@ type TranslationForm = {
   translateFrom: ValueOf<typeof TRANSLATION_LANGUAGES_CODES_MAP>;
   translateTo: ValueOf<typeof TRANSLATION_LANGUAGES_CODES_MAP>;
   translations: Record<string, TranslationEntry & { label: string }>;
+  glossary?: string;
+  style?: string;
 };
 
 type TranslationFormStatus = {
@@ -314,6 +316,8 @@ const getTranslationFormInitialValues = () =>
         label: gettext("Current Story"),
       },
     },
+    glossary: "",
+    style: "",
   } as const);
 
 const getTranslationFormValues = (
@@ -421,6 +425,8 @@ const getTranslationFormValues = (
     translateFrom,
     translateTo,
     translations,
+    glossary: "",
+    style: "",
   };
 };
 
