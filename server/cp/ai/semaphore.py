@@ -17,6 +17,7 @@ from typing import (
     overload,
 )
 import datetime
+import html
 
 
 logger = logging.getLogger(__name__)
@@ -627,18 +628,6 @@ class Semaphore(AIServiceBase):
 
             return response_dict
 
-        def escape_ampersands_in_item(item):
-            item["headline"] = (
-                item["headline"].replace("&", "&amp;") if item.get("headline") else ""
-            )
-            item["abstract"] = (
-                item["abstract"].replace("&", "&amp;") if item.get("abstract") else ""
-            )
-            item["body_html"] = (
-                item["body_html"].replace("&", "&amp;") if item.get("body_html") else ""
-            )
-            return item
-
         try:
             if not self.api_key_manager:
                 logger.warning(
@@ -647,7 +636,6 @@ class Semaphore(AIServiceBase):
                 )
                 return {}
 
-            item = escape_ampersands_in_item(item)
             xml_payload = self.html_to_xml(item)
             payload = {"XML_INPUT": xml_payload}
 
@@ -688,17 +676,6 @@ class Semaphore(AIServiceBase):
             return {}
 
     def html_to_xml(self, html_content: Item) -> str:
-        def clean_html_content(input_str):
-            # Remove full HTML tags using regular expressions
-            your_string = input_str.replace("<p>", "")
-            your_string = your_string.replace("</p>", "")
-            your_string = your_string.replace("<br>", "")
-            your_string = your_string.replace("&nbsp;", "")
-            your_string = your_string.replace("&amp;", "")
-            your_string = your_string.replace("&lt;&gt;", "")
-
-            return your_string
-
         xml_template = """<?xml version="1.0" ?>
                 <request op="CLASSIFY">
                 <document>
@@ -728,16 +705,16 @@ class Semaphore(AIServiceBase):
         dateTime = datetime.datetime.now().isoformat()
 
         # Embed the 'body_html' into the XML template
+        # double escape is needed here to properly escape inner content for semaphore
         xml_output = xml_template.format(
-            headline,
-            headline_extended,
-            body_html,
-            slugline,
+            html.escape(html.escape(headline)),
+            html.escape(html.escape(headline_extended)),
+            html.escape(html.escape(html.unescape(body_html))),
+            html.escape(html.escape(slugline)),
             guid,
             env,
             dateTime,
         )
-        xml_output = clean_html_content(xml_output)
 
         return xml_output
 

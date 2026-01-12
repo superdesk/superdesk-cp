@@ -378,6 +378,8 @@ class ArchiveSearchProvider(SearchProvider):
             language = prefer_top_level(whole, data, "language", "")
             located = prefer_top_level(whole, data, "located", "")
             wire = whole.get("wire") or data.get("wire")
+            sign_off = whole.get("sign_off") or data.get("sign_off")
+            dateline = whole.get("located") or data.get("located")
 
             transformed.append(
                 {
@@ -400,7 +402,9 @@ class ArchiveSearchProvider(SearchProvider):
                     "language": language,
                     "byline": byline or "",
                     "located": located,
-                    "wordcount": wordcount,
+                    "word_count": wordcount,
+                    "sign_off": sign_off,
+                    "dateline": {"text": dateline},
                     **(
                         {"anpa_category": [{"name": w} for w in wire]}
                         if isinstance(wire, list)
