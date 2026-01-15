@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 ULTRAD_ID = "ultrad_id"
 ULTRAD_URL = "https://pc-trad.herokuapp.com/cms/"
-ULTRAD_TIMEOUT = (5, 15)
+ULTRAD_TIMEOUT = aiohttp.ClientTimeout(total=15, connect=3)
 
 IN_PROGRESS_STATES = [
     CONTENT_STATE.ROUTED,
