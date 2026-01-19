@@ -4,9 +4,8 @@ import logging
 import re
 from typing import Tuple, Dict
 
-from flask import current_app as app
-from eve.utils import config
 from superdesk.publish.formatters import Formatter
+from superdesk.publish_async.utils import generate_sequence_number
 from superdesk.errors import FormatterError
 from superdesk.metadata.item import (
     ITEM_TYPE,
@@ -190,11 +189,9 @@ class NINJS21Formatter(Formatter):
 
         return self._infosources_cache
 
-    def format(self, article, subscriber, codes=None):
+    async def format(self, article, subscriber, codes=None):
         try:
-            pub_seq_num = superdesk.get_resource_service(
-                "subscribers"
-            ).generate_sequence_number(subscriber)
+            pub_seq_num = await generate_sequence_number(subscriber)
 
             ninjs = self._transform_to_ninjs(article, subscriber)
             return [
