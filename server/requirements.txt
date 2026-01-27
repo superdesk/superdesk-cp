@@ -79,6 +79,7 @@ croniter==6.0.0
 cryptography==45.0.4
     # via
     #   authlib
+    #   google-auth
     #   jwcrypto
 deepdiff==8.6.1
     # via superdesk-planning
@@ -129,7 +130,7 @@ google-api-core[grpc]==2.25.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.47.0
+google-auth==2.48.0
     # via
     #   -r requirements.in
     #   google-api-core
