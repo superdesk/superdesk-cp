@@ -83,7 +83,7 @@ cryptography==45.0.4
     #   jwcrypto
 deepdiff==8.6.1
     # via superdesk-planning
-deepl==1.27.0
+deepl==1.28.0
     # via -r requirements.in
 docopt==0.6.2
     # via num2words
@@ -308,7 +308,7 @@ regex==2024.11.6
     # via superdesk-core
 reportlab==4.2.5
     # via superdesk-core
-requests==2.32.4
+requests==2.32.5
     # via
     #   deepl
     #   google-api-core
