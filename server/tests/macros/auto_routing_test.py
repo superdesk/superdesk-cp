@@ -105,6 +105,17 @@ class AutoRoutingMacroTestCase(AsyncQuartTestCase):
         self.assertNotIn("auto_publish", item)
         self.assertEqual(3, item["urgency"])
 
+    async def test_auto_routing_handles_stop_async_iteration_from_cursor_next(self):
+        item = {"uri": "uri", "slugline": "foo"}
+        _resources = {"archive": ArchiveRaisesStopAsyncIterationMock()}
+
+        with patch.dict(superdesk.resources, _resources):
+            result = await callback(item)
+
+        self.assertEqual(item, result)
+        self.assertNotIn("auto_publish", item)
+        self.assertNotIn("urgency", item)
+
 
 class ArchiveServiceMock:
     def __init__(self, data):
@@ -114,6 +125,24 @@ class ArchiveServiceMock:
         return MockAsyncListCursor(self.data)
 
 
+class CursorRaisesStopAsyncIterationMock:
+    def sort(self, key, direction):
+        return self
+
+    async def next(self):
+        raise StopAsyncIteration
+
+
+class ArchiveServiceRaisesStopAsyncIterationMock:
+    async def find_async(self, where, max_results):
+        return CursorRaisesStopAsyncIterationMock()
+
+
 class ArchiveMock:
     def __init__(self, data):
         self.service = ArchiveServiceMock(data)
+
+
+class ArchiveRaisesStopAsyncIterationMock:
+    def __init__(self):
+        self.service = ArchiveServiceRaisesStopAsyncIterationMock()
