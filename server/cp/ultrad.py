@@ -32,7 +32,7 @@ class UltradException(RuntimeError):
 
 
 def get_headers():
-    return {"x-ultrad-auth": app.config["ULTRAD_AUTH"]}
+    return {"Accept": "application/json", "x-ultrad-auth": app.config["ULTRAD_AUTH"]}
 
 
 async def upload_document(item: dict) -> str | None:
