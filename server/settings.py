@@ -258,7 +258,7 @@ elif "scp-master" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "test")
 elif "cp-uat-api" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "uat-old")
-elif "cp-uat" in SERVER_URL or "cp2-uat" in SERVER_URL:
+elif "cp-uat" in SERVER_URL or "cp2-uat" in SERVER_URL or "cp2-uat-api" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "uat")
 elif "cms-api" in SERVER_URL:
     SAML_PATH = os.path.join(SAML_BASE_PATH, "prod-old")
