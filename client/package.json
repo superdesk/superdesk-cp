@@ -12,5 +12,8 @@
     "scripts": {
         "build": "npx @superdesk/build-tools build-root-repo ./",
         "start": "npx grunt server"
+    },
+    "volta": {
+        "node": "22.22.1"
     }
 }
