@@ -130,7 +130,7 @@ google-api-core[grpc]==2.25.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.49.0
+google-auth==2.49.1
     # via
     #   -r requirements.in
     #   google-api-core
@@ -318,9 +318,7 @@ requests==2.32.5
 requests-oauthlib==2.0.0
     # via python-twitter
 rsa==4.9.1
-    # via
-    #   google-auth
-    #   oauth2client
+    # via oauth2client
 s3transfer==0.13.0
     # via boto3
 sentry-sdk[flask]==2.32.0
