@@ -58,6 +58,7 @@ class CPNewsroomNinjsFormatter(NewsroomNinjsFormatter):
                 if item.get("in_jimi") is True:
                     vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
 
+            ninjs.setdefault("subject", [])
             updated_subjects = list(ninjs["subject"])
             # Setting a Pre defined Allowed Scheme Vocabulary Mapping
 

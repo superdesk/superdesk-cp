@@ -103,7 +103,7 @@ class ArchiveSearchProvider(SearchProvider):
         except (ValueError, TypeError):
             return None
 
-    def find(self, query=None, params=None):
+    async def find_async(self, query=None, params=None):
         logger.info("Frontend query=%s params=%s", query, params)
 
         if query is None:

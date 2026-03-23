@@ -650,6 +650,7 @@ class NINJSFormatter_2(Formatter):
                     )
                     vocab_mapping[name_in_vocab.lower()] = (qcode, translated_name)
 
+            ninjs.setdefault("subject", [])
             updated_subjects = list(ninjs["subject"])
 
             for subject in ninjs["subject"]:

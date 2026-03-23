@@ -80,7 +80,7 @@ async def callback(item, **kwargs):
 
     try:
         prev = await manually_edited.next()
-    except StopIteration:
+    except StopAsyncIteration:
         prev = None
 
     if prev:
