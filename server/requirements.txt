@@ -308,7 +308,7 @@ regex==2024.11.6
     # via superdesk-core
 reportlab==4.2.5
     # via superdesk-core
-requests==2.32.5
+requests==2.33.0
     # via
     #   deepl
     #   google-api-core
