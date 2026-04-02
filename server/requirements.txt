@@ -83,7 +83,7 @@ cryptography==46.0.6
     #   jwcrypto
 deepdiff==8.6.2
     # via superdesk-planning
-deepl==1.28.0
+deepl==1.29.0
     # via -r requirements.in
 docopt==0.6.2
     # via num2words
