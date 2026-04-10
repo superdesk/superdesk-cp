@@ -179,6 +179,24 @@ class CP_AP_ParseTestCase(unittest.TestCase):
         self.assertIn("Pedestrians are silhouetted", item["description_text"])
         self.assertEqual("AP", item["extra"]["provider"])
 
+    def test_parse_picture_exif_keywords_list(self):
+        with self.app.app_context():
+            with patch.dict(superdesk.resources, resources):
+                with patch("cp.ingest.parser.ap.get_meta_iptc") as meta_iptc:
+                    meta_iptc.return_value = {
+                        "Keywords": ["one", "two", "three"],
+                    }
+                    with requests_mock.mock() as mock:
+                        mock.get(
+                            picture_data["data"]["item"]["renditions"]["preview"][
+                                "href"
+                            ],
+                            content=b"x",
+                        )
+                        item = parser.parse(picture_data, provider)
+
+        self.assertEqual("one, two, three", item["extra"][cp.XMP_KEYWORDS])
+
     def test_parse_embargoed(self):
         with self.app.app_context():
             with patch.dict(superdesk.resources, resources):

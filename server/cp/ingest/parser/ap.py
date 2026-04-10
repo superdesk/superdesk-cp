@@ -802,6 +802,14 @@ class CP_APMediaFeedParser(APMediaFeedParser):
 
         self._parse_exif(data, item)
 
+    def _normalize_exif_keywords(self, keywords) -> str:
+        if isinstance(keywords, str):
+            return ", ".join(keywords.split(";"))
+        elif isinstance(keywords, list):
+            return ", ".join([str(keyword) for keyword in keywords if keyword])
+        else:
+            return str(keywords)
+
     def _parse_exif(self, data, item):
         try:
             res = sess.get(data["item"]["renditions"]["preview"]["href"], timeout=10)
@@ -813,8 +821,8 @@ class CP_APMediaFeedParser(APMediaFeedParser):
         if metadata.get("Headline"):
             item.setdefault("extra", {})[cp.HEADLINE2] = metadata["Headline"]
         if metadata.get("Keywords"):
-            item.setdefault("extra", {})[cp.XMP_KEYWORDS] = ", ".join(
-                metadata["Keywords"].split(";")
+            item.setdefault("extra", {})[cp.XMP_KEYWORDS] = (
+                self._normalize_exif_keywords(metadata["Keywords"])
             )
 
     def _find_place(self, data, type_name):
