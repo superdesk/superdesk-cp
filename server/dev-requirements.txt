@@ -1,7 +1,7 @@
 -r requirements.txt
 
 pep8==1.7.1
-aioresponses
+aioresponses==0.7.8
 pytest==9.0.3
 flake8==7.3.0
 mypy==1.20.0
@@ -10,7 +10,7 @@ wooper==0.4.4
 requests_mock==1.12.1
 black==24.10.0
 
-types-python-dateutil
-types-pytz
-types-requests
-types-six
+types-python-dateutil~=2.9.0
+types-pytz~=2025.2.0
+types-requests~=2.31.0
+types-six~=1.17.0
