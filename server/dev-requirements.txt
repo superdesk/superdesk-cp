@@ -12,5 +12,5 @@ black==24.10.0
 
 types-python-dateutil~=2.9.0
 types-pytz~=2025.2.0
-types-requests~=2.31.0
+types-requests~=2.33.0
 types-six~=1.17.0
