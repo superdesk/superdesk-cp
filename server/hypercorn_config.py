@@ -10,4 +10,4 @@ use_reload = reload = "SUPERDESK_RELOAD" in os.environ
 if reload:
     accesslog = "-"
 
-timeout = int(os.environ.get("WEB_TIMEOUT", 30))
+read_timeout = int(os.environ.get("WEB_TIMEOUT", 30))
