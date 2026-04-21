@@ -338,7 +338,7 @@ python-dateutil==2.9.0.post0
     #   croniter
     #   icalendar
     #   superdesk-core
-python-dotenv==1.2.1
+python-dotenv==1.2.2
     # via dotenv
 python-jwt==4.1.0
     # via flask-oidc-ex
