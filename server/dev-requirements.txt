@@ -4,7 +4,7 @@ pep8==1.7.1
 aioresponses==0.7.8
 pytest==9.0.3
 flake8==7.3.0
-mypy==1.20.1
+mypy==1.20.2
 httmock==1.4.0
 wooper==0.4.4
 requests_mock==1.12.1
