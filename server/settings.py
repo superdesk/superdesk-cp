@@ -19,7 +19,6 @@ from superdesk.default_settings import (
     env,
     SERVER_URL,
     CORE_APPS as _core_apps,
-    CELERY_BEAT_SCHEDULE,
     NINJS_COMMON_RENDITIONS,
     timedelta,
     MODULES,
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     "cp.archive_search",
     "cp.ingest",
     "cp.output",
-    "cp.ultrad",
     "cp.planning_exports",
     "cp.set_province_on_publish",
     "cp.set_byline_on_publish",
@@ -323,18 +321,6 @@ PLANNING_EXPIRY_MINUTES = 60 * 24 * 30  # 30d
 # url used when clicking on a location of an Event
 STREET_MAP_URL = "https://www.google.ca/maps/?q="
 
-# ultrad auth header
-ULTRAD_AUTH = env("ULTRAD_AUTH", "")
-ULTRAD_TODO_STAGE = env("ULTRAD_TODO_STAGE", "Traduction")
-
-CELERY_BEAT_SCHEDULE.update(
-    {
-        "ultrad:sync": {
-            "task": "cp.ultrad.sync",
-            "schedule": timedelta(minutes=1),
-        },
-    }
-)
 
 DEFAULT_TEMPLATE_METADATA_MACRO_OVERRIDE = ["urgency"]
 DEFAULT_TEMPLATE_METADATA_MACRO_EXCLUDE = [
