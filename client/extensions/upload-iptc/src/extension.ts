@@ -38,18 +38,20 @@ const copySubj = (scheme: string) => (subj: ISubject) => ({
     source: '',
 });
 
-const toString = (value: string | Array<string> | undefined) : string => (
-    Array.isArray(value) ? value[0] : (value || '')
-);
+const toString = (value: string | Array<string> | undefined): string =>
+    String(Array.isArray(value) ? value?.[0] ?? '' : value ?? '');
 
-const toArray = (value: string | Array<string> | undefined) : Array<string> => {
+const toArray = (value: string | Array<string> | undefined): Array<string> => {
     if (value == null) {
         return [];
     }
 
-    return (Array.isArray(value) ? value : value.split('\n'))
-        .map((value) => value.trim());
-}
+    const ensureStringArray = Array.isArray(value) ? value : value.split('\n');
+
+    return ensureStringArray
+        .map((entry) => String(entry ?? ''))
+        .map((entry) => entry.trim());
+};
 
 const extension: IExtension = {
     activate: (superdesk: ISuperdesk) => {
