@@ -142,5 +142,7 @@ class ParserTestCase(TestCase):
             ],
             app=self.app,
         )
-        self.assertIn("09:00 AM 2024-09-13 Ada X, 4001 Rue Berri, Montreal, QC", template_data)
+        self.assertIn(
+            "09:00 AM 2024-09-13 Ada X, 4001 Rue Berri, Montreal, QC", template_data
+        )
         self.assertNotIn(". Quebec Canada", template_data)
