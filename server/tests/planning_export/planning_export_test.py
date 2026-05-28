@@ -107,3 +107,42 @@ class ParserTestCase(TestCase):
             "<p>fifth<br>06:30 AM 2024-04-22<br></p>",
             template_data,
         )
+
+    async def test_embedded_location_fallback(self):
+        template_data = await render_template(
+            "news_events_list_export.html",
+            items=[
+                {
+                    "type": "event",
+                    "calendars": [
+                        {"is_active": True, "name": "Sport", "qcode": "sport"}
+                    ],
+                    "language": "en",
+                    "name": "Embedded location event",
+                    "dates": {
+                        "start": datetime.datetime(
+                            2024, 9, 13, 13, 0, 0, tzinfo=datetime.timezone.utc
+                        ),
+                        "end": datetime.datetime(
+                            2024, 9, 13, 13, 0, 0, tzinfo=datetime.timezone.utc
+                        ),
+                    },
+                    "location": [
+                        {
+                            "name": "Ada X, 4001 Rue Berri, Montreal, QC",
+                            "qcode": "onclusive-venue:383014",
+                            "address": {
+                                "country": "Canada",
+                                "state": "Quebec",
+                            },
+                            "formatted_address": "Quebec Canada",
+                        }
+                    ],
+                }
+            ],
+            app=self.app,
+        )
+        self.assertIn(
+            "09:00 AM 2024-09-13 Ada X, 4001 Rue Berri, Montreal, QC", template_data
+        )
+        self.assertNotIn(". Quebec Canada", template_data)

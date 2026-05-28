@@ -12,9 +12,9 @@
                     COUVERTURE: {{ item.coverage_types }}.<br>
                 {%- endif -%}
                 {%- if item.address.city -%}
-                    {{ item.address.city }} - {{ item.local_time }}. {{ item.address.short }}.<br>
+                    {{ item.address.city }} - {{ item.local_time }}.{% if item.address.full %} {{ item.address.full }}.{% endif %}<br>
                 {%- else -%}
-                    {{ item.local_time }}.<br>
+                    {{ item.local_time }}.{% if item.address.full %} {{ item.address.full }}.{% endif %}<br>
                 {%- endif -%}
                 {%- if item.description_short -%}
                     <br>{{ item.description_short }}
