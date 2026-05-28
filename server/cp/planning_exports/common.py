@@ -121,59 +121,56 @@ def set_item_location(item, event):
     if item["type"] == "planning":
         item["location"] = event.get("location")
 
-    item.setdefault("address", {})
-    item["address"].setdefault("name", "")
-    item["address"].setdefault("full", "")
-    item["address"].setdefault("title", "")
-    item["address"].setdefault("address", "")
+    item["address"] = {
+        "country": None,
+        "state": None,
+        "city": "",
+        "name": "",
+        "full": "",
+    }
+
     if len(item.get("location") or []):
         # Set the items Location details if available
         try:
-            address_qcode = (item["location"][0] or {}).get("qcode")
+            location_item = item["location"][0] or {}
+            address_item = location_item
+            address_qcode = location_item.get("qcode")
+            is_onclusive = (address_qcode or "").startswith("onclusive-venue:")
             if address_qcode:
+                # Prefer canonical location data when available,
+                # and fall back to embedded location payload values.
                 address_item = (
                     get_resource_service("locations").find_one(
                         req=None, guid=address_qcode
                     )
-                    or {}
+                    or location_item
                 )
-                address = address_item.get("address") or {}
 
-                try:
-                    address_line = (address.get("line") or [])[0]
-                except IndexError:
-                    address_line = ""
+            address = address_item.get("address") or location_item.get("address") or {}
 
-                item["address"] = {
-                    "country": address["country"] if address.get("country") else None,
-                    "locality": (
-                        address["locality"] if address.get("locality") else None
-                    ),
-                    "city": address["city"] if address.get("city") else "",
-                    "state": address["state"] if address.get("state") else None,
-                    "name": address.get("city") or address_item.get("name") or "",
-                    "full": address_item.get("unique_name")
-                    or address_item.get("formatted_address")
-                    or "",
-                    "title": address_item.get("name") or "",
-                    "address": address_line,
-                }
+            title = address_item.get("name") or ""
+            full = (
+                address_item.get("unique_name")
+                or address_item.get("formatted_address")
+                or ""
+            )
+            city = address.get("city") or ""
+            if is_onclusive and title:
+                full = title
+
+            item["address"] = {
+                "country": address["country"] if address.get("country") else None,
+                "state": address["state"] if address.get("state") else None,
+                "city": city,
+                "name": city or title,
+                "full": full,
+            }
         except (IndexError, KeyError):
             pass
 
     # Set the name and full address to be used in the template
     if item["address"]["name"]:
         item["address"]["name"] = item["address"]["name"].upper()
-
-    if item["address"]["title"] and item["address"]["address"]:
-        item["address"]["short"] = (
-            item["address"]["title"] + ", " + item["address"]["address"]
-        )
-    else:
-        item["address"]["short"] = item["address"]["full"]
-
-    if item["address"]["full"]:
-        item["address"]["full"] = ". " + item["address"]["full"]
 
 
 def set_item_coverages(item):

@@ -15,11 +15,7 @@
  {%- endif -%}
  
  {%- if item.formatted_time -%}
-    {{ item.formatted_time }}<br>
- {%- endif -%}
- 
- {%- if item.address.full -%}
-    {{ item.address.full }}<br>
+    {{ item.formatted_time }}{% if item.address.full %} {{ item.address.full }}{% endif %}<br>
  {%- endif -%}
  
  {%- if item.coverage_types -%}
