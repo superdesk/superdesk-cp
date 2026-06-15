@@ -560,7 +560,7 @@
             "type": "string"
         },
         "byline": {
-            "required": false,
+            "required": true,
             "nullable": true,
             "type": "string"
         },
@@ -659,7 +659,7 @@
             "section": "content"
         },
         "byline": {
-            "required": false,
+            "required": true,
             "order": 8,
             "section": "content"
         },
