@@ -489,6 +489,187 @@
         }
     }
 }, {
+    "_id": "video",
+    "label": "Video",
+    "type": "video",
+    "priority": 0,
+    "enabled": false,
+    "is_used": true,
+    "init_version": 4,
+    "schema": {
+        "subject": {
+            "required": false,
+            "schema": {
+                "schema": {
+                    "parent": {
+                        "nullable": true
+                    },
+                    "name": {},
+                    "scheme": {
+                        "required": true,
+                        "nullable": true,
+                        "allowed": ["photo_categories", "photo_supplementalcategories", "destinations"],
+                        "type": "string"
+                    },
+                    "qcode": {},
+                    "service": {
+                        "nullable": true
+                    }
+                },
+                "type": "dict"
+            },
+            "mandatory_in_list": {
+                "scheme": {}
+            },
+            "type": "list",
+            "default": []
+        },
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "nullable": true,
+            "type": "string"
+        },
+        "description_text": {
+            "required": true,
+            "nullable": true,
+            "type": "string"
+        },
+        "slugline": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "string",
+            "maxlength": 80
+        },
+        "dateline": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "dict"
+        },
+        "headline": {
+            "required": false,
+            "nullable": true,
+            "type": "string"
+        },
+        "copyrightnotice": {
+            "nullable": true,
+            "required": false,
+            "enabled": true,
+            "type": "string"
+        },
+        "byline": {
+            "required": true,
+            "nullable": true,
+            "type": "string"
+        },
+        "photographer_code": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "caption_writer": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "filename": {
+            "required": false,
+            "nullable": true,
+            "enabled": true,
+            "type": "text"
+        },
+        "urgency": {
+            "required": false,
+            "nullable": true,
+            "type": "integer"
+        }
+    },
+    "editor": {
+        "usageterms": null,
+        "ednote": {
+            "required": false,
+            "order": 4,
+            "sdWidth": "full"
+        },
+        "photo_categories": {
+            "required": false,
+            "order": 1,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "photo_supplementalcategories": {
+            "required": false,
+            "order": 2,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "photographer_code": {
+            "required": false,
+            "order": 9,
+            "section": "content"
+        },
+        "slugline": {
+            "required": false,
+            "order": 5,
+            "sdWidth": "full",
+            "section": "content"
+        },
+        "dateline": {
+            "required": false,
+            "order": 13,
+            "sdWidth": "half",
+            "section": "content"
+        },
+        "destinations": {
+            "required": false,
+            "order": 3,
+            "sdWidth": "half",
+            "section": "header"
+        },
+        "headline": {
+            "required": false,
+            "order": 6,
+            "formatOptions": [],
+            "section": "content"
+        },
+        "copyrightnotice": {
+            "order": 12,
+            "sdWidth": "full",
+            "section": "content",
+            "textarea": true
+        },
+        "urgency": {
+            "required": false,
+            "order": 4,
+            "sdWidth": "half",
+            "displayOnMediaEditor": false
+        },
+        "description_text": {
+            "required": true,
+            "order": 7,
+            "section": "content"
+        },
+        "caption_writer": {
+            "required": false,
+            "order": 10,
+            "section": "content"
+        },
+        "byline": {
+            "required": true,
+            "order": 8,
+            "section": "content"
+        },
+        "filename": {
+            "required": false,
+            "order": 14,
+            "section": "content"
+        }
+    }
+}, {
     "widgets_config": [{
         "widget_id": "related-item",
         "is_displayed": true
