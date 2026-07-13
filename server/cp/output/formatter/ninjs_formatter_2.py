@@ -194,6 +194,13 @@ class NINJSFormatter_2(Formatter):
         except Exception as ex:
             raise FormatterError.ninjsFormatterError(ex, subscriber)
 
+    async def export(self, item):
+        if self.can_format(self.type, item):
+            sequence, formatted_doc = (await self.format(item, None, None))[0]
+            return formatted_doc.replace("''", "'")
+        else:
+            raise Exception()
+
     # Adding a method to fetch Parents of Manual Tags
 
     async def _add_parent_manual_tags(self, item):
