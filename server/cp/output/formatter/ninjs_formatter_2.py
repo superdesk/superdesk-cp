@@ -196,10 +196,12 @@ class NINJSFormatter_2(Formatter):
 
     async def export(self, item):
         if self.can_format(self.type, item):
-            sequence, formatted_doc = (await self.format(item, None, None))[0]
+            _, formatted_doc = (await self.format(item, None, None))[0]
             return formatted_doc.replace("''", "'")
         else:
-            raise Exception()
+            raise FormatterError.ninjsFormatterError(
+                Exception("Item type '{}' does not match formatter type '{}'".format(item.get("type"), self.type))
+            )
 
     # Adding a method to fetch Parents of Manual Tags
 
