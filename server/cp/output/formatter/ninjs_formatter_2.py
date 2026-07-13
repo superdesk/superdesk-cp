@@ -200,7 +200,11 @@ class NINJSFormatter_2(Formatter):
             return formatted_doc.replace("''", "'")
         else:
             raise FormatterError.ninjsFormatterError(
-                Exception("Item type '{}' does not match formatter type '{}'".format(item.get("type"), self.type))
+                Exception(
+                    "Item type '{}' does not match formatter type '{}'".format(
+                        item.get("type"), self.type
+                    )
+                )
             )
 
     # Adding a method to fetch Parents of Manual Tags
