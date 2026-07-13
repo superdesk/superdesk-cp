@@ -163,7 +163,7 @@ google-api-core[grpc]==2.28.1
     # via
     #   google-cloud-core
     #   google-cloud-translate
-google-auth==2.55.2
+google-auth==2.56.0
     # via
     #   -r requirements.in
     #   google-api-core
@@ -407,7 +407,9 @@ six==1.17.0
 superdesk-analytics @ git+https://github.com/superdesk/superdesk-analytics.git@release/3.1
     # via -r requirements.in
 superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v3.1.6
-    # via -r requirements.in
+    # via
+    #   -r requirements.in
+    #   superdesk-core
 superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@v3.1.5
     # via -r requirements.in
 taskgroup==0.2.2
