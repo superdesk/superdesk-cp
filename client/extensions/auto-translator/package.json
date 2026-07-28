@@ -23,7 +23,7 @@
     "diff-match-patch": "1.0.5",
     "formik": "2.4.6",
     "superdesk-ui-framework": "4.0.72",
-    "dompurify": "3.4.11"
+    "dompurify": "3.4.12"
   },
   "superdeskExtension": {
     "translations-extract-paths": [
