@@ -504,3 +504,5 @@ DEFAULT_AUTHOR_FR = "cpdefaultauthorfr"
 HTTP_PUSH_TIMEOUT = (5, int(env("HTTP_PUSH_TIMEOUT", 60)))
 
 COPY_ON_REWRITE_FIELDS = ["event"]
+
+CELERY_USE_ASYNC_WORKER = True
