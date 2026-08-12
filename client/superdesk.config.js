@@ -94,7 +94,7 @@ module.exports = function(grunt) {
             searchShortcut: true,
             elasticHighlight: true,
             hideCreatePackage: true,
-            useTansaProofing: true,
+            useTansaProofing: false,
             planning: true,
             noPublishOnAuthoringDesk: true,
             autorefreshContent: true,
