@@ -6,7 +6,7 @@ python-xmp-toolkit>=2.0.1,<2.2
 num2words==0.5.14
 google-auth==2.56.3
 google-cloud-translate==3.27.0
-deepl==1.30.0
+deepl==1.32.0
 dotenv==0.9.9
 pyexiftool==0.5.6
 

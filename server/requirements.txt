@@ -115,7 +115,7 @@ cryptography==50.0.0
     #   jwcrypto
 deepdiff==8.6.2
     # via superdesk-planning
-deepl==1.30.0
+deepl==1.32.0
     # via -r requirements.in
 dnspython==2.8.0
     # via pymongo
