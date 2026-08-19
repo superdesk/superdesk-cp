@@ -33,11 +33,11 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
     label = SOURCE
     ALLOWED_EXT = {".newsml", ".xml"}
 
-    def parse_content_subject(self, tree, item):
+    async def parse_content_subject(self, tree, item):
         pass
 
-    def parse_item(self, tree):
-        item = super().parse_item(tree)
+    async def parse_item(self, tree):
+        item = await super().parse_item(tree)
         meta = tree.find(self.qname("contentMeta"))
 
         organisation = meta.xpath(
@@ -77,8 +77,8 @@ class GlobeNewswireParser(NewsMLTwoFeedParser):
                     }
                 )
 
-    def parse_content_meta(self, tree, item):
-        meta = super().parse_content_meta(tree, item)
+    async def parse_content_meta(self, tree, item):
+        meta = await super().parse_content_meta(tree, item)
 
         item["language"] = "{}-CA".format(item["language"].split("-")[0])
         item["description_text"] = DESCRIPTION[item["language"]]

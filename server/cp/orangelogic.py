@@ -18,7 +18,7 @@ from superdesk.errors import AlreadyExistsError
 from superdesk.timer import timer
 from superdesk.utc import local_to_utc
 from superdesk.types.search_providers import SearchProvider
-from superdesk.io.commands.update_ingest import update_renditions
+from superdesk.media.renditions import update_renditions_async
 from superdesk.media.image import get_meta_iptc
 
 from cp.utils import parse_xmp
@@ -295,7 +295,7 @@ class OrangelogicSearchProvider(SearchProvider):
 
         await self.ensure_session()
         href = str(yarl.URL(url).with_query(params))
-        update_renditions(item, href, None)
+        await update_renditions_async(item, href, None)
 
         if item["type"] == "picture":
             await _parse_binary_async(item)

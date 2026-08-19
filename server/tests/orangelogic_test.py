@@ -138,7 +138,7 @@ class OrangelogicTestCase(TestCase):
             with self.assertRaises(ClientError):
                 items = await self.service.find_async({})
 
-    @patch("cp.orangelogic.update_renditions", side_effect=set_rendition)
+    @patch("cp.orangelogic.update_renditions_async", side_effect=set_rendition)
     async def test_fetch_to_jimi(self, update_renditions_mock):
         self.app.media.get_async.return_value = MockAsyncFile(
             read_fixture(
@@ -153,7 +153,7 @@ class OrangelogicTestCase(TestCase):
             with patch.dict(superdesk.resources, resources):
                 fetched = await self.service.fetch_async({})
 
-            update_renditions_mock.assert_called_once_with(
+            update_renditions_mock.assert_awaited_once_with(
                 fetched,
                 "https://example.com/htm/GetDocumentAPI.aspx?F=TRX&DocID=2RLQZBCB4R4R4&token=token.foo",
                 None,
