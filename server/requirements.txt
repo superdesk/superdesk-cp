@@ -415,7 +415,7 @@ tzlocal==5.4.4
     #   superdesk-core
 unidecode==1.4.0
     # via superdesk-core
-urllib3==2.7.0
+urllib3==2.8.0
     # via
     #   botocore
     #   elasticsearch
