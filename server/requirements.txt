@@ -158,7 +158,7 @@ google-auth==2.59.1
     #   google-cloud-translate
 google-cloud-core==2.6.0
     # via google-cloud-translate
-google-cloud-translate==3.27.0
+google-cloud-translate==3.28.0
     # via -r requirements.in
 googleapis-common-protos[grpc]==1.75.0
     # via
