@@ -4,12 +4,8 @@ from flask import url_for
 from superdesk import get_resource_service
 
 
-async def test_excluded_fields(prodapi_app_with_data, prodapi_app_with_data_client):
-    """Ensure that fields which are listed as `excluded_fields` are not in the response.
-
-    :param prodapi_app_with_data: prod api app with filled data
-    :param prodapi_app_with_data_client: client for prod api app with filled data
-    """
+async def test_search_planning_with_es_query(prodapi_app_with_data, prodapi_app_with_data_client):
+    """Test searching the Production API / Planning endpoint using raw Elasticsearch query."""
 
     async with prodapi_app_with_data.test_request_context("/"):
         params = dict(
