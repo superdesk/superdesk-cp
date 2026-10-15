@@ -1,0 +1,62 @@
+[
+    {
+        "_id": "plan_1", "guid": "plan_1", "type": "planning",
+        "planning_date": "2019-09-10T01:46:38.000Z",
+        "state": "scheduled",
+        "language": "en-CA",
+        "slugline": "Citroen 100 let",
+        "name": "Citroen 100 let",
+        "urgency": 2,
+        "coverages": [
+            {
+                "coverage_id": "coverage_1",
+                "planning": {
+                    "g2_content_type": "text",
+                    "slugline": "Citroen 100 let",
+                    "scheduled": "2019-09-10T15:00:00.000Z"
+                },
+                "news_coverage_status": {"qcode": "ncostat:int", "name": "coverage intended", "label": "Planned"}
+            }
+        ]
+    },
+    {
+        "_id": "plan_2", "guid": "plan_2", "type": "planning",
+        "planning_date": "2019-09-10T11:46:38.000Z",
+        "state": "draft",
+        "language": "en-CA",
+        "slugline": "Citroen 100 let",
+        "name": "Citroen 100 let",
+        "urgency": 2,
+        "coverages": [
+            {
+                "coverage_id": "coverage_3",
+                "planning": {
+                    "g2_content_type": "text",
+                    "slugline": "Citroen 100 let",
+                    "scheduled": "2019-09-10T15:00:00.000Z"
+                },
+                "news_coverage_status": {"qcode": "ncostat:int", "name": "coverage intended", "label": "Planned"}
+            }
+        ]
+    },
+    {
+        "_id": "plan_3", "guid": "plan_3", "type": "planning",
+        "planning_date": "2019-09-11T01:46:38.000Z",
+        "state": "scheduled",
+        "language": "en-CA",
+        "slugline": "Citroen 100 let",
+        "name": "Citroen 100 let",
+        "urgency": 2,
+        "coverages": [
+            {
+                "coverage_id": "coverage_5",
+                "planning": {
+                    "g2_content_type": "text",
+                    "slugline": "Citroen 100 let",
+                    "scheduled": "2019-09-10T15:00:00.000Z"
+                },
+                "news_coverage_status": {"qcode": "ncostat:int", "name": "coverage intended", "label": "Planned"}
+            }
+        ]
+    }
+]

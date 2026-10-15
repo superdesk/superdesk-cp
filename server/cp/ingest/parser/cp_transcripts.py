@@ -28,6 +28,6 @@ class CPTranscriptsFeedParser(NINJSFeedParser):
 
         if version > 0:
             # set it as expected not based on what already arrived
-            item["rewrite_of"] = f"{original_guid}.{version-1}"
+            item["rewrite_of"] = f"{original_guid}.{version - 1}"
 
         return item
