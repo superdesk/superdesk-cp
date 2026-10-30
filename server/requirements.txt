@@ -283,7 +283,7 @@ protobuf==7.35.1
     #   grpc-google-iam-v1
     #   grpcio-status
     #   proto-plus
-pyasn1==0.6.4
+pyasn1==0.6.5
     # via
     #   ldap3
     #   oauth2client
