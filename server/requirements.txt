@@ -300,7 +300,7 @@ pydantic==2.12.5
 pydantic-core==2.41.5
     # via pydantic
 pyexiftool==0.5.6
-    # via -r requirements.in
+    # via superdesk-core
 pyexiv2==2.15.5
     # via superdesk-core
 pyjwt==2.13.0
@@ -385,10 +385,8 @@ six==1.17.0
     #   python-dateutil
 superdesk-analytics @ git+https://github.com/superdesk/superdesk-analytics.git@v3.6-rc1
     # via -r requirements.in
-superdesk-core[exiv2] @ git+https://github.com/superdesk/superdesk-core.git@v3.6-rc4
-    # via
-    #   -r requirements.in
-    #   superdesk-core
+superdesk-core @ git+https://github.com/superdesk/superdesk-core.git@v3.6-rc5
+    # via -r requirements.in
 superdesk-planning @ git+https://github.com/superdesk/superdesk-planning.git@v3.6-rc2
     # via -r requirements.in
 tenacity==9.1.4
